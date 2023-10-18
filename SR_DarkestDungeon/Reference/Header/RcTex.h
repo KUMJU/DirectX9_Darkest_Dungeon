@@ -5,7 +5,7 @@ BEGIN(Engine)
 
 class ENGINE_DLL CRcTex : public CVIBuffer
 {
-private:
+public:
 	explicit CRcTex();
 	explicit CRcTex(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CRcTex(const CRcTex& rhs);

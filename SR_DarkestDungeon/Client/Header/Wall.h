@@ -3,7 +3,7 @@
 
 BEGIN(Engine)
 
-class CTerrainTex;
+class CRcTex;
 class CTexture;
 class CTransform;
 
@@ -11,12 +11,12 @@ END
 
 
 
-class CTerrain : public CGameObject
+class CWall : public CGameObject
 {
-public :
-	CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
-	CTerrain(const CTerrain& rhs);
-	virtual ~CTerrain();
+public:
+	CWall(LPDIRECT3DDEVICE9 pGraphicDev);
+	CWall(const CWall& rhs);
+	virtual ~CWall();
 
 public:
 	virtual HRESULT ReadyGameObject() override;
@@ -26,11 +26,9 @@ public:
 
 private:
 	virtual void			AddComponent();
-	void			KeyInput(const _float& fTimeDelta);
-	//HRESULT			SetUpMaterial(void);
 
 private:
-	shared_ptr<CTerrainTex> m_pBufferCom = nullptr;
+	shared_ptr<CRcTex> m_pBufferCom = nullptr;
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
 

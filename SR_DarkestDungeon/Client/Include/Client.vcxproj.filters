@@ -34,6 +34,12 @@
     <Filter Include="02. Object\02. DynamicCamera">
       <UniqueIdentifier>{887b3477-da71-41b6-99ee-30cb4c0bd4ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\03. SkyBox">
+      <UniqueIdentifier>{e71f3ab5-c266-4e98-afcf-9deda15e9546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\04. Wall">
+      <UniqueIdentifier>{c67da2c7-2884-4053-ba85-ba6da0e784dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -66,6 +72,12 @@
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\00. Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\SkyBox.h">
+      <Filter>02. Object\03. SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Wall.h">
+      <Filter>02. Object\04. Wall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -88,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkyBox.cpp">
+      <Filter>02. Object\03. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Wall.cpp">
+      <Filter>02. Object\04. Wall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

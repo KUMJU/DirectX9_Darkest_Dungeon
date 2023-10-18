@@ -1,6 +1,16 @@
 #include "RcTex.h"
 
+CRcTex::CRcTex()
+{
+}
+
 CRcTex::CRcTex(const CRcTex& rhs)
+	: CVIBuffer(rhs)
+{
+}
+
+CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CVIBuffer(pGraphicDev)
 {
 }
 
