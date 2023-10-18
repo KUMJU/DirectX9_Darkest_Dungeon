@@ -21,19 +21,27 @@ public:
 	virtual void			RenderGameObject() {}
 
 public:
-	_bool GetActive() { return m_bActive; }
-	std::shared_ptr<CComponent> GetComponent(const tstring& _strKeyName , COMPONENTID _eComID);
+	_bool GetIsActive() { return m_bActive; }
+	_bool GetIsEnable() { return m_bEnable; }
 
-//Component Manage
+	void SetActive(_bool _bValue) { m_bActive = _bValue; }
+	void SetEnable(_bool _bValue) { m_bEnable = _bValue; }
+
+
+	std::shared_ptr<CComponent> GetComponent(const tstring& _strKeyName, COMPONENTID _eComID);
+
+	//Component Manage
 protected:
 	void RemoveComponent();
 
 private:
 	virtual void AddComponent();
-	
+
 protected:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
-	bool m_bActive = true;
+
+	_bool m_bActive = true;
+	_bool m_bEnable = true;
 
 protected:
 	map<tstring, std::shared_ptr<CComponent>> m_mapComponent[ID_END];
