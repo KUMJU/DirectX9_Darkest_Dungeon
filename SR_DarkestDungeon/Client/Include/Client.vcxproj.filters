@@ -34,6 +34,12 @@
     <Filter Include="02. Object\02. DynamicCamera">
       <UniqueIdentifier>{887b3477-da71-41b6-99ee-30cb4c0bd4ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\InteractionObj">
+      <UniqueIdentifier>{08321268-5b8b-4899-be2c-39a82684fd51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Village">
+      <UniqueIdentifier>{b17f6d19-1214-48ba-abb9-3f79da233822}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -66,6 +72,12 @@
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\00. Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\InteractionObj.h">
+      <Filter>02. Object\InteractionObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Village.h">
+      <Filter>01. Scene\Village</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -88,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InteractionObj.cpp">
+      <Filter>02. Object\InteractionObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Village.cpp">
+      <Filter>01. Scene\Village</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
