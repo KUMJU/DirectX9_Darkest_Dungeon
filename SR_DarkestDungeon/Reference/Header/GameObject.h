@@ -27,6 +27,9 @@ public:
 	void SetActive(_bool _bValue) { m_bActive = _bValue; }
 	void SetEnable(_bool _bValue) { m_bEnable = _bValue; }
 
+	void SetPos(_vec3 _vPos) { m_vPos = _vPos; }
+	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
+
 
 	std::shared_ptr<CComponent> GetComponent(const tstring& _strKeyName, COMPONENTID _eComID);
 
@@ -42,6 +45,9 @@ protected:
 
 	_bool m_bActive = true;
 	_bool m_bEnable = true;
+
+	_vec3 m_vPos = _vec3{ 0.f, 0.f, 0.f };
+	_vec3 m_vAngle = _vec3{ 0.f, 0.f, 0.f };
 
 protected:
 	map<tstring, std::shared_ptr<CComponent>> m_mapComponent[ID_END];

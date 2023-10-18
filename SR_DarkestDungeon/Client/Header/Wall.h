@@ -18,6 +18,8 @@ public:
 	CWall(const CWall& rhs);
 	virtual ~CWall();
 
+	shared_ptr<CTransform> Get_TransformCom() { return m_pTransformCom; }
+
 public:
 	virtual HRESULT ReadyGameObject() override;
 	virtual _int UpdateGameObject(const _float& fTimeDelta) override;
@@ -30,7 +32,11 @@ private:
 private:
 	shared_ptr<CRcTex> m_pBufferCom = nullptr;
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
+
+	shared_ptr<CRcTex> m_pBufferCom2 = nullptr;
+	shared_ptr<CTexture> m_pTextureCom2 = nullptr;
+
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
 
-	_float		m_fSpeed = 10.f;
+	_int		m_iNum = 0;
 };

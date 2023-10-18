@@ -61,9 +61,49 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	// Wall
 	Engine::CreateNewTexture(L"Com_Weald_WallTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_wall.0%d.png", 9);
+	Engine::CreateNewTexture(L"Com_Weald_BackWallTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_mid.png", 1);
 
-	shared_ptr<CGameObject> m_pWall = make_shared<CWall>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	shared_ptr<CGameObject> m_pWall;
+	for (int i = 0; i < 16; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(0.f, 2.5f, 4.f + 8.f*i));
+		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(12.f, 2.5f, 4.f + 8.f * i));
+		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(12.f, 2.5f, 48.f + 8.f * i));
+		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(16.f + 8.f * i, 2.5f, 44.f));
+		m_pWall->SetAngle(_vec3(0.f, PI/2.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(16.f + 8.f * i, 2.5f, 32.f));
+		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
 
 	//가장 최하위 순서에 돌려줄 것
 	m_pLayer->ReadyLayer();

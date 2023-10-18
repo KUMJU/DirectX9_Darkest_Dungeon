@@ -93,7 +93,7 @@ void CLayer::LateUpdateLayer()
 HRESULT CLayer::CreateGameObject(tstring _strObjName, shared_ptr<CGameObject> _pObject)
 {
 	auto iter = m_objectMap.find(_strObjName);
-
+	
 	//이미 동일 오브젝트를 넣은 적이 있을 때
 	if (m_objectMap.end() == iter) {
 		list<shared_ptr<CGameObject>> vTempVec;
