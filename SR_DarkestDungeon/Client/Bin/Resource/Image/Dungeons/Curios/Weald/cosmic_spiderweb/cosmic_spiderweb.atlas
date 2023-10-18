@@ -1,0 +1,27 @@
+
+cosmic_spiderweb.png
+size: 1589,679
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: false
+  xy: 2, 9
+  size: 536, 668
+  orig: 536, 668
+  offset: 0, 0
+  index: -1
+closed
+  rotate: false
+  xy: 540, 2
+  size: 527, 675
+  orig: 527, 675
+  offset: 0, 0
+  index: -1
+open
+  rotate: false
+  xy: 1069, 3
+  size: 518, 674
+  orig: 518, 674
+  offset: 0, 0
+  index: -1

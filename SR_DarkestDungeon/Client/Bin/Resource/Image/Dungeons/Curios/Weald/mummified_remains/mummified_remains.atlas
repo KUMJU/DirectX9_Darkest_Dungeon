@@ -1,0 +1,27 @@
+
+mummified_remains.png
+size: 597,613
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: false
+  xy: 2, 2
+  size: 593, 177
+  orig: 593, 177
+  offset: 0, 0
+  index: -1
+closed
+  rotate: false
+  xy: 2, 181
+  size: 569, 198
+  orig: 569, 198
+  offset: 0, 0
+  index: -1
+open
+  rotate: false
+  xy: 2, 381
+  size: 572, 230
+  orig: 572, 230
+  offset: 0, 0
+  index: -1

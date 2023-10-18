@@ -1,0 +1,27 @@
+
+locked_display_cabinet.png
+size: 1534,626
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: false
+  xy: 609, 2
+  size: 455, 622
+  orig: 455, 622
+  offset: 0, 0
+  index: -1
+closed
+  rotate: false
+  xy: 1066, 19
+  size: 466, 605
+  orig: 466, 605
+  offset: 0, 0
+  index: -1
+open
+  rotate: true
+  xy: 2, 9
+  size: 615, 605
+  orig: 615, 605
+  offset: 0, 0
+  index: -1

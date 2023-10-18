@@ -1,0 +1,27 @@
+
+iron_maiden.png
+size: 1226,786
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: true
+  xy: 459, 2
+  size: 341, 680
+  orig: 341, 680
+  offset: 0, 0
+  index: -1
+closed
+  rotate: true
+  xy: 459, 345
+  size: 439, 765
+  orig: 439, 765
+  offset: 0, 0
+  index: -1
+open
+  rotate: false
+  xy: 2, 19
+  size: 455, 765
+  orig: 455, 765
+  offset: 0, 0
+  index: -1

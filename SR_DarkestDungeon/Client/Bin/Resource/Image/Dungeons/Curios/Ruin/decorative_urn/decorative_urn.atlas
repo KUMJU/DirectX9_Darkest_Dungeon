@@ -1,0 +1,27 @@
+
+decorative_urn.png
+size: 1187,343
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: false
+  xy: 772, 77
+  size: 413, 264
+  orig: 413, 264
+  offset: 0, 0
+  index: -1
+closed
+  rotate: false
+  xy: 2, 2
+  size: 384, 339
+  orig: 384, 339
+  offset: 0, 0
+  index: -1
+open
+  rotate: false
+  xy: 388, 2
+  size: 382, 339
+  orig: 382, 339
+  offset: 0, 0
+  index: -1

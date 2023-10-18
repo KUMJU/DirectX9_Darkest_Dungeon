@@ -1,0 +1,48 @@
+
+holy_fountain.png
+size: 1667,346
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: true
+  xy: 676, 5
+  size: 339, 586
+  orig: 339, 586
+  offset: 0, 0
+  index: -1
+closed
+  rotate: true
+  xy: 2, 35
+  size: 309, 672
+  orig: 309, 672
+  offset: 0, 0
+  index: -1
+open
+  rotate: true
+  xy: 2, 35
+  size: 309, 672
+  orig: 309, 672
+  offset: 0, 0
+  index: -1
+glow
+  rotate: true
+  xy: 1528, 187
+  size: 157, 137
+  orig: 157, 137
+  offset: 0, 0
+  index: -1
+mist
+  rotate: false
+  xy: 1264, 18
+  size: 262, 326
+  orig: 262, 326
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 2, 2
+  size: 240, 31
+  orig: 240, 31
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,27 @@
+
+lost_luggage.png
+size: 804,635
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: true
+  xy: 549, 89
+  size: 544, 253
+  orig: 544, 253
+  offset: 0, 0
+  index: -1
+closed
+  rotate: false
+  xy: 2, 2
+  size: 545, 267
+  orig: 545, 267
+  offset: 0, 0
+  index: -1
+open
+  rotate: false
+  xy: 2, 271
+  size: 545, 362
+  orig: 545, 362
+  offset: 0, 0
+  index: -1

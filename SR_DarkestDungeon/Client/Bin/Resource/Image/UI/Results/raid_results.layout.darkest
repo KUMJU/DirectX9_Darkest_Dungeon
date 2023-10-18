@@ -1,0 +1,97 @@
+raid_results_screen_layout:
+	.level_background_pos 0 0
+	.completion_background_pos 960 0
+	.quest_title_pos 960 212
+	.quest_result_pos 960 150
+	.state_pos 510 0
+	.progression_bar_pos 0 958
+	.next_pos 1870 980
+	.back_pos 50 980
+	.return_to_town_pos 1870 980
+
+raid_results_screen_next_layout:
+	.text_offset 0 0
+
+raid_results_screen_back_layout:
+	.text_offset 0 0
+
+raid_results_screen_return_to_town_layout:
+	.text_offset 0 0
+
+raid_results_items_state_layout:
+	.frame_offset 450 230
+	.quest_inventory_title 450 242
+	.quest_inventory_grid_offset 84 308
+	.party_gold_inventory_title 200 490
+	.party_gold_inventory_grid_offset 84 538
+	.party_gold_total_offset 620 496
+	.party_heirloom_inventory_title 200 714
+	.party_heirloom_inventory_grid_offset 84 760
+	.party_heirloom_total_offset 620 720
+
+raid_results_quest_inventory_system_grid_layout:
+	.number_of_columns 8
+	.start_pos 40 0
+	.offset 80 160
+	.is_centred 1
+
+raid_results_party_gold_inventory_system_grid_layout:
+	.number_of_columns 6
+	.start_pos 100 0
+	.offset 80 160
+	.is_centred 1
+
+raid_results_party_heirloom_inventory_system_grid_layout:
+	.number_of_columns 6
+	.start_pos 100 0
+	.offset 80 160
+	.is_centred 1
+    
+wave_raid_results_layout:
+	.wave_party_gold_inventory_title 200 550
+    .wave_party_gold_inventory_grid_offset 84 598
+    .wave_party_gold_total_offset 620 556
+    .wave_shard_title 200 770
+    .wave_shard_total_offset 620 778
+    .wave_kill_count_offset 450 830
+	.wave_kill_count_scale 1.5
+	.corpse_pile_left_start_offset 25 975
+	.corpse_pile_right_start_offset 1895 975
+	.corpse_pile_start_width 1050
+	.corpse_pile_part_width 725
+	.corpse_pile_hero_width 525
+	.corpse_compression_factor 0.4
+	.corpse_row_width_reduction 25
+	.corpse_row_offset_y -50
+	.corpse_insert_randomly 1
+	.corpse_row_group_size 7
+	.corpse_row_max_darkness 0.60
+	.corpse_pile_approx_height 1100
+	.corpse_rotation_range 0 15
+	.corpse_slide_time 1.0
+	.corpse_slide_ease_func easeInOutCubic
+
+wave_raid_results_party_gold_inventory_system_grid_layout:
+	.number_of_columns 6
+	.start_pos 100 0
+	.offset 80 160
+	.is_centred 1
+
+raid_results_heroes_state_layout:
+	.frame_offset 450 250
+	.heroes_start_pos 130 250
+	.heroes_spacing 0 168
+
+raid_results_hero_layout:
+	.portrait_icon_offset 5 64
+	.portrait_dead_overlay_offset 5 64
+	.name_offset 0 16
+	.campaign_status_offset 556 3
+	.campaign_status_resolve_level_bar_tooltip_offset 100 8
+	.resolve_from_quest_offset 520 20
+	.new_quirks_from_quest_start_offset 145 18
+	.new_quirks_from_quest_spacing 0 24.
+	.new_quirks_from_quest_controller_selected_icon_scale 1.0 1.0
+	.new_quirks_from_quest_controller_selected_icon_offset -146 0.0
+	.center_of_quirks_upperleft_offset 175 50
+

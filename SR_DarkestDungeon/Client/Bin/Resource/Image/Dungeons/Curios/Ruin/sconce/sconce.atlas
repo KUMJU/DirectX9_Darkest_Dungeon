@@ -1,0 +1,27 @@
+
+sconce.png
+size: 857,769
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: true
+  xy: 2, 510
+  size: 257, 852
+  orig: 257, 852
+  offset: 0, 0
+  index: -1
+closed
+  rotate: true
+  xy: 2, 256
+  size: 252, 853
+  orig: 252, 853
+  offset: 0, 0
+  index: -1
+open
+  rotate: true
+  xy: 2, 2
+  size: 252, 768
+  orig: 252, 768
+  offset: 0, 0
+  index: -1

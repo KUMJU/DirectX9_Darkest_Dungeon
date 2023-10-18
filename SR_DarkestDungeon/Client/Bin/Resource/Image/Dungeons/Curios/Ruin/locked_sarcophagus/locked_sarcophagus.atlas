@@ -1,0 +1,27 @@
+
+locked_sarcophagus.png
+size: 1185,761
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: true
+  xy: 524, 15
+  size: 744, 340
+  orig: 744, 340
+  offset: 0, 0
+  index: -1
+closed
+  rotate: true
+  xy: 866, 21
+  size: 738, 317
+  orig: 738, 317
+  offset: 0, 0
+  index: -1
+open
+  rotate: true
+  xy: 2, 2
+  size: 757, 520
+  orig: 757, 520
+  offset: 0, 0
+  index: -1

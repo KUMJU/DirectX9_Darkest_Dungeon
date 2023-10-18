@@ -1,0 +1,27 @@
+
+heirloom_chest.png
+size: 1486,437
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: false
+  xy: 547, 18
+  size: 459, 417
+  orig: 459, 417
+  offset: 0, 0
+  index: -1
+closed
+  rotate: false
+  xy: 1008, 37
+  size: 476, 398
+  orig: 476, 398
+  offset: 0, 0
+  index: -1
+open
+  rotate: false
+  xy: 2, 2
+  size: 543, 433
+  orig: 543, 433
+  offset: 0, 0
+  index: -1

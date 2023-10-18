@@ -1,0 +1,27 @@
+
+suit_of_armor.png
+size: 933,682
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: false
+  xy: 602, 48
+  size: 329, 632
+  orig: 329, 632
+  offset: 0, 0
+  index: -1
+closed
+  rotate: false
+  xy: 2, 4
+  size: 299, 676
+  orig: 299, 676
+  offset: 0, 0
+  index: -1
+open
+  rotate: false
+  xy: 303, 2
+  size: 297, 678
+  orig: 297, 678
+  offset: 0, 0
+  index: -1

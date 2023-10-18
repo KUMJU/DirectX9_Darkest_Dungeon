@@ -1,0 +1,27 @@
+
+travellers_tent_tutorial.png
+size: 1706,964
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+active
+  rotate: true
+  xy: 1152, 16
+  size: 946, 552
+  orig: 946, 552
+  offset: 0, 0
+  index: -1
+closed
+  rotate: true
+  xy: 2, 36
+  size: 926, 593
+  orig: 926, 593
+  offset: 0, 0
+  index: -1
+open
+  rotate: true
+  xy: 597, 2
+  size: 960, 553
+  orig: 960, 553
+  offset: 0, 0
+  index: -1

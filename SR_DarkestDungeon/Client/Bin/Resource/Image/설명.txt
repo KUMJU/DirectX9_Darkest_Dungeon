@@ -1,0 +1,88 @@
+=====마을======
+Village : 마을
+Stage Coach : 역마차
+BlackSmith : 대장간
+Guild : 길드
+Survivalist : 생존 전문가
+Tavern : 여관
+Abbey : 수도원
+Sanitarium : 요양원
+Nomad Wagon : 유목민 마차
+Graveyard : 무덤
+Acnestor's Memoirs : 선조의 기억
+
+=====영웅=====
+Vestal : 성녀
+Jester : 광대
+Highwayman : 노상강도
+Shieldbreaker : 방패 파괴자
+Abomination : 괴인
+Man-at-Arms : 중보병
+
+=====던전=====
+Ruins : 폐허
+Warrens : 사육장
+Weald : 삼림지대
+Cove : 해안 만
+
+=====몬스터=====
+폐허 몬스터
+Bone Defender : 해골 수비병
+Bone Soldier : 해골 병사
+Bone Arbalest : 해골 석궁병
+Bone Courtier : 해골 보좌관
+Bone Spearman : 해골 창병
+Bone Captain : 해골 대장
+Bone Bearer : 해골 기수
+
+폐허 보스
+Necromancer : 강령술사
+Prophet : 예언자
+
+삼림지대 몬스터
+Fungal Scratcher : 긁어대는 곰팡이
+Fungal Artillery : 포자 박격포
+Gnasher : 광견
+Ectoplasm : 엑토플라즘
+Large Ectoplasm : 대형 엑토플라즘
+Unclean Giant : 더러운 거인
+Crone : 노파
+Hateful Virago : 증오에 찬 악녀
+
+삼림지대 보스
+Hag : 마귀할멈
+Brigand Cannon : 도적의 대포
+
+=====아이템=====
+보급품
+Provisions : 보급품
+Food : 식량
+Shovel : 삽
+Antivenom : 해독제
+Bandage : 붕대
+Medicinal Herbs : 약초
+Skeleton Key : 만능 열쇠
+Holy Water : 성수
+Laudanum : 아편제
+Torch : 횃불
+
+전리품
+Loot : 전리품
+Gold : 금화
+Citrine : 황수정/시트린
+Jade : 비취
+Onyx : 오닉스
+Emerald : 에메랄드
+Sapphire : 사파이어
+Ruby : 루비
+
+가보
+Heirlooms : 가보
+Bust : 흉상
+Oil Painting/Portrait : 유화/초상화
+Deed : 증서
+Crest : 문장
+
+Trinket : 장신구
+
+Curio : 골동품
