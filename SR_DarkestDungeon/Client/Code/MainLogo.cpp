@@ -58,7 +58,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	// Camera
 	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-	
+
 	// Terrain
 	Engine::CreateNewTexture(L"Com_Weald_FloorTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/forest_Tiles.png", 1);
@@ -73,10 +73,61 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_mid.png", 1);
 
 	shared_ptr<CGameObject> m_pWall;
-	for (int i = 0; i < 16; i++)
+	// 진입방 벽
+	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(0.f, 2.5f, 4.f + 8.f*i));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f, 2.5f, WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 2.f, 2.5f, WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 1; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i, 2.5f, WALLSIZEX * 2.f));
+		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 1; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 1.5f + WALLSIZEX * i, 2.5f, WALLSIZEX * 2.f));
+		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	// 통로 1 벽
+	for (int i = 0; i < 10; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + WALLSIZEX * 1.f, 2.5f, WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 1.f, 2.5f, WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	// 방 2 벽
+	for (int i = 0; i < 4; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(WALLSIZEX * 1.f, 2.5f, WALLSIZEX / 2.f + WALLSIZEX * 12.f + WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -84,34 +135,35 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 4; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(12.f, 2.5f, 4.f + 8.f * i));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 3.f + PATHSIZEX + WALLSIZEX * 2.f, 2.5f, WALLSIZEX / 2.f + WALLSIZEX * 12.f + WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(12.f, 2.5f, 48.f + 8.f * i));
-		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
-		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
-	}
-
-	for (int i = 0; i < 10; i++)
-	{
-		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(16.f + 8.f * i, 2.5f, 44.f));
-		m_pWall->SetAngle(_vec3(0.f, PI/2.f, 0.f));
-		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
-	}
-
-	for (int i = 0; i < 10; i++)
-	{
-		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(16.f + 8.f * i, 2.5f, 32.f));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 1.5f + WALLSIZEX * i, 2.5f, WALLSIZEX * 12.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(WALLSIZEX * 3.5f + PATHSIZEX + WALLSIZEX * i, 2.5f, WALLSIZEX * 12.f));
+		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev);
+		m_pWall->SetPos(_vec3(WALLSIZEX * 1.5f + WALLSIZEX * i, 2.5f, WALLSIZEX * 16.f));
+		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
 
 	//가장 최하위 순서에 돌려줄 것
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

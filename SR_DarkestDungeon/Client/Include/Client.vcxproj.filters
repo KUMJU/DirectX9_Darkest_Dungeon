@@ -25,14 +25,8 @@
     <Filter Include="01. Scene\00. MainLogo">
       <UniqueIdentifier>{ab472b2f-3fb9-418b-8436-febb768cecd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\01. Terrain">
-      <UniqueIdentifier>{a0f3ecda-89d1-4243-a456-497a3a619a30}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\00. Player">
       <UniqueIdentifier>{46805983-c3aa-4d76-af0c-35ea459267e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. DynamicCamera">
-      <UniqueIdentifier>{887b3477-da71-41b6-99ee-30cb4c0bd4ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\InteractionObj">
       <UniqueIdentifier>{08321268-5b8b-4899-be2c-39a82684fd51}</UniqueIdentifier>
@@ -40,14 +34,29 @@
     <Filter Include="01. Scene\Village">
       <UniqueIdentifier>{b17f6d19-1214-48ba-abb9-3f79da233822}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\03. SkyBox">
-      <UniqueIdentifier>{e71f3ab5-c266-4e98-afcf-9deda15e9546}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\04. Wall">
-      <UniqueIdentifier>{c67da2c7-2884-4053-ba85-ba6da0e784dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\StaticCamera">
       <UniqueIdentifier>{9008c8b2-b181-42f5-b52f-f08dd4f3bb71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. Terrain">
+      <UniqueIdentifier>{a0f3ecda-89d1-4243-a456-497a3a619a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\03. DynamicCamera">
+      <UniqueIdentifier>{887b3477-da71-41b6-99ee-30cb4c0bd4ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\04. SkyBox">
+      <UniqueIdentifier>{e71f3ab5-c266-4e98-afcf-9deda15e9546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\05. Wall">
+      <UniqueIdentifier>{c67da2c7-2884-4053-ba85-ba6da0e784dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Creature">
+      <UniqueIdentifier>{c51956e8-53bc-45a0-9adc-51ae6c720952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Creature\Monster">
+      <UniqueIdentifier>{b6af58e5-923a-4a5f-b02e-67ff5bd630c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Creature\Hero">
+      <UniqueIdentifier>{e475954f-198d-44c4-814c-916f04ec042e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,19 +82,19 @@
       <Filter>01. Scene\00. MainLogo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Terrain.h">
-      <Filter>02. Object\01. Terrain</Filter>
+      <Filter>02. Object\02. Terrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DynamicCamera.h">
-      <Filter>02. Object\02. DynamicCamera</Filter>
+      <Filter>02. Object\03. DynamicCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\00. Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SkyBox.h">
-      <Filter>02. Object\03. SkyBox</Filter>
+      <Filter>02. Object\04. SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Wall.h">
-      <Filter>02. Object\04. Wall</Filter>
+      <Filter>02. Object\05. Wall</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InteractionObj.h">
       <Filter>02. Object\InteractionObj</Filter>
@@ -95,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\StaticCamera.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Creature.h">
+      <Filter>02. Object\01. Creature</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,19 +123,19 @@
       <Filter>01. Scene\00. MainLogo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Terrain.cpp">
-      <Filter>02. Object\01. Terrain</Filter>
+      <Filter>02. Object\02. Terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
-      <Filter>02. Object\02. DynamicCamera</Filter>
+      <Filter>02. Object\03. DynamicCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\00. Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
-      <Filter>02. Object\03. SkyBox</Filter>
+      <Filter>02. Object\04. SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Wall.cpp">
-      <Filter>02. Object\04. Wall</Filter>
+      <Filter>02. Object\05. Wall</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InteractionObj.cpp">
       <Filter>02. Object\InteractionObj</Filter>
@@ -133,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticCamera.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Creature.cpp">
+      <Filter>02. Object\01. Creature</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
