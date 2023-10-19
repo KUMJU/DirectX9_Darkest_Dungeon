@@ -5,7 +5,9 @@
 #include"SkyBox.h"
 #include"Layer.h"
 #include"DynamicCamera.h"
+#include"Player.h"
 #include"Export_Utility.h"
+#include"StaticCamera.h"
 
 CMainLogo::CMainLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -20,6 +22,12 @@ HRESULT CMainLogo::ReadyScene()
 {
 	Ready_Layer_Environment(L"Layer_Environment");
 	Ready_Layer_SkyBox(L"Layer_SkyBox");
+	Ready_Layer_GameObject(L"Layer_GameObj");
+
+	for (auto& iter : m_mapLayer) {
+		//GameComponenet Setting
+		iter.second->ReadyLayer();
+	}
 
 	return __super::ReadyScene();
 }
@@ -60,7 +68,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 
 	// Wall
 	Engine::CreateNewTexture(L"Com_Weald_WallTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_wall.0%d.png", 9);
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_wall.%d.png", 9);
 	Engine::CreateNewTexture(L"Com_Weald_BackWallTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_mid.png", 1);
 
@@ -106,8 +114,8 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	}
 
 	//가장 최하위 순서에 돌려줄 것
-	m_pLayer->ReadyLayer();
-	
+	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
+
 
 	return S_OK;
 }
@@ -124,14 +132,21 @@ HRESULT CMainLogo::Ready_Layer_SkyBox(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pSkyBox = make_shared<CSkyBox>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Weald_SkyBox", m_pSkyBox);
 
-	//가장 최하위 순서에 돌려줄 것
-	m_pLayer->ReadyLayer();
+	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return E_NOTIMPL;
 }
 
-HRESULT CMainLogo::Ready_Layer_GameObject(const tstring* pLayerTag)
+HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 {
+	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
+	m_mapLayer.insert({ pLayerTag, m_pLayer });
+
+	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+
+	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
+
 	return E_NOTIMPL;
 }
 

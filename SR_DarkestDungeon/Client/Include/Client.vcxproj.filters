@@ -46,6 +46,9 @@
     <Filter Include="02. Object\04. Wall">
       <UniqueIdentifier>{c67da2c7-2884-4053-ba85-ba6da0e784dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\StaticCamera">
+      <UniqueIdentifier>{9008c8b2-b181-42f5-b52f-f08dd4f3bb71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -90,6 +93,9 @@
     <ClInclude Include="..\Header\Village.h">
       <Filter>01. Scene\Village</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\StaticCamera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -124,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Village.cpp">
       <Filter>01. Scene\Village</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

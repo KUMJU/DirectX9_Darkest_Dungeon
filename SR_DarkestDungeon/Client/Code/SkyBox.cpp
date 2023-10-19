@@ -20,7 +20,7 @@ HRESULT CSkyBox::ReadyGameObject()
 {
 	m_pTransformCom->SetScale(40.f, 40.f, 40.f);
 
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 _int CSkyBox::UpdateGameObject(const _float& fTimeDelta)

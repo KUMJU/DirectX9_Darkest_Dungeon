@@ -8,15 +8,20 @@ CLayer::~CLayer()
 {
 }
 
-HRESULT CLayer::ReadyLayer()
+void CLayer::AwakeLayer()
 {
-
 	for (auto& iter : m_objectMap) {
 		for (auto& it : iter.second) {
 			//GameComponenet Setting
 			it->AwakeGameObject();
 		}
 	}
+
+
+}
+
+HRESULT CLayer::ReadyLayer()
+{
 
 	for (auto& iter : m_objectMap) {
 		for (auto& it : iter.second) {
@@ -26,7 +31,7 @@ HRESULT CLayer::ReadyLayer()
 	}
 
 
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 _int CLayer::UpdateLayer(const _float& fTimeDelta)
