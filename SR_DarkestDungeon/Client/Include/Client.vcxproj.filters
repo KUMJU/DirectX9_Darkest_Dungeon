@@ -1,169 +1,169 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="00. MainApp">
-      <UniqueIdentifier>{7e1092ce-5997-4516-a3a6-4a9bd3005ee4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene">
-      <UniqueIdentifier>{e7b9ef4c-6da9-4606-9389-4f70ae8d49a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object">
-      <UniqueIdentifier>{c471c75d-2971-48f3-82a7-75a0e4f18e8e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. MainLogo">
-      <UniqueIdentifier>{ab472b2f-3fb9-418b-8436-febb768cecd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Terrain">
-      <UniqueIdentifier>{a0f3ecda-89d1-4243-a456-497a3a619a30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\00. Player">
-      <UniqueIdentifier>{46805983-c3aa-4d76-af0c-35ea459267e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. DynamicCamera">
-      <UniqueIdentifier>{887b3477-da71-41b6-99ee-30cb4c0bd4ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\InteractionObj">
-      <UniqueIdentifier>{08321268-5b8b-4899-be2c-39a82684fd51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\Village">
-      <UniqueIdentifier>{b17f6d19-1214-48ba-abb9-3f79da233822}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\03. SkyBox">
-      <UniqueIdentifier>{e71f3ab5-c266-4e98-afcf-9deda15e9546}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\04. Wall">
-      <UniqueIdentifier>{c67da2c7-2884-4053-ba85-ba6da0e784dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Creature">
-      <UniqueIdentifier>{c51956e8-53bc-45a0-9adc-51ae6c720952}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Creature\Monster">
-      <UniqueIdentifier>{b6af58e5-923a-4a5f-b02e-67ff5bd630c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Creature\Hero">
-      <UniqueIdentifier>{e475954f-198d-44c4-814c-916f04ec042e}</UniqueIdentifier>
-    <Filter Include="Skill">
-      <UniqueIdentifier>{58677ee1-7ce9-4037-b932-9ff789c6265b}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\pch.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\MainApp.h">
-      <Filter>00. MainApp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\MainLogo.h">
-      <Filter>01. Scene\00. MainLogo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Terrain.h">
-      <Filter>02. Object\01. Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\DynamicCamera.h">
-      <Filter>02. Object\02. DynamicCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Player.h">
-      <Filter>02. Object\00. Player</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SkyBox.h">
-      <Filter>02. Object\03. SkyBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Wall.h">
-      <Filter>02. Object\04. Wall</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Village.h">
-      <Filter>01. Scene\Village</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\InteractionObj.h">
-      <Filter>02. Object\InteractionObj</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\StaticCamera.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Creature.h">
-      <Filter>02. Object\01. Creature</Filter>
-    <ClInclude Include="..\Header\Skill.h">
-      <Filter>Skill</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Client.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MainApp.cpp">
       <Filter>00. MainApp</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MainLogo.cpp">
       <Filter>01. Scene\00. MainLogo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Terrain.cpp">
-      <Filter>02. Object\01. Terrain</Filter>
+    <ClCompile Include="..\Code\Village.cpp">
+      <Filter>01. Scene\01. Village</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
-      <Filter>02. Object\02. DynamicCamera</Filter>
+      <Filter>02. Object\02. Camera\00. DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>02. Object\02. Camera\01. StaticCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Terrain.cpp">
+      <Filter>02. Object\01. Terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\00. Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SkyBox.cpp">
-      <Filter>02. Object\03. SkyBox</Filter>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Wall.cpp">
-      <Filter>02. Object\04. Wall</Filter>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InteractionObj.cpp">
       <Filter>02. Object\InteractionObj</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Village.cpp">
-      <Filter>01. Scene\Village</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\StaticCamera.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Creature.cpp">
-      <Filter>02. Object\01. Creature</Filter>
+      <Filter>02. Object\Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Wall.cpp">
+      <Filter>02. Object\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkyBox.cpp">
+      <Filter>02. Object\SkyBox</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\Skill.cpp">
       <Filter>Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Client.rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
+    <ClInclude Include="..\Header\MainApp.h">
+      <Filter>00. MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainLogo.h">
+      <Filter>01. Scene\00. MainLogo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Village.h">
+      <Filter>01. Scene\01. Village</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DynamicCamera.h">
+      <Filter>02. Object\02. Camera\00. DynamicCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticCamera.h">
+      <Filter>02. Object\02. Camera\01. StaticCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Terrain.h">
+      <Filter>02. Object\01. Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Player.h">
+      <Filter>02. Object\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InteractionObj.h">
+      <Filter>02. Object\InteractionObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Creature.h">
+      <Filter>02. Object\Creature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Wall.h">
+      <Filter>02. Object\Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkyBox.h">
+      <Filter>02. Object\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Skill.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="Client.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="00. MainApp">
+      <UniqueIdentifier>{71f77704-c9c4-4f88-b5c2-b48a34ca5a5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene">
+      <UniqueIdentifier>{d4a2e53c-54bc-4ac2-85ab-d1e15395c37a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object">
+      <UniqueIdentifier>{a03fc43d-bcf7-4eb0-86f9-f7e45a09e10b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{e1155500-940e-49c2-9107-d4a69db5ac8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{00314391-f3db-4784-9113-8c90406a2378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{bd369ee3-7a1d-442f-a64f-c2cc55c3e642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. MainLogo">
+      <UniqueIdentifier>{9ce8fae6-0131-4906-b66d-fa3800c7a1bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\01. Village">
+      <UniqueIdentifier>{c465146d-98bd-4355-a853-c45e26ba2486}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\00. Player">
+      <UniqueIdentifier>{83163362-666c-4a2e-8a97-ae10002977d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Terrain">
+      <UniqueIdentifier>{c36ae6ba-90b6-44c4-8700-57cc14226536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. Camera">
+      <UniqueIdentifier>{dd1b8acf-7346-4267-ac2e-2650a1472612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. Camera\00. DynamicCamera">
+      <UniqueIdentifier>{97d15d34-e6fe-4319-9020-c47370ae9a1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. Camera\01. StaticCamera">
+      <UniqueIdentifier>{cd9641bd-069c-4a14-a5e7-fda97abce56f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\InteractionObj">
+      <UniqueIdentifier>{85be34aa-e4bd-4ce5-8655-ea07476a7baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Creature">
+      <UniqueIdentifier>{1e80321d-b4e1-4b9a-82d2-870d48156bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\SkyBox">
+      <UniqueIdentifier>{40bad2bb-8ca5-4bf9-9fb0-9d092026cdfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Wall">
+      <UniqueIdentifier>{abb4ba7e-723f-4012-bcd8-870a44c649d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{37ff8b03-d58c-4724-b714-eefe773245b1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
