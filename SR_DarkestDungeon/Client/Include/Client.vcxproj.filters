@@ -40,19 +40,10 @@
     <Filter Include="01. Scene\Village">
       <UniqueIdentifier>{b17f6d19-1214-48ba-abb9-3f79da233822}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\StaticCamera">
-      <UniqueIdentifier>{9008c8b2-b181-42f5-b52f-f08dd4f3bb71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. Terrain">
-      <UniqueIdentifier>{a0f3ecda-89d1-4243-a456-497a3a619a30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\03. DynamicCamera">
-      <UniqueIdentifier>{887b3477-da71-41b6-99ee-30cb4c0bd4ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\04. SkyBox">
+    <Filter Include="02. Object\03. SkyBox">
       <UniqueIdentifier>{e71f3ab5-c266-4e98-afcf-9deda15e9546}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\05. Wall">
+    <Filter Include="02. Object\04. Wall">
       <UniqueIdentifier>{c67da2c7-2884-4053-ba85-ba6da0e784dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\01. Creature">
@@ -90,19 +81,19 @@
       <Filter>01. Scene\00. MainLogo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Terrain.h">
-      <Filter>02. Object\02. Terrain</Filter>
+      <Filter>02. Object\01. Terrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DynamicCamera.h">
-      <Filter>02. Object\03. DynamicCamera</Filter>
+      <Filter>02. Object\02. DynamicCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\00. Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SkyBox.h">
-      <Filter>02. Object\04. SkyBox</Filter>
+      <Filter>02. Object\03. SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Wall.h">
-      <Filter>02. Object\05. Wall</Filter>
+      <Filter>02. Object\04. Wall</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Village.h">
       <Filter>01. Scene\Village</Filter>
@@ -133,19 +124,19 @@
       <Filter>01. Scene\00. MainLogo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Terrain.cpp">
-      <Filter>02. Object\02. Terrain</Filter>
+      <Filter>02. Object\01. Terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
-      <Filter>02. Object\03. DynamicCamera</Filter>
+      <Filter>02. Object\02. DynamicCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\00. Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
-      <Filter>02. Object\04. SkyBox</Filter>
+      <Filter>02. Object\03. SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Wall.cpp">
-      <Filter>02. Object\05. Wall</Filter>
+      <Filter>02. Object\04. Wall</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InteractionObj.cpp">
       <Filter>02. Object\InteractionObj</Filter>
