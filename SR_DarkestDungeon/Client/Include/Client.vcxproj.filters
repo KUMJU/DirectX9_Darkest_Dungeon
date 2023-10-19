@@ -46,6 +46,14 @@
     <Filter Include="02. Object\04. Wall">
       <UniqueIdentifier>{c67da2c7-2884-4053-ba85-ba6da0e784dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\01. Creature">
+      <UniqueIdentifier>{c51956e8-53bc-45a0-9adc-51ae6c720952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Creature\Monster">
+      <UniqueIdentifier>{b6af58e5-923a-4a5f-b02e-67ff5bd630c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Creature\Hero">
+      <UniqueIdentifier>{e475954f-198d-44c4-814c-916f04ec042e}</UniqueIdentifier>
     <Filter Include="Skill">
       <UniqueIdentifier>{58677ee1-7ce9-4037-b932-9ff789c6265b}</UniqueIdentifier>
     </Filter>
@@ -93,6 +101,11 @@
     <ClInclude Include="..\Header\InteractionObj.h">
       <Filter>02. Object\InteractionObj</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\StaticCamera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Creature.h">
+      <Filter>02. Object\01. Creature</Filter>
     <ClInclude Include="..\Header\Skill.h">
       <Filter>Skill</Filter>
     </ClInclude>
@@ -131,6 +144,11 @@
     <ClCompile Include="..\Code\Village.cpp">
       <Filter>01. Scene\Village</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Creature.cpp">
+      <Filter>02. Object\01. Creature</Filter>
     <ClCompile Include="..\Code\Skill.cpp">
       <Filter>Skill</Filter>
     </ClCompile>
