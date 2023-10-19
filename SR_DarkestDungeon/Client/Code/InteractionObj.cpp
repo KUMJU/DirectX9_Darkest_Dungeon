@@ -46,6 +46,7 @@ _int CInteractionObj::UpdateGameObject(const _float& fTimeDelta)
 
 void CInteractionObj::LateUpdateGameObject()
 {
+
 }
 
 void CInteractionObj::RenderGameObject()
@@ -73,8 +74,16 @@ void CInteractionObj::AddComponent()
 	pComponent = m_pBufferCom = make_shared<CRcTex>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"RcTex AddComponent Failed");
 	dynamic_pointer_cast<CRcTex>(m_pBufferCom)->ReadyBuffer();
-
 	m_mapComponent[ID_STATIC].insert({ L"Com_RcTex", pComponent });
+
+	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
+	NULL_CHECK_MSG(pComponent, L"Texture AddComponent Failed");
+	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+
+	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
+	NULL_CHECK_MSG(pComponent, L"Transform AddComponent Failed");
+	m_pTransformCom->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 }
 
 _float CInteractionObj::CalcDistance()
@@ -92,15 +101,13 @@ _float CInteractionObj::CalcDistance()
 
 void CInteractionObj::GetInteractionKey(const _float& fTimeDelta)
 {
+	// 키 입력받기
 	if (Engine::Get_DIKeyState(DIK_C) & 0X80)
 	{
 		// 상호작용 시작
 		if (!m_bInteracting)
 		{
 			m_bInteracting = true;
-			// 플레이어 행동 막기
-			// ----------수정 필요------------
-			//m_pPlayer->BockMove(true);
 			InteractionAction();
 		}
 		// 상호작용 종료
@@ -112,13 +119,23 @@ void CInteractionObj::GetInteractionKey(const _float& fTimeDelta)
 		}
 	}
 
+	// 인터렉션 키 UI 보여주기
 	if (!m_bInteracting)
 	{
-		// 인터랙션 키 UI 보여주기
 		// ----------수정 필요------------
 	}
 }
 
 void CInteractionObj::InteractionAction()
 {
+	m_bInteracting = true;
+
+	// 플레이어 행동 막기
+	// ----------수정 필요------------
+	//m_pPlayer->BockMove(true);
+}
+
+void CInteractionObj::FinishInteraction()
+{
+	m_bInteracting = false;
 }

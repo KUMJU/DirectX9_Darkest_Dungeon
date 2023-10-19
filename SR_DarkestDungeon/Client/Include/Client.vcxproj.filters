@@ -84,11 +84,11 @@
     <ClInclude Include="..\Header\Wall.h">
       <Filter>02. Object\04. Wall</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\InteractionObj.h">
-      <Filter>02. Object\InteractionObj</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Village.h">
       <Filter>01. Scene\Village</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InteractionObj.h">
+      <Filter>02. Object\InteractionObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

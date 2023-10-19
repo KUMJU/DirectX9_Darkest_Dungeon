@@ -30,14 +30,17 @@ protected:
 	// 플레이어와 Object의 거리를 계산하는 함수
 	virtual _float	CalcDistance();
 
-	// 상호작용 키를 띄우는 함수
+	// 상호작용 키 UI를 띄우고 키를 입력받는 함수
 	virtual void	GetInteractionKey(const _float& fTimeDelta);
-
-	// 상호작용 중인지를 알려주는 함수 (플레이어 이동을 막기 위함)
-	virtual _bool	IsInteracting() { return m_bInteracting; }
 
 	// 상호작용 동작
 	virtual void	InteractionAction();
+
+	// 상호작용 종료 시 호출되는 함수
+	virtual void	FinishInteraction();
+
+	// 상호작용 중인지 확인하는 함수
+	virtual _bool	IsInteracting() { return m_bInteracting; }
 
 
 protected:
