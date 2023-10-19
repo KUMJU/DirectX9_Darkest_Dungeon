@@ -156,6 +156,7 @@
     <ClInclude Include="..\Header\MainLogo.h" />
     <ClInclude Include="..\Header\pch.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\Skill.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
     <ClInclude Include="..\Header\Terrain.h" />
