@@ -14,6 +14,7 @@ enum class ESkillAbility {
 
 class CSkill
 {
+public:
 	CSkill(tstring _strSkillName, _bool* _arrActivatePos, _bool* _arrTargetPos, _bool _bToEnemy,
 		_int _iActivateCnt, _int _iAbilityCnt, ESkillAbility* _eListAbility, _int _iMoveCnt,
 		_int* _iDotDamage, _float _fStunRate, _int _iHeal, tstring _strAnimKey, tstring _strImgKey);
