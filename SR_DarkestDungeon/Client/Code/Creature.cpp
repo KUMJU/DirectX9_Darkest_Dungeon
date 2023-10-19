@@ -66,9 +66,11 @@ void CCreature::AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTAC
 		break;
 	case ATTACKTYPE::ATTACK_BLIGHT:
 		_pCreature->BlightAttack(_iDotDamage, _iTurn);
+		_pCreature->SetBlight(true);
 		break;
 	case ATTACKTYPE::ATTACK_BLEED:
 		_pCreature->BleedAttack(_iDotDamage, _iTurn);
+		_pCreature->SetBleed(true);
 		break;
 	case ATTACKTYPE::ATTACK_STRESS:
 		break;

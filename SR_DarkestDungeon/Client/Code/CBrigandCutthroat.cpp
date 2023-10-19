@@ -115,6 +115,41 @@ void CBrigandCutthroat::RenderGameObject()
 	__super::RenderGameObject();
 }
 
+void CBrigandCutthroat::StartTurn()
+{
+	__super::StartTurn();
+}
+
+void CBrigandCutthroat::AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
+{
+	__super::AttackCreature(_pCreature, _fSkillRatio, _eAttackTYPE, _iDotDamage, _iTurn);
+}
+
+void CBrigandCutthroat::EndAttack(CCreature* _pCreature)
+{
+	__super::EndAttack(_pCreature);
+}
+
+void CBrigandCutthroat::BlightAttack(_int _iBlightDmg, _int _iTurn)
+{
+	__super::BlightAttack(_iBlightDmg, _iTurn);
+}
+
+void CBrigandCutthroat::BleedAttack(_int _iBleedDmg, _int _iTurn)
+{
+	__super::BleedAttack(_iBleedDmg, _iTurn);
+}
+
+void CBrigandCutthroat::BlightCure()
+{
+	__super::BlightCure();
+}
+
+void CBrigandCutthroat::BleedCure()
+{
+	__super::BleedCure();
+}
+
 void CBrigandCutthroat::AddComponent()
 {
 	Engine::CreateNewTexture(L"Brigand Cutthroat_Combat", TEX_NORMAL,
