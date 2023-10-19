@@ -2,6 +2,9 @@
 
 #include"Scene.h"
 
+#define WALLSIZEX 8.f
+#define PATHSIZEX 12.f
+
 class CMainLogo : public Engine::CScene
 {
 public:
