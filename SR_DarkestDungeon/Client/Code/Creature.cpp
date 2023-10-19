@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Creature.h"
+
+#include "Export_System.h"
 #include"Export_Utility.h"
 
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -34,22 +36,11 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 
 void CCreature::LateUpdateGameObject()
 {
+	ClimbingTerrain();
 }
 
 void CCreature::RenderGameObject()
 {
-	// m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	m_pBufCom->RenderBuffer();
-	m_pEffectBufCom->RenderBuffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CCreature::StartTurn()
@@ -150,6 +141,18 @@ void CCreature::AddComponent()
 
 void CCreature::ClimbingTerrain()
 {
+	//_vec3		vPos;
+	//m_pTransformCom->GetInfo(INFO_POS, &vPos);
+	//
+	//CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"OBJ_Terrain", L"Proto_TerrainTex", ID_STATIC));
+	//NULL_CHECK(pTerrainBufferCom);
+	//
+	//_float		fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos,
+	//	pTerrainBufferCom->Get_VtxPos(),
+	//	pTerrainBufferCom->Get_VtxCntX(),
+	//	pTerrainBufferCom->Get_VtxCntZ());
+	//
+	//m_pTransformCom->Set_Pos(vPos.x, fHeight + 0.5f, vPos.z);
 }
 
 void CCreature::Free()

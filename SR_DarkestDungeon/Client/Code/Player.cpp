@@ -15,6 +15,12 @@ HRESULT CPlayer::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+	m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+
+	m_pTransformCom->SetAngle(m_vAngle);
+	m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
+
 	return S_OK;
 }
 
@@ -54,7 +60,6 @@ void CPlayer::AddComponent()
 	NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
-	m_pTransformCom->SetScale(2.f, 2.f, 1.f);
 
 	pComponent = m_pBufCom = make_shared<CRcTex>(m_pGraphicDev);
 	m_pBufCom->ReadyBuffer();

@@ -73,12 +73,12 @@ public:
 	// 출혈 치료
 	void	BleedCure();
 
-private:
+protected:
 	virtual void			AddComponent();
 	virtual void			ClimbingTerrain();
 
 
-private:
+protected:
 	// Creature Common Component
 	// 본체 관련 Component
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
@@ -92,9 +92,9 @@ private:
 
 	// 예시) 내가 공격시 나오는 이펙트 출력, 상대는 피격 이펙트 출력
 
-private:
+protected:
 	STAT		m_tCommonStat;				// 스탯
-	_bool		m_bMyTurn = false;			// 자신의 턴 여부
+	_bool		m_bMyTurn = false;			// 자신의 턴 여부 
 
 	_bool		m_bHitted = false;			// 자신의 피격상태 여부
 	_bool		m_bEffectOn = false;		// 이펙트 여부
@@ -106,7 +106,7 @@ private:
 	_bool		m_bBleeding = false;			// 출혈여부
 	_int		m_bBleedDot[4] = { 0 };		// 턴마다 출혈 도트뎀
 
-private:
+protected:
 	virtual void	Free();
 };
 
