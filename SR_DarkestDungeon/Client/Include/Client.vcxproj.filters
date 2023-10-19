@@ -25,8 +25,14 @@
     <Filter Include="01. Scene\00. MainLogo">
       <UniqueIdentifier>{ab472b2f-3fb9-418b-8436-febb768cecd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\01. Terrain">
+      <UniqueIdentifier>{a0f3ecda-89d1-4243-a456-497a3a619a30}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. Object\00. Player">
       <UniqueIdentifier>{46805983-c3aa-4d76-af0c-35ea459267e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. DynamicCamera">
+      <UniqueIdentifier>{887b3477-da71-41b6-99ee-30cb4c0bd4ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\InteractionObj">
       <UniqueIdentifier>{08321268-5b8b-4899-be2c-39a82684fd51}</UniqueIdentifier>
@@ -57,6 +63,8 @@
     </Filter>
     <Filter Include="02. Object\01. Creature\Hero">
       <UniqueIdentifier>{e475954f-198d-44c4-814c-916f04ec042e}</UniqueIdentifier>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{58677ee1-7ce9-4037-b932-9ff789c6265b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +115,8 @@
     </ClInclude>
     <ClInclude Include="..\Header\Creature.h">
       <Filter>02. Object\01. Creature</Filter>
+    <ClInclude Include="..\Header\Skill.h">
+      <Filter>Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +158,8 @@
     </ClCompile>
     <ClCompile Include="..\Code\Creature.cpp">
       <Filter>02. Object\01. Creature</Filter>
+    <ClCompile Include="..\Code\Skill.cpp">
+      <Filter>Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

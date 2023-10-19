@@ -9,6 +9,7 @@ BEGIN(Engine)
 enum class EGameState {
 	PRCESS,
 	PAUSE,
+	LOCK,
 	ENUM_END
 };
 

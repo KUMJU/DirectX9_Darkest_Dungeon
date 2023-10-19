@@ -58,6 +58,7 @@ public:
 		m_vInfo[INFO_POS] += *pDir * fTimeDelta * fSpeed;
 	}
 
+
 private:
 
 	_vec3 m_vInfo[INFO_END];
