@@ -1,19 +1,15 @@
 #include "Export_Utility.h"
-inline shared_ptr<CComponent> Get_Component(const tstring* pLayerTag, const tstring* pObjTag, const tstring* pComponentTag, COMPONENTID eID)
-{
-
-
-    return nullptr;
-}
-inline void ChangeScene(shared_ptr<CScene> _pScene)
-{
-    CSceneMgr::GetInstance()->ChangeScene(_pScene);
-}
 
 inline shared_ptr<CComponent> Get_Component(const tstring& pLayerTag, const tstring& pObjTag, const tstring& pComponentTag, COMPONENTID eID)
 {
     return CSceneMgr::GetInstance()->GetComponenet(pLayerTag, pObjTag, pComponentTag, eID);
 }
+
+inline void ChangeScene(shared_ptr<CScene> _pScene)
+{
+    CSceneMgr::GetInstance()->ChangeScene(_pScene);
+}
+
 
 inline _int UpdateScene(const _float& fTimeDelta)
 {
@@ -58,7 +54,7 @@ inline void ReadyResourceMgr(LPDIRECT3DDEVICE9 _pGraphicDev)
     CResourceMgr::GetInstance()->ReadyResource(_pGraphicDev);
 }
 
-inline void CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType, const _tchar* _pPath, const _uint& _iCnt)
+inline void CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType, wstring _pPath, const _uint& _iCnt)
 {
     CResourceMgr::GetInstance()->CreateNewTexture(_KeyName, _eType, _pPath, _iCnt);
 }

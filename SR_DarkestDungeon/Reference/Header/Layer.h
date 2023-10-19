@@ -12,6 +12,7 @@ public:
 	virtual ~CLayer();
 
 public:
+	void				AwakeLayer();
 	HRESULT				ReadyLayer();
 	_int				UpdateLayer(const _float& fTimeDelta);
 	void				LateUpdateLayer();

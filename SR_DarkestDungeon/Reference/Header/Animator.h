@@ -34,11 +34,11 @@ public:
 	_bool CheckFinish() { return m_bFinishCount; }
 
 private:
-	vector<IDirect3DBaseTexture9*> m_vecTexture;
+	vector<IDirect3DBaseTexture9*>* m_vecTexture;
 
 private:
 
-	tagFrame* m_tAnimFrame;
+	tagFrame m_tAnimFrame;
 
 	_float m_fActTime= 0.f;
 	_bool m_bFinishCount = false;

@@ -17,11 +17,11 @@ void CResourceMgr::ReadyResource(LPDIRECT3DDEVICE9 _pGraphicDev)
 
 }
 
-HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType, const _tchar* _pPath, const _uint& _iCnt)
+HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType, wstring _pPath, const _uint& _iCnt)
 {
 	if (_eType >= TEXTUREID::TEX_END)
 		return E_FAIL;
-
+	
 	IDirect3DBaseTexture9* pTexture = nullptr;
 	vector<IDirect3DBaseTexture9*> vTempVec;
 	vTempVec.reserve(_iCnt);
@@ -29,8 +29,14 @@ HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType
 	for (_uint i = 0; i < _iCnt; ++i)
 	{
 		TCHAR		szFileName[128] = L"";
+		wstring strPathCopy = _pPath;
 
-		wsprintf(szFileName, _pPath, i);
+		if (i < 10 && 1 != _iCnt) {
+			size_t iSize = strPathCopy.find(L"%");
+			strPathCopy.insert(iSize, L"0");
+		}
+
+		wsprintf(szFileName, strPathCopy.c_str(), i);
 
 		switch (_eType)
 		{
@@ -57,37 +63,27 @@ HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType
 	return S_OK;
 }
 
-vector<IDirect3DBaseTexture9*> CResourceMgr::GetTexture(const tstring& _keyName, TEXTUREID _eType, vector<IDirect3DBaseTexture9*>& _vec)
+vector<IDirect3DBaseTexture9*>* CResourceMgr::GetTexture(const tstring& _keyName, TEXTUREID _eType)
 {
-	vector<IDirect3DBaseTexture9*> temp = {};
 
 	if (_eType == TEXTUREID::TEX_NORMAL) {
 		auto iter = m_TextureMap.find(_keyName);
 
 		if (iter == m_TextureMap.end())
-			return temp;
+			return nullptr;
 
-		for (auto it : iter->second) {
-			_vec.push_back(it);
-		}
-
-
-		return iter->second;
+		return &(iter->second);
 	}
 	else if (_eType == TEXTUREID::TEX_CUBE) {
 		auto iter = m_CubeMap.find(_keyName);
 
 		if (iter == m_CubeMap.end())
-			return temp;
+			return nullptr;
 
-		for (auto it : iter->second) {
-			_vec.push_back(it);
-		}
-
-		return iter->second;
+		return &(iter->second);
 	}
 
-	return temp;
+	return nullptr;
 }
 
 

@@ -12,22 +12,23 @@ CAnimator::~CAnimator()
 
 void CAnimator::SetAnimTexture()
 {
-    m_pGraphicDev->SetTexture(0, m_vecTexture[m_tAnimFrame->iCurrentFrame]);
+    m_pGraphicDev->SetTexture(0, (*m_vecTexture)[m_tAnimFrame.iCurrentFrame]);
 }
 
-_int CAnimator::UpdateComponent(const _float& fTimeDelta )
+_int CAnimator::UpdateComponent(const _float& fTimeDelta)
 {
-    if (m_vecTexture.size() == 0)
+    if (!m_vecTexture)
         return 0;
 
     m_bFinishCount = false;
     m_fActTime += fTimeDelta;
 
-    if (m_fActTime >= m_tAnimFrame->fTime) {
-        m_tAnimFrame->iCurrentFrame += 1;
-        
-        if (m_tAnimFrame->iMaxFrame <= m_tAnimFrame->iCurrentFrame) {
-            m_tAnimFrame->iCurrentFrame = 0;
+    if (m_fActTime >= m_tAnimFrame.fTime) {
+        m_tAnimFrame.iCurrentFrame += 1;
+        m_fActTime = 0.f;
+
+        if (m_tAnimFrame.iMaxFrame <= m_tAnimFrame.iCurrentFrame) {
+            m_tAnimFrame.iCurrentFrame = 0;
             m_bFinishCount = true;
         }
     }
@@ -44,16 +45,16 @@ void CAnimator::LateUpdateComponent()
 HRESULT CAnimator::SetAnimKey(const tstring& _keyName, float _fAnimTime)
 {
 
-    CResourceMgr::GetInstance()->GetTexture(_keyName, TEXTUREID::TEX_NORMAL, m_vecTexture);
+    m_vecTexture = CResourceMgr::GetInstance()->GetTexture(_keyName, TEXTUREID::TEX_NORMAL);
 
-    if (m_vecTexture.size() == 0) {
+    if (m_vecTexture == nullptr) {
         m_bEnable = false;
         return E_FAIL;
     }
 
-    m_tAnimFrame->iCurrentFrame = 0;
-    m_tAnimFrame->fTime = _fAnimTime;
-    m_tAnimFrame->iMaxFrame = m_vecTexture.size();
+    m_tAnimFrame.iCurrentFrame = 0;
+    m_tAnimFrame.fTime = _fAnimTime;
+    m_tAnimFrame.iMaxFrame = m_vecTexture->size();
 
     m_fActTime = 0.f;
 

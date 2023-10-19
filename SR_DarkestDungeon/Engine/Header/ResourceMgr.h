@@ -23,9 +23,9 @@ public:
 
 public:
 	//텍스쳐를 세팅해서 저장하는 함수, 큐브와 일반 텍스쳐 동일하게 사용
-	HRESULT CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType, const _tchar* _pPath, const _uint& _iCnt);
+	HRESULT CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType, wstring _pPath, const _uint& _iCnt);
 	//텍스쳐를 불러오는 함수
-	vector<IDirect3DBaseTexture9*> GetTexture(const tstring& _keyName, TEXTUREID _eType, vector<IDirect3DBaseTexture9*>& _vec);
+	vector<IDirect3DBaseTexture9*>* GetTexture(const tstring& _keyName, TEXTUREID _eType);
 
 public:
 	//씬 전환 이후 사용하지 않는 텍스쳐를 지우거나 전체를 날려버릴 때 사용

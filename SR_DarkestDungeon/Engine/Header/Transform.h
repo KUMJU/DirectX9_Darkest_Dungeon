@@ -53,6 +53,10 @@ public:
 	virtual			_int	UpdateComponent(const _float& fTimeDelta);
 	virtual			void	LateUpdateComponent();
 
+	void			MoveForward(const _vec3* pDir, const _float& fTimeDelta, const _float& fSpeed)
+	{
+		m_vInfo[INFO_POS] += *pDir * fTimeDelta * fSpeed;
+	}
 
 
 private:
