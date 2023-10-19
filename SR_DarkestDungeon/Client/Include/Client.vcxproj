@@ -155,7 +155,9 @@
     <ClInclude Include="..\Header\MainLogo.h" />
     <ClInclude Include="..\Header\pch.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Terrain.h" />
+    <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\Village.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
@@ -168,7 +170,9 @@
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainLogo.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
+    <ClCompile Include="..\Code\Wall.cpp" />
     <ClCompile Include="..\Code\Village.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">

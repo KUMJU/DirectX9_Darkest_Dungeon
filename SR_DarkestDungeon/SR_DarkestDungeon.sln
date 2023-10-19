@@ -23,7 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Header", "02. Header", 
 		Engine\Header\Engine_Macro.h = Engine\Header\Engine_Macro.h
 		Engine\Header\Engine_Struct.h = Engine\Header\Engine_Struct.h
 		Engine\Header\Engine_Typedef.h = Engine\Header\Engine_Typedef.h
-		Engine\Header\Enums.h = Engine\Header\Enums.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "Engine\Utility\Include\Utility.vcxproj", "{594C97D9-D7DA-4873-8547-A8C4FC2ED417}"

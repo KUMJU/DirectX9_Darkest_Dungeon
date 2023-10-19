@@ -6,6 +6,7 @@
 #include"ResourceMgr.h"
 
 #include"TerrainTex.h"
+#include"CubeTex.h"
 #include"Texture.h"
 #include"RcTex.h"
 #include "Transform.h"

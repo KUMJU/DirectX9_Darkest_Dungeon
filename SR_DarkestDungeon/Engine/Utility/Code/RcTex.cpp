@@ -1,17 +1,12 @@
 #include "RcTex.h"
 
-CRcTex::CRcTex()
-	:CVIBuffer()
+CRcTex::CRcTex(const CRcTex& rhs)
+	: CVIBuffer(rhs)
 {
 }
 
 CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CVIBuffer(pGraphicDev)
-{
-}
-
-CRcTex::CRcTex(const CRcTex& rhs)
-	:CVIBuffer(rhs)
+	: CVIBuffer(pGraphicDev)
 {
 }
 

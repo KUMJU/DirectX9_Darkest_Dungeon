@@ -25,6 +25,8 @@ public:
 	const _vec3* GetScale() { return &m_vScale; }
 	const _matrix* GetWorld() { return &m_matWorld; }
 
+	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
+
 public:
 
 	void SetPosition(const _float& _fX, const _float& _fY, const _float& _fZ)

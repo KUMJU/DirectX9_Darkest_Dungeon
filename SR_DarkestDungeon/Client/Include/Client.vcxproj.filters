@@ -40,6 +40,12 @@
     <Filter Include="01. Scene\Village">
       <UniqueIdentifier>{b17f6d19-1214-48ba-abb9-3f79da233822}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\03. SkyBox">
+      <UniqueIdentifier>{e71f3ab5-c266-4e98-afcf-9deda15e9546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\04. Wall">
+      <UniqueIdentifier>{c67da2c7-2884-4053-ba85-ba6da0e784dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -72,6 +78,12 @@
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\00. Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\SkyBox.h">
+      <Filter>02. Object\03. SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Wall.h">
+      <Filter>02. Object\04. Wall</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\InteractionObj.h">
       <Filter>02. Object\InteractionObj</Filter>
     </ClInclude>
@@ -100,6 +112,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkyBox.cpp">
+      <Filter>02. Object\03. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Wall.cpp">
+      <Filter>02. Object\04. Wall</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InteractionObj.cpp">
       <Filter>02. Object\InteractionObj</Filter>

@@ -38,13 +38,13 @@ void CTerrain::LateUpdateGameObject()
 
 void CTerrain::RenderGameObject()
 {
-//	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	m_pTextureCom->SetTextureKey(L"Weald_Floor_Texture", TEX_NORMAL);
+	m_pTextureCom->SetTextureKey(L"Com_Weald_FloorTexture", TEX_NORMAL);
 	m_pTextureCom->SetTexture(0);
 
 	m_pBufferCom->RenderBuffer();
@@ -61,16 +61,17 @@ void CTerrain::AddComponent()
 
 	pComponent = m_pBufferCom = make_shared<CTerrainTex>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Terrain AddComponent Failed");
-	dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV,L"../Bin/Resource/Image/Terrain/Height.bmp");
-
-	m_mapComponent[ID_STATIC].insert({ L"Weald_Floor_Texture", pComponent });
+	dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV,L"../Bin/Resource/Image/Height_Terrain/TestHeight.bmp");
+	m_mapComponent[ID_STATIC].insert({ L"Com_Weald_FloorTexture", pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Texture AddComponent Failed");
-
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
-
+	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
+	NULL_CHECK_MSG(pComponent, L"Transform AddComponent Failed");
+	//m_pTransformCom->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 }
 
 void CTerrain::KeyInput(const _float& fTimeDelta)

@@ -117,7 +117,9 @@
     <ClCompile Include="..\Code\Animator.cpp">
       <Filter>03. Component\06. Animator</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CubeTex.cpp" />
+    <ClCompile Include="..\Code\CubeTex.cpp">
+      <Filter>03. Component\04. VIBuffer\02. CubeTex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\SceneMgr.h">
@@ -175,7 +177,9 @@
     <ClInclude Include="..\..\Header\Animator.h">
       <Filter>03. Component\06. Animator</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\CubeTex.h" />
+    <ClInclude Include="..\..\Header\CubeTex.h">
+      <Filter>03. Component\04. VIBuffer\02. CubeTex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Utility.rc" />
