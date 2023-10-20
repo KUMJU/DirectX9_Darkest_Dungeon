@@ -52,6 +52,43 @@ void CMainLogo::RenderScene()
 {
 }
 
+void CMainLogo::FormBattlePosition(vector<shared_ptr<CGameObject>> _pHeroes, vector<shared_ptr<CGameObject>> _pMonsters, _float _fAngle, _vec3 _vOrigin)
+{
+	// 좌측
+	// 3열
+	dynamic_pointer_cast<CCreature>(_pHeroes[2])->SetPos(_vec3(_vOrigin.x - 4.f, 3.f, _vOrigin.y + 8.f));
+	dynamic_pointer_cast<CCreature>(_pHeroes[2])->SetAngle(_vec3(0.f, _fAngle, 0.f));
+
+	// 4열
+	dynamic_pointer_cast<CCreature>(_pHeroes[3])->SetPos(_vec3(_vOrigin.x - 6.f, 3.f, _vOrigin.y + 6.f));
+	dynamic_pointer_cast<CCreature>(_pHeroes[3])->SetAngle(_vec3(0.f, _fAngle, 0.f));
+
+	// 1열
+	dynamic_pointer_cast<CCreature>(_pHeroes[0])->SetPos(_vec3(_vOrigin.x + 4.f, 3.f, _vOrigin.y + 4.f));
+	dynamic_pointer_cast<CCreature>(_pHeroes[0])->SetAngle(_vec3(0.f, _fAngle, 0.f));
+
+	// 2열
+	dynamic_pointer_cast<CCreature>(_pHeroes[1])->SetPos(_vec3(_vOrigin.x + 2.f, 3.f, _vOrigin.y + 2.f));
+	dynamic_pointer_cast<CCreature>(_pHeroes[1])->SetAngle(_vec3(0.f, _fAngle, 0.f));
+
+	// 우측
+	// 3열
+	dynamic_pointer_cast<CCreature>(_pMonsters[2])->SetPos(_vec3(_vOrigin.x + 24.f, 3.f, _vOrigin.y + 8.f));
+	dynamic_pointer_cast<CCreature>(_pMonsters[2])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
+
+	// 4열
+	dynamic_pointer_cast<CCreature>(_pMonsters[3])->SetPos(_vec3(_vOrigin.x + 26.f, 3.f, _vOrigin.y + 6.f));
+	dynamic_pointer_cast<CCreature>(_pMonsters[3])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
+
+	// 1열
+	dynamic_pointer_cast<CCreature>(_pMonsters[0])->SetPos(_vec3(_vOrigin.x + 16.f, 3.f, _vOrigin.y + 4.f));
+	dynamic_pointer_cast<CCreature>(_pMonsters[0])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
+
+	// 2열
+	dynamic_pointer_cast<CCreature>(_pMonsters[1])->SetPos(_vec3(_vOrigin.x + 18.f, 3.f, _vOrigin.y + 2.f));
+	dynamic_pointer_cast<CCreature>(_pMonsters[1])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
+}
+
 HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
@@ -202,53 +239,36 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	//m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
 	// 좌측
-	// 3열
-	shared_ptr<CGameObject> m_pBrigandCutthroat_3 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat_3->SetPos(_vec3(WALLSIZEX + PATHSIZEX - 4.f, 3.f, WALLSIZEX * 14.f + 8.f));
-	m_pBrigandCutthroat_3->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_3);
-
-	// 4열
-	shared_ptr<CGameObject> m_pBrigandCutthroat_4 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat_4->SetPos(_vec3(WALLSIZEX + PATHSIZEX - 6.f, 3.f, WALLSIZEX * 14.f + 6.f));
-	m_pBrigandCutthroat_4->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_4);
-
-	// 1열
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat_1->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 4.f, 3.f, WALLSIZEX * 14.f + 4.f));
-	m_pBrigandCutthroat_1->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_1);
-
-	// 2열
 	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat_2->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 2.f, 3.f, WALLSIZEX * 14.f + 2.f));
-	m_pBrigandCutthroat_2->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
-
-	// 우측
-	// 3열
-	shared_ptr<CGameObject> m_pBrigandCutthroat_7 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat_7->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 24.f, 3.f, WALLSIZEX * 14.f + 8.f));
-	m_pBrigandCutthroat_7->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_7);
-
-	// 4열
-	shared_ptr<CGameObject> m_pBrigandCutthroat_8 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat_8->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 26.f, 3.f, WALLSIZEX * 14.f + 6.f));
-	m_pBrigandCutthroat_8->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_8);
-
-	// 1열
+	shared_ptr<CGameObject> m_pBrigandCutthroat_3 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandCutthroat_4 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_5 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat_5->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 16.f, 3.f, WALLSIZEX * 14.f + 4.f));
-	m_pBrigandCutthroat_5->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_5);
-
-	// 2열
 	shared_ptr<CGameObject> m_pBrigandCutthroat_6 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat_6->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 18.f, 3.f, WALLSIZEX * 14.f + 2.f));
-	m_pBrigandCutthroat_6->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	shared_ptr<CGameObject> m_pBrigandCutthroat_7 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandCutthroat_8 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+
+	vector<shared_ptr<CGameObject>> vHeroes;
+	vector<shared_ptr<CGameObject>> vMonsters;
+	vHeroes.push_back(m_pBrigandCutthroat_1);
+	vHeroes.push_back(m_pBrigandCutthroat_2);
+	vHeroes.push_back(m_pBrigandCutthroat_3);
+	vHeroes.push_back(m_pBrigandCutthroat_4);
+	vMonsters.push_back(m_pBrigandCutthroat_5);
+	vMonsters.push_back(m_pBrigandCutthroat_6);
+	vMonsters.push_back(m_pBrigandCutthroat_7);
+	vMonsters.push_back(m_pBrigandCutthroat_8);
+
+	FormBattlePosition(vHeroes, vMonsters, -PI / 2.f, _vec3(WALLSIZEX + PATHSIZEX, WALLSIZEX * 14.f, 0.f));
+	
+	// z축 기준 뒤에거부터
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_3);
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_4);
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_1);
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_7);
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_8);
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_5);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_6);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
