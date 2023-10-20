@@ -29,6 +29,7 @@ CTransform::~CTransform()
 HRESULT CTransform::ReadyTransform()
 {
 	D3DXMatrixIdentity(&m_matWorld);
+	m_vAngle = { 0.f , 0.f ,0.f };
 
 	for (size_t i = 0; i < INFO_END; ++i)
 		memcpy(&m_vInfo[i], &m_matWorld.m[i][0], sizeof(_vec3));
