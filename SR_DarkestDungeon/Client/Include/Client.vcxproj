@@ -149,7 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\CBrigandCutthroat.h" />
+    <ClInclude Include="..\Header\BrigandCutthroat.h" />
     <ClInclude Include="..\Header\Creature.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\InteractionObj.h" />
@@ -170,7 +170,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\CBrigandCutthroat.cpp" />
+    <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\InteractionObj.cpp" />

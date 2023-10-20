@@ -46,7 +46,7 @@
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. Object\Creature\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CBrigandCutthroat.cpp">
+    <ClCompile Include="..\Code\BrigandCutthroat.cpp">
       <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,7 +105,7 @@
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02. Object\Creature\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CBrigandCutthroat.h">
+    <ClInclude Include="..\Header\BrigandCutthroat.h">
       <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,10 +28,18 @@ HRESULT CCreature::ReadyGameObject()
 
 _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 {
-	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 
-	return _int();
+	//ºôº¸µå ½ÃÀÛ
+	_matrix matWorld;
+	
+	matWorld = *m_pTransformCom->GetWorld();
+	SetBillBoard(matWorld);
+	m_pTransformCom->SetWorld(&matWorld);
+
+	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
+
+	return iExit;
 }
 
 void CCreature::LateUpdateGameObject()

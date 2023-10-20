@@ -61,7 +61,7 @@ void CTerrain::AddComponent()
 
 	pComponent = m_pBufferCom = make_shared<CTerrainTex>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Terrain AddComponent Failed");
-	dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV,L"../Bin/Resource/Image/Height_Terrain/TestHeight.bmp");
+	dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV,L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp");
 	m_mapComponent[ID_STATIC].insert({ L"Com_Weald_FloorTexture", pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);

@@ -73,7 +73,7 @@ void CGameObject::SetBillBoard(_matrix& _matWorld)
 	matBill._33 = matView._33;
 	D3DXMatrixInverse(&matBill, 0, &matBill);
 
-	_matWorld = (_matWorld * matBill);
+	_matWorld = (matBill * _matWorld);
 }
 
 std::shared_ptr<CComponent> CGameObject::GetComponent(const tstring& _strKeyName, COMPONENTID _eComID)

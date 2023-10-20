@@ -25,9 +25,9 @@ HRESULT CMonster::ReadyGameObject()
 
 _int CMonster::UpdateGameObject(const _float& fTimeDelta)
 {
-	__super::UpdateGameObject(fTimeDelta);
+	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 	
-	return _int();
+	return iExit;
 }
 
 void CMonster::LateUpdateGameObject()

@@ -9,8 +9,8 @@ namespace Engine
 
 #define	WINCY		720
 
-#define	VTXCNTX		129
-#define VTXCNTZ		129
+#define	VTXCNTX		200
+#define VTXCNTZ		200
 #define VTXITV		1
 
 #ifndef			MSG_BOX

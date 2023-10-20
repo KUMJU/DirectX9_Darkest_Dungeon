@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CBrigandCutthroat.h"
+#include "BrigandCutthroat.h"
 #include"Export_Utility.h"
 
 CBrigandCutthroat::CBrigandCutthroat(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -31,9 +31,11 @@ HRESULT CBrigandCutthroat::ReadyGameObject()
 
 _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 {
-	__super::UpdateGameObject(fTimeDelta);
+	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
-	_vec3		vDir;
+	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
+
+	//³¡
 	
 	if (GetAsyncKeyState('1') & 0x8000) {
 		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.02f);
@@ -87,7 +89,7 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 	//}
 
 
-	return _int();
+	return iExit;
 }
 
 void CBrigandCutthroat::LateUpdateGameObject()

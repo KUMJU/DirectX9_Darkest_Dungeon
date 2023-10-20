@@ -27,8 +27,16 @@ HRESULT CPlayer::ReadyGameObject()
 _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 {
 	KeyInput(fTimeDelta);
-	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
+
+	////ºôº¸µå ½ÃÀÛ
+	//_matrix matWorld;
+	//
+	//matWorld = *m_pTransformCom->GetWorld();
+	//SetBillBoard(matWorld);
+	//m_pTransformCom->SetWorld(&matWorld);
+
+	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
 	return iExit;
 }
