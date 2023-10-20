@@ -149,11 +149,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CBrigandCutthroat.h" />
     <ClInclude Include="..\Header\Creature.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\InteractionObj.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MainLogo.h" />
+    <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\pch.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\Skill.h" />
@@ -168,11 +170,13 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CBrigandCutthroat.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\InteractionObj.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainLogo.cpp" />
+    <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Skill.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />

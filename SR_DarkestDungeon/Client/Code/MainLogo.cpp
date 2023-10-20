@@ -9,6 +9,8 @@
 #include"Export_Utility.h"
 #include"StaticCamera.h"
 
+#include "CBrigandCutthroat.h"
+
 CMainLogo::CMainLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -194,8 +196,20 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+	//shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
+	//m_pPlayer->SetPos(_vec3(WALLSIZEX + PATHSIZEX, 3.f, WALLSIZEX * 1.f));
+	//m_pPlayer->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
+	//m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+
+	shared_ptr<CGameObject> m_pBrigandCutthroat = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat->SetPos(_vec3(WALLSIZEX + PATHSIZEX, 3.f, WALLSIZEX * 15.f));
+	m_pBrigandCutthroat->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat);
+
+	shared_ptr<CGameObject> m_pBrigandCutthroat2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat2->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 4.f, 3.f, WALLSIZEX * 15.f - 2.f));
+	m_pBrigandCutthroat2->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat2);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

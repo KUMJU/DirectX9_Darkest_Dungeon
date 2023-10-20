@@ -43,6 +43,12 @@
     <ClCompile Include="..\Code\Skill.cpp">
       <Filter>Skill</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. Object\Creature\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBrigandCutthroat.cpp">
+      <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -95,6 +101,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\Skill.h">
       <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Monster.h">
+      <Filter>02. Object\Creature\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBrigandCutthroat.h">
+      <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +171,12 @@
     </Filter>
     <Filter Include="Skill">
       <UniqueIdentifier>{37ff8b03-d58c-4724-b714-eefe773245b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Creature\Monster">
+      <UniqueIdentifier>{72bdd547-9afa-47e1-8ae5-f04608e96388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Creature\Monster\Weald_Monster">
+      <UniqueIdentifier>{6608ba19-6075-4019-afa0-21c77a3cef7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

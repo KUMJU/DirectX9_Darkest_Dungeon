@@ -49,36 +49,38 @@ public:
 	void	SetTurn(_bool _bTurn) { m_bMyTurn = _bTurn; }
 	void	SetHitted(_bool _bHitted) { m_bHitted = _bHitted; }
 	void	SetEffectOn(_bool _bEffectOn) { m_bEffectOn = _bEffectOn; }
+	void	SetBlight(_bool _bBlight) { m_bBlighting = true; }
+	void	SetBleed(_bool _bBleed) { m_bBleeding = true; }
 
-public:
+protected:
 	// 턴 시작시
-	void	StartTurn();
+	virtual void	StartTurn();
 
 	// 다른 크리처 공격시
-	void	AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE,
+	virtual void	AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE,
 		_int _iDotDamage = 0, _int _iTurn = 0);
 
 	// 공격 종료시
-	void	EndAttack(CCreature* _pCreature);
+	virtual void	EndAttack(CCreature* _pCreature);
 
 	// 중독 공격
-	void	BlightAttack(_int _iBlightDmg, _int _iTurn);
+	virtual void	BlightAttack(_int _iBlightDmg, _int _iTurn);
 
 	// 출혈 공격
-	void	BleedAttack(_int _iBleedDmg, _int _iTurn);
+	virtual void	BleedAttack(_int _iBleedDmg, _int _iTurn);
 
 	// 중독 치료
-	void	BlightCure();
+	virtual void	BlightCure();
 
 	// 출혈 치료
-	void	BleedCure();
+	virtual void	BleedCure();
 
-private:
+protected:
 	virtual void			AddComponent();
 	virtual void			ClimbingTerrain();
 
 
-private:
+protected:
 	// Creature Common Component
 	// 본체 관련 Component
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
@@ -92,9 +94,9 @@ private:
 
 	// 예시) 내가 공격시 나오는 이펙트 출력, 상대는 피격 이펙트 출력
 
-private:
+protected:
 	STAT		m_tCommonStat;				// 스탯
-	_bool		m_bMyTurn = false;			// 자신의 턴 여부
+	_bool		m_bMyTurn = false;			// 자신의 턴 여부 
 
 	_bool		m_bHitted = false;			// 자신의 피격상태 여부
 	_bool		m_bEffectOn = false;		// 이펙트 여부
@@ -106,7 +108,7 @@ private:
 	_bool		m_bBleeding = false;			// 출혈여부
 	_int		m_bBleedDot[4] = { 0 };		// 턴마다 출혈 도트뎀
 
-private:
+protected:
 	virtual void	Free();
 };
 
