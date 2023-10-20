@@ -45,8 +45,9 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 	if (GetAsyncKeyState('2') & 0x8000) {
 		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack1", 0.02f);
 		m_pTransformCom->SetScale(2.f * 427.f / 232.f, 2.f * 268.f / 311.f, 1.f);
+		//m_pTransformCom->SetScaleRatio(_vec3(2.f, 2.f, 1.f), _vec2(232.f, 311.f), _vec2(427.f, 268.f));
 	}
-
+	
 	if (GetAsyncKeyState('3') & 0x8000) {
 		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack2", 0.02f);
 		m_pTransformCom->SetScale(2.f * 232.f / 232.f, 2.f * 365.f / 311.f, 1.f);
@@ -122,12 +123,12 @@ void CBrigandCutthroat::StartTurn()
 	__super::StartTurn();
 }
 
-void CBrigandCutthroat::AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
+void CBrigandCutthroat::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
 {
 	__super::AttackCreature(_pCreature, _fSkillRatio, _eAttackTYPE, _iDotDamage, _iTurn);
 }
 
-void CBrigandCutthroat::EndAttack(CCreature* _pCreature)
+void CBrigandCutthroat::EndAttack(shared_ptr<CGameObject> _pCreature)
 {
 	__super::EndAttack(_pCreature);
 }

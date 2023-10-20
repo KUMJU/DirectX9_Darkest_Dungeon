@@ -19,11 +19,11 @@ protected:
 	virtual void	StartTurn();
 
 	// 다른 크리처 공격시
-	virtual void	AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE,
+	virtual void	AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE,
 		_int _iDotDamage = 0, _int _iTurn = 0);
 
 	// 공격 종료시
-	virtual void	EndAttack(CCreature* _pCreature);
+	virtual void	EndAttack(shared_ptr<CGameObject> _pCreature);
 
 	// 중독 공격
 	virtual void	BlightAttack(_int _iBlightDmg, _int _iTurn);

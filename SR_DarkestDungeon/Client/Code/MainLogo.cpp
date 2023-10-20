@@ -79,7 +79,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f, 2.5f, WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f, WALLSIZEUPY, WALLSIZEX / 2.f + WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -87,7 +87,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 2.f, 2.5f, WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 2.f, WALLSIZEUPY, WALLSIZEX / 2.f + WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -95,7 +95,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 1; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i, 2.5f, WALLSIZEX * 2.f));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 2.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -103,7 +103,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 1; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 1.5f + WALLSIZEX * i, 2.5f, WALLSIZEX * 2.f));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 1.5f + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 2.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -112,7 +112,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 10; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + WALLSIZEX * 1.f, 2.5f, WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + WALLSIZEX * 1.f, WALLSIZEUPY, WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -120,7 +120,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 10; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 1.f, 2.5f, WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 1.f, WALLSIZEUPY, WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -129,7 +129,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 4; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 1.f, 2.5f, WALLSIZEX / 2.f + WALLSIZEX * 12.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 1.f, WALLSIZEUPY, WALLSIZEX / 2.f + WALLSIZEX * 12.f + WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -137,7 +137,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 4; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 3.f + PATHSIZEX + WALLSIZEX * 2.f, 2.5f, WALLSIZEX / 2.f + WALLSIZEX * 12.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 3.f + PATHSIZEX + WALLSIZEX * 2.f, WALLSIZEUPY, WALLSIZEX / 2.f + WALLSIZEX * 12.f + WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -145,7 +145,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 1.5f + WALLSIZEX * i, 2.5f, WALLSIZEX * 12.f));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 1.5f + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 12.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -153,7 +153,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 3.5f + PATHSIZEX + WALLSIZEX * i, 2.5f, WALLSIZEX * 12.f));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 3.5f + PATHSIZEX + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 12.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -161,7 +161,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 6; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 1.5f + WALLSIZEX * i, 2.5f, WALLSIZEX * 16.f));
+		m_pWall->SetPos(_vec3(WALLSIZEX * 1.5f + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 16.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -202,18 +202,54 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	//m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
 	// 좌측
+	// 3열
+	shared_ptr<CGameObject> m_pBrigandCutthroat_3 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat_3->SetPos(_vec3(WALLSIZEX + PATHSIZEX - 4.f, 3.f, WALLSIZEX * 14.f + 8.f));
+	m_pBrigandCutthroat_3->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_3);
+
+	// 4열
+	shared_ptr<CGameObject> m_pBrigandCutthroat_4 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat_4->SetPos(_vec3(WALLSIZEX + PATHSIZEX - 6.f, 3.f, WALLSIZEX * 14.f + 6.f));
+	m_pBrigandCutthroat_4->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_4);
+
 	// 1열
-	shared_ptr<CGameObject> m_pBrigandCutthroat = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 4.f, 3.f, WALLSIZEX * 14.f + 4.f));
-	m_pBrigandCutthroat->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat);
+	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat_1->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 4.f, 3.f, WALLSIZEX * 14.f + 4.f));
+	m_pBrigandCutthroat_1->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_1);
+
+	// 2열
+	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat_2->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 2.f, 3.f, WALLSIZEX * 14.f + 2.f));
+	m_pBrigandCutthroat_2->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
 
 	// 우측
+	// 3열
+	shared_ptr<CGameObject> m_pBrigandCutthroat_7 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat_7->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 24.f, 3.f, WALLSIZEX * 14.f + 8.f));
+	m_pBrigandCutthroat_7->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_7);
+
+	// 4열
+	shared_ptr<CGameObject> m_pBrigandCutthroat_8 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat_8->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 26.f, 3.f, WALLSIZEX * 14.f + 6.f));
+	m_pBrigandCutthroat_8->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_8);
+
 	// 1열
-	shared_ptr<CGameObject> m_pBrigandCutthroat5 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	m_pBrigandCutthroat5->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 16.f, 3.f, WALLSIZEX * 14.f + 4.f));
-	m_pBrigandCutthroat5->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat5);
+	shared_ptr<CGameObject> m_pBrigandCutthroat_5 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat_5->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 16.f, 3.f, WALLSIZEX * 14.f + 4.f));
+	m_pBrigandCutthroat_5->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_5);
+
+	// 2열
+	shared_ptr<CGameObject> m_pBrigandCutthroat_6 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	m_pBrigandCutthroat_6->SetPos(_vec3(WALLSIZEX + PATHSIZEX + 18.f, 3.f, WALLSIZEX * 14.f + 2.f));
+	m_pBrigandCutthroat_6->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_6);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

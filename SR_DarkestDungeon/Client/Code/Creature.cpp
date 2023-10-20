@@ -64,42 +64,42 @@ void CCreature::StartTurn()
 	m_bBleedDot[3] = 0;
 }
 
-void CCreature::AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
+void CCreature::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
 {
-	if (!_pCreature) return;
+	if (!dynamic_pointer_cast<CCreature>(_pCreature)) return;
 
 	switch (_eAttackTYPE)
 	{
 	case ATTACKTYPE::ATTACK_NORMAL:
 		break;
 	case ATTACKTYPE::ATTACK_BLIGHT:
-		_pCreature->BlightAttack(_iDotDamage, _iTurn);
-		_pCreature->SetBlight(true);
+		dynamic_pointer_cast<CCreature>(_pCreature)->BlightAttack(_iDotDamage, _iTurn);
+		dynamic_pointer_cast<CCreature>(_pCreature)->SetBlight(true);
 		break;
 	case ATTACKTYPE::ATTACK_BLEED:
-		_pCreature->BleedAttack(_iDotDamage, _iTurn);
-		_pCreature->SetBleed(true);
+		dynamic_pointer_cast<CCreature>(_pCreature)->BleedAttack(_iDotDamage, _iTurn);
+		dynamic_pointer_cast<CCreature>(_pCreature)->SetBleed(true);
 		break;
 	case ATTACKTYPE::ATTACK_STRESS:
 		break;
 	}
 
 	// 상대
-	_pCreature->m_tCommonStat.iHp -= m_tCommonStat.iAttackPower * _fSkillRatio;
-	_pCreature->SetHitted(true);
-	_pCreature->SetEffectOn(true);
+	dynamic_pointer_cast<CCreature>(_pCreature)->m_tCommonStat.iHp -= m_tCommonStat.iAttackPower * _fSkillRatio;
+	dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(true);
+	dynamic_pointer_cast<CCreature>(_pCreature)->SetEffectOn(true);
 
 	// 나
 	m_bEffectOn = true;
 }
 
-void CCreature::EndAttack(CCreature* _pCreature)
+void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)
 {
-	if (!_pCreature) return;
+	if (!dynamic_pointer_cast<CCreature>(_pCreature)) return;
 
 	// 상대
-	_pCreature->SetHitted(false);
-	_pCreature->SetEffectOn(false);
+	dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(false);
+	dynamic_pointer_cast<CCreature>(_pCreature)->SetEffectOn(false);
 
 	// 나
 	m_bEffectOn = false;
