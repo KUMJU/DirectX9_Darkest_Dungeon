@@ -8,6 +8,11 @@ CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
+CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName)
+	: Engine::CGameObject(pGraphicDev), m_strKeyName(_KeyName)
+{
+}
+
 CTerrain::CTerrain(const CTerrain& rhs)
 	: Engine::CGameObject(rhs)
 
@@ -44,7 +49,7 @@ void CTerrain::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	m_pTextureCom->SetTextureKey(L"Com_Weald_FloorTexture", TEX_NORMAL);
+	m_pTextureCom->SetTextureKey(m_strKeyName, TEX_NORMAL);
 	m_pTextureCom->SetTexture(0);
 
 	m_pBufferCom->RenderBuffer();

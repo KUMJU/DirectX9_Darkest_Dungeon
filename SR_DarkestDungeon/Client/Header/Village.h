@@ -17,9 +17,9 @@ public:
 private:
 
 	HRESULT				Ready_Layer_Environment(tstring pLayerTag);
-	HRESULT				Ready_Layer_SkyBox(const tstring* pLayerTag);
-	HRESULT				Ready_Layer_GameObject(const tstring* pLayerTag);
-	HRESULT				Ready_Layer_UI(const tstring* pLayerTag);
+	HRESULT				Ready_Layer_SkyBox(tstring pLayerTag);
+	HRESULT				Ready_Layer_GameObject(tstring pLayerTag);
+	HRESULT				Ready_Layer_UI(tstring pLayerTag);
 
 };
 

@@ -63,7 +63,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	Engine::CreateNewTexture(L"Com_Weald_FloorTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/forest_Tiles.png", 1);
 
-	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Weald_FloorTexture");
 	m_pLayer->CreateGameObject(L"OBJ_Terrain", m_pTerrain);
 
 	// Wall
@@ -181,7 +181,7 @@ HRESULT CMainLogo::Ready_Layer_SkyBox(tstring pLayerTag)
 	Engine::CreateNewTexture(L"Com_Weald_SkyBoxTexture", TEX_CUBE,
 		L"../Bin/Resource/Image/SkyBox/WealdSkyBox.dds", 1);
 
-	shared_ptr<CGameObject> m_pSkyBox = make_shared<CSkyBox>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pSkyBox = make_shared<CSkyBox>(m_pGraphicDev, L"Com_Weald_SkyBoxTexture");
 	m_pLayer->CreateGameObject(L"OBJ_Weald_SkyBox", m_pSkyBox);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

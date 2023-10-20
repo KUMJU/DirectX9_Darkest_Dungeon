@@ -7,6 +7,11 @@ CSkyBox::CSkyBox(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
+CSkyBox::CSkyBox(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _keyName)
+	: Engine::CGameObject(pGraphicDev), m_strKeyName(_keyName)
+{
+}
+
 CSkyBox::CSkyBox(const CSkyBox& rhs)
 	: Engine::CGameObject(rhs)
 {
@@ -46,7 +51,7 @@ void CSkyBox::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pTextureCom->SetTextureKey(L"Com_Weald_SkyBoxTexture", TEX_CUBE);
+	m_pTextureCom->SetTextureKey(m_strKeyName, TEX_CUBE);
 	m_pTextureCom->SetTexture(0);
 
 	dynamic_pointer_cast<CCubeTex>(m_pBufferCom)->RenderBuffer();
