@@ -23,7 +23,7 @@ private:
 
 public:
 	EGameState GetGameState() { return m_eCurrentState; }
-	void SetGameState(EGameState _state) { m_eCurrentState = _state; }
+	void SetGameState(EGameState _state);
 
 public:
 	shared_ptr<CGameObject> GetPlayer() { return m_pPlayer; }

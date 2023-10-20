@@ -22,9 +22,9 @@ bld/
 [Oo]bj/
 
 ## Resource
-
-Bin/
+Bin/**
 !Bin/Resource/
+!Bin/Resource/Image/
 
 # Visual Studio 2015 cache/options directory
 .vs/

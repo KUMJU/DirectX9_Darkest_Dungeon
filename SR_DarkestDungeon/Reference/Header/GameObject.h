@@ -31,7 +31,7 @@ public:
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
 	void	SetBillBoard(_matrix& _matWorld);
-
+	void SetLock(_bool _bLock) { m_bLock = _bLock; }
 
 	std::shared_ptr<CComponent> GetComponent(const tstring& _strKeyName, COMPONENTID _eComID);
 
@@ -50,6 +50,8 @@ protected:
 
 	_vec3 m_vPos = _vec3{ 0.f, 0.f, 0.f };
 	_vec3 m_vAngle = _vec3{ 0.f, 0.f, 0.f };
+
+	_bool m_bLock = false;
 
 protected:
 	map<tstring, std::shared_ptr<CComponent>> m_mapComponent[ID_END];

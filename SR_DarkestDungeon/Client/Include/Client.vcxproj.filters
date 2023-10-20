@@ -43,11 +43,14 @@
     <ClCompile Include="..\Code\Skill.cpp">
       <Filter>Skill</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. Object\Creature\Monster</Filter>
+    <ClCompile Include="..\Code\Door.cpp">
+      <Filter>02. Object\InteractionObj\00. Door</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CBrigandCutthroat.cpp">
-      <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
+    <ClCompile Include="..\Code\Hero.cpp">
+      <Filter>02. Object\Creature\Hero</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Vestal.cpp">
+      <Filter>02. Object\Creature\Hero\00. Vestal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,11 +105,17 @@
     <ClInclude Include="..\Header\Skill.h">
       <Filter>Skill</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Monster.h">
-      <Filter>02. Object\Creature\Monster</Filter>
+    <ClInclude Include="..\Header\Door.h">
+      <Filter>02. Object\InteractionObj\00. Door</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CBrigandCutthroat.h">
-      <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
+    <ClInclude Include="Enums.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Hero.h">
+      <Filter>02. Object\Creature\Hero</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Vestal.h">
+      <Filter>02. Object\Creature\Hero\00. Vestal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -172,11 +181,14 @@
     <Filter Include="Skill">
       <UniqueIdentifier>{37ff8b03-d58c-4724-b714-eefe773245b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Creature\Monster">
-      <UniqueIdentifier>{72bdd547-9afa-47e1-8ae5-f04608e96388}</UniqueIdentifier>
+    <Filter Include="02. Object\Creature\Hero">
+      <UniqueIdentifier>{fc14569d-4b33-47e3-aab2-c6804c57a525}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Creature\Monster\Weald_Monster">
-      <UniqueIdentifier>{6608ba19-6075-4019-afa0-21c77a3cef7a}</UniqueIdentifier>
+    <Filter Include="02. Object\InteractionObj\00. Door">
+      <UniqueIdentifier>{0bc8f06c-a953-43aa-ac07-f46704c155a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Creature\Hero\00. Vestal">
+      <UniqueIdentifier>{b23187ec-0121-4511-9a96-edf733bb14b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

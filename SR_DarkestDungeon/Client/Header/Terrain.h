@@ -15,6 +15,7 @@ class CTerrain : public CGameObject
 {
 public :
 	CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
+	CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName);
 	CTerrain(const CTerrain& rhs);
 	virtual ~CTerrain();
 
@@ -35,4 +36,6 @@ private:
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
 
 	_float		m_fSpeed = 10.f;
+
+	tstring		m_strKeyName;
 };

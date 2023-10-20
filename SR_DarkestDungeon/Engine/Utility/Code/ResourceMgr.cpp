@@ -25,7 +25,7 @@ HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType
 	IDirect3DBaseTexture9* pTexture = nullptr;
 	vector<IDirect3DBaseTexture9*> vTempVec;
 	vTempVec.reserve(_iCnt);
-
+	
 	for (_uint i = 0; i < _iCnt; ++i)
 	{
 		TCHAR		szFileName[128] = L"";

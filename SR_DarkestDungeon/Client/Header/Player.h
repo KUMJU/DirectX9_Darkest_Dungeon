@@ -30,7 +30,6 @@ private:
 	void			KeyInput(const _float& fTimeDelta);
 	void			ClimbingTerrain();
 
-
 private:
 	// Player Component
 	shared_ptr<CTransform> m_pTransformCom;

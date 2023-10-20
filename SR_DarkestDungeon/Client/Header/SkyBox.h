@@ -15,6 +15,7 @@ class CSkyBox : public CGameObject
 {
 public:
 	CSkyBox(LPDIRECT3DDEVICE9 pGraphicDev);
+	CSkyBox(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _keyName);
 	CSkyBox(const CSkyBox& rhs);
 	virtual ~CSkyBox();
 
@@ -33,4 +34,5 @@ private:
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
 
 	_float		m_fSpeed = 10.f;
+	tstring		m_strKeyName;
 };
