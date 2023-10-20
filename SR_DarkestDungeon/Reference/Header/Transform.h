@@ -47,6 +47,8 @@ public:
 		*(((_float*)&m_vAngle) + eType) += fAngle;
 	}
 
+	void SetWorld(const _matrix* _matWorld) { m_matWorld = *_matWorld; }
+
 
 public:
 	HRESULT			ReadyTransform();
@@ -57,6 +59,7 @@ public:
 	{
 		m_vInfo[INFO_POS] += *pDir * fTimeDelta * fSpeed;
 	}
+
 
 private:
 
