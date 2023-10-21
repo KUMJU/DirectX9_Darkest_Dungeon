@@ -45,8 +45,12 @@ public:
 
 public:
 	STAT	GetCommonStat() { return m_tCommonStat; }
+	_bool	GetDone() { return m_bDone; }
+	_bool	GetAbleAct() { return m_bAbleAct; }
 	void	SetCommonStat(STAT _tStat) { m_tCommonStat = _tStat; }
 	void	SetTurn(_bool _bTurn) { m_bMyTurn = _bTurn; }
+	void	SetDone(_bool _bDone) { m_bDone = _bDone; }
+	void	SetAbleAct(_bool _bAbleAct) { m_bAbleAct = _bAbleAct; }
 	void	SetHitted(_bool _bHitted) { m_bHitted = _bHitted; }
 	void	SetEffectOn(_bool _bEffectOn) { m_bEffectOn = _bEffectOn; }
 	void	SetBlight(_bool _bBlight) { m_bBlighting = true; }
@@ -97,6 +101,8 @@ protected:
 protected:
 	STAT		m_tCommonStat;				// 스탯
 	_bool		m_bMyTurn = false;			// 자신의 턴 여부 
+	_bool		m_bDone = false;			// 이번 턴에 행동 했는지 여부
+	_bool		m_bAbleAct = true;			// 이번 턴에 행동 가능한지 여부(기절이나 시체사라지면 불가능)
 
 	_bool		m_bHitted = false;			// 자신의 피격상태 여부
 	_bool		m_bEffectOn = false;		// 이펙트 여부
