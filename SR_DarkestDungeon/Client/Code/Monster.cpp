@@ -25,9 +25,9 @@ HRESULT CMonster::ReadyGameObject()
 
 _int CMonster::UpdateGameObject(const _float& fTimeDelta)
 {
-	__super::UpdateGameObject(fTimeDelta);
+	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 	
-	return _int();
+	return iExit;
 }
 
 void CMonster::LateUpdateGameObject()
@@ -45,12 +45,12 @@ void CMonster::StartTurn()
 	__super::StartTurn();
 }
 
-void CMonster::AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
+void CMonster::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
 {
 	__super::AttackCreature(_pCreature, _fSkillRatio, _eAttackTYPE, _iDotDamage, _iTurn);
 }
 
-void CMonster::EndAttack(CCreature* _pCreature)
+void CMonster::EndAttack(shared_ptr<CGameObject> _pCreature)
 {
 	__super::EndAttack(_pCreature);
 }

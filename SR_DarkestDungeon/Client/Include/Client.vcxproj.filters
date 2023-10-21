@@ -52,6 +52,12 @@
     <ClCompile Include="..\Code\Vestal.cpp">
       <Filter>02. Object\Creature\Hero\00. Vestal</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BrigandCutthroat.cpp">
+      <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BattleSystem.cpp">
+      <Filter>BattleSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -116,6 +122,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\Vestal.h">
       <Filter>02. Object\Creature\Hero\00. Vestal</Filter>
+	</ClInclude>
+    <ClInclude Include="..\Header\BrigandCutthroat.h">
+      <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BattleSystem.h">
+      <Filter>BattleSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +201,9 @@
     </Filter>
     <Filter Include="02. Object\Creature\Hero\00. Vestal">
       <UniqueIdentifier>{b23187ec-0121-4511-9a96-edf733bb14b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BattleSystem">
+      <UniqueIdentifier>{8e591575-8f87-499a-aac7-1f3f8ae98a42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

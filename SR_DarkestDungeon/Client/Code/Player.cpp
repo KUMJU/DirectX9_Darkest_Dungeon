@@ -29,7 +29,6 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 	if(!m_bLock)
 		KeyInput(fTimeDelta);
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
-	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 
 	return iExit;
 }

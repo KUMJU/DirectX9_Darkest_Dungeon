@@ -42,10 +42,20 @@ public:
 		m_vScale = { _fX, _fY, _fZ };
 	}
 
+	// _vOriginScale: OriginImage의 조정비율, _vOriginImage: OriginImage의 x,y길이, _vMoveImage: MoveImage의 x,y길이
+	void SetScaleRatio(_vec3 _vOriginScale, _vec2 _vOriginImage, _vec2 _vMoveImage)
+	{
+		SetScale(_vOriginScale.x * _vMoveImage.x / _vOriginImage.x,
+			_vOriginScale.y * _vMoveImage.y / _vOriginImage.y,
+			_vOriginScale.z);
+	}
+
 	void Rotation(ROTATION eType, const _float& fAngle)
 	{
 		*(((_float*)&m_vAngle) + eType) += fAngle;
 	}
+
+	void SetWorld(const _matrix* _matWorld) { m_matWorld = *_matWorld; }
 
 
 public:

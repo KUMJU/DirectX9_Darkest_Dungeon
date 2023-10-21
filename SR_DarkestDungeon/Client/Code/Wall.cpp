@@ -19,8 +19,8 @@ CWall::~CWall()
 HRESULT CWall::ReadyGameObject()
 {
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(4.f, 4.f, 1.f);
-
+	m_pTransformCom->SetScale(6.f, 6.f, 1.f);
+	
 	m_pTransformCom->SetAngle(m_vAngle);
 	m_pTransformCom->Rotation(ROT_Y, PI /2.f);
 	m_iNum = rand() % 9;
