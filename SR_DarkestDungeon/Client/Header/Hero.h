@@ -2,30 +2,6 @@
 #include "Creature.h"
 #include "Skill.h"
 
-enum class EHeroState
-{
-	// 비전투
-	IDLE,
-	WALK,
-
-	// 전투
-	COMBAT,			// 전투 중 IDLE
-	DEATH_DOOR,		// 죽음의 문턱
-	AFFLICTION,		// 붕괴
-	VIRTUE,			// 기상
-	STUN,			// 기절
-	BLEED,			// 출혈
-	BLIGHT,			// 중독
-	DEATH,			// 사망
-	ENUM_END
-};
-
-typedef struct tagHeroStat
-{
-	_int		iStress;		// 스트레스
-	_float		fCritical;		// 치명타 확률
-} HEROSTAT;
-
 // 붕괴 (75%)
 enum class EAffliction
 {
@@ -60,6 +36,14 @@ class CHero : public CCreature
 {
 public:
 	explicit CHero(LPDIRECT3DDEVICE9 pGraphicDev);
+
+	// 전부 세팅할 때
+	CHero(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
+		shared_ptr<vector<shared_ptr<CSkill>>> _pVecSkill, _float _fCritical);
+
+	// 전투 위치, 스킬은 나중에 세팅할 때	
+	CHero(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat);
+
 	CHero(const CHero& rhs);
 	virtual ~CHero();
 
@@ -70,17 +54,24 @@ public:
 	virtual void RenderGameObject() override;
 
 public:
-	void		SelectSkill(_int _iSkillID);
+	shared_ptr<CSkill>		SelectSkill(_int _iSkillID);
 
-	void		AttackCreature(_int _iEnemyPos, shared_ptr<CCreature> _pCreature);
+	virtual	void			StressAction();
+
 
 protected:
 	virtual void		AddComponent();
-	virtual void		SetAnimKey(tstring strAnimKey) { m_strAnimKey = strAnimKey; }
+	//virtual void		SetAnimKey(tstring strAnimKey) { m_strAnimKey = strAnimKey; }
 
 public:
-	HEROSTAT	GetHeroStat() { return m_tHeroStat; }
-	void		SetHeroStat(HEROSTAT _tStat) { m_tHeroStat = _tStat; }
+	_int		GetStress() { return m_iStress; }
+	void		SetStress(_int _iValue) { m_iStress = _iValue; }
+	void		IncreaseStress(_int _iValue) { m_iStress += _iValue; }
+	void		DecreaseStress(_int _iValue) { m_iStress -= _iValue; }
+
+	_float		GetCritical() { return m_fCritical; }
+	void		SetCritical(_float _fValue) { m_fCritical = _fValue; }
+	void		ChangeCritical(_float _fValue) { m_fCritical *= _fValue; }
 
 	_bool		IsDeathDoor() { return m_bDeathDoor; }
 	void		SetDeathDoor(_bool _bDeathDoor) { m_bDeathDoor = _bDeathDoor; }
@@ -93,18 +84,18 @@ public:
 
 protected:
 
-	shared_ptr<vector<shared_ptr<CSkill>>> m_pVecSkill;
-	HEROSTAT			m_tHeroStat;
-
-	shared_ptr<vector<shared_ptr<EHeroState>>>	m_pVecHeroState;
+	_int				m_iStress = 0;		// 스트레스
+	_float				m_fCritical;		// 치명타 확률
 
 	_bool				m_bDeathDoor = false;		// 죽음의 문턱 여부
+
 	_bool				m_bAffliction = false;		// 붕괴 여부
+	EAffliction			m_eAffliction = EAffliction::ENUM_END;
+
 	_bool				m_bVirtue = false;			// 기상 여부
+	EVirtue				m_eVirtue = EVirtue::ENUM_END;
 
-	shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
-
-	shared_ptr<CSkill>	m_pSelectedSkill;
+	//shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
 
 private:
 	virtual void	Free();

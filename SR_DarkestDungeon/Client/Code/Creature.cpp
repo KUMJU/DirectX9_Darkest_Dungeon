@@ -1,13 +1,23 @@
 #include "pch.h"
 #include "Creature.h"
-
 #include "Export_System.h"
-#include"Export_Utility.h"
+#include "Export_Utility.h"
 
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
 	memset(&m_tCommonStat, NULL, sizeof(STAT));
+}
+
+CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
+	shared_ptr<vector<shared_ptr<CSkill>>> _pVecSkill)
+	: CGameObject(pGraphicDev), m_tCommonStat(_tCommonStat), m_iPosition(_iPosition), m_pVecSkill(_pVecSkill)
+{
+}
+
+CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat)
+	: CGameObject(pGraphicDev), m_tCommonStat(_tCommonStat)
+{
 }
 
 CCreature::CCreature(const CCreature& rhs)
@@ -32,7 +42,7 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 
 	//빌보드 시작
 	_matrix matWorld;
-	
+
 	matWorld = *m_pTransformCom->GetWorld();
 	SetBillBoard(matWorld);
 	m_pTransformCom->SetWorld(&matWorld);
@@ -51,41 +61,112 @@ void CCreature::RenderGameObject()
 {
 }
 
-void CCreature::StartTurn()
+shared_ptr<CSkill> CCreature::GetSkill(tstring _strSkillName)
 {
-	// 도트뎀 계산
-	m_tCommonStat.iHp -= (m_bBlightDot[0] + m_bBleedDot[0]);
-	for (int i = 1; i < 3; i++)
+	for (auto iter : *m_pVecSkill)
 	{
-		m_bBlightDot[i - 1] = m_bBlightDot[i];
-		m_bBleedDot[i - 1] = m_bBleedDot[i];
+		// 수정 필요 // 이렇게 비교해도 되는지 확인해봐야됨
+		if (iter->GetSkillName() == _strSkillName)
+		{
+			return iter;
+		}
 	}
-	m_bBlightDot[3] = 0;
-	m_bBleedDot[3] = 0;
+
+	return nullptr;
 }
 
-void CCreature::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, EAttackType _eAttackTYPE, _int _iDotDamage, _int _iTurn)
+HRESULT CCreature::SetSkill(shared_ptr<vector<shared_ptr<CSkill>>> _pSkill)
 {
-	if (!dynamic_pointer_cast<CCreature>(_pCreature)) return;
+	m_pVecSkill = _pSkill;
 
-	switch (_eAttackTYPE)
+	return S_OK;
+}
+
+void CCreature::StartTurn()
+{
+	// 출혈이나 중독 상태라면
+	if (m_bState[0] || m_bState[1])
 	{
-	case EAttackType::ATTACK:
-		break;
-	case EAttackType::BLIGHT:
-		dynamic_pointer_cast<CCreature>(_pCreature)->BlightAttack(_iDotDamage, _iTurn);
-		dynamic_pointer_cast<CCreature>(_pCreature)->SetBlight(true);
-		break;
-	case EAttackType::BLEED:
-		dynamic_pointer_cast<CCreature>(_pCreature)->BleedAttack(_iDotDamage, _iTurn);
-		dynamic_pointer_cast<CCreature>(_pCreature)->SetBleed(true);
-		break;
-	case EAttackType::STRESS:
-		break;
+		// 도트뎀 계산
+		m_tCommonStat.iHp -= (m_bBlightDot[0] + m_bBleedDot[0]);
+		for (int i = 1; i < 3; i++)
+		{
+			m_bBlightDot[i - 1] = m_bBlightDot[i];
+			m_bBleedDot[i - 1] = m_bBleedDot[i];
+		}
+		m_bBlightDot[3] = 0;
+		m_bBleedDot[3] = 0;
+	}
+
+	// ====지워도됨=====
+	// 전투시스템에서 어떻게 할지??
+	// 기절
+	//if (m_bState[2]) return false;
+
+	// 죽었는지
+	//if (m_tCommonStat.iHp <= 0) return false;
+}
+
+void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill)
+{
+	if (!_pCreature) return;
+	if (!_pSkill) return;
+
+	_bool* arrAttack = _pSkill->GetArrAttack();
+
+	// 단순 공격
+	if (arrAttack[0])
+	{
+		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+
+		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
+	}
+
+	// 중독
+	if (arrAttack[1])
+	{
+		_pCreature->BlightAttack(_pSkill->GetDotDamage());
+		_pCreature->SetBlight(true);
+
+		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
+	}
+
+	// 출혈
+	if (arrAttack[2])
+	{
+		_pCreature->BleedAttack(_pSkill->GetDotDamage());
+		_pCreature->SetBleed(true);
+
+		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
+	}
+
+	// 기절
+	if (arrAttack[3])
+	{
+		_pCreature->SetStun(true);
+
+		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
+	}
+
+	// 이동
+	if (arrAttack[4])
+	{
+		_pCreature->SetPosition(_pSkill->GetMoveCnt());
+
+		// 동료 크리처들도 움직여주기
+		// 수정 필요
+		// 이건 구조에 따라 잘,,,,
+	}
+
+	// 힐
+	if (arrAttack[5])
+	{
+		_pCreature->IncreaseHP(_pSkill->GetHeal());
+
+		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
 
 	// 상대
-	dynamic_pointer_cast<CCreature>(_pCreature)->m_tCommonStat.iHp -= m_tCommonStat.iAttackPower * _fSkillRatio;
 	dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(true);
 	dynamic_pointer_cast<CCreature>(_pCreature)->SetEffectOn(true);
 
@@ -108,31 +189,31 @@ void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)
 	m_bMyTurn = false;
 }
 
-void CCreature::BlightAttack(_int _iBlightDmg, _int _iTurn)
+void CCreature::BlightAttack(_int* _iDotDam)
 {
-	for (int i = 0; i < _iTurn; i++)
+	for (int i = 0; i < _iDotDam[1]; i++)
 	{
-		m_bBlightDot[i] += _iBlightDmg;
+		m_bBlightDot[i] += _iDotDam[0];
 	}
 }
 
-void CCreature::BleedAttack(_int _iBleedDmg, _int _iTurn)
+void CCreature::BleedAttack(_int* _iDotDam)
 {
-	for (int i = 0; i < _iTurn; i++)
+	for (int i = 0; i < _iDotDam[1]; i++)
 	{
-		m_bBleedDot[i] += _iBleedDmg;
+		m_bBleedDot[i] += _iDotDam[0];
 	}
 }
 
 void CCreature::BlightCure()
 {
-	m_bBlighting = false;
+	m_bState[0] = false;
 	for (int i = 0; i < 4; i++) m_bBlightDot[i] = 0;
 }
 
 void CCreature::BleedCure()
 {
-	m_bBleeding = false;
+	m_bState[1] = false;
 	for (int i = 0; i < 4; i++) m_bBleedDot[i] = 0;
 }
 
