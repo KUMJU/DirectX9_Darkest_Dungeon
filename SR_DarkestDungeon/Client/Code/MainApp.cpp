@@ -86,7 +86,6 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 void CMainApp::Free()
 {
-	//m_pGraphicDev->Release();
 	Engine::Release_Utility();
 	Engine::Release_System();
 }

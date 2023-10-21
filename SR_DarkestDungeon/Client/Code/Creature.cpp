@@ -42,7 +42,7 @@ void CCreature::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	// m_pGraphicDev->SetRenderState(D3DRS_ , D3DFILL_WIREFRAME);
 
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
@@ -65,21 +65,21 @@ void CCreature::StartTurn()
 	m_bBleedDot[3] = 0;
 }
 
-void CCreature::AttackCreature(CCreature* _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
+void CCreature::AttackCreature(CCreature* _pCreature, _float _fSkillRatio, EAttackType _eAttackTYPE, _int _iDotDamage, _int _iTurn)
 {
 	if (!_pCreature) return;
 
 	switch (_eAttackTYPE)
 	{
-	case ATTACKTYPE::ATTACK_NORMAL:
+	case EAttackType::ATTACK:
 		break;
-	case ATTACKTYPE::ATTACK_BLIGHT:
+	case EAttackType::BLIGHT:
 		_pCreature->BlightAttack(_iDotDamage, _iTurn);
 		break;
-	case ATTACKTYPE::ATTACK_BLEED:
+	case EAttackType::BLEED:
 		_pCreature->BleedAttack(_iDotDamage, _iTurn);
 		break;
-	case ATTACKTYPE::ATTACK_STRESS:
+	case EAttackType::STRESS:
 		break;
 	}
 
@@ -111,7 +111,7 @@ void CCreature::BlightAttack(_int _iBlightDmg, _int _iTurn)
 {
 	for (int i = 0; i < _iTurn; i++)
 	{
-		m_bBlightDot[i] + _iBlightDmg;
+		m_bBlightDot[i] += _iBlightDmg;
 	}
 }
 
@@ -119,7 +119,7 @@ void CCreature::BleedAttack(_int _iBleedDmg, _int _iTurn)
 {
 	for (int i = 0; i < _iTurn; i++)
 	{
-		m_bBleedDot[i] + _iBleedDmg;
+		m_bBleedDot[i] += _iBleedDmg;
 	}
 }
 
