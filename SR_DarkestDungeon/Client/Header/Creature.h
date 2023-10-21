@@ -18,17 +18,8 @@ typedef struct tagCreatureCommonStat
 	_int		iDodge;			// 회피율
 	_int		iSpeed;			// 속도
 	_int		iAttackPower;	// 순수공격력(실제 데미지는 스킬에 따른 공격력 계수의 곱)
-
+	_int		iOrder;			// 순서(앞에서부터 0~3)
 }STAT;
-
-// Attack 타입
-enum class ATTACKTYPE
-{ 
-	ATTACK_NORMAL, 
-	ATTACK_BLIGHT, 
-	ATTACK_BLEED, 
-	ATTACK_STRESS
-};
 
 class CCreature : public CGameObject
 {
@@ -61,7 +52,7 @@ protected:
 	virtual void	StartTurn();
 
 	// 다른 크리처 공격시
-	virtual void	AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE,
+	virtual void	AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, EAttackType _eAttackTYPE,
 		_int _iDotDamage = 0, _int _iTurn = 0);
 
 	// 공격 종료시
@@ -109,12 +100,16 @@ protected:
 	// m_bHitted && m_bEffectOn -> 피격 애니메이션 on
 	// !m_bHitted && m_bEffectOn -> 타격 애니메이션 on
 
-	_bool		m_bBlighting = false;			// 중독여부
+	_bool		m_bBlighting = false;		// 중독여부
 	_int		m_bBlightDot[4] = { 0 };	// 턴마다 중독 도트뎀
-	_bool		m_bBleeding = false;			// 출혈여부
+	_bool		m_bBleeding = false;		// 출혈여부
 	_int		m_bBleedDot[4] = { 0 };		// 턴마다 출혈 도트뎀
+
+	_bool		m_bStun = false;			// 기절 여부
+	_bool		m_bDeath = false;			// 사망 여부
+
+	tstring		m_strAnimKey;				// 애니메이션 키
 
 protected:
 	virtual void	Free();
 };
-

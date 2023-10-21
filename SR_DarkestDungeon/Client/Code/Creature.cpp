@@ -70,7 +70,7 @@ void CCreature::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkil
 
 	switch (_eAttackTYPE)
 	{
-	case ATTACKTYPE::ATTACK_NORMAL:
+	case EAttackType::ATTACK:
 		break;
 	case ATTACKTYPE::ATTACK_BLIGHT:
 		dynamic_pointer_cast<CCreature>(_pCreature)->BlightAttack(_iDotDamage, _iTurn);
@@ -80,7 +80,7 @@ void CCreature::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkil
 		dynamic_pointer_cast<CCreature>(_pCreature)->BleedAttack(_iDotDamage, _iTurn);
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetBleed(true);
 		break;
-	case ATTACKTYPE::ATTACK_STRESS:
+	case EAttackType::STRESS:
 		break;
 	}
 
@@ -112,7 +112,7 @@ void CCreature::BlightAttack(_int _iBlightDmg, _int _iTurn)
 {
 	for (int i = 0; i < _iTurn; i++)
 	{
-		m_bBlightDot[i] + _iBlightDmg;
+		m_bBlightDot[i] += _iBlightDmg;
 	}
 }
 
@@ -120,7 +120,7 @@ void CCreature::BleedAttack(_int _iBleedDmg, _int _iTurn)
 {
 	for (int i = 0; i < _iTurn; i++)
 	{
-		m_bBleedDot[i] + _iBleedDmg;
+		m_bBleedDot[i] += _iBleedDmg;
 	}
 }
 
