@@ -19,7 +19,7 @@ protected:
 	virtual void	StartTurn();
 
 	// 다른 크리처 공격시
-	virtual void	AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE,
+	virtual void	AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, EAttackType _eAttackTYPE,
 		_int _iDotDamage = 0, _int _iTurn = 0);
 
 	// 공격 종료시

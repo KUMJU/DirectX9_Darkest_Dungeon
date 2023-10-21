@@ -24,7 +24,7 @@ HRESULT CMainApp::Ready_MainApp()
 	Engine::CreateNewTexture(L"Highwayman_Walk", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Walk/armatureName_walk_%d.png",32);
 
-    shared_ptr<CScene> pMainLogo = make_shared<CVillage>(m_pGraphicDev);
+    shared_ptr<CScene> pMainLogo = make_shared<CMainLogo>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
 

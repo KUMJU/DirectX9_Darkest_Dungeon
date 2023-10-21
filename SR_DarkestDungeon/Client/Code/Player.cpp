@@ -30,6 +30,8 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 		KeyInput(fTimeDelta);
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
+	_int iExit = __super::UpdateGameObject(fTimeDelta);
+
 	return iExit;
 }
 

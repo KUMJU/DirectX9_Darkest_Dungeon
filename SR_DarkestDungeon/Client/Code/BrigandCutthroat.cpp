@@ -123,7 +123,7 @@ void CBrigandCutthroat::StartTurn()
 	__super::StartTurn();
 }
 
-void CBrigandCutthroat::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
+void CBrigandCutthroat::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, EAttackType _eAttackTYPE, _int _iDotDamage, _int _iTurn)
 {
 	__super::AttackCreature(_pCreature, _fSkillRatio, _eAttackTYPE, _iDotDamage, _iTurn);
 }

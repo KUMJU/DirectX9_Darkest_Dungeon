@@ -64,7 +64,7 @@ void CCreature::StartTurn()
 	m_bBleedDot[3] = 0;
 }
 
-void CCreature::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, ATTACKTYPE _eAttackTYPE, _int _iDotDamage, _int _iTurn)
+void CCreature::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, EAttackType _eAttackTYPE, _int _iDotDamage, _int _iTurn)
 {
 	if (!dynamic_pointer_cast<CCreature>(_pCreature)) return;
 
@@ -72,11 +72,11 @@ void CCreature::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkil
 	{
 	case EAttackType::ATTACK:
 		break;
-	case ATTACKTYPE::ATTACK_BLIGHT:
+	case EAttackType::BLIGHT:
 		dynamic_pointer_cast<CCreature>(_pCreature)->BlightAttack(_iDotDamage, _iTurn);
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetBlight(true);
 		break;
-	case ATTACKTYPE::ATTACK_BLEED:
+	case EAttackType::BLEED:
 		dynamic_pointer_cast<CCreature>(_pCreature)->BleedAttack(_iDotDamage, _iTurn);
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetBleed(true);
 		break;
