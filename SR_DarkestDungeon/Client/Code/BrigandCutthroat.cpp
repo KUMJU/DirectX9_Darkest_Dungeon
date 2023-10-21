@@ -36,7 +36,7 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
 	//³¡
-	
+
 	if (GetAsyncKeyState('1') & 0x8000) {
 		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.02f);
 		m_pTransformCom->SetScale(2.f, 2.f, 1.f);
@@ -47,7 +47,7 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 		m_pTransformCom->SetScale(2.f * 427.f / 232.f, 2.f * 268.f / 311.f, 1.f);
 		//m_pTransformCom->SetScaleRatio(_vec3(2.f, 2.f, 1.f), _vec2(232.f, 311.f), _vec2(427.f, 268.f));
 	}
-	
+
 	if (GetAsyncKeyState('3') & 0x8000) {
 		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack2", 0.02f);
 		m_pTransformCom->SetScale(2.f * 232.f / 232.f, 2.f * 365.f / 311.f, 1.f);
@@ -62,7 +62,7 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Hitted", 0.02f);
 		m_pTransformCom->SetScale(2.f * 225.f / 232.f, 2.f * 317.f / 311.f, 1.f);
 	}
-	
+
 	//if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 	//	m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack1", 0.02f);
 	//	m_pTransformCom->SetScale(2.f * 427.f/232.f, 2.f * 268.f / 311.f, 1.f);
@@ -118,41 +118,6 @@ void CBrigandCutthroat::RenderGameObject()
 	__super::RenderGameObject();
 }
 
-void CBrigandCutthroat::StartTurn()
-{
-	__super::StartTurn();
-}
-
-void CBrigandCutthroat::AttackCreature(shared_ptr<CGameObject> _pCreature, _float _fSkillRatio, EAttackType _eAttackTYPE, _int _iDotDamage, _int _iTurn)
-{
-	__super::AttackCreature(_pCreature, _fSkillRatio, _eAttackTYPE, _iDotDamage, _iTurn);
-}
-
-void CBrigandCutthroat::EndAttack(shared_ptr<CGameObject> _pCreature)
-{
-	__super::EndAttack(_pCreature);
-}
-
-void CBrigandCutthroat::BlightAttack(_int _iBlightDmg, _int _iTurn)
-{
-	__super::BlightAttack(_iBlightDmg, _iTurn);
-}
-
-void CBrigandCutthroat::BleedAttack(_int _iBleedDmg, _int _iTurn)
-{
-	__super::BleedAttack(_iBleedDmg, _iTurn);
-}
-
-void CBrigandCutthroat::BlightCure()
-{
-	__super::BlightCure();
-}
-
-void CBrigandCutthroat::BleedCure()
-{
-	__super::BleedCure();
-}
-
 void CBrigandCutthroat::AddComponent()
 {
 	Engine::CreateNewTexture(L"Brigand Cutthroat_Combat", TEX_NORMAL,
@@ -189,11 +154,6 @@ void CBrigandCutthroat::AddComponent()
 	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
 	__super::AddComponent();
-}
-
-void CBrigandCutthroat::ClimbingTerrain()
-{
-	__super::ClimbingTerrain();
 }
 
 void CBrigandCutthroat::Free()
