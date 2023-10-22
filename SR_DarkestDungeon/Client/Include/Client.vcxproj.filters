@@ -52,11 +52,16 @@
     <ClCompile Include="..\Code\Vestal.cpp">
       <Filter>02. Object\Creature\Hero\00. Vestal</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BrigandCutthroat.cpp">
-      <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\BattleSystem.cpp">
       <Filter>BattleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
+    <ClCompile Include="..\Code\Monster.cpp" />
+    <ClCompile Include="..\Code\DungeonRoom.cpp">
+      <Filter>DungeonRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DungeonSystem.cpp">
+      <Filter>DungeonSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,12 +127,20 @@
     </ClInclude>
     <ClInclude Include="..\Header\Vestal.h">
       <Filter>02. Object\Creature\Hero\00. Vestal</Filter>
-	</ClInclude>
-    <ClInclude Include="..\Header\BrigandCutthroat.h">
-      <Filter>02. Object\Creature\Monster\Weald_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BattleSystem.h">
       <Filter>BattleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BrigandCutthroat.h" />
+    <ClInclude Include="..\Header\Monster.h" />
+    <ClInclude Include="..\Header\DungeonRoom.h">
+      <Filter>DungeonRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DungeonSystem.h">
+      <Filter>DungeonSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Define.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +217,12 @@
     </Filter>
     <Filter Include="BattleSystem">
       <UniqueIdentifier>{8e591575-8f87-499a-aac7-1f3f8ae98a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DungeonSystem">
+      <UniqueIdentifier>{433d512d-1100-4f68-af1f-7bfaf092db7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DungeonRoom">
+      <UniqueIdentifier>{29a9c869-b0ac-4b2a-8647-0849bd09d4d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,8 @@
 #include"Scene.h"
 #include "Creature.h"
 
-#define WALLSIZEX 12.f
-#define WALLSIZEUPY 5.f
-#define PATHSIZEX 18.f
+class CDungeonSystem;
+class CDungeonRoom;
 
 class CMainLogo : public Engine::CScene
 {
@@ -22,8 +21,8 @@ public:
 public:
 	// 추후에 던전시스템으로 옮길 예정
 	// 열 맞춰서 배치하는 기능
-	void	FormBattlePosition(vector<shared_ptr<CGameObject>> _pHeroes, vector<shared_ptr<CGameObject>> _pMonsters,
-		_float _fAngle, _vec3 _vOrigin);
+	//void	FormBattlePosition(vector<shared_ptr<CGameObject>> _pHeroes, vector<shared_ptr<CGameObject>> _pMonsters,
+	//	_float _fAngle, _vec3 _vOrigin);
 
 private:
 
@@ -32,5 +31,8 @@ private:
 	HRESULT				Ready_Layer_GameObject(tstring pLayerTag);
 	HRESULT				Ready_Layer_UI(const tstring* pLayerTag);
 
+	shared_ptr<CDungeonSystem> m_pWealdDungeon = {};
+	shared_ptr<CDungeonRoom> m_pRoom1 = {};
+	shared_ptr<CDungeonRoom> m_pRoom2 = {};
 };
 
