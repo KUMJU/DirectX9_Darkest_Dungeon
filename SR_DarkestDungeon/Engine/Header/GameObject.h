@@ -31,15 +31,17 @@ public:
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
 	void	SetBillBoard(_matrix& _matWorld);
-
-
 	std::shared_ptr<CComponent> GetComponent(const tstring& _strKeyName, COMPONENTID _eComID);
+
+public:
+	_float				Get_ViewZ() { return m_fViewZ; }
+	void				Compute_ViewZ(const _vec3* pPos);
 
 	//Component Manage
 protected:
 	void RemoveComponent();
 
-private:
+protected:
 	virtual void AddComponent();
 
 protected:
@@ -50,6 +52,7 @@ protected:
 
 	_vec3 m_vPos = _vec3{ 0.f, 0.f, 0.f };
 	_vec3 m_vAngle = _vec3{ 0.f, 0.f, 0.f };
+	_float			m_fViewZ;
 
 protected:
 	map<tstring, std::shared_ptr<CComponent>> m_mapComponent[ID_END];

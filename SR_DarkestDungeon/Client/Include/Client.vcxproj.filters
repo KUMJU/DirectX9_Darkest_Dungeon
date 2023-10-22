@@ -49,6 +49,15 @@
     <Filter Include="02. Object\StaticCamera">
       <UniqueIdentifier>{9008c8b2-b181-42f5-b52f-f08dd4f3bb71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Inventory">
+      <UniqueIdentifier>{d300b25d-2f4a-4574-8037-af3175fa180c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item">
+      <UniqueIdentifier>{fa9561cc-b149-4720-8dd3-beb39223d039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\00. Player\PlayerHand">
+      <UniqueIdentifier>{9b41398d-c20d-4abd-a311-8ff148a03d54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -93,8 +102,17 @@
     <ClInclude Include="..\Header\Village.h">
       <Filter>01. Scene\Village</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Item.h">
+      <Filter>02. Object\Item</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\StaticCamera.h">
+      <Filter>02. Object\StaticCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Inventory.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerHand.h">
+      <Filter>02. Object\00. Player\PlayerHand</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,8 +149,17 @@
     <ClCompile Include="..\Code\Village.cpp">
       <Filter>01. Scene\Village</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Item.cpp">
+      <Filter>02. Object\Item</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>02. Object\StaticCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Inventory.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerHand.cpp">
+      <Filter>02. Object\00. Player\PlayerHand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

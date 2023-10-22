@@ -121,5 +121,5 @@ shared_ptr<CComponent> CLayer::GetComponent(const tstring& _strObjName, const ts
 	if (iter == m_objectMap.end())
 		return nullptr;
 
-	return iter->second.front()->GetComponent(_strComName, _eID);;
+	return iter->second.front()->GetComponent(_strComName, _eID);
 }

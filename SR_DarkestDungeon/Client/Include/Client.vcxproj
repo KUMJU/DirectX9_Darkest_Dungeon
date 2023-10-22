@@ -151,10 +151,13 @@
   <ItemGroup>
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\InteractionObj.h" />
+    <ClInclude Include="..\Header\Inventory.h" />
+    <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MainLogo.h" />
     <ClInclude Include="..\Header\pch.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\PlayerHand.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
     <ClInclude Include="..\Header\Terrain.h" />
@@ -168,9 +171,12 @@
   <ItemGroup>
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\InteractionObj.cpp" />
+    <ClCompile Include="..\Code\Inventory.cpp" />
+    <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainLogo.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\PlayerHand.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />

@@ -1,6 +1,7 @@
 #pragma once
 
 #include"GameObject.h"
+#include "PlayerHand.h"
 
 BEGIN(Engine)
 
@@ -11,6 +12,8 @@ class CAnimator;
 
 END
 
+
+class CPlayerHand;
 
 class CPlayer : public CGameObject
 {
@@ -30,15 +33,21 @@ private:
 	void			KeyInput(const _float& fTimeDelta);
 	void			ClimbingTerrain();
 
+	void			ShakingHand();
 
 private:
 	// Player Component
-	shared_ptr<CTransform> m_pTransformCom;
-	shared_ptr<CAnimator> m_pTextureCom;
-	shared_ptr<CRcTex> m_pBufCom;
+	shared_ptr<CTransform> m_pTransformCom = nullptr;
+
+	//Player HandComponenet
+	shared_ptr<CPlayerHand> m_pPlayerHand = nullptr;
+
+public:
+	void SetPlayerHand(shared_ptr<CPlayerHand> _pHand) { m_pPlayerHand = _pHand; }
 
 private:
-	_float		m_fSpeed = 5.f;
+	_float		m_fSpeed = 3.f;
+	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 
 private:
 	virtual void	Free();

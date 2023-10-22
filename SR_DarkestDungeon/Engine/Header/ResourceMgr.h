@@ -34,6 +34,7 @@ public:
 
 private:
 
+
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
 
 	map<tstring, vector<IDirect3DBaseTexture9*> > m_TextureMap;
