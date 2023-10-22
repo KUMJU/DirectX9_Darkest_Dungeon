@@ -46,8 +46,7 @@ _int CLayer::UpdateLayer(const _float& fTimeDelta)
 			//Dead Check
 			if (false == ((*it)->GetIsActive())) {
 				it->reset();
-				iter.second.erase(it);
-				it++;
+				it = iter.second.erase(it);
 				continue;
 			}
 
@@ -78,8 +77,7 @@ void CLayer::LateUpdateLayer()
 			//Dead Check
 			if (false == ((*it)->GetIsActive())) {
 				it->reset();
-				iter.second.erase(it);
-				it++;
+				it = iter.second.erase(it);
 				continue;
 			}
 

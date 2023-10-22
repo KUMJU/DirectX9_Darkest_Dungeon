@@ -6,6 +6,7 @@ BEGIN(Engine)
 class CRcTex;
 class CTexture;
 class CTransform;
+class CCollider;
 
 END
 
@@ -25,6 +26,11 @@ public:
 	virtual _int UpdateGameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdateGameObject() override;
 	virtual void RenderGameObject() override;
+	
+	virtual void OnCollide(shared_ptr<CGameObject> _pObj) override;
+
+	_bool	IsHorizontal() { return m_bHorizontal; }
+
 
 private:
 	virtual void			AddComponent();
@@ -38,5 +44,9 @@ private:
 
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
 
+	shared_ptr<CCollider> m_pColliderCom = nullptr;
+
 	_int		m_iNum = 0;
+
+	_bool		m_bHorizontal = true;
 };
