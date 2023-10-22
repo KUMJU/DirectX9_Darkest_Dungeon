@@ -47,6 +47,7 @@ inline void Release_Utility()
     CSceneMgr::GetInstance()->DestroyInstance();
     CGameMgr::GetInstance()->DestroyInstance();
     CResourceMgr::GetInstance()->DestroyInstance();
+    CCollisionMgr::GetInstance()->DestroyInstance();
 }
 
 inline void ReadyResourceMgr(LPDIRECT3DDEVICE9 _pGraphicDev)

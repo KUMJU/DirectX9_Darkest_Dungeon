@@ -73,6 +73,8 @@ _int CTransform::UpdateComponent(const _float& fTimeDelta)
 	for (_uint i = 0; i < INFO_END; ++i)
 		memcpy(&m_matWorld.m[i][0], &m_vInfo[i], sizeof(_vec3));
 
+	m_vPos = &m_matWorld.m[INFO_POS][0];
+
 	return 0;
 
 }

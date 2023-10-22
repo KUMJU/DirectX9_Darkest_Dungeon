@@ -1,4 +1,5 @@
 #include "Layer.h"
+#include "CollisionMgr.h"
 
 CLayer::CLayer()
 {
@@ -89,6 +90,12 @@ void CLayer::LateUpdateLayer()
 			}
 
 			(*it)->LateUpdateGameObject();
+			
+			// Collision Check
+			if ((*it)->IsColliding())
+			{
+				CCollisionMgr::GetInstance()->CheckCollision(*it);
+			}
 
 			it++;
 		}

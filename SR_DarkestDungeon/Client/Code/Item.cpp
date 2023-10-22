@@ -65,6 +65,11 @@ void CItem::RenderGameObject()
 	}
 }
 
+void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
+{
+	_int a = 3;
+}
+
 void CItem::SetDropItemInfo(_vec3 _vPosition, const tstring& _strName )
 {
 	m_vPosition = _vPosition;
@@ -89,6 +94,12 @@ void CItem::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransCom->SetPosition(m_vPosition.x, m_vPosition.y, m_vPosition.z);
 
+	pComponent = m_pColliderCom = make_shared<CCollider>();
+	NULL_CHECK_MSG(pComponent, L"Make Player Item ColliderCom Failed");
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
+	m_pColliderCom->SetScale({ 2.f, 2.f, 2.f });
+	m_pColliderCom->SetPos(m_pTransCom->GetPos());
+
 }
 
 void CItem::FloatingOnField()
@@ -109,4 +120,3 @@ void CItem::FloatingOnField()
 
 	m_pTransCom->SetPosition(vPos.x, vPos.y + m_fTotalHeight, vPos.z);
 }
-

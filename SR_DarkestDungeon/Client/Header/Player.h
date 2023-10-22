@@ -9,6 +9,7 @@ class CRcTex;
 class CTexture;
 class CTransform;
 class CAnimator;
+class CCollider;
 
 END
 
@@ -41,6 +42,7 @@ private:
 protected:
 	// Player Component
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
+	shared_ptr<CCollider> m_pColliderCom = nullptr;
 
 	//Player HandComponenet
 	shared_ptr<CPlayerHand> m_pPlayerHand = nullptr;

@@ -21,6 +21,7 @@ public:
 		memcpy(_pInfo, &m_matWorld.m[_eType][0], sizeof(_vec3));
 	}
 
+	_vec3* GetPos() { return &m_vPos; }
 	const _vec3* GetAngles() { return &m_vAngle; }
 	const _vec3* GetScale() { return &m_vScale; }
 	const _matrix* GetWorld() { return &m_matWorld; }
@@ -70,8 +71,8 @@ public:
 
 
 private:
-
 	_vec3 m_vInfo[INFO_END];
+	_vec3 m_vPos;
 	_vec3 m_vScale;
 	_vec3 m_vAngle;
 	_matrix m_matWorld;
