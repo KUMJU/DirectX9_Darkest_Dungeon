@@ -30,6 +30,9 @@ public:
 	void SetPos(_vec3 _vPos) { m_vPos = _vPos; }
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
+	virtual void OnCollide(shared_ptr<CGameObject> _pObj) {};
+
+public:
 	void SetLock(_bool _bLock) { m_bLock = _bLock; }
 	void	SetBillBoard(_matrix& _matWorld);
 	std::shared_ptr<CComponent> GetComponent(const tstring& _strKeyName, COMPONENTID _eComID);

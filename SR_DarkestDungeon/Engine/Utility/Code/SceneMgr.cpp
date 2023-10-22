@@ -61,3 +61,9 @@ shared_ptr<CComponent> CSceneMgr::GetComponenet(const tstring& _strLayerName, co
 
 	return 	m_pCurrentScene->GetComponent(_strLayerName, _strObjName, _strComName, _eID);
 }
+
+HRESULT CSceneMgr::AddNewObject(const tstring& _LayerName, const tstring& _ObjKeyName, shared_ptr<CGameObject> _pObj)
+{
+	if (m_pCurrentScene)
+		return m_pCurrentScene->AddNewObject(_LayerName, _ObjKeyName, _pObj);
+}

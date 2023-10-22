@@ -25,6 +25,8 @@ HRESULT CDynamicCamera::ReadyGameObject()
 
 	FAILED_CHECK_RETURN(CCamera::ReadyGameObject(), E_FAIL);
 
+
+
 	return S_OK;
 }
 

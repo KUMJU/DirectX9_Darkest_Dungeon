@@ -1,6 +1,7 @@
 #include"pch.h"
 #include "Player.h"
 #include"Export_Utility.h"
+#include"Inventory.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -130,6 +131,11 @@ void CPlayer::ShakingHand()
 	if(EHandItem::ENUM_END != m_eCurrentItem )
 		m_pPlayerHand->ShakingHand();
 
+}
+
+void CPlayer::InsertItem(shared_ptr<CItem> _pItem)
+{
+	m_pInventory->InsertItem(_pItem);
 }
 
 void CPlayer::Free()

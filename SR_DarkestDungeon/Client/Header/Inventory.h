@@ -1,6 +1,7 @@
 #pragma once
 
 #include"UIObj.h"
+#include"Item.h"
 
 BEGIN(Engine)
 
@@ -21,13 +22,18 @@ public:
 	virtual void LateUpdateGameObject() override;
 	virtual void RenderGameObject() override;
 
+public:
+	void InsertItem(shared_ptr<CItem> _pItem) {
+		if(m_itemList.size() <= 10)
+			m_itemList.push_back(_pItem);
+	}
+
 protected:
-	void			AddComponent();
+	void	AddComponent();
 
 private:
 	shared_ptr<CTexture> m_pTextureCom;
-
-
+	list<shared_ptr<CGameObject>> m_itemList;
 
 };
 
