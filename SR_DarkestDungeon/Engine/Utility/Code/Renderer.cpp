@@ -26,10 +26,13 @@ void CRenderer::RenderGameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	RenderPriority(pGraphicDev);
 	RenderNonalpha(pGraphicDev);
 	RenderAlpha(pGraphicDev);
-	
+	RenderFront(pGraphicDev);
+
 	//직교투영
 	SetProjOrth(pGraphicDev);
 	RenderUI(pGraphicDev);
+
+	pGraphicDev->SetTransform(D3DTS_VIEW, &m_MatOrigin);
 
 	ClearRenderGroup();
 
@@ -88,6 +91,18 @@ void CRenderer::RenderAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 }
 
+void CRenderer::RenderFront(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	for (auto& iter : m_RenderList[RENDER_FRONT])
+		iter->RenderGameObject();
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+}
+
 void CRenderer::RenderUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	for (auto& iter : m_RenderList[RENDER_UI]) {
@@ -106,6 +121,8 @@ void CRenderer::SetProjPerspective(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::SetProjOrth(LPDIRECT3DDEVICE9& pGraphicDev)
 {
+	pGraphicDev->GetTransform(D3DTS_VIEW, &m_MatOrigin);
+
 	_matrix matView;
 	D3DXMatrixIdentity(&matView);
 	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);

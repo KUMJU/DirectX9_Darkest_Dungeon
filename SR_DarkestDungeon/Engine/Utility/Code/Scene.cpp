@@ -49,6 +49,11 @@ void CScene::CreateNewLayer(const tstring& _newLayerName)
 
 }
 
+HRESULT CScene::AddNewObject(const tstring& _strLayerName, const tstring& _strObjKey, shared_ptr<CGameObject> _pObj)
+{
+	return E_NOTIMPL;
+}
+
 shared_ptr<CComponent> CScene::GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID)
 {
 	auto iter = m_mapLayer.find(_strLayerName);

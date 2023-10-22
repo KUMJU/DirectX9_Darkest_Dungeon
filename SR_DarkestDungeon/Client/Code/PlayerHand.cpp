@@ -28,7 +28,13 @@ _int CPlayerHand::UpdateGameObject(const _float& fTimeDelta)
 
 	int iExit(0);
 	iExit = __super::UpdateGameObject(fTimeDelta);
-	AddRenderGroup(RENDER_ALPHA, shared_from_this());
+	
+	_vec3 vPos;
+
+	m_pItemTransmCom->GetInfo(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
+
+	AddRenderGroup(RENDER_FRONT, shared_from_this());
 	m_fTime = fTimeDelta;
 	return iExit;
 }
@@ -55,6 +61,7 @@ void CPlayerHand::LateUpdateGameObject()
 	D3DXVec3Normalize(&vRight, &vRight);
 
 	vPos = vPos + ((vLook* 4.5f + vRight * -3.f));
+	//anti venom : 4.2f 
 
 	if (m_bWalking) {
 		m_fActTime += m_fTime;
@@ -82,14 +89,14 @@ void CPlayerHand::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pItemTransmCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
 	m_pTextureCom->SetTexture(0);
 	m_pItemBufCom->RenderBuffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

@@ -27,5 +27,7 @@ private:
 	_bool		m_bCheck = false;
 	_float		m_fTimeDelta = 0.f;
 
+
+
 };
 

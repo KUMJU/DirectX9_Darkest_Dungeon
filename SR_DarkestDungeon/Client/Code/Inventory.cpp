@@ -1,5 +1,6 @@
 #include"pch.h"
 #include "Inventory.h"
+#include"Item.h"
 #include"Export_Utility.h"
 
 CInventory::CInventory(LPDIRECT3DDEVICE9 _pGraphicDev)
@@ -48,6 +49,11 @@ void CInventory::RenderGameObject()
 
     m_pTextureCom->SetTexture(0);
     m_pRcTexCom->RenderBuffer();
+
+
+    for (auto& iter : m_itemList) {
+        iter->RenderGameObject();
+    }
 
     m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

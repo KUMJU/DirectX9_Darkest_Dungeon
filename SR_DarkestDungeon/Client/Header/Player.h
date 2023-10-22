@@ -14,6 +14,8 @@ END
 
 
 class CPlayerHand;
+class CInventory;
+class CItem;
 
 class CPlayer : public CGameObject
 {
@@ -27,6 +29,7 @@ public:
 	virtual _int UpdateGameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdateGameObject() override;
 	virtual void RenderGameObject() override;
+	void			SetInventory(shared_ptr<CInventory> _pInventory) { m_pInventory = _pInventory; }
 
 private:
 	void			AddComponent();
@@ -34,7 +37,7 @@ private:
 	void			ClimbingTerrain();
 
 	void			ShakingHand();
-
+	void			InsertItem (shared_ptr<CItem> _pItem);
 protected:
 	// Player Component
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
@@ -48,6 +51,7 @@ public:
 private:
 	_float		m_fSpeed = 3.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
+	shared_ptr<CInventory> m_pInventory = nullptr;
 
 private:
 	virtual void	Free();

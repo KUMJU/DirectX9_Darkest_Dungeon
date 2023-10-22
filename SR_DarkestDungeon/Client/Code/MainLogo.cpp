@@ -13,6 +13,9 @@
 
 #include"Inventory.h"
 #include"PlayerHand.h"
+#include"Item.h"
+
+#include"GameMgr.h"
 
 #include "BrigandCutthroat.h"
 
@@ -104,7 +107,8 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 		L"../Bin/Resource/Image/PlayerItem/supply_antivenom.png", 1);
 	Engine::CreateNewTexture(L"Player_Item_Bandage", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_bandage.png", 1);
-
+	Engine::CreateNewTexture(L"Item_UI_Antivenom", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1);
 	//
 
 	//UIResource
@@ -250,8 +254,11 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
+	//Player
 	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+
+	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
 
 	// GameObject
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
@@ -314,10 +321,16 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_5);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_6);
 
+
+//PlayerObj
 	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
-
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
+
+	shared_ptr<CGameObject> m_pItem = make_shared<CItem>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_TestItem", m_pItem);
+	dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 4.f, 1.f, 6.f }, L"Player_Item_Antivenom");
+
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
@@ -329,8 +342,17 @@ HRESULT CMainLogo::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	shared_ptr<CGameObject> m_pPlayer = make_shared<CInventory>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_UI", m_pPlayer);
+	shared_ptr<CGameObject> m_pInventory = make_shared<CInventory>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
+	
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
+
+	shared_ptr<CGameObject> m_pItem = make_shared<CItem>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_UITestItem", m_pItem);
+	dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 0.f, 0.f, 0.f }, L"Item_UI_Antivenom");
+	dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
+	dynamic_pointer_cast<CInventory>(m_pInventory)->InsertItem(dynamic_pointer_cast<CItem>(m_pItem));
+
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

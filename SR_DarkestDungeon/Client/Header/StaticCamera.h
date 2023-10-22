@@ -11,6 +11,7 @@ END
 
 enum class ECameraMode {
 	IDLE,
+	FPS,
 	LOOKBACK,
 	BATTLE,
 	ENUM_END
@@ -52,5 +53,10 @@ private:
 	ECameraMode m_eCurrentState = ECameraMode::IDLE;
 	_float m_fAngle = 0.f;
 	_float m_deltaTime = 0.f;
+	
+	_float m_fDir = 1.f;
+	_float m_fTotalTime = 0.f;
+	_float m_fActTime = 0.f;
+	_vec3 m_vDstVec;
 
 };

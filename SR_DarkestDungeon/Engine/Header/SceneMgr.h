@@ -26,12 +26,15 @@ public:
 	HRESULT ChangeScene(shared_ptr<CScene> _newScene);
 	//货肺款 Scene阑 积己
 	void CreateScene(const tstring& _strSceneName , shared_ptr<CScene> _newScene);
-
 	shared_ptr<CComponent> GetComponenet(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID);
 
 public:
 	
 	shared_ptr<CScene> GetCurrentScene() { return m_pCurrentScene; }
+
+//	void ChangeLayer(const tstring& _Dst, const tstring& _Src);
+	HRESULT AddNewObject(const tstring& _LayerName, const tstring& _ObjKeyName, shared_ptr<CGameObject> _pObj);
+
 
 private:
 	shared_ptr<CScene> m_pCurrentScene;	
