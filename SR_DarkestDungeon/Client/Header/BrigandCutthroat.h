@@ -1,6 +1,10 @@
 #pragma once
 #include "Monster.h"
 
+#define	HITTEDTIME	1.f
+#define	ATTACK1TIME	0.5f
+#define	ATTACK2TIME	0.5f
+
 class CBrigandCutthroat : public CMonster
 {
 public:
@@ -19,5 +23,10 @@ private:
 
 private:
 	virtual void	Free();
+
+private:
+	_float		m_fHittedTime = HITTEDTIME;
+	_float		m_fAttack1Time = ATTACK1TIME;
+	_float		m_fAttack2Time = ATTACK2TIME;
 };
 

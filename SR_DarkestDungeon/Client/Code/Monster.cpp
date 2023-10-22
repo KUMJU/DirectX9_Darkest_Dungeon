@@ -8,7 +8,7 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
-	shared_ptr<vector<shared_ptr<CSkill>>> _pVecSkill)
+	vector<shared_ptr<CSkill>>& _pVecSkill)
 	: CCreature(pGraphicDev, _tCommonStat, _iPosition, _pVecSkill)
 {
 }

@@ -1,50 +1,65 @@
 #pragma once
-#include "Creature.h"
+#include"GameObject.h"
 
-class BattleSystem
+class CBattleSystem
 {
 public:
-	BattleSystem();
-	~BattleSystem();
+	CBattleSystem();
+	~CBattleSystem();
 
 public:
-	vector<shared_ptr<CCreature>> GetHerolist() { return m_vHero; }
-	vector<shared_ptr<CCreature>> GetEnemylist() { return m_vEnemy; }
-	void SetHerolist(vector<shared_ptr<CCreature>> _HeroList)
+	vector<shared_ptr<CGameObject>> GetHeroesVector() { return m_vHeroes; }
+	vector<shared_ptr<CGameObject>> GetMonstersVector() { return m_vMonsters; }
+	void SetCurrentCreature(shared_ptr<CGameObject> _pCrea) { m_pCurrentCreature = _pCrea; }
+	void PushCreaturesVector(vector<shared_ptr<CGameObject>>& _vVec)
 	{
-		m_vHero = _HeroList;
+		m_vCreatures = _vVec;
 	}
-	void SetEnemylist(vector<shared_ptr<CCreature>> _EnemyList)
+	void PushHeroesVector(vector<shared_ptr<CGameObject>>& _vVec)
 	{
-		m_vEnemy = _EnemyList;
+		m_vHeroes = _vVec;
+	}
+	void PushMonstersVector(vector<shared_ptr<CGameObject>>& _vVec)
+	{
+		m_vMonsters = _vVec;
 	}
 
 public:
-	void Update();
+	void Ready();
+	void Update(const _float& fTimeDelta); // 턴 진행중
 
 public:
-	// 매턴 시작시 호출
-	_bool IsHeroFirst();	// 턴게임 시작 진영이 영웅진영인지
+	// 턴 시작시 호출
+	void StartTurn();
+
+	// 매 크리처 턴 시작시 호출
+	shared_ptr<CGameObject> NextCreature(); // 영웅부터 몬스터까지 빠른 속도인 creature를 반환
 
 	// 매 크리처 턴 종료시 호출
-	void NextCreatureTurn(); // 차례인 Creature
+	void CreatureTurnEnd();
 
+	// 턴 종료시 호출
 	void NextTurn();	// 다음 턴
 
-	void EndBattle();
-
-	_int TurnCreature(vector<shared_ptr<CCreature>> _vCreatures);
+	// 배틀 끝
+	void EndBattle();	// 전투 종료
 
 	_bool HeroesAllDead();
 	_bool MonstersAllDead();
 
+protected:
+	void CmpBySpeed(vector<shared_ptr<CGameObject>>& _vCreatures);
+
 private:
-	vector<shared_ptr<CCreature>> m_vHero;		// 파티 리스트		0: 제일 앞
-	vector<shared_ptr<CCreature>> m_vEnemy;		// 적들 리스트
+	vector<shared_ptr<CGameObject>> m_vCreatures;		// 영웅, 몬스터 포함 리스트
+	vector<shared_ptr<CGameObject>> m_vHeroes;			// 영웅 리스트		0: 제일 앞
+	vector<shared_ptr<CGameObject>> m_vMonsters;		// 몬스터 리스트
 
 	_int m_iTurn = 1;	// 현재 턴
-	_int m_iTurnHero = 0; // 차례인 영웅
-	_int m_iTurnEnemy = 0; // 차례인 몬스터
-	_bool m_bHeroTrun = true; // 히어로 차례인지
+	shared_ptr<CGameObject>			m_pCurrentCreature = nullptr;
+
+	_float  m_fTime = BATTLEINTERVEL;	// 매 크리처 턴사이 간격
+	_bool	m_bNext = false;
+	_bool	m_bHero = false;			// 공격 주체가 영웅인지?
 };
 

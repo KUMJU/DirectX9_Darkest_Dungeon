@@ -8,7 +8,7 @@ CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
-	shared_ptr<vector<shared_ptr<CSkill>>> _pVecSkill, _float _fCritical)
+	vector<shared_ptr<CSkill>>& _pVecSkill, _float _fCritical)
 	: CCreature(pGraphicDev, _tCommonStat, _iPosition, _pVecSkill), m_fCritical(_fCritical)
 {
 }
@@ -67,7 +67,7 @@ void CHero::RenderGameObject()
 
 shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)
 {
-	shared_ptr<CSkill> m_pSelectedSkill = (*m_pVecSkill)[_iSkillID];
+	shared_ptr<CSkill> m_pSelectedSkill = (m_pVecSkill)[_iSkillID];
 
 	// 장착하지 않았거나 배운 적 없는 스킬이면 선택 불가
 	if (!m_pSelectedSkill->IsEquipped() || !m_pSelectedSkill->IsUnlocked())

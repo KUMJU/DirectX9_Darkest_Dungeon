@@ -8,7 +8,7 @@ public:
 
 	// 스킬까지 세팅할 때
 	CMonster(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
-		shared_ptr<vector<shared_ptr<CSkill>>> _pVecSkill);
+		vector<shared_ptr<CSkill>>& _pVecSkill);
 
 	// 전투 위치와 스킬은 나중에 세팅할 때	
 	CMonster(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat);

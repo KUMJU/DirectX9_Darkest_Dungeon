@@ -10,7 +10,7 @@ CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
-	shared_ptr<vector<shared_ptr<CSkill>>> _pVecSkill)
+	vector<shared_ptr<CSkill>>& _pVecSkill)
 	: CGameObject(pGraphicDev), m_tCommonStat(_tCommonStat), m_iPosition(_iPosition), m_pVecSkill(_pVecSkill)
 {
 }
@@ -61,28 +61,28 @@ void CCreature::RenderGameObject()
 {
 }
 
-shared_ptr<CSkill> CCreature::GetSkill(tstring _strSkillName)
-{
-	for (auto iter : *m_pVecSkill)
-	{
-		// 수정 필요 // 이렇게 비교해도 되는지 확인해봐야됨
-		if (iter->GetSkillName() == _strSkillName)
-		{
-			return iter;
-		}
-	}
+//shared_ptr<CSkill> CCreature::GetSkill(tstring _strSkillName)
+//{
+//	for (auto iter : *m_pVecSkill)
+//	{
+//		// 수정 필요 // 이렇게 비교해도 되는지 확인해봐야됨
+//		if (iter->GetSkillName() == _strSkillName)
+//		{
+//			return iter;
+//		}
+//	}
+//
+//	return nullptr;
+//}
 
-	return nullptr;
-}
+//HRESULT CCreature::SetSkill(shared_ptr<vector<shared_ptr<CSkill>>> _pSkill)
+//{
+//	m_pVecSkill = _pSkill;
+//
+//	return S_OK;
+//}
 
-HRESULT CCreature::SetSkill(shared_ptr<vector<shared_ptr<CSkill>>> _pSkill)
-{
-	m_pVecSkill = _pSkill;
-
-	return S_OK;
-}
-
-void CCreature::StartTurn()
+void CCreature::StartCalculate()
 {
 	// 출혈이나 중독 상태라면
 	if (m_bState[0] || m_bState[1])
@@ -98,13 +98,21 @@ void CCreature::StartTurn()
 		m_bBleedDot[3] = 0;
 	}
 
-	// ====지워도됨=====
-	// 전투시스템에서 어떻게 할지??
 	// 기절
-	//if (m_bState[2]) return false;
+	if (m_bState[2])
+	{
+		m_bState[2] = false;
+		m_bMyTurn = false;
+		m_bDone = true;
+	}
 
 	// 죽었는지
-	//if (m_tCommonStat.iHp <= 0) return false;
+	if (m_tCommonStat.iHp <= 0)
+	{
+		m_bState[3] = true;
+		m_bMyTurn = false;
+		m_bDone = true;
+	}
 }
 
 void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill)
@@ -125,6 +133,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 중독
 	if (arrAttack[1])
 	{
+		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 		_pCreature->BlightAttack(_pSkill->GetDotDamage());
 		_pCreature->SetBlight(true);
 
@@ -134,6 +143,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 출혈
 	if (arrAttack[2])
 	{
+		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 		_pCreature->BleedAttack(_pSkill->GetDotDamage());
 		_pCreature->SetBleed(true);
 
@@ -143,6 +153,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 기절
 	if (arrAttack[3])
 	{
+		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 		_pCreature->SetStun(true);
 
 		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
@@ -151,6 +162,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 이동
 	if (arrAttack[4])
 	{
+		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 		_pCreature->SetPosition(_pSkill->GetMoveCnt());
 
 		// 동료 크리처들도 움직여주기
