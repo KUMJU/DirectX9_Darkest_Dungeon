@@ -119,7 +119,6 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		m_eCurrentItem = EHandItem::BANDAGE;
 	}
 
-
 }
 
 void CPlayer::ClimbingTerrain()
@@ -136,6 +135,26 @@ void CPlayer::ShakingHand()
 void CPlayer::InsertItem(shared_ptr<CItem> _pItem)
 {
 	m_pInventory->InsertItem(_pItem);
+}
+
+void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
+{
+
+	//item
+	
+	shared_ptr<CItem> pNewItem = make_shared<CItem>(m_pGraphicDev);
+	pNewItem->SetDropItemInfo({ -182.f, -320.f ,0.f }, L"Item_UI_Antivenom");
+
+	pNewItem->AwakeGameObject();
+	pNewItem->ReadyGameObject();
+	pNewItem->SetOnField(false);
+	//임시로 고정값으로 해둠
+	pNewItem->SetScale({ 20.f, 38.f, 1.f });
+
+	InsertItem(pNewItem);
+
+	_pObj->SetActive(false);
+
 }
 
 void CPlayer::Free()

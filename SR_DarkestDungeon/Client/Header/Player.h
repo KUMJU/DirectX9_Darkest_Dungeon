@@ -38,6 +38,8 @@ private:
 
 	void			ShakingHand();
 	void			InsertItem (shared_ptr<CItem> _pItem);
+	virtual void	OnCollide(shared_ptr<CGameObject> _pObj);
+
 protected:
 	// Player Component
 	shared_ptr<CTransform> m_pTransformCom = nullptr;

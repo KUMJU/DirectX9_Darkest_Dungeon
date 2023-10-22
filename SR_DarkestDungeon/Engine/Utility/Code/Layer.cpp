@@ -123,3 +123,19 @@ shared_ptr<CComponent> CLayer::GetComponent(const tstring& _strObjName, const ts
 
 	return iter->second.front()->GetComponent(_strComName, _eID);
 }
+
+HRESULT CLayer::AddNewObject(const tstring& _strObjKey, shared_ptr<CGameObject> _pObj)
+{
+	auto iter = m_objectMap.find(_strObjKey);
+
+	if (iter != m_objectMap.end()) {
+		iter->second.push_back(_pObj);
+	}
+	else {
+		list<shared_ptr<CGameObject>> tempList;
+		tempList.push_back(_pObj);
+		m_objectMap.insert({ _strObjKey , tempList });
+	}
+
+	return S_OK;
+}

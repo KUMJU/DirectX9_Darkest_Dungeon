@@ -23,6 +23,7 @@ public:
 
 public:
 	shared_ptr<CComponent> GetComponent(const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID);
+	HRESULT AddNewObject(const tstring& _strObjKey, shared_ptr<CGameObject> _pObj);
 
 private:
 	map<tstring, list<shared_ptr<CGameObject>>> m_objectMap;
