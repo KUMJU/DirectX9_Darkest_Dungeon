@@ -12,6 +12,7 @@
 #include"RcTex.h"
 #include "Transform.h"
 #include"Animator.h"
+#include "Collider.h"
 
 
 BEGIN(Engine)

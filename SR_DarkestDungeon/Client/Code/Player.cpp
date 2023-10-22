@@ -2,6 +2,7 @@
 #include "Player.h"
 #include"Export_Utility.h"
 #include"Inventory.h"
+#include "Wall.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -68,7 +69,7 @@ void CPlayer::AddComponent()
 
 void CPlayer::KeyInput(const _float& fTimeDelta)
 {
-	
+
 	_vec3		vDir;
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
@@ -76,7 +77,8 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, m_fSpeed);
 		ShakingHand();
-
+		m_fDeltaTime = fTimeDelta;
+		m_eLastMove = EPlayerMove::RIGHT;
 	}
 
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
@@ -84,7 +86,8 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, -m_fSpeed);
 		ShakingHand();
-
+		m_fDeltaTime = fTimeDelta;
+		m_eLastMove = EPlayerMove::LEFT;
 	}
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000){
@@ -92,7 +95,8 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, -m_fSpeed);
 		ShakingHand();
-
+		m_fDeltaTime = fTimeDelta;
+		m_eLastMove = EPlayerMove::DOWN;
 	}
 
 
@@ -101,7 +105,8 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, m_fSpeed);
 		ShakingHand();
-
+		m_fDeltaTime = fTimeDelta;
+		m_eLastMove = EPlayerMove::UP;
 	}
 
 	if (GetAsyncKeyState('1') & 0x8000) {
@@ -145,22 +150,58 @@ void CPlayer::InsertItem(shared_ptr<CItem> _pItem)
 
 void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 {
+	// ITEM 충돌
+	if (ECollideID::ITEM == _pObj->GetColType())
+	{
+		shared_ptr<CItem> pNewItem = make_shared<CItem>(m_pGraphicDev);
+		pNewItem->SetDropItemInfo({ -182.f, -320.f ,0.f }, L"Item_UI_Antivenom");
 
-	//item
-	
-	shared_ptr<CItem> pNewItem = make_shared<CItem>(m_pGraphicDev);
-	pNewItem->SetDropItemInfo({ -182.f, -320.f ,0.f }, L"Item_UI_Antivenom");
+		pNewItem->AwakeGameObject();
+		pNewItem->ReadyGameObject();
+		pNewItem->SetOnField(false);
+		//임시로 고정값으로 해둠
+		pNewItem->SetScale({ 20.f, 38.f, 1.f });
 
-	pNewItem->AwakeGameObject();
-	pNewItem->ReadyGameObject();
-	pNewItem->SetOnField(false);
-	//임시로 고정값으로 해둠
-	pNewItem->SetScale({ 20.f, 38.f, 1.f });
+		InsertItem(pNewItem);
 
-	InsertItem(pNewItem);
+		_pObj->SetActive(false);
+	}
 
-	_pObj->SetActive(false);
+	// WALL 충돌
+	else if (ECollideID::WALL == _pObj->GetColType())
+	{
+		_vec3		vPlayerPos;
+		_vec3		vWallPos;
 
+		m_pTransformCom->GetInfo(INFO_POS, &vPlayerPos);
+		dynamic_pointer_cast<CTransform>(_pObj->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetInfo(INFO_POS, &vPlayerPos);
+
+		switch (m_eLastMove)
+		{
+		case EPlayerMove::RIGHT:
+			/*if (dynamic_pointer_cast<CWall>(_pObj)->IsHorizontal())
+			{*/
+				m_pTransformCom->SetPosition(vWallPos.x - 3.f, vPlayerPos.y, vPlayerPos.z);
+			//}
+			break;
+		case EPlayerMove::LEFT:
+			m_pTransformCom->GetInfo(INFO_POS, &vPlayerPos);
+			m_pTransformCom->SetPosition(vWallPos.x + 3.f, vPlayerPos.y, vPlayerPos.z);
+			break;
+		case EPlayerMove::UP:
+			m_pTransformCom->GetInfo(INFO_POS, &vPlayerPos);
+			m_pTransformCom->SetPosition(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z - 3.f);
+			break;
+		case EPlayerMove::DOWN:
+			m_pTransformCom->GetInfo(INFO_POS, &vPlayerPos);
+			m_pTransformCom->SetPosition(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z + 2.f);
+			break;
+		case EPlayerMove::ENUM_END:
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void CPlayer::Free()

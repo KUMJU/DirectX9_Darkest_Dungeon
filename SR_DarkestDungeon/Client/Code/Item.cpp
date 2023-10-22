@@ -14,6 +14,7 @@ CItem::~CItem()
 HRESULT CItem::ReadyGameObject()
 {
 	__super::ReadyGameObject();
+	m_eCollideID = ECollideID::ITEM;
 	return S_OK;
 }
 

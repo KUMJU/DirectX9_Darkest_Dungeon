@@ -18,6 +18,15 @@ class CPlayerHand;
 class CInventory;
 class CItem;
 
+enum class EPlayerMove
+{
+	RIGHT,
+	LEFT,
+	UP,
+	DOWN,
+	ENUM_END
+};
+
 class CPlayer : public CGameObject
 {
 
@@ -56,6 +65,9 @@ private:
 	_float		m_fSpeed = 3.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
+
+	_float		m_fDeltaTime = 0.f;
+	EPlayerMove m_eLastMove = EPlayerMove::ENUM_END;
 
 private:
 	virtual void	Free();
