@@ -8,6 +8,7 @@ class CRcTex;
 class CTexture;
 class CTransform;
 class CAnimator;
+class CCollider;
 
 END
 
@@ -22,6 +23,8 @@ public:
 	virtual _int UpdateGameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdateGameObject() override;
 	virtual void RenderGameObject() override;
+
+	virtual void OnCollide(shared_ptr<CGameObject> _pObj) override;
 
 public:
 	//true일 경우 필드 위에 배치된 아이템이고, false일 시 인벤토리에 들어간 아이템
@@ -39,11 +42,13 @@ protected:
 	//필드에 떠있을때 위 아래로 둥둥 띄워주는 효과
 	void FloatingOnField();
 
+
 private:
 	//Componenet
 	shared_ptr<CTransform> m_pTransCom = nullptr;
 	shared_ptr<CRcTex> m_pBufCom = nullptr;
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
+	shared_ptr<CCollider> m_pColliderCom = nullptr;
 
 private:
 	//Member variable

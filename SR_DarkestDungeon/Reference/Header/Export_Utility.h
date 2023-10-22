@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include"GameMgr.h"
 #include"ResourceMgr.h"
+#include "CollisionMgr.h"
 
 #include"TerrainTex.h"
 #include"CubeTex.h"
@@ -11,6 +12,7 @@
 #include"RcTex.h"
 #include "Transform.h"
 #include"Animator.h"
+#include "Collider.h"
 
 
 BEGIN(Engine)

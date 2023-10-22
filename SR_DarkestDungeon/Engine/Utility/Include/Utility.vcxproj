@@ -145,6 +145,8 @@
     <ClInclude Include="..\..\Header\Animator.h" />
     <ClInclude Include="..\..\Header\Camera.h" />
     <ClInclude Include="..\..\Header\CameraMgr.h" />
+    <ClInclude Include="..\..\Header\Collider.h" />
+    <ClInclude Include="..\..\Header\CollisionMgr.h" />
     <ClInclude Include="..\..\Header\Component.h" />
     <ClInclude Include="..\..\Header\CubeTex.h" />
     <ClInclude Include="..\..\Header\EngineUtil.h" />
@@ -170,6 +172,8 @@
     <ClCompile Include="..\Code\Animator.cpp" />
     <ClCompile Include="..\Code\Camera.cpp" />
     <ClCompile Include="..\Code\CameraMgr.cpp" />
+    <ClCompile Include="..\Code\Collider.cpp" />
+    <ClCompile Include="..\Code\CollisionMgr.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />
     <ClCompile Include="..\Code\CubeTex.cpp" />
     <ClCompile Include="..\Code\EngineUtil.cpp" />

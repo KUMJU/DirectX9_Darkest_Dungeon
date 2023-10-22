@@ -58,6 +58,12 @@ void CPlayer::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransformCom->SetScale(1.f, 1.f, 1.f);
 
+	pComponent = m_pColliderCom = make_shared<CCollider>();
+	NULL_CHECK_MSG(pComponent, L"Make Player ColliderCom Failed");
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
+	m_pColliderCom->SetScale({ 3.f, 3.f, 3.f });
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
 }
 
 void CPlayer::KeyInput(const _float& fTimeDelta)

@@ -328,6 +328,7 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
 	shared_ptr<CGameObject> m_pItem = make_shared<CItem>(m_pGraphicDev);
+	m_pItem->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem", m_pItem);
 	dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 4.f, 1.f, 6.f }, L"Player_Item_Antivenom");
 
