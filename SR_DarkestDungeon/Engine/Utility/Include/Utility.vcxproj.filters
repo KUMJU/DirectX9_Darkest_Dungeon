@@ -133,7 +133,7 @@
     <ClCompile Include="..\Code\UIObj.cpp">
       <Filter>02. GameObject\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CUIMgr.cpp">
+    <ClCompile Include="..\Code\UIMgr.cpp">
       <Filter>04. Manager\04.UIMgr</Filter>
     </ClCompile>
   </ItemGroup>

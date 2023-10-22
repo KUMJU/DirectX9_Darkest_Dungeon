@@ -172,7 +172,6 @@
     <ClCompile Include="..\Code\CameraMgr.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />
     <ClCompile Include="..\Code\CubeTex.cpp" />
-    <ClCompile Include="..\Code\CUIMgr.cpp" />
     <ClCompile Include="..\Code\EngineUtil.cpp" />
     <ClCompile Include="..\Code\GameMgr.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
@@ -186,6 +185,7 @@
     <ClCompile Include="..\Code\TerrainTex.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />
     <ClCompile Include="..\Code\Transform.cpp" />
+    <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="..\Code\UIObj.cpp" />
     <ClCompile Include="..\Code\VIBuffer.cpp" />
   </ItemGroup>

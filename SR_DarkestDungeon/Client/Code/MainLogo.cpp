@@ -250,10 +250,8 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	//shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
-	//m_pPlayer->SetPos(_vec3(WALLSIZEX + PATHSIZEX, 3.f, WALLSIZEX * 1.f));
-	//m_pPlayer->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
-	//m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
 	// GameObject
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);

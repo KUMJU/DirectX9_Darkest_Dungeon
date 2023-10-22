@@ -35,7 +35,7 @@ private:
 
 	void			ShakingHand();
 
-private:
+protected:
 	// Player Component
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
 

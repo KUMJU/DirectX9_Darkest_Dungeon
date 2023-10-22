@@ -2,7 +2,6 @@
 #include"Engine_Define.h"
 #include"Layer.h"
 
-
 BEGIN(Engine)
 
 class ENGINE_DLL CScene
