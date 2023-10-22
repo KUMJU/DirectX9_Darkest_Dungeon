@@ -87,6 +87,20 @@ std::shared_ptr<CComponent> CGameObject::GetComponent(const tstring& _strKeyName
 	return iter->second;
 }
 
+void CGameObject::Compute_ViewZ(const _vec3* pPos)
+{
+	_matrix		matCamWorld;
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+	D3DXMatrixInverse(&matCamWorld, 0, &matCamWorld);
+
+	_vec3	vCamPos;
+	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
+
+	vCamPos = vCamPos - *pPos;
+	m_fViewZ = D3DXVec3Length(&(vCamPos));
+}
+
 void CGameObject::RemoveComponent()
 {
 }

@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Header\Animator.h" />
     <ClInclude Include="..\..\Header\Camera.h" />
+    <ClInclude Include="..\..\Header\CameraMgr.h" />
     <ClInclude Include="..\..\Header\Component.h" />
     <ClInclude Include="..\..\Header\CubeTex.h" />
     <ClInclude Include="..\..\Header\EngineUtil.h" />
@@ -160,14 +161,18 @@
     <ClInclude Include="..\..\Header\TerrainTex.h" />
     <ClInclude Include="..\..\Header\Texture.h" />
     <ClInclude Include="..\..\Header\Transform.h" />
+    <ClInclude Include="..\..\Header\UIMgr.h" />
+    <ClInclude Include="..\..\Header\UIObj.h" />
     <ClInclude Include="..\..\Header\VIBuffer.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Animator.cpp" />
     <ClCompile Include="..\Code\Camera.cpp" />
+    <ClCompile Include="..\Code\CameraMgr.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />
     <ClCompile Include="..\Code\CubeTex.cpp" />
+    <ClCompile Include="..\Code\CUIMgr.cpp" />
     <ClCompile Include="..\Code\EngineUtil.cpp" />
     <ClCompile Include="..\Code\GameMgr.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
@@ -181,6 +186,7 @@
     <ClCompile Include="..\Code\TerrainTex.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />
     <ClCompile Include="..\Code\Transform.cpp" />
+    <ClCompile Include="..\Code\UIObj.cpp" />
     <ClCompile Include="..\Code\VIBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>

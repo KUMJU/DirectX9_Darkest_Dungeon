@@ -2,6 +2,7 @@
 #include "Player.h"
 #include"Export_Utility.h"
 
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -15,23 +16,22 @@ HRESULT CPlayer::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
-	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(2.f, 2.f, 1.f);
-
-	m_pTransformCom->SetAngle(m_vAngle);
-	m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
+	m_pTransformCom->SetPosition(4.f, 0.f, 0.f);
 
 	return S_OK;
 }
+
+
 
 _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 {
 	if(!m_bLock)
 		KeyInput(fTimeDelta);
+	m_pPlayerHand->StopShakingHand();
+	KeyInput(fTimeDelta);
+	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
-
-	_int iExit = __super::UpdateGameObject(fTimeDelta);
-
+	
 	return iExit;
 }
 
@@ -42,13 +42,6 @@ void CPlayer::LateUpdateGameObject()
 
 void CPlayer::RenderGameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pTextureCom->SetAnimTexture();
-	m_pBufCom->RenderBuffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 }
 
@@ -62,41 +55,37 @@ void CPlayer::AddComponent()
 	NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
-
-	pComponent = m_pBufCom = make_shared<CRcTex>(m_pGraphicDev);
-	m_pBufCom->ReadyBuffer();
-	m_mapComponent[ID_STATIC].insert({ L"Com_RCTex",pComponent });
-
-	//¿©±â
-	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	m_pTextureCom->SetAnimKey(L"Highwayman_Idle", 0.05f);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
-
-
+	m_pTransformCom->SetScale(1.f, 1.f, 1.f);
 
 }
 
 void CPlayer::KeyInput(const _float& fTimeDelta)
 {
+	
 	_vec3		vDir;
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-		m_pTextureCom->SetAnimKey(L"Highwayman_Walk", 0.02f);
 		m_pTransformCom->GetInfo(INFO_RIGHT, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, m_fSpeed);
+		ShakingHand();
+
 	}
 
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
 		m_pTransformCom->GetInfo(INFO_RIGHT, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, -m_fSpeed);
+		ShakingHand();
+
 	}
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000){
 		m_pTransformCom->GetInfo(INFO_LOOK, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, -m_fSpeed);
+		ShakingHand();
+
 	}
 
 
@@ -104,6 +93,29 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		m_pTransformCom->GetInfo(INFO_LOOK, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, m_fSpeed);
+		ShakingHand();
+
+	}
+
+	if (GetAsyncKeyState('1') & 0x8000) {
+
+		m_pPlayerHand->SetCurrentItem(EHandItem::SHOVEL);
+		m_eCurrentItem = EHandItem::SHOVEL;
+
+	}
+
+	if (GetAsyncKeyState('2') & 0x8000) {
+
+		m_pPlayerHand->SetCurrentItem(EHandItem::ANTI_VENOM);
+		m_eCurrentItem = EHandItem::ANTI_VENOM;
+
+
+	}
+
+	if (GetAsyncKeyState('3') & 0x8000) {
+
+		m_pPlayerHand->SetCurrentItem(EHandItem::BANDAGE);
+		m_eCurrentItem = EHandItem::BANDAGE;
 	}
 
 
@@ -111,6 +123,13 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 void CPlayer::ClimbingTerrain()
 {
+}
+
+void CPlayer::ShakingHand()
+{
+	if(EHandItem::ENUM_END != m_eCurrentItem )
+		m_pPlayerHand->ShakingHand();
+
 }
 
 void CPlayer::Free()

@@ -63,6 +63,9 @@
     <ClCompile Include="..\Code\DungeonSystem.cpp">
       <Filter>DungeonSystem</Filter>
     </ClCompile>
+    <Filter Include="02. Object\00. Player\PlayerHand">
+      <UniqueIdentifier>{9b41398d-c20d-4abd-a311-8ff148a03d54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -140,7 +143,17 @@
       <Filter>DungeonSystem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Define.h">
+    <ClInclude Include="..\Header\Item.h">
+      <Filter>02. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticCamera.h">
+      <Filter>02. Object\StaticCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Inventory.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerHand.h">
+      <Filter>02. Object\00. Player\PlayerHand</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +237,19 @@
     <Filter Include="DungeonRoom">
       <UniqueIdentifier>{29a9c869-b0ac-4b2a-8647-0849bd09d4d6}</UniqueIdentifier>
     </Filter>
+
+        <ClCompile Include="..\Code\Item.cpp">
+      <Filter>02. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>02. Object\StaticCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Inventory.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerHand.cpp">
+      <Filter>02. Object\00. Player\PlayerHand</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

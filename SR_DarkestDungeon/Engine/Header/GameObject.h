@@ -32,16 +32,17 @@ public:
 
 	void SetLock(_bool _bLock) { m_bLock = _bLock; }
 	void	SetBillBoard(_matrix& _matWorld);
-
-
-
 	std::shared_ptr<CComponent> GetComponent(const tstring& _strKeyName, COMPONENTID _eComID);
+
+public:
+	_float				Get_ViewZ() { return m_fViewZ; }
+	void				Compute_ViewZ(const _vec3* pPos);
 
 	//Component Manage
 protected:
 	void RemoveComponent();
 
-private:
+protected:
 	virtual void AddComponent();
 
 protected:
@@ -52,6 +53,7 @@ protected:
 
 	_vec3 m_vPos = _vec3{ 0.f, 0.f, 0.f };
 	_vec3 m_vAngle = _vec3{ 0.f, 0.f, 0.f };
+	_float			m_fViewZ;
 
 	_bool m_bLock = false;
 

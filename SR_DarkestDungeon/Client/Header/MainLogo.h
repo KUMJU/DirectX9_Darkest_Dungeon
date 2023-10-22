@@ -28,8 +28,10 @@ private:
 
 	HRESULT				Ready_Layer_Environment(tstring pLayerTag);
 	HRESULT				Ready_Layer_SkyBox(tstring pLayerTag);
+	HRESULT				Ready_Layer_Camera(tstring pLayerTag);
+
 	HRESULT				Ready_Layer_GameObject(tstring pLayerTag);
-	HRESULT				Ready_Layer_UI(const tstring* pLayerTag);
+	HRESULT				Ready_Layer_UI(tstring pLayerTag);
 
 	shared_ptr<CDungeonSystem> m_pWealdDungeon = {};
 	shared_ptr<CDungeonRoom> m_pRoom1 = {};
