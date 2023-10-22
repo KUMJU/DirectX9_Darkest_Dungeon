@@ -152,7 +152,10 @@
     <ClInclude Include="..\Header\BattleSystem.h" />
     <ClInclude Include="..\Header\BrigandCutthroat.h" />
     <ClInclude Include="..\Header\Creature.h" />
+    <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Door.h" />
+    <ClInclude Include="..\Header\DungeonRoom.h" />
+    <ClInclude Include="..\Header\DungeonSystem.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Hero.h" />
     <ClInclude Include="..\Header\InteractionObj.h" />
@@ -179,6 +182,8 @@
     <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
     <ClCompile Include="..\Code\Door.cpp" />
+    <ClCompile Include="..\Code\DungeonRoom.cpp" />
+    <ClCompile Include="..\Code\DungeonSystem.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Hero.cpp" />
     <ClCompile Include="..\Code\InteractionObj.cpp" />

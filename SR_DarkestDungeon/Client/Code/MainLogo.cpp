@@ -1,13 +1,15 @@
-#include"pch.h"
+#include "pch.h"
 #include "MainLogo.h"
-#include"Terrain.h"
+#include "Terrain.h"
 #include "Wall.h"
-#include"SkyBox.h"
-#include"Layer.h"
-#include"DynamicCamera.h"
-#include"Player.h"
-#include"Export_Utility.h"
-#include"StaticCamera.h"
+#include "SkyBox.h"
+#include "Layer.h"
+#include "DynamicCamera.h"
+#include "Player.h"
+#include "Export_Utility.h"
+#include "StaticCamera.h"
+#include "DungeonSystem.h"
+#include "DungeonRoom.h"
 
 #include "BrigandCutthroat.h"
 
@@ -22,6 +24,13 @@ CMainLogo::~CMainLogo()
 
 HRESULT CMainLogo::ReadyScene()
 {
+	// Weald 던전
+	m_pWealdDungeon = make_shared<CDungeonSystem>();
+	// 던전 방1
+	m_pRoom1 = make_shared<CDungeonRoom>();
+	// 던전 방2
+	m_pRoom2 = make_shared<CDungeonRoom>();
+
 	Ready_Layer_Environment(L"Layer_Environment");
 	Ready_Layer_SkyBox(L"Layer_SkyBox");
 	Ready_Layer_GameObject(L"Layer_GameObj");
@@ -36,6 +45,19 @@ HRESULT CMainLogo::ReadyScene()
 
 _int CMainLogo::UpdateScene(const _float& fTimeDelta)
 {
+	// 방 1에 들어가면
+	if (GetAsyncKeyState('8') & 0x8000) {
+		m_pWealdDungeon->CurrentRoom(0);
+		m_pRoom1->BattleStart();
+	}
+
+	// 방 2에 들어가면
+	if (GetAsyncKeyState('9') & 0x8000) {
+		m_pWealdDungeon->CurrentRoom(1);
+		//m_pRoom2->BattleStart();
+	}
+
+
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
 
@@ -50,43 +72,6 @@ void CMainLogo::LateUpdateScene()
 
 void CMainLogo::RenderScene()
 {
-}
-
-void CMainLogo::FormBattlePosition(vector<shared_ptr<CGameObject>> _pHeroes, vector<shared_ptr<CGameObject>> _pMonsters, _float _fAngle, _vec3 _vOrigin)
-{
-	// 좌측
-	// 3열
-	dynamic_pointer_cast<CCreature>(_pHeroes[2])->SetPos(_vec3(_vOrigin.x - 4.f, 3.f, _vOrigin.y + 8.f));
-	dynamic_pointer_cast<CCreature>(_pHeroes[2])->SetAngle(_vec3(0.f, _fAngle, 0.f));
-
-	// 4열
-	dynamic_pointer_cast<CCreature>(_pHeroes[3])->SetPos(_vec3(_vOrigin.x - 6.f, 3.f, _vOrigin.y + 6.f));
-	dynamic_pointer_cast<CCreature>(_pHeroes[3])->SetAngle(_vec3(0.f, _fAngle, 0.f));
-
-	// 1열
-	dynamic_pointer_cast<CCreature>(_pHeroes[0])->SetPos(_vec3(_vOrigin.x + 4.f, 3.f, _vOrigin.y + 4.f));
-	dynamic_pointer_cast<CCreature>(_pHeroes[0])->SetAngle(_vec3(0.f, _fAngle, 0.f));
-
-	// 2열
-	dynamic_pointer_cast<CCreature>(_pHeroes[1])->SetPos(_vec3(_vOrigin.x + 2.f, 3.f, _vOrigin.y + 2.f));
-	dynamic_pointer_cast<CCreature>(_pHeroes[1])->SetAngle(_vec3(0.f, _fAngle, 0.f));
-
-	// 우측
-	// 3열
-	dynamic_pointer_cast<CCreature>(_pMonsters[2])->SetPos(_vec3(_vOrigin.x + 24.f, 3.f, _vOrigin.y + 8.f));
-	dynamic_pointer_cast<CCreature>(_pMonsters[2])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
-
-	// 4열
-	dynamic_pointer_cast<CCreature>(_pMonsters[3])->SetPos(_vec3(_vOrigin.x + 26.f, 3.f, _vOrigin.y + 6.f));
-	dynamic_pointer_cast<CCreature>(_pMonsters[3])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
-
-	// 1열
-	dynamic_pointer_cast<CCreature>(_pMonsters[0])->SetPos(_vec3(_vOrigin.x + 16.f, 3.f, _vOrigin.y + 4.f));
-	dynamic_pointer_cast<CCreature>(_pMonsters[0])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
-
-	// 2열
-	dynamic_pointer_cast<CCreature>(_pMonsters[1])->SetPos(_vec3(_vOrigin.x + 18.f, 3.f, _vOrigin.y + 2.f));
-	dynamic_pointer_cast<CCreature>(_pMonsters[1])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
 }
 
 HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
@@ -238,7 +223,7 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	//m_pPlayer->SetAngle(_vec3(0.f, -PI / 2.f, 0.f));
 	//m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
-	// 좌측
+	// GameObject
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_3 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
@@ -247,21 +232,49 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pBrigandCutthroat_6 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_7 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_8 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-
-	vector<shared_ptr<CGameObject>> vHeroes;
-	vector<shared_ptr<CGameObject>> vMonsters;
-	vHeroes.push_back(m_pBrigandCutthroat_1);
-	vHeroes.push_back(m_pBrigandCutthroat_2);
-	vHeroes.push_back(m_pBrigandCutthroat_3);
-	vHeroes.push_back(m_pBrigandCutthroat_4);
-	vMonsters.push_back(m_pBrigandCutthroat_5);
-	vMonsters.push_back(m_pBrigandCutthroat_6);
-	vMonsters.push_back(m_pBrigandCutthroat_7);
-	vMonsters.push_back(m_pBrigandCutthroat_8);
-
-	FormBattlePosition(vHeroes, vMonsters, -PI / 2.f, _vec3(WALLSIZEX + PATHSIZEX, WALLSIZEX * 14.f, 0.f));
 	
-	// z축 기준 뒤에거부터
+
+	// 방에 GameObject 넣기
+	vector<shared_ptr<CGameObject>> vect1;
+	vect1.push_back(m_pBrigandCutthroat_1);
+	vect1.push_back(m_pBrigandCutthroat_2);
+	vect1.push_back(m_pBrigandCutthroat_3);
+	vect1.push_back(m_pBrigandCutthroat_4);
+	vect1.push_back(m_pBrigandCutthroat_5);
+	vect1.push_back(m_pBrigandCutthroat_6);
+	vect1.push_back(m_pBrigandCutthroat_7);
+	vect1.push_back(m_pBrigandCutthroat_8);
+
+	m_pRoom1->PushGameObjectVector(vect1);
+
+	vector<shared_ptr<CGameObject>> vect2;
+	vect2.push_back(m_pBrigandCutthroat_1);
+	vect2.push_back(m_pBrigandCutthroat_2);
+	vect2.push_back(m_pBrigandCutthroat_3);
+	vect2.push_back(m_pBrigandCutthroat_4);
+
+	m_pRoom1->PushHeroesVector(vect2);
+
+	vector<shared_ptr<CGameObject>> vect3;
+	vect3.push_back(m_pBrigandCutthroat_5);
+	vect3.push_back(m_pBrigandCutthroat_6);
+	vect3.push_back(m_pBrigandCutthroat_7);
+	vect3.push_back(m_pBrigandCutthroat_8);
+
+	m_pRoom1->PushMonstersVector(vect3);
+
+	// 던전에 방 넣기
+	vector<shared_ptr<CDungeonRoom>> vect4;
+	vect4.push_back(m_pRoom1);
+	vect4.push_back(m_pRoom2);
+
+	m_pWealdDungeon->PushDungeonRoomVector(vect4);
+
+
+	m_pWealdDungeon->CurrentRoom(0);
+	m_pRoom1->BattleStart();
+	
+	// Layer에 GameObject 넣기
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_3);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_4);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_1);
