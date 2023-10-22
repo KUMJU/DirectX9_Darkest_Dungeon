@@ -19,12 +19,21 @@ CWall::~CWall()
 HRESULT CWall::ReadyGameObject()
 {
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(6.f, 6.f, 1.f);
+	m_pTransformCom->SetScale(6.f, 6.f, 6.f);
 	
 	m_pTransformCom->SetAngle(m_vAngle);
+	if (PI / 2.f == m_vAngle.y)
+	{
+		m_bHorizontal = true;
+		m_pColliderCom->SetScale({ 6.f, 20.f, 1.f });
+	}
+	else
+		m_bHorizontal = false;
 	m_pTransformCom->Rotation(ROT_Y, PI /2.f);
 	m_iNum = rand() % 9;
 
+	m_eCollideID = ECollideID::WALL;
+	m_bColliding = true;
 	return E_NOTIMPL;
 }
 
@@ -61,6 +70,10 @@ void CWall::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
+void CWall::OnCollide(shared_ptr<CGameObject> _pObj)
+{
+}
+
 void CWall::AddComponent()
 {
 	shared_ptr<CComponent> pComponent;
@@ -87,4 +100,10 @@ void CWall::AddComponent()
 	NULL_CHECK_MSG(pComponent, L"Transform AddComponent Failed");
 	//m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
+
+	pComponent = m_pColliderCom = make_shared<CCollider>();
+	NULL_CHECK_MSG(pComponent, L"Make Player Item ColliderCom Failed");
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
+	m_pColliderCom->SetScale({ 1.f, 20.f, 6.f });
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 }
