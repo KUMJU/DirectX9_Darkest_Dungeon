@@ -41,6 +41,7 @@ _int CItem::UpdateGameObject(const _float& fTimeDelta)
 
 void CItem::LateUpdateGameObject()
 {
+
 	if(m_bOnField)
 		FloatingOnField();
 
@@ -54,6 +55,11 @@ void CItem::RenderGameObject()
 	if (m_bOnField) {
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	}
+	else {
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+	}
 
 	m_pTextureCom->SetTexture(0);
 	m_pBufCom->RenderBuffer();
@@ -63,12 +69,22 @@ void CItem::RenderGameObject()
 	if (m_bOnField) {
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	}
+	else {
+		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	}
 }
 
 void CItem::SetDropItemInfo(_vec3 _vPosition, const tstring& _strName )
 {
 	m_vPosition = _vPosition;
 	m_strItemKey = _strName;
+}
+
+void CItem::SetScale(_vec3 _vScale)
+{
+	m_pTransCom->SetScale(_vScale.x, _vScale.y, _vScale.z);
 }
 
 void CItem::AddComponent()
@@ -88,7 +104,6 @@ void CItem::AddComponent()
 	m_pTransCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransCom->SetPosition(m_vPosition.x, m_vPosition.y, m_vPosition.z);
-
 }
 
 void CItem::FloatingOnField()

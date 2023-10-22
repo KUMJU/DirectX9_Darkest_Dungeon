@@ -16,10 +16,9 @@ public:
 	virtual void			LateUpdateScene();
 	virtual void			RenderScene();
 
-
-
 public:
 	void CreateNewLayer(const tstring& _newLayerName);
+	HRESULT AddNewObject(const tstring& _strLayerName, const tstring& _strObjKey, shared_ptr<CGameObject> _pObj);
 
 public:
 	shared_ptr<CComponent> GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID);

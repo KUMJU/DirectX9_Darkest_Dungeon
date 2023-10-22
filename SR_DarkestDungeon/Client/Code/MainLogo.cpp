@@ -347,11 +347,11 @@ HRESULT CMainLogo::Ready_Layer_UI(tstring pLayerTag)
 	
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
 
-	shared_ptr<CGameObject> m_pItem = make_shared<CItem>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_UITestItem", m_pItem);
-	dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 0.f, 0.f, 0.f }, L"Item_UI_Antivenom");
-	dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
-	dynamic_pointer_cast<CInventory>(m_pInventory)->InsertItem(dynamic_pointer_cast<CItem>(m_pItem));
+	//shared_ptr<CGameObject> m_pItem = make_shared<CItem>(m_pGraphicDev);
+	//m_pLayer->CreateGameObject(L"Obj_UITestItem", m_pItem);
+	//dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 0.f, 0.f, 0.f }, L"Item_UI_Antivenom");
+	//dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
+	//dynamic_pointer_cast<CInventory>(m_pInventory)->InsertItem(dynamic_pointer_cast<CItem>(m_pItem));
 
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

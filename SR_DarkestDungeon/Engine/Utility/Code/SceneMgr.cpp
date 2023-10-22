@@ -66,4 +66,6 @@ HRESULT CSceneMgr::AddNewObject(const tstring& _LayerName, const tstring& _ObjKe
 {
 	if (m_pCurrentScene)
 		return m_pCurrentScene->AddNewObject(_LayerName, _ObjKeyName, _pObj);
+
+	return E_FAIL;
 }

@@ -32,11 +32,20 @@ _int CInventory::UpdateGameObject(const _float& fTimeDelta)
     CGameObject::UpdateGameObject(fTimeDelta);
     AddRenderGroup(RENDER_UI, shared_from_this());
 
+    for (auto& iter : m_itemList) {
+        iter->UpdateGameObject(fTimeDelta);
+    }
+
     return iExit;
 }
 
 void CInventory::LateUpdateGameObject()
 {
+
+    for (auto& iter : m_itemList) {
+        iter->LateUpdateGameObject();
+    }
+
     __super::LateUpdateGameObject();
 }
 
