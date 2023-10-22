@@ -62,7 +62,7 @@ public:
 	void SetPlayerHand(shared_ptr<CPlayerHand> _pHand) { m_pPlayerHand = _pHand; }
 
 private:
-	_float		m_fSpeed = 3.f;
+	_float		m_fSpeed = 10.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
 

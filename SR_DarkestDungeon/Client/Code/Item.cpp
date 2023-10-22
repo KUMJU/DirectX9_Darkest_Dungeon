@@ -126,9 +126,9 @@ void CItem::FloatingOnField()
 	m_pTransCom->GetInfo(INFO_POS, &vPos);
 
 	m_fActTime += m_fTime;
-	m_fTotalHeight += 0.008f * m_CurrentDir * m_fTime;
+	m_fTotalHeight += 0.01f * m_CurrentDir * m_fTime;
 
-	if (0.6f < m_fTime + m_fActTime) {
+	if (0.7f < m_fTime + m_fActTime) {
 
 		m_CurrentDir *= -1.f;
 		m_fActTime = 0.f;

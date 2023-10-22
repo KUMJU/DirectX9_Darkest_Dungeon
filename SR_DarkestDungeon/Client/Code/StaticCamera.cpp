@@ -57,7 +57,7 @@ void CStaticCamera::LateUpdateGameObject()
 	case ECameraMode::FPS:
 
 		m_matView = *(m_pPlrTransCom->GetWorld());
-		m_matView.m[3][1] += 2.f;
+		m_matView.m[3][1] += 3.f;
 		D3DXMatrixInverse(&m_matView, 0, &m_matView);
 
 		break;
