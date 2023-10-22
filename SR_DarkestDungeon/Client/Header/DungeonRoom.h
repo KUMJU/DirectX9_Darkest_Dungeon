@@ -1,6 +1,8 @@
 #pragma once
 #include"GameObject.h"
 
+class CBattleSystem;
+
 class CDungeonRoom
 {
 public:
@@ -11,6 +13,8 @@ public:
 	vector<shared_ptr<CGameObject>>	GetGameObjectVector() { return m_vGameObject; }
 	vector<shared_ptr<CGameObject>>	GetHeroesVector() { return m_vHeroes; }
 	vector<shared_ptr<CGameObject>>	GetMonstersVector() { return m_vMonsters; }
+	shared_ptr<CBattleSystem>		GetBattleSystem() { return m_pBattleSystem; }
+	void	SetBattleSystem(shared_ptr<CBattleSystem> _pBattleSystem) { m_pBattleSystem = _pBattleSystem; }
 
 public:
 	void	PushGameObjectVector(vector<shared_ptr<CGameObject>>& _vVec)
@@ -26,10 +30,13 @@ public:
 		m_vMonsters = _vVec;
 	}
 
+	// 전투시 카메라 위치 반환 함수
+	_vec3	GetBattleCameraPos() { return _vec3(WALLSIZEX + PATHSIZEX + 10.f, 3.f, WALLSIZEX * 14.f + 4.f); }
+
 public:
 	void	MakeDisableAllObject();
 	void	MakeAbleAllObject();
-	void	BattleStart();		// 싸움 시작시
+	void	BattleUpdate(const _float& fTimeDelta);		// 싸움
 
 public:
 	// 전투진형 배치
@@ -40,5 +47,6 @@ private:
 	vector<shared_ptr<CGameObject>>		m_vGameObject = {};
 	vector<shared_ptr<CGameObject>>		m_vHeroes = {};
 	vector<shared_ptr<CGameObject>>		m_vMonsters = {};
+	shared_ptr<CBattleSystem>			m_pBattleSystem = nullptr;
 };
 

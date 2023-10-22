@@ -20,6 +20,29 @@ HRESULT CBrigandCutthroat::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	// 스탯 설정
+	m_tCommonStat.iHp = 100;
+	m_tCommonStat.iDodge = 10;
+	m_tCommonStat.iSpeed = 3;
+	m_tCommonStat.iAttackPower = 10;
+
+	// 스킬 넣어주기
+	vector<shared_ptr<CSkill>>	pVecSkill = {};
+	int Skill1_Dot[2] = {1,3};
+	_bool	m_bArrAttack1[6] = { 0, 0, 1, 0, 0, 0};
+	shared_ptr<CSkill> m_pBrigandCutthroat_1 = make_shared<CSkill>
+		(L"Attack1", L"Brigand Cutthroat_Attack1", Skill1_Dot, 0.f, 1.2f, 0.f,
+			m_bArrAttack1, 0, 0);
+	pVecSkill.push_back(m_pBrigandCutthroat_1);
+
+	int Skill2_Dot[2] = { 2,3 };
+	_bool	m_bArrAttack2[6] = { 0, 0, 1, 0, 0, 0 };
+	shared_ptr<CSkill> m_pBrigandCutthroat_2 = make_shared<CSkill>
+		(L"Attack2", L"Brigand Cutthroat_Attack2", Skill2_Dot, 0.f, 1.5f, 0.f,
+			m_bArrAttack2, 0, 0);
+	pVecSkill.push_back(m_pBrigandCutthroat_2);
+	SetSkill(pVecSkill);
+
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 	m_pTransformCom->SetScale(2.f, 2.f, 1.f);
 
@@ -35,59 +58,90 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
-	//끝
-
-	if (GetAsyncKeyState('1') & 0x8000) {
-		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.02f);
-		m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+	// Animation
+	if (m_eCurAnimState != m_ePrevAnimState)
+	{
+		switch (m_eCurAnimState)
+		{
+		case EAnimState::COMBAT:
+			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.02f);
+			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			break;
+		case EAnimState::BESHOT:
+			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Hitted", 0.02f);
+			m_pTransformCom->SetScale(2.f * 225.f / 232.f, 2.f * 317.f / 311.f, 1.f);
+			break;
+		case EAnimState::SKILL1:
+			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack1", 0.02f);
+			m_pTransformCom->SetScale(2.f * 427.f / 232.f, 2.f * 268.f / 311.f, 1.f);
+			break;
+		case EAnimState::SKILL2:
+			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack2", 0.02f);
+			m_pTransformCom->SetScale(2.f * 232.f / 232.f, 2.f * 365.f / 311.f, 1.f);
+			break;
+		case EAnimState::CORPSE:
+			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Dead", 0.02f);
+			m_pTransformCom->SetScale(2.f * 215.f / 232.f, 2.f * 158.f / 311.f, 1.f);
+			break;
+		}
 	}
 
-	if (GetAsyncKeyState('2') & 0x8000) {
-		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack1", 0.02f);
-		m_pTransformCom->SetScale(2.f * 427.f / 232.f, 2.f * 268.f / 311.f, 1.f);
-		//m_pTransformCom->SetScaleRatio(_vec3(2.f, 2.f, 1.f), _vec2(232.f, 311.f), _vec2(427.f, 268.f));
+	// 임시
+	if ((m_bAttacking1 || m_bAttacking2) && m_tCommonStat.iHp > 0)
+	{
+		if(m_bAttacking1)
+			m_eCurAnimState = EAnimState::SKILL1;
+		else if (m_bAttacking2)
+			m_eCurAnimState = EAnimState::SKILL2;
+	}
+	else if (m_tCommonStat.iHp <= 0)
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EAnimState::CORPSE;
+	}
+	else if (m_bHitted == true && m_tCommonStat.iHp > 0)
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EAnimState::BESHOT;
+	}
+	else
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EAnimState::COMBAT;
 	}
 
-	if (GetAsyncKeyState('3') & 0x8000) {
-		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack2", 0.02f);
-		m_pTransformCom->SetScale(2.f * 232.f / 232.f, 2.f * 365.f / 311.f, 1.f);
+	// 피격 시간
+	if (m_bHitted)
+	{
+		m_fHittedTime -= fTimeDelta;
+		if (m_fHittedTime < 0.f)
+		{
+			m_bHitted = false;
+			m_fHittedTime = HITTEDTIME;
+		}
 	}
 
-	if (GetAsyncKeyState('4') & 0x8000) {
-		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Dead", 0.02f);
-		m_pTransformCom->SetScale(2.f * 215.f / 232.f, 2.f * 158.f / 311.f, 1.f);
+	// 공격1 시간
+	if (m_bAttacking1)
+	{
+		m_fAttack1Time -= fTimeDelta;
+		if (m_fAttack1Time < 0.f)
+		{
+			m_bAttacking1 = false;
+			m_fAttack1Time = ATTACK1TIME;
+		}
 	}
 
-	if (GetAsyncKeyState('5') & 0x8000) {
-		m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Hitted", 0.02f);
-		m_pTransformCom->SetScale(2.f * 225.f / 232.f, 2.f * 317.f / 311.f, 1.f);
+	// 공격2 시간
+	if (m_bAttacking2)
+	{
+		m_fAttack2Time -= fTimeDelta;
+		if (m_fAttack2Time < 0.f)
+		{
+			m_bAttacking2 = false;
+			m_fAttack2Time = ATTACK2TIME;
+		}
 	}
-
-	//if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-	//	m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack1", 0.02f);
-	//	m_pTransformCom->SetScale(2.f * 427.f/232.f, 2.f * 268.f / 311.f, 1.f);
-	//	m_pTransformCom->GetInfo(INFO_RIGHT, &vDir);
-	//	D3DXVec3Normalize(&vDir, &vDir);
-	//	m_pTransformCom->MoveForward(&vDir, fTimeDelta, 5.f);
-	//}
-	//if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
-	//	m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.02f);
-	//	m_pTransformCom->SetScale(2.f, 2.f, 1.f);
-	//	m_pTransformCom->GetInfo(INFO_RIGHT, &vDir);
-	//	D3DXVec3Normalize(&vDir, &vDir);
-	//	m_pTransformCom->MoveForward(&vDir, fTimeDelta, -5.f);
-	//}
-	//if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
-	//	m_pTransformCom->GetInfo(INFO_LOOK, &vDir);
-	//	D3DXVec3Normalize(&vDir, &vDir);
-	//	m_pTransformCom->MoveForward(&vDir, fTimeDelta, -5.f);
-	//}
-	//
-	//if (GetAsyncKeyState(VK_UP) & 0x8000) {
-	//	m_pTransformCom->GetInfo(INFO_LOOK, &vDir);
-	//	D3DXVec3Normalize(&vDir, &vDir);
-	//	m_pTransformCom->MoveForward(&vDir, fTimeDelta, 5.f);
-	//}
 
 
 	return iExit;

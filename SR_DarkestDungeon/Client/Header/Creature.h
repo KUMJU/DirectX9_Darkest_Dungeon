@@ -36,6 +36,10 @@ enum class EAnimState
 	// 몬스터용
 	CORPSE,			// 시체
 
+	// 스킬
+	SKILL1,
+	SKILL2,
+
 	// 영웅용
 	AFFLICTION,		// 붕괴
 	VIRTUE,			// 기상
@@ -49,7 +53,7 @@ public:
 
 	// 스킬까지 세팅할 때
 	CCreature(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
-		shared_ptr<vector<shared_ptr<CSkill>>> _pVecSkill);
+		vector<shared_ptr<CSkill>>& _pVecSkill);
 
 	// 전투 위치와 스킬은 나중에 세팅할 때	
 	CCreature(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat);
@@ -65,11 +69,16 @@ public:
 
 public:
 	// 인덱스로 스킬 불러오기 (생각 좀 해봐야 할듯,, 스킬을 건너뛰고 장착할 수 있어서)
-	shared_ptr<CSkill> GetSkill(_int _iIdx) { return (*m_pVecSkill)[_iIdx]; }
+	shared_ptr<CSkill> GetSkill(_int _iIdx) { return m_pVecSkill[_iIdx]; }
 	// 이름으로 스킬 불러오기 (일단 이거 사용)
 	shared_ptr<CSkill> GetSkill(tstring _strSkillName);
 
-	HRESULT	SetSkill(shared_ptr<vector<shared_ptr<CSkill>>> _pSkill);	// 스킬 vector로 한 번에 넣어주기
+	//HRESULT	SetSkill(shared_ptr<vector<shared_ptr<CSkill>>> _pSkill);	// 스킬 vector로 한 번에 넣어주기
+	void	SetSkill(vector<shared_ptr<CSkill>>& _vVec)
+	{
+		m_pVecSkill = _vVec;
+	}
+
 
 	STAT	GetCommonStat() { return m_tCommonStat; }
 	void	SetCommonStat(STAT _tStat) { m_tCommonStat = _tStat; }
@@ -78,8 +87,12 @@ public:
 	void	SetPosition(_int _iPosition) { m_iPosition += _iPosition; }
 
 	void	SetHitted(_bool _bHitted) { m_bHitted = _bHitted; }
+	void	SetAttacking1(_bool _bAttacking1) { m_bAttacking1 = _bAttacking1; }
+	void	SetAttacking2(_bool _bAttacking2) { m_bAttacking2 = _bAttacking2; }
 	void	SetEffectOn(_bool _bEffectOn) { m_bEffectOn = _bEffectOn; }
 
+	_bool	GetIsStun() { return m_bState[2]; }
+	_bool	GetIsCorpse() { return m_bState[3]; }
 	void	SetBlight(_bool _bBlight) { m_bState[0] = true; }
 	void	SetBleed(_bool _bBleed) { m_bState[1] = true; }
 	void	SetStun(_bool _bStun) { m_bState[2] = true; }
@@ -101,22 +114,22 @@ public:
 	_int	GetOrder() { return m_tCommonStat.iOrder; }
 	void	SetOrder(_int _iValue) { m_tCommonStat.iOrder = _iValue; }
 
-
+	void	StartCalculate();
 
 
 	// 쓰는지??
 	_bool	GetDone() { return m_bDone; }
 	_bool	GetAbleAct() { return m_bAbleAct; }
+	_bool	GetTurn() { return m_bMyTurn; }
 	void	SetTurn(_bool _bTurn) { m_bMyTurn = _bTurn; }
 	void	SetDone(_bool _bDone) { m_bDone = _bDone; }
 	void	SetAbleAct(_bool _bAbleAct) { m_bAbleAct = _bAbleAct; }
 
+	virtual void	AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill);
+
 protected:
-	// 턴 시작시
-	virtual void	StartTurn();
 
 	// 다른 크리처 공격시
-	virtual void	AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill);
 
 	// 공격 종료시
 	virtual void	EndAttack(shared_ptr<CGameObject> _pCreature);
@@ -155,7 +168,7 @@ protected:
 
 	_int		m_iPosition;				// 위치 (0~3)
 
-	_bool		m_bDeath = false;			// 사망 여부
+	_bool		m_bDeath = false;			// 사망 여부(몬스터는 시체까지 소멸할때, 영웅은 사망할때)
 	_bool		m_bState[4] = { false };	// 순서대로 중독, 출혈, 기절, 시체 여부
 
 	_int		m_bBlightDot[4] = { 0 };	// 턴마다 중독 도트뎀
@@ -167,9 +180,11 @@ protected:
 	// !m_bHitted && m_bEffectOn -> 타격 애니메이션 on
 	// 예시) 내가 공격시 나오는 이펙트 출력, 상대는 피격 이펙트 출력
 
-	shared_ptr<vector<shared_ptr<CSkill>>>	m_pVecSkill;	// 스킬
+	vector<shared_ptr<CSkill>>	m_pVecSkill;	// 스킬
 
 	EAnimState m_eAnimState = EAnimState::IDLE;	// 애니메이션 변경을 위한 상태값
+	EAnimState m_eCurAnimState = EAnimState::IDLE;	// 애니메이션 변경을 위한 상태값
+	EAnimState m_ePrevAnimState = EAnimState::IDLE;	// 애니메이션 변경을 위한 상태값
 	tstring		m_strAnimKey = L"";				// 애니메이션 키
 	tstring		m_strEffectKey = L"";				// 이펙트 키
 
@@ -177,6 +192,10 @@ protected:
 	_bool		m_bMyTurn = false;			// 자신의 턴 여부 
 	_bool		m_bDone = false;			// 이번 턴에 행동 했는지 여부
 	_bool		m_bAbleAct = true;			// 이번 턴에 행동 가능한지 여부(기절이나 시체사라지면 불가능)
+
+	// 스킬 사용중
+	_bool		m_bAttacking1 = false;
+	_bool		m_bAttacking2 = false;
 
 protected:
 	virtual void	Free();

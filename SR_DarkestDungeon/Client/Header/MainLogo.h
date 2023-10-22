@@ -36,5 +36,7 @@ private:
 	shared_ptr<CDungeonSystem> m_pWealdDungeon = {};
 	shared_ptr<CDungeonRoom> m_pRoom1 = {};
 	shared_ptr<CDungeonRoom> m_pRoom2 = {};
+
+	_bool				m_bTestBattle = false;
 };
 

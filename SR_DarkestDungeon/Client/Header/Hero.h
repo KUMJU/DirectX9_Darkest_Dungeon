@@ -39,7 +39,7 @@ public:
 
 	// 전부 세팅할 때
 	CHero(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
-		shared_ptr<vector<shared_ptr<CSkill>>> _pVecSkill, _float _fCritical);
+		vector<shared_ptr<CSkill>>& _pVecSkill, _float _fCritical);
 
 	// 전투 위치, 스킬은 나중에 세팅할 때	
 	CHero(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat);

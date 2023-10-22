@@ -10,6 +10,7 @@
 #include "StaticCamera.h"
 #include "DungeonSystem.h"
 #include "DungeonRoom.h"
+#include "BattleSystem.h"
 
 #include"Inventory.h"
 #include"PlayerHand.h"
@@ -53,15 +54,18 @@ _int CMainLogo::UpdateScene(const _float& fTimeDelta)
 	// 방 1에 들어가면
 	if (GetAsyncKeyState('8') & 0x8000) {
 		m_pWealdDungeon->CurrentRoom(0);
-		m_pRoom1->BattleStart();
+		m_bTestBattle = true;
 	}
 
 	// 방 2에 들어가면
 	if (GetAsyncKeyState('9') & 0x8000) {
 		m_pWealdDungeon->CurrentRoom(1);
-		//m_pRoom2->BattleStart();
 	}
 
+	if (m_bTestBattle)
+	{
+		m_pRoom1->BattleUpdate(fTimeDelta);
+	}
 
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
@@ -237,7 +241,7 @@ HRESULT CMainLogo::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
@@ -265,44 +269,55 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	
 
 	// 방에 GameObject 넣기
-	vector<shared_ptr<CGameObject>> vect1;
-	vect1.push_back(m_pBrigandCutthroat_1);
-	vect1.push_back(m_pBrigandCutthroat_2);
-	vect1.push_back(m_pBrigandCutthroat_3);
-	vect1.push_back(m_pBrigandCutthroat_4);
-	vect1.push_back(m_pBrigandCutthroat_5);
-	vect1.push_back(m_pBrigandCutthroat_6);
-	vect1.push_back(m_pBrigandCutthroat_7);
-	vect1.push_back(m_pBrigandCutthroat_8);
+	vector<shared_ptr<CGameObject>> Room1_v1;
+	Room1_v1.push_back(m_pBrigandCutthroat_1);
+	Room1_v1.push_back(m_pBrigandCutthroat_2);
+	Room1_v1.push_back(m_pBrigandCutthroat_3);
+	Room1_v1.push_back(m_pBrigandCutthroat_4);
+	Room1_v1.push_back(m_pBrigandCutthroat_5);
+	Room1_v1.push_back(m_pBrigandCutthroat_6);
+	Room1_v1.push_back(m_pBrigandCutthroat_7);
+	Room1_v1.push_back(m_pBrigandCutthroat_8);
 
-	m_pRoom1->PushGameObjectVector(vect1);
+	m_pRoom1->PushGameObjectVector(Room1_v1);
 
-	vector<shared_ptr<CGameObject>> vect2;
-	vect2.push_back(m_pBrigandCutthroat_1);
-	vect2.push_back(m_pBrigandCutthroat_2);
-	vect2.push_back(m_pBrigandCutthroat_3);
-	vect2.push_back(m_pBrigandCutthroat_4);
+	vector<shared_ptr<CGameObject>> Room1_v2;
+	Room1_v2.push_back(m_pBrigandCutthroat_1);
+	Room1_v2.push_back(m_pBrigandCutthroat_2);
+	Room1_v2.push_back(m_pBrigandCutthroat_3);
+	Room1_v2.push_back(m_pBrigandCutthroat_4);
 
-	m_pRoom1->PushHeroesVector(vect2);
+	m_pRoom1->PushHeroesVector(Room1_v2);
 
-	vector<shared_ptr<CGameObject>> vect3;
-	vect3.push_back(m_pBrigandCutthroat_5);
-	vect3.push_back(m_pBrigandCutthroat_6);
-	vect3.push_back(m_pBrigandCutthroat_7);
-	vect3.push_back(m_pBrigandCutthroat_8);
+	vector<shared_ptr<CGameObject>> Room1_v3;
+	Room1_v3.push_back(m_pBrigandCutthroat_5);
+	Room1_v3.push_back(m_pBrigandCutthroat_6);
+	Room1_v3.push_back(m_pBrigandCutthroat_7);
+	Room1_v3.push_back(m_pBrigandCutthroat_8);
 
-	m_pRoom1->PushMonstersVector(vect3);
+	m_pRoom1->PushMonstersVector(Room1_v3);
+
+	// 배틀시스템 넣기
+	shared_ptr<CBattleSystem> pRoom1_Battle = make_shared<CBattleSystem>();
+	//pRoom1_Battle->Ready();
+	pRoom1_Battle->PushCreaturesVector(Room1_v1);
+	pRoom1_Battle->PushHeroesVector(Room1_v2);
+	pRoom1_Battle->PushMonstersVector(Room1_v3);
+	m_pRoom1->SetBattleSystem(pRoom1_Battle);
 
 	// 던전에 방 넣기
-	vector<shared_ptr<CDungeonRoom>> vect4;
-	vect4.push_back(m_pRoom1);
-	vect4.push_back(m_pRoom2);
+	vector<shared_ptr<CDungeonRoom>> Dungeon1_v;
+	Dungeon1_v.push_back(m_pRoom1);
+	Dungeon1_v.push_back(m_pRoom2);
 
-	m_pWealdDungeon->PushDungeonRoomVector(vect4);
+	m_pWealdDungeon->PushDungeonRoomVector(Dungeon1_v);
 
+	// 던전 object들 위치 잡아놓기
+	// 1번 방
+	m_pRoom1->FormBattlePosition(Room1_v2, Room1_v3,
+		-PI / 2.f, _vec3(WALLSIZEX + PATHSIZEX, WALLSIZEX * 14.f, 0.f));
 
-	m_pWealdDungeon->CurrentRoom(0);
-	m_pRoom1->BattleStart();
+	m_pWealdDungeon->CurrentRoom(10);
 	
 	// Layer에 GameObject 넣기
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_3);

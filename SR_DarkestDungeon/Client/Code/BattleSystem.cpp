@@ -1,133 +1,197 @@
 #include "pch.h"
 #include "BattleSystem.h"
+#include "Creature.h"
+#include "Export_System.h"
 
-BattleSystem::BattleSystem()
+CBattleSystem::CBattleSystem()
 {
 }
 
-BattleSystem::~BattleSystem()
+CBattleSystem::~CBattleSystem()
 {
 }
 
-void BattleSystem::Update()
+void CBattleSystem::Update(const _float& fTimeDelta)
 {
-	// 턴
-	while (1)
+	// 턴 시작시
+	if (m_pCurrentCreature == nullptr) StartTurn();
+	
+	if (!m_bNext)
 	{
-		if (IsHeroFirst())
+		m_fTime -= fTimeDelta;
+		if (m_fTime < 0.f)
 		{
-			m_bHeroTrun = true;
+			m_fTime = BATTLEINTERVEL;
+			m_bNext = true;
 		}
-		else
-		{
-			m_bHeroTrun = false;
-		}
+	}
 
-		// 턴 안의 크리처 턴
-		while (1)
+	// 크리처의 턴일때
+	if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn() && m_bNext)
+	{
+		// 크리처 종류에 따라 행동
+		// 시체일때
+		if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse())
 		{
-			if (m_bHeroTrun)
+			
+		}
+		// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽도록
+		dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate();
+		
+		// 공격 AI
+		int iNum = rand() % 2;
+		int iTarget = rand() % 4;
+		switch (iNum)
+		{
+		case 0:
+			if (m_bHero)
 			{
-				m_iTurnHero = TurnCreature(m_vHero);
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+				(dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(0));
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking1(true);
+				dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetHitted(true);
 			}
 			else
 			{
-
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+				(dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(0));
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking1(true);
+				dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetHitted(true);
 			}
+			break;
 
-			
-		}
-		// 두 진영 중 한 진영이 전멸했을때
-		if (HeroesAllDead() || MonstersAllDead())
-		{
-			EndBattle();
+		case 1:
+			if (m_bHero)
+			{
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+				(dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(1));
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking2(true);
+				dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetHitted(true);
+			}
+			else
+			{
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+				(dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(1));
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking2(true);
+				dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetHitted(true);
+			}
 			break;
 		}
-		NextTurn();
+		// 크리처 턴 엔드
+		CreatureTurnEnd();
+		m_bNext = false;
 	}
+
+	//if (dynamic_pointer_cast<CCreature>(m_vHeroes[0])->GetCommonStat().iHp < 0)
+	//	int c = 5;
+
+	// 종료 조건
+	if (HeroesAllDead() || MonstersAllDead())
+		EndBattle();
 }
 
-_bool BattleSystem::IsHeroFirst()
+void CBattleSystem::StartTurn()
 {
-	_int iFastHeroSpeed = 0;
-	_int iFastEnemySpeed = 0;
-	for (auto& iter : m_vHero)
-	{
-		if (iter->GetCommonStat().iSpeed > iFastHeroSpeed)
-		{
-			iFastHeroSpeed = iter->GetCommonStat().iSpeed;
-		}
-	}
-	for (auto& iter : m_vEnemy)
-	{
-		if (iter->GetCommonStat().iSpeed > iFastEnemySpeed)
-		{
-			iFastEnemySpeed = iter->GetCommonStat().iSpeed;
-		}
-	}
-
-	if (iFastHeroSpeed >= iFastEnemySpeed)
-		return true;
-	else
-		return false;
+	// 턴 시작시 나오는 UI등 그런 것들
+	m_pCurrentCreature = NextCreature();
+	//_float fTurnInterver = 0.f;
+	//fTurnInterver += Engine::Get_TimeDelta(L"Timer_Immediate");
+	//// 크리처 턴 시작
+	//if (fTurnInterver > 1.f)
+	//{
+	//	fTurnInterver = 0.f;
+	//	m_pCurrentCreature = NextCreature();
+	//}
 }
 
-void BattleSystem::NextCreatureTurn()
+shared_ptr<CGameObject> CBattleSystem::NextCreature()
 {
+	// 속도를 기준으로 내림차순
+	CmpBySpeed(m_vCreatures);
+
+	// 영웅부터 몬스터까지 빠른 속도인 creature를 반환
+	for (int i = 0; i < size(m_vCreatures); i++)
+	{
+		for (auto& iter : m_vHeroes)
+		{
+			if ((dynamic_pointer_cast<CCreature>(iter)->GetCommonStat().iSpeed ==
+				dynamic_pointer_cast<CCreature>(m_vCreatures[i])->GetCommonStat().iSpeed)
+				&& !dynamic_pointer_cast<CCreature>(m_vCreatures[i])->GetDone())
+			{
+				dynamic_pointer_cast<CCreature>(m_vCreatures[i])->SetTurn(true);
+				m_bHero = true;
+				return m_vCreatures[i];
+			}
+		}
+		for (auto& iter : m_vMonsters)
+		{
+			if ((dynamic_pointer_cast<CCreature>(iter)->GetCommonStat().iSpeed ==
+				dynamic_pointer_cast<CCreature>(m_vCreatures[i])->GetCommonStat().iSpeed)
+				&& !dynamic_pointer_cast<CCreature>(m_vCreatures[i])->GetDone())
+			{
+				dynamic_pointer_cast<CCreature>(m_vCreatures[i])->SetTurn(true);
+				m_bHero = false;
+				return m_vCreatures[i];
+			}
+		}
+	}
 	
+	// 모두 다 했을시에 다음 턴으로
+	NextTurn();
+
+	return shared_ptr<CGameObject>();
 }
 
-void BattleSystem::NextTurn()
+void CBattleSystem::CreatureTurnEnd()
 {
+	dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTurn(false);
+	dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetDone(true);
+	m_pCurrentCreature = NextCreature();
+}
+
+void CBattleSystem::NextTurn()
+{
+	// 모두 초기화
+	for (auto& iter : m_vCreatures)
+	{
+		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
+	}
+	m_pCurrentCreature = nullptr;
+
 	m_iTurn++;
 }
 
-void BattleSystem::EndBattle()
+void CBattleSystem::EndBattle()
 {
 }
 
-_int BattleSystem::TurnCreature(vector<shared_ptr<CCreature>> _vCreatures)
+_bool CBattleSystem::HeroesAllDead()
 {
-	_int iSpeed = 0;
-	_int iIndex = 0;
-	for (_int i = 0; i < sizeof(_vCreatures); i++)
+	for (auto& iter : m_vHeroes)
 	{
-		if (_vCreatures[i]->GetCommonStat().iSpeed > iSpeed && _vCreatures[i]->GetAbleAct())
-		{
-			iSpeed = _vCreatures[i]->GetCommonStat().iSpeed;
-			iIndex = i;
-		}
-	}
-
-	// 모두의 턴을 돌았을때
-	if (iSpeed == 0)
-	{
-		return 10;
-	}
-
-	_vCreatures[iIndex]->SetAbleAct(false);
-
-	return iIndex;
-}
-
-_bool BattleSystem::HeroesAllDead()
-{
-	for (auto& iter : m_vHero)
-	{
-		if (iter->GetCommonStat().iHp > 0)
+		if (dynamic_pointer_cast<CCreature>(iter)->GetCommonStat().iHp > 0)
 		{
 			return false;
 		}
 	}
+	return true;
 }
 
-_bool BattleSystem::MonstersAllDead()
+_bool CBattleSystem::MonstersAllDead()
 {
-	for (auto& iter : m_vEnemy)
+	for (auto& iter : m_vMonsters)
 	{
-		if (iter->GetCommonStat().iHp > 0)
+		if (dynamic_pointer_cast<CCreature>(iter)->GetCommonStat().iHp > 0)
 		{
 			return false;
 		}
 	}
+	return true;
+}
+
+void CBattleSystem::CmpBySpeed(vector<shared_ptr<CGameObject>>& _vCreatures)
+{
+	
+	//sort(_vCreatures.begin(), _vCreatures.end());
+	
 }

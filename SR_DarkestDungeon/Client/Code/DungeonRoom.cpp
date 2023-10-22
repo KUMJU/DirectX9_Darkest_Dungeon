@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DungeonRoom.h"
 #include "Creature.h"
+#include "BattleSystem.h"
 
 CDungeonRoom::CDungeonRoom()
 {
@@ -26,9 +27,11 @@ void CDungeonRoom::MakeAbleAllObject()
 	}
 }
 
-void CDungeonRoom::BattleStart()
+void CDungeonRoom::BattleUpdate(const _float& fTimeDelta)
 {
-	FormBattlePosition(m_vHeroes, m_vMonsters, -PI / 2.f, _vec3(WALLSIZEX + PATHSIZEX, WALLSIZEX * 14.f, 0.f));
+	//FormBattlePosition(m_vHeroes, m_vMonsters, -PI / 2.f, _vec3(WALLSIZEX + PATHSIZEX, WALLSIZEX * 14.f, 0.f));
+
+	m_pBattleSystem->Update(fTimeDelta);
 }
 
 void CDungeonRoom::FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes, vector<shared_ptr<CGameObject>>& _vMonsters, _float _fAngle, _vec3 _vOrigin)
