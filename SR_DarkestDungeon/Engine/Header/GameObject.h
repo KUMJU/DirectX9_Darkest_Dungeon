@@ -37,6 +37,7 @@ public:
 	ECollideID GetColType() { return m_eCollideID; }
 
 	virtual void OnCollide(shared_ptr<CGameObject> _pObj) {}
+	virtual void OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection _eDir) {}
 
 public:
 	void SetLock(_bool _bLock) { m_bLock = _bLock; }

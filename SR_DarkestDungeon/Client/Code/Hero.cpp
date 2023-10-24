@@ -37,32 +37,19 @@ HRESULT CHero::ReadyGameObject()
 
 _int CHero::UpdateGameObject(const _float& fTimeDelta)
 {
-	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
-	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
-
-
+	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
 	return iExit;
 }
 
 void CHero::LateUpdateGameObject()
 {
+	__super::LateUpdateGameObject();
 }
 
 void CHero::RenderGameObject()
 {
-	//// m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//// m_pGraphicDev->SetRenderState(D3DRS_ , D3DFILL_WIREFRAME);
-
-	//m_pBufCom->RenderBuffer();
-	//m_pEffectBufCom->RenderBuffer();
-
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	__super::RenderGameObject();
 }
 
 shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)
@@ -123,21 +110,27 @@ void CHero::StressAction()
 
 void CHero::AddComponent()
 {
-	shared_ptr<CComponent> pComponent;
+	__super::AddComponent();
+	//shared_ptr<CComponent> pComponent;
 
-	pComponent = m_pBufCom = make_shared <CRcTex>(m_pGraphicDev);
-	m_pBufCom->ReadyBuffer();
-	m_mapComponent[ID_STATIC].insert({ L"Com_RCTex",pComponent });
+	//pComponent = m_pBufCom = make_shared <CRcTex>(m_pGraphicDev);
+	//m_pBufCom->ReadyBuffer();
+	//m_mapComponent[ID_STATIC].insert({ L"Com_RCTex",pComponent });
 
-	pComponent = m_pEffectBufCom = make_shared<CRcTex>(m_pGraphicDev);
-	m_pEffectBufCom->ReadyBuffer();
-	m_mapComponent[ID_STATIC].insert({ L"Com_EffectRCTex",pComponent });
+	//pComponent = m_pEffectBufCom = make_shared<CRcTex>(m_pGraphicDev);
+	//m_pEffectBufCom->ReadyBuffer();
+	//m_mapComponent[ID_STATIC].insert({ L"Com_EffectRCTex",pComponent });
 
-	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	m_pTextureCom->SetAnimKey(m_strAnimKey, 0.05f);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator", pComponent });
+	//pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
+	//m_pTextureCom->SetAnimKey(m_strAnimKey, 0.05f);
+	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator", pComponent });
+}
+
+void CHero::ChangeAnim()
+{
 }
 
 void CHero::Free()
 {
+	__super::Free();
 }

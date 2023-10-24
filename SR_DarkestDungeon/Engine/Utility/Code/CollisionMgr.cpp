@@ -34,15 +34,44 @@ bool CCollisionMgr::AABB_AABB(shared_ptr<CGameObject> _pSrc, shared_ptr<CGameObj
 	_vec3 vDstPos = *pDsCollider->GetPos();
 	_vec3 vDstScale = *pDsCollider->GetScale();
 
-	if ((vSrcPos.x - vSrcScale.x / 2.f <= vDstPos.x + vDstScale.x / 2.f) &&
-		(vSrcPos.x + vSrcScale.x / 2.f >= vDstPos.x - vDstScale.x / 2.f) &&
-		(vSrcPos.y - vSrcScale.y / 2.f <= vDstPos.y + vDstScale.y / 2.f) &&
-		(vSrcPos.y + vSrcScale.y / 2.f >= vDstPos.y - vDstScale.y / 2.f) &&
-		(vSrcPos.z - vSrcScale.z / 2.f <= vDstPos.z + vDstScale.z / 2.f) &&
-		(vSrcPos.z + vSrcScale.z / 2.f >= vDstPos.z - vDstScale.z / 2.f))
+	if ((vSrcPos.x - vSrcScale.x / 2.f < vDstPos.x + vDstScale.x / 2.f) &&
+		(vSrcPos.x + vSrcScale.x / 2.f > vDstPos.x - vDstScale.x / 2.f) &&
+		(vSrcPos.y - vSrcScale.y / 2.f < vDstPos.y + vDstScale.y / 2.f) &&
+		(vSrcPos.y + vSrcScale.y / 2.f > vDstPos.y - vDstScale.y / 2.f) &&
+		(vSrcPos.z - vSrcScale.z / 2.f < vDstPos.z + vDstScale.z / 2.f) &&
+		(vSrcPos.z + vSrcScale.z / 2.f > vDstPos.z - vDstScale.z / 2.f))
 	{
+		if (ECollideID::WALL == _pDst->GetColType())
+		{
+			// x충돌 (동시검사)
+			if (abs(vSrcPos.x - vDstPos.x) < ((vSrcScale.x + vDstScale.x) / 2.f))
+			{
+				_float fGap = (vSrcScale.x + vDstScale.x) / 2.f - abs(vSrcPos.x - vDstPos.x);
+
+				if (vSrcPos.x < vDstPos.x)
+					_pSrc->OnCollide(_pDst, fGap, EDirection::RIGHT);
+				else
+					_pSrc->OnCollide(_pDst, fGap, EDirection::LEFT);
+			}
+
+			// z충돌 (동시검사)
+			if (abs(vSrcPos.z - vDstPos.z) < ((vSrcScale.z + vDstScale.z) / 2.f))
+			{
+				_float fGap = (vSrcScale.z + vDstScale.z) / 2.f - abs(vSrcPos.z - vDstPos.z);
+
+				if (vSrcPos.z < vDstPos.z)
+					_pSrc->OnCollide(_pDst, fGap, EDirection::TOP);
+				else
+					_pSrc->OnCollide(_pDst, fGap, EDirection::BOTTOM);
+			}
+
+			return true;
+		}
+
 		_pSrc->OnCollide(_pDst);
 		_pDst->OnCollide(_pSrc);
+
+		return true;
 	}
 
 	return false;

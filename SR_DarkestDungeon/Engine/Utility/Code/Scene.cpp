@@ -15,11 +15,14 @@ HRESULT CScene::ReadyScene()
 
 _int CScene::UpdateScene(const _float& _fTimeDelta)
 {
+	KeyInput();
+
 	_int		iResult(0);
 
 	for (auto& iter : m_mapLayer)
 	{
 		iResult = iter.second->UpdateLayer(_fTimeDelta);
+		iter.second->SetColliderVisible(m_bColliderVisible);
 
 		if (iResult & 0x80000000)
 			return iResult;
@@ -57,6 +60,15 @@ HRESULT CScene::AddNewObject(const tstring& _strLayerName, const tstring& _strOb
 		return iter->second->AddNewObject(_strObjKey, _pObj);
 
 	return E_FAIL;
+}
+
+void CScene::KeyInput()
+{
+	if (GetAsyncKeyState(VK_F1) & 0x8000)
+		m_bColliderVisible = true;
+
+	else if (GetAsyncKeyState(VK_F2) & 0x8000)
+		m_bColliderVisible = false;
 }
 
 shared_ptr<CComponent> CScene::GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID)

@@ -11,6 +11,9 @@
 #include"Layer.h"
 #include"DynamicCamera.h"
 #include "InteractionObj.h"
+
+#include "Vestal.h"
+
 #include"Export_Utility.h"
 
 CVillage::CVillage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -99,11 +102,16 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
+	//플레이어
 	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
-	Engine::CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
+	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
+	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
+	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
+	// 인터랙션 오브젝트 테스트
 	Engine::CreateNewTexture(L"Village_Door_Open", TEX_NORMAL,
 		L"../Bin/Resource/Image/Village/Interaction/Door/open.png", 1);
 
@@ -112,6 +120,10 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 	shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Door", m_pDoor);
+
+	// 영웅 테스트
+	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

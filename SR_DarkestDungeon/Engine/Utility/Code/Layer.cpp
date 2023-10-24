@@ -1,5 +1,6 @@
 #include "Layer.h"
 #include "CollisionMgr.h"
+#include "Collider.h"
 
 CLayer::CLayer()
 {
@@ -82,17 +83,33 @@ void CLayer::LateUpdateLayer()
 			}
 
 			//Enable Check
-			if (false == ((*it)->GetIsEnable())) {
+ 			if (false == ((*it)->GetIsEnable())) {
 				it++;
 				continue;
 			}
 
 			(*it)->LateUpdateGameObject();
-			
+
+			it++;
+		}
+	}
+
+	for (auto& iter : m_objectMap)
+	{
+		for (auto it = iter.second.begin(); it != iter.second.end();) {
+
+			//Enable Check
+			if (false == ((*it)->GetIsEnable())) {
+				it++;
+				continue;
+			}
+
 			// Collision Check
 			if ((*it)->IsColliding())
 			{
-				CCollisionMgr::GetInstance()->CheckCollision(*it);
+				dynamic_pointer_cast<CCollider>((*it)->GetComponent(L"Com_Collider", ID_DYNAMIC))->SetVisible(m_bColliderVisible);
+				if (ECollideID::PLAYER != (*it)->GetColType())
+					CCollisionMgr::GetInstance()->CheckCollision(*it);
 			}
 
 			it++;

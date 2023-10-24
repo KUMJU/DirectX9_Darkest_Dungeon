@@ -20,6 +20,9 @@ HRESULT CPlayer::ReadyGameObject()
 
 	m_pTransformCom->SetPosition(4.f, 0.f, 0.f);
 
+	m_eCollideID = ECollideID::PLAYER;
+	m_bColliding = true;
+
 	return S_OK;
 }
 
@@ -27,13 +30,17 @@ HRESULT CPlayer::ReadyGameObject()
 
 _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 {
-	if(!m_bLock)
+	if (!m_bLock)
 		KeyInput(fTimeDelta);
 	m_pPlayerHand->StopShakingHand();
-	KeyInput(fTimeDelta);
 	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
-	
+
+	for (int i = 0; i < 4; ++i)
+	{
+		m_bMoveLock[i] = false;
+	}
+
 	return iExit;
 }
 
@@ -44,7 +51,7 @@ void CPlayer::LateUpdateGameObject()
 
 void CPlayer::RenderGameObject()
 {
-
+	m_pColliderCom->RenderCollider();
 }
 
 void CPlayer::AddComponent()
@@ -59,7 +66,7 @@ void CPlayer::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransformCom->SetScale(1.f, 1.f, 1.f);
 
-	pComponent = m_pColliderCom = make_shared<CCollider>();
+	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Make Player ColliderCom Failed");
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
 	m_pColliderCom->SetScale({ 3.f, 3.f, 3.f });
@@ -73,6 +80,8 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	_vec3		vDir;
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+		if (m_bMoveLock[1])
+			return;
 		m_pTransformCom->GetInfo(INFO_RIGHT, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, m_fSpeed);
@@ -82,6 +91,8 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	}
 
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+		if (m_bMoveLock[3])
+			return;
 		m_pTransformCom->GetInfo(INFO_RIGHT, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, -m_fSpeed);
@@ -90,7 +101,9 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		m_eLastMove = EPlayerMove::LEFT;
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) & 0x8000){
+	if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
+		if (m_bMoveLock[2])
+			return;
 		m_pTransformCom->GetInfo(INFO_LOOK, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, -m_fSpeed);
@@ -101,6 +114,8 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000) {
+		if (m_bMoveLock[0])
+			return;
 		m_pTransformCom->GetInfo(INFO_LOOK, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->MoveForward(&vDir, fTimeDelta, m_fSpeed);
@@ -138,7 +153,7 @@ void CPlayer::ClimbingTerrain()
 
 void CPlayer::ShakingHand()
 {
-	if(EHandItem::ENUM_END != m_eCurrentItem )
+	if (EHandItem::ENUM_END != m_eCurrentItem)
 		m_pPlayerHand->ShakingHand();
 
 }
@@ -166,40 +181,59 @@ void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 
 		_pObj->SetActive(false);
 	}
+}
 
+void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection _eDir)
+{
 	// WALL Ãæµ¹
-	else if (ECollideID::WALL == _pObj->GetColType())
+	if (ECollideID::WALL == _pObj->GetColType())
 	{
 		_vec3		vPlayerPos;
+		_vec3		vPlayerScale;
 		_vec3		vWallPos;
+		_vec3		vWallColScale;
 
-		m_pTransformCom->GetInfo(INFO_POS, &vPlayerPos);
-		dynamic_pointer_cast<CTransform>(_pObj->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetInfo(INFO_POS, &vPlayerPos);
 
-		switch (m_eLastMove)
+		shared_ptr<CCollider> pWallCollider = dynamic_pointer_cast<CCollider>(_pObj->GetComponent(L"Com_Collider", ID_DYNAMIC));
+		vWallPos = *pWallCollider->GetPos();
+		vWallColScale = *pWallCollider->GetScale();
+		vPlayerPos = *m_pColliderCom->GetPos();
+		vPlayerScale = *m_pColliderCom->GetScale();
+
+		_bool bHorizontal = dynamic_pointer_cast<CWall>(_pObj)->IsHorizontal();
+
+		if (bHorizontal)
 		{
-		case EPlayerMove::RIGHT:
-			/*if (dynamic_pointer_cast<CWall>(_pObj)->IsHorizontal())
-			{*/
-				m_pTransformCom->SetPosition(vWallPos.x - 3.f, vPlayerPos.y, vPlayerPos.z);
-			//}
-			break;
-		case EPlayerMove::LEFT:
-			m_pTransformCom->GetInfo(INFO_POS, &vPlayerPos);
-			m_pTransformCom->SetPosition(vWallPos.x + 3.f, vPlayerPos.y, vPlayerPos.z);
-			break;
-		case EPlayerMove::UP:
-			m_pTransformCom->GetInfo(INFO_POS, &vPlayerPos);
-			m_pTransformCom->SetPosition(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z - 3.f);
-			break;
-		case EPlayerMove::DOWN:
-			m_pTransformCom->GetInfo(INFO_POS, &vPlayerPos);
-			m_pTransformCom->SetPosition(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z + 2.f);
-			break;
-		case EPlayerMove::ENUM_END:
-			break;
-		default:
-			break;
+			switch (_eDir)
+			{
+			case EDirection::TOP:
+				m_pTransformCom->SetPosition(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z - _fGap);
+				m_bMoveLock[0] = true;
+				break;
+			case EDirection::BOTTOM:
+				m_pTransformCom->SetPosition(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z + _fGap);
+				m_bMoveLock[2] = true;
+				break;
+			default:
+				break;
+			}
+		}
+
+		else
+		{
+			switch (_eDir)
+			{
+			case EDirection::RIGHT:
+				m_pTransformCom->SetPosition(vPlayerPos.x - _fGap, vPlayerPos.y, vPlayerPos.z);
+				m_bMoveLock[1] = true;
+				break;
+			case EDirection::LEFT:
+				m_pTransformCom->SetPosition(vPlayerPos.x + _fGap, vPlayerPos.y, vPlayerPos.z);
+				m_bMoveLock[3] = true;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }

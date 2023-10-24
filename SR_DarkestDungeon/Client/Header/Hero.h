@@ -61,7 +61,8 @@ public:
 
 protected:
 	virtual void		AddComponent();
-	//virtual void		SetAnimKey(tstring strAnimKey) { m_strAnimKey = strAnimKey; }
+	virtual void		SetAnimState(EAnimState _eAnimState) { m_eCurAnimState = _eAnimState; }
+	virtual void		ChangeAnim();
 
 public:
 	_int		GetStress() { return m_iStress; }

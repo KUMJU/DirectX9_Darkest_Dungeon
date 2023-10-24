@@ -39,6 +39,8 @@ enum class EAnimState
 	// ½ºÅ³
 	SKILL1,
 	SKILL2,
+	SKILL3,
+	SKILL4,
 
 	// ¿µ¿õ¿ë
 	AFFLICTION,		// ºØ±«

@@ -25,7 +25,7 @@ HRESULT CWall::ReadyGameObject()
 	if (PI / 2.f == m_vAngle.y)
 	{
 		m_bHorizontal = true;
-		m_pColliderCom->SetScale({ 6.f, 20.f, 1.f });
+		m_pColliderCom->SetScale({ 12.f, 12.f, 1.f });
 	}
 	else
 		m_bHorizontal = false;
@@ -51,6 +51,7 @@ void CWall::LateUpdateGameObject()
 
 void CWall::RenderGameObject()
 {
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
@@ -64,6 +65,7 @@ void CWall::RenderGameObject()
 	m_pTextureCom->SetTextureKey(L"Com_Weald_WallTexture", TEX_NORMAL);
 	m_pTextureCom->SetTexture(m_iNum);
 	m_pBufferCom->RenderBuffer();
+	m_pColliderCom->RenderCollider();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
@@ -101,9 +103,9 @@ void CWall::AddComponent()
 	//m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 
-	pComponent = m_pColliderCom = make_shared<CCollider>();
+	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Make Player Item ColliderCom Failed");
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 1.f, 20.f, 6.f });
+	m_pColliderCom->SetScale({ 1.f, 12.f, 12.f });
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 }

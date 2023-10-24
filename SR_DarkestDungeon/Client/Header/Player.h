@@ -49,6 +49,7 @@ private:
 	void			ShakingHand();
 	void			InsertItem (shared_ptr<CItem> _pItem);
 	virtual void	OnCollide(shared_ptr<CGameObject> _pObj);
+	virtual void	OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection _eDir);
 
 protected:
 	// Player Component
@@ -68,6 +69,9 @@ private:
 
 	_float		m_fDeltaTime = 0.f;
 	EPlayerMove m_eLastMove = EPlayerMove::ENUM_END;
+
+	_bool		m_bMoveLock[4] = { false };
+	_bool		m_bMoveSave[4] = { false };
 
 private:
 	virtual void	Free();

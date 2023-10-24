@@ -9,9 +9,10 @@ class ENGINE_DLL CCollider : public CComponent
 {
 public:
 	explicit CCollider();
-	explicit CCollider(ECollideID _eCollideID);
-	explicit CCollider(ECollideID _eCollideID, _vec3* _vPos, const _vec3& _vScale);
-	explicit CCollider(ECollideID _eCollideID, _vec3* _vPos, const _float& _fRadius);
+	explicit CCollider(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CCollider(LPDIRECT3DDEVICE9 pGraphicDev, ECollideID _eCollideID);
+	explicit CCollider(LPDIRECT3DDEVICE9 pGraphicDev, ECollideID _eCollideID, _vec3* _vPos, const _vec3& _vScale);
+	explicit CCollider(LPDIRECT3DDEVICE9 pGraphicDev, ECollideID _eCollideID, _vec3* _vPos, const _float& _fRadius);
 	~CCollider();
 
 public:
@@ -26,9 +27,10 @@ public:
 	void SetScale(const _vec3 _vScale) { m_vScale = _vScale; }
 	void SetRadius(const _float _fRadius) {	m_fRadius = _fRadius; }
 
+	void SetVisible(_bool _bVisible) { m_bVisible = _bVisible; }
+	_bool GetVisible() { return m_bVisible; }
+
 public:
-			HRESULT	ReadyCollider();
-	virtual	_int	UpdateComponent(const _float& fTimeDelta);
 	virtual	void	RenderCollider(void);
 
 private:
@@ -39,8 +41,10 @@ private:
 	_vec3 m_vScale;
 
 	_float m_fRadius;
-	//_bool	m_bVisible;
+	_bool	m_bVisible = false;
 
+	_vec3 m_vPoint[2][9];
+	ID3DXLine* m_pLine;
 };
 
 END

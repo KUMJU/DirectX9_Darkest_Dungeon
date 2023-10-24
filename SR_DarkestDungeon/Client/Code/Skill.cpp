@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "Skill.h"
 
-CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey,
-	_bool* _arrActivatePos, _bool* _arrTargetPos, _int* _iDotDamage,
-	_bool* _bArrAttack, _float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
+CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, tstring _strEffectKey,
+	_bool* _arrActivatePos, _bool* _arrTargetPos, _bool* _bArrAttack, _int* _iDotDamage,
+	 _float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
 	_bool _bToEnemy, _int _iActivateCnt, _int _iMoveCnt, _int _iHeal)
 	: m_strSkillName(_strSkillName), m_bToEnemy(_bToEnemy), m_iActivateCnt(_iActivateCnt),
 	m_iMoveCnt(_iMoveCnt), m_iHeal(_iHeal), m_strAnimKey(_strAnimKey), m_strImgKey(_strImgKey),

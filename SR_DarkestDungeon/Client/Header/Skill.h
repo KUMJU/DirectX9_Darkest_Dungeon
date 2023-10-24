@@ -6,9 +6,11 @@ class CSkill
 {
 public:
 	// 영웅 스킬 용
-	CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey,
-		_bool* _arrActivatePos, _bool* _arrTargetPos, _int* _iDotDamage, _bool* _bArrAttack,
-		_float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
+	// (스킬 이름, 스킬 애니메이션, 스킬 이미지, 활성 위치, 타겟 위치, 공격종류(단순 공격, 중독, 출혈, 기절, 이동, 힐), 
+	//		도트뎀[데미지][라운드], 스턴 확률, 공격력 계수, 치명타 확률, 적인지 아닌지, 라운드 당 사용 가능 횟수, 이동량, 힐량)
+	CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, tstring _strEffectKey,
+		_bool* _arrActivatePos, _bool* _arrTargetPos, _bool* _bArrAttack, _int* _iDotDamage = nullptr,
+		_float _fStunRatio = 1.f, _float _fDamageRatio = 1.f, _float _fCriticalRatio = 1.f,
 		_bool _bToEnemy = 1, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0);
 
 	// 몬스터 스킬 용
@@ -101,8 +103,10 @@ protected:
 	// 치명타 계수
 	_float		m_fCriticalRatio;
 
-	// 애니메이션 키
+	// 크리처 애니메이션 키
 	tstring		m_strAnimKey;
+	// 이펙트 애니메이션 키
+	tstring		m_strEffectAnimKey;
 	// 스킬 이미지 키
 	tstring		m_strImgKey = L"";
 };

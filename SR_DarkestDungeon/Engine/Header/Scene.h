@@ -19,6 +19,7 @@ public:
 public:
 	void CreateNewLayer(const tstring& _newLayerName);
 	HRESULT AddNewObject(const tstring& _strLayerName, const tstring& _strObjKey, shared_ptr<CGameObject> _pObj);
+	void KeyInput();
 
 public:
 	shared_ptr<CComponent> GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID);
@@ -26,6 +27,8 @@ public:
 protected:
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 	unordered_map<tstring, std::shared_ptr<CLayer>> m_mapLayer;
+
+	_bool				m_bColliderVisible = false;
 
 };
 

@@ -75,6 +75,7 @@ void CItem::RenderGameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	}
+	m_pColliderCom->RenderCollider();
 }
 
 void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
@@ -111,7 +112,7 @@ void CItem::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransCom->SetPosition(m_vPosition.x, m_vPosition.y, m_vPosition.z);
 
-	pComponent = m_pColliderCom = make_shared<CCollider>();
+	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Make Player Item ColliderCom Failed");
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
 	m_pColliderCom->SetScale({ 2.f, 2.f, 2.f });
