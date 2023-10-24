@@ -13,7 +13,7 @@ CStaticCamera::~CStaticCamera()
 
 HRESULT CStaticCamera::ReadyGameObject()
 {
-	m_pPlrTransCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
+	m_pPlrTransCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
 
 	FAILED_CHECK_RETURN(CCamera::ReadyGameObject(), E_FAIL);
 
@@ -26,14 +26,13 @@ HRESULT CStaticCamera::ReadyGameObject()
 
 _int CStaticCamera::UpdateGameObject(const _float& fTimeDelta)
 {
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	m_deltaTime = fTimeDelta;
 	return 0;
 }
 
 void CStaticCamera::LateUpdateGameObject()
 {
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 
 	m_vUp = _vec3(0.f, 1.f, 0.f);
 	_vec3 vLook, vPos;

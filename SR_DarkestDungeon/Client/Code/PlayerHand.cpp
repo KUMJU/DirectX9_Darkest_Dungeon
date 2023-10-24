@@ -16,7 +16,7 @@ HRESULT CPlayerHand::ReadyGameObject()
 	m_bWalking = false;
 	m_bEnable = false;
 
-	m_pPlrTransmCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
+	m_pPlrTransmCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
 	
 	return S_OK;
 }

@@ -38,11 +38,11 @@ HRESULT CMainLogo::ReadyScene()
 	// ´øÀü ¹æ2
 	m_pRoom2 = make_shared<CDungeonRoom>();
 
-	Ready_Layer_Environment(L"Layer_Environment");
-	Ready_Layer_SkyBox(L"Layer_SkyBox");
-	Ready_Layer_GameObject(L"Layer_GameObj");
-	Ready_Layer_UI(L"Layer_UI");
-	Ready_Layer_Camera(L"Layer_Camera");
+	Ready_Layer_Environment(L"Layer_3_Environment");
+	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
+	Ready_Layer_GameObject(L"Layer_4_GameObj");
+	Ready_Layer_UI(L"Layer_2_UI");
+	Ready_Layer_Camera(L"Layer_5_Camera");
 
 	for (auto& iter : m_mapLayer) {
 		//GameComponenet Setting

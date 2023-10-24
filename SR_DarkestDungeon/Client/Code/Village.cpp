@@ -27,9 +27,9 @@ CVillage::~CVillage()
 
 HRESULT CVillage::ReadyScene()
 {
-	Ready_Layer_Environment(L"Layer_Environment");
-	Ready_Layer_SkyBox(L"Layer_SkyBox");
-	Ready_Layer_GameObject(L"Layer_GameObj");
+	Ready_Layer_Environment(L"Layer_3_Environment");
+	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
+	Ready_Layer_GameObject(L"Layer_4_GameObj");
 
 	for (auto& iter : m_mapLayer) {
 		//GameComponenet Setting

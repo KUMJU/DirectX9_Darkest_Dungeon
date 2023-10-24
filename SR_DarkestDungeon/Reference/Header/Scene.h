@@ -26,7 +26,7 @@ public:
 
 protected:
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
-	unordered_map<tstring, std::shared_ptr<CLayer>> m_mapLayer;
+	map<tstring, std::shared_ptr<CLayer>> m_mapLayer;
 
 	_bool				m_bColliderVisible = false;
 
