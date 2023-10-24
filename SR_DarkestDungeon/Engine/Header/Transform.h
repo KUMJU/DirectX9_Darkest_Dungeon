@@ -39,6 +39,7 @@ public:
 		m_vPos.x = _fX;
 		m_vPos.y = _fY;
 		m_vPos.z = _fZ;
+
 	}
 
 	void SetScale(const _float& _fX, const _float& _fY, const _float& _fZ)

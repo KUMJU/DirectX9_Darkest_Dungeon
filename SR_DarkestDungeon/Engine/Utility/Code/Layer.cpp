@@ -88,22 +88,6 @@ void CLayer::LateUpdateLayer()
 				continue;
 			}
 
-			(*it)->LateUpdateGameObject();
-
-			it++;
-		}
-	}
-
-	for (auto& iter : m_objectMap)
-	{
-		for (auto it = iter.second.begin(); it != iter.second.end();) {
-
-			//Enable Check
-			if (false == ((*it)->GetIsEnable())) {
-				it++;
-				continue;
-			}
-
 			// Collision Check
 			if ((*it)->IsColliding())
 			{
@@ -111,6 +95,9 @@ void CLayer::LateUpdateLayer()
 				if (ECollideID::PLAYER != (*it)->GetColType())
 					CCollisionMgr::GetInstance()->CheckCollision(*it);
 			}
+
+			(*it)->LateUpdateGameObject();
+
 
 			it++;
 		}

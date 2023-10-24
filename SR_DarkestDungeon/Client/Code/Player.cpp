@@ -30,9 +30,9 @@ HRESULT CPlayer::ReadyGameObject()
 
 _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 {
+	m_pPlayerHand->StopShakingHand();
 	if (!m_bLock)
 		KeyInput(fTimeDelta);
-	m_pPlayerHand->StopShakingHand();
 	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
