@@ -25,7 +25,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 
 
-    shared_ptr<CScene> pMainLogo = make_shared<CWeald_Dungeon>(m_pGraphicDev);
+    shared_ptr<CScene> pMainLogo = make_shared<CVillage>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
 

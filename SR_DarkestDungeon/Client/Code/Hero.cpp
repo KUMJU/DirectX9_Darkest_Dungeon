@@ -39,6 +39,32 @@ _int CHero::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
+	ChangeAnimState();
+	SetAnimDelay(fTimeDelta);
+
+	// 테스트용
+	{
+		if (GetAsyncKeyState(VK_HOME) & 0x8000)
+		{
+			m_eCurAnimState = EAnimState::COMBAT;
+		}
+
+		else if (GetAsyncKeyState(VK_PRIOR) & 0x8000)
+		{
+			m_eCurAnimState = EAnimState::WALK;
+		}
+
+		else if (GetAsyncKeyState(VK_NEXT) & 0x8000)
+		{
+			m_eCurAnimState = EAnimState::SKILL1;
+		}
+
+		else if (GetAsyncKeyState(VK_END) & 0x8000)
+		{
+			m_eCurAnimState = EAnimState::SKILL2;
+		}
+	}
+
 	return iExit;
 }
 
@@ -77,30 +103,29 @@ shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)
 	return m_pSelectedSkill;
 }
 
-void CHero::StressAction()
+void CHero::StressUp()
 {
 	srand(unsigned(time(NULL)));
 
 	if (m_iStress >= 100)
 	{
 		// 랜덤 숫자 0~1 생성
-		int iRand = rand() % 2;
+		_int iRand = rand() % 2;
+
 		// 랜덤 숫자 0~3 생성
-		int iAorV = rand() % 4;
+		_int iAorV = rand() % 4;
+
 		// 3 나오면 기상
 		if (3 == iAorV)
 		{
 			m_bVirtue = true;
 			m_eVirtue = (EVirtue)iRand;
-			// 애니메이션 변경
-
 		}
 		// 아니면 붕괴
 		else
 		{
 			m_bAffliction = true;
 			m_eAffliction = (EAffliction)iRand;
-			// 애니메이션 변경
 		}
 	}
 
@@ -110,24 +135,155 @@ void CHero::StressAction()
 
 void CHero::AddComponent()
 {
-	__super::AddComponent();
-	//shared_ptr<CComponent> pComponent;
+	shared_ptr<CComponent> pComponent;
 
-	//pComponent = m_pBufCom = make_shared <CRcTex>(m_pGraphicDev);
-	//m_pBufCom->ReadyBuffer();
-	//m_mapComponent[ID_STATIC].insert({ L"Com_RCTex",pComponent });
+	pComponent = m_pTransformCom = make_shared<CTransform>();
+	NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
+	m_pTransformCom->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 
-	//pComponent = m_pEffectBufCom = make_shared<CRcTex>(m_pGraphicDev);
-	//m_pEffectBufCom->ReadyBuffer();
-	//m_mapComponent[ID_STATIC].insert({ L"Com_EffectRCTex",pComponent });
+	pComponent = m_pBufCom = make_shared <CRcTex>(m_pGraphicDev);
+	m_pBufCom->ReadyBuffer();
+	m_mapComponent[ID_STATIC].insert({ L"Com_RCTex",pComponent });
 
-	//pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	//m_pTextureCom->SetAnimKey(m_strAnimKey, 0.05f);
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator", pComponent });
+	pComponent = m_pEffectBufCom = make_shared<CRcTex>(m_pGraphicDev);
+	m_pEffectBufCom->ReadyBuffer();
+	m_mapComponent[ID_STATIC].insert({ L"Com_EffectRCTex",pComponent });
+
+	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
+	m_pTextureCom->SetAnimKey(m_strAnimKey, 0.05f);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator", pComponent });
 }
 
-void CHero::ChangeAnim()
+void CHero::SwapSkill(_int _iIdx1, _int _iIdx2)
 {
+	swap(m_pVecSkill[_iIdx1], m_pVecSkill[_iIdx2]);
+}
+
+void CHero::ChangeAnimState()
+{
+	// 마을인 경우
+	if (!m_bInDungeon)
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EAnimState::IDLE;
+
+		return;
+	}
+
+	// 임시
+	if ((m_bAttacking1 || m_bAttacking2 || m_bAttacking3 || m_bAttacking4) && m_tCommonStat.iHp >= 0)
+	{
+		if (m_bAttacking1)
+			m_eCurAnimState = EAnimState::SKILL1;
+		else if (m_bAttacking2)
+			m_eCurAnimState = EAnimState::SKILL2;
+		else if (m_bAttacking3)
+			m_eCurAnimState = EAnimState::SKILL3;
+		else if (m_bAttacking4)
+			m_eCurAnimState = EAnimState::SKILL4;
+	}
+	else if (m_bHitted == true && m_tCommonStat.iHp > 0)
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EAnimState::BESHOT;
+	}
+	else
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EAnimState::COMBAT;
+	}
+}
+
+void CHero::SetAnimDelay(const _float& fTimeDelta)
+{
+	// 피격 시간
+	if (m_bHitted)
+	{
+		m_fHittedTime -= fTimeDelta;
+		if (m_fHittedTime < 0.f)
+		{
+			m_bHitted = false;
+			m_fHittedTime = HITTEDTIME;
+		}
+	}
+
+	// 공격 시간
+	if (m_bAttacking1 || m_bAttacking2 || m_bAttacking3 || m_bAttacking4 )
+	{
+		m_fAttackTime -= fTimeDelta;
+		if (m_fAttackTime < 0.f)
+		{
+			m_bAttacking1 = false;
+			m_bAttacking2 = false;
+			m_bAttacking3 = false;
+			m_bAttacking4 = false;
+
+			m_fAttackTime = ATTACKTIME;
+		}
+	}
+
+	// 붕괴 or 기상 변경 시간 (UI로 띄우기)
+	if ((m_bVirtue || m_bAffliction) && !m_bStressChanged)
+	{
+		m_fChangeTime -= fTimeDelta;
+		if (m_fChangeTime < 0.f)
+		{
+			m_bStressChanged = true;
+		}
+	}
+
+	// 기타 딜레이 타임
+	if (m_bDelay)
+	{
+		m_fDelayTime -= fTimeDelta;
+		if (m_fDelayTime < 0.f)
+		{
+			m_bDelay = false;
+		}
+	}
+}
+
+void CHero::StressEvent()
+{
+	if (m_bAffliction)
+	{
+		switch (m_eAffliction)
+		{
+		// 스트레스
+		case EAffliction::SELFISH:
+			m_iStress += 5;
+			m_bDelay = true;
+			// 이펙트 넣어주기
+			break;
+		// 자해
+		case EAffliction::IRRATIONAL:
+			m_tCommonStat.iHp -= 3;
+			m_bHitted = true;
+			// 이펙트 넣어주기
+			break;
+		case EAffliction::ENUM_END:
+			break;
+		}
+	}
+	else if (m_bVirtue)
+	{
+		switch (m_eVirtue)
+		{
+		case EVirtue::COURAGEOUS:
+			m_tCommonStat.iHp += 3;
+			m_bHitted = true;
+			// 이펙트 넣어주기
+			break;
+		case EVirtue::VIGOROUS:
+			m_iStress -= 4;
+			m_bHitted = true;
+			// 이펙트 넣어주기
+			break;
+		case EVirtue::ENUM_END:
+			break;
+		}
+	}
 }
 
 void CHero::Free()

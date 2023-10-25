@@ -6,12 +6,12 @@ class CSkill
 {
 public:
 	// 영웅 스킬 용
-	// (스킬 이름, 스킬 애니메이션, 스킬 이미지, 활성 위치, 타겟 위치, 공격종류(단순 공격, 중독, 출혈, 기절, 이동, 힐), 
-	//		도트뎀[데미지][라운드], 스턴 확률, 공격력 계수, 치명타 확률, 적인지 아닌지, 라운드 당 사용 가능 횟수, 이동량, 힐량)
+	// (스킬 이름, 스킬 애니메이션, 스킬 이미지, 이펙트키, 활성 위치, 타겟 위치, 공격종류(단순 공격, 중독, 출혈, 기절, 이동, 힐), 
+	//	각 공격 타겟이 적인지 아닌지, 도트뎀[데미지][라운드], 스턴 확률, 공격력 계수, 치명타 확률, 라운드 당 사용 가능 횟수, 이동량, 힐량, 타겟 대상을 모두 공격하는지)
 	CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, tstring _strEffectKey,
-		_bool* _arrActivatePos, _bool* _arrTargetPos, _bool* _bArrAttack, _int* _iDotDamage = nullptr,
-		_float _fStunRatio = 1.f, _float _fDamageRatio = 1.f, _float _fCriticalRatio = 1.f,
-		_bool _bToEnemy = 1, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0);
+		_bool* _arrActivatePos, _bool* _arrTargetPos, _bool* _bArrAttack, _bool* _bArrToEnemy,
+		_int* _iDotDamage = nullptr, _float _fStunRatio = 1.f, _float _fDamageRatio = 1.f,
+		_float _fCriticalRatio = 1.f, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0, _bool _bTargetAll = 0);
 
 	// 몬스터 스킬 용
 	// (스킬 이름, 스킬 애니메이션(크리처의 애니메이션), 도트뎀[데미지][라운드],
@@ -33,11 +33,12 @@ public:
 
 	_bool		IsActivatePos(_int _idx) { return m_arrActivatePos[_idx]; }
 	_bool		IsTargetPos(_int _idx) { return m_arrTargetPos[_idx]; }
-	_bool* GetTargetPos() { return m_arrTargetPos; }
-	_bool		IsToEnemy() { return m_bToEnemy; }
+	_bool*		GetTargetPos() { return m_arrTargetPos; }
+	_bool*		GetArrToEnemy() { return m_bArrToEnemy; }
+	_bool		IsTargetAll() { return m_bTargetAll; }
 	_bool		CanActivateCnt() { if (0 == m_iActivateCnt) return false; return true; }
 	void		DecreaseActivateCnt() { --m_iActivateCnt; }
-	_bool* GetArrAttack() { return m_bArrAttack; }
+	_bool*		GetArrAttack() { return m_bArrAttack; }
 
 	_bool		IsEquipped() { return m_bEquipped; }
 	void		SetEquipped(_bool _bEquipped) { m_bEquipped = _bEquipped; }
@@ -67,14 +68,18 @@ protected:
 	_bool		m_arrActivatePos[4] = { true };
 	// 타겟 위치
 	_bool		m_arrTargetPos[4] = { true };
-	// 타겟 적(true) or 아군(false)
-	_bool		m_bToEnemy = true;
 
 	// 한 전투 당 사용 가능 횟수 (-1일 시 무제한)
 	_int		m_iActivateCnt = -1;
 
 	// 능력 개수
 	_bool		m_bArrAttack[6] = { false };		// 단순 공격, 중독, 출혈, 기절, 이동, 힐
+
+	// 타겟 적(true) or 아군(false)
+	_bool		m_bArrToEnemy[6] = { true };
+
+	// 타겟 포지션 모두 공격
+	_bool		m_bTargetAll = false;
 
 	// 장착 여부
 	_bool		m_bEquipped = true;
