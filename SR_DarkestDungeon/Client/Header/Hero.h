@@ -55,14 +55,21 @@ public:
 
 public:
 	shared_ptr<CSkill>		SelectSkill(_int _iSkillID);
+	virtual	void			StressUp();
 
-	virtual	void			StressAction();
+	// 선택한 두 스킬의 순서를 스왑하는 함수
+	virtual void			SwapSkill(_int _iIdx1, _int _iIdx2);
 
 
 protected:
 	virtual void		AddComponent();
 	virtual void		SetAnimState(EAnimState _eAnimState) { m_eCurAnimState = _eAnimState; }
-	virtual void		ChangeAnim();
+	virtual void		ChangeAnimState();
+	virtual void		SetAnimDelay(const _float& fTimeDelta);
+	virtual void		ChangeAnim() {}
+
+	// 영웅 턴 시작시에 호출해서 동작해주기
+	virtual void		StressEvent();
 
 public:
 	_int		GetStress() { return m_iStress; }
@@ -95,6 +102,23 @@ protected:
 
 	_bool				m_bVirtue = false;			// 기상 여부
 	EVirtue				m_eVirtue = EVirtue::ENUM_END;
+
+	_bool				m_bDelay = false;			// UI 출력 시간 등 (애니메이션이 변하진 않지만 기다려야하는 시간)
+
+	// 딜레이를 만들기 위한 상태값들
+	_float				m_fHittedTime = HITTEDTIME;
+	_float				m_fAttackTime = ATTACKTIME;
+	_float				m_fChangeTime = CHANGETIME;
+	_float				m_fDelayTime = DELAYTIME;
+
+	_bool				m_bInDungeon = false;
+
+	_bool				m_bAttacking1 = false;
+	_bool				m_bAttacking2 = false;
+	_bool				m_bAttacking3 = false;
+	_bool				m_bAttacking4 = false;
+
+	_bool				m_bStressChanged = false;
 
 	//shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
 

@@ -27,41 +27,43 @@ HRESULT CVestal::ReadyGameObject()
 		_bool arrActivatePos1[4] = { 1, 1, 0, 0 };
 		_bool arrTargetPos1[4] = { 1, 1, 0, 0 };
 		_bool arrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrToEnemy1[6] = { 1, 0, 0, 0, 0, 0 };
 
 
 		// 철퇴 후려치기
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
-			(L"MaceBash", L"Vestal_MaceBash", L"MaceBash_Img", L"MaceBash_Effect_Anim",
-				arrActivatePos1, arrTargetPos1, arrTargetPos1, DotDamZero, 1.f, 1.15f);
+			(L"MaceBash", L"Vestal_MaceBash", L"MaceBash_Img", L"MaceBash_Effect",
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.15f);
 
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 1, 1, 1, 0 };
 		_bool arrAttack2[6] = { 1, 0, 0, 1, 0, 0 };
+		_bool arrToEnemy2[6] = { 1, 0, 0, 0, 0, 0 };
 
 		// 눈부신 광채
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
-			(L"DazzlingLight", L"Vestal_DazzlingLight", L"DazzlingLight_Img", L"DazzlingLight_Effect_Anim",
-				arrActivatePos2, arrTargetPos2, arrAttack2, DotDamZero, 1.f, 0.25f);
+			(L"DazzlingLight", L"Vestal_DazzlingLight", L"DazzlingLight_Img", L"DazzlingLight_Effect",
+				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.25f);
 
 		_bool arrActivatePos3[4] = { 0, 0, 1, 1 };
 		_bool arrTargetPos3[4] = { 1, 1, 1, 1 };
 		_bool arrAttack3[6] = { 0, 0, 0, 0, 0, 1 };
+		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 1, 0 };
 
 		// 신성한 은총
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
-			(L"DivineGrace", L"Vestal_DivineGrace", L"DivineGrace_Img", L"DivineGrace_Effect_Anim",
-				arrActivatePos3, arrTargetPos3, arrAttack3, DotDamZero, 1.f, 1.f, 1.f,
-				false, -1, 0, 4);
+			(L"DivineGrace", L"Vestal_DivineGrace", L"DivineGrace_Img", L"DivineGrace_Effect",
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.f, 1.f, -1, 0, 4);
 
 		_bool arrActivatePos4[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos4[4] = { 1, 1, 1, 1 };
 		_bool arrAttack4[6] = { 0, 0, 0, 0, 0, 1 };
+		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 1, 0 };
 
 		// 신성한 위무
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
-			(L"DevineComfort", L"Vestal_DevineComfort", L"DevineComfort_Img", L"DevineComfort_Effect_Anim",
-				arrActivatePos3, arrTargetPos3, arrAttack3, DotDamZero, 1.f, 1.f, 1.f,
-				false, -1, 0, 4);
+			(L"DevineComfort", L"Vestal_DevineComfort", L"DevineComfort_Img", L"DevineComfort_Effect",
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.f, -1, 0, 4);
 
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
@@ -89,6 +91,8 @@ HRESULT CVestal::ReadyGameObject()
 
 		m_pTransformCom->SetAngle(m_vAngle);
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
+
+		m_pTextureCom->SetAnimKey(L"Vestal_Idle", 0.02f);
 	}
 
 	return S_OK;
@@ -96,10 +100,11 @@ HRESULT CVestal::ReadyGameObject()
 
 _int CVestal::UpdateGameObject(const _float& fTimeDelta)
 {
+	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
+
 	_int iExit = __super::UpdateGameObject(fTimeDelta);
 
 	ChangeAnim();
-	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
 	return iExit;
 }
@@ -130,40 +135,63 @@ void CVestal::RenderGameObject()
 
 void CVestal::AddComponent()
 {
-	Engine::CreateNewTexture(L"Vestal_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Combat/armatureName_combat_%d.png", 31);
-	Engine::CreateNewTexture(L"Vestal_Idle", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Idle/armatureName_idle_%d.png", 37);
-	Engine::CreateNewTexture(L"Vestal_Walk", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Walk/armatureName_walk_%d.png", 33);
+	// 영웅 애니메이션
+	{
+		Engine::CreateNewTexture(L"Vestal_Combat", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Combat/armatureName_combat_%d.png", 29);
+		Engine::CreateNewTexture(L"Vestal_Idle", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Idle/armatureName_idle_%d.png", 37);
+		Engine::CreateNewTexture(L"Vestal_Walk", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Walk/armatureName_walk_%d.png", 33);
 
-	Engine::CreateNewTexture(L"Vestal_MaceBash", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Attack.png", 1);
-	Engine::CreateNewTexture(L"Vestal_DazzlingLight", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Stun.png", 1);
-	Engine::CreateNewTexture(L"Vestal_DivineGrace", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1);
-	Engine::CreateNewTexture(L"Vestal_DevineComfort", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1);
+		Engine::CreateNewTexture(L"Vestal_MaceBash", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Attack.png", 1);
+		Engine::CreateNewTexture(L"Vestal_DazzlingLight", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Stun.png", 1);
+		Engine::CreateNewTexture(L"Vestal_DivineGrace", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1);
+		Engine::CreateNewTexture(L"Vestal_DevineComfort", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1);
 
-	Engine::CreateNewTexture(L"Vestal_Defend", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Defend.png", 1);
-	Engine::CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Afflicted.png", 1);
-	Engine::CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue.png", 1);
+		Engine::CreateNewTexture(L"Vestal_Defend", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Defend.png", 1);
+		Engine::CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Afflicted.png", 1);
+		Engine::CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue.png", 1);
+	}
 
-	shared_ptr<CComponent> pComponent;
+	// 스킬 이미지
+	{
+		Engine::CreateNewTexture(L"MaceBash_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/MaceBashImg.png", 1);
+		Engine::CreateNewTexture(L"DazzlingLight_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DazzlingLightImg.png", 1);
+		Engine::CreateNewTexture(L"DivineGrace_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineGraceImg.png", 1);
+		Engine::CreateNewTexture(L"DivineComfort_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineComfortImg.png", 1);
+	}
 
-	pComponent = m_pTransformCom = make_shared<CTransform>();
-	NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
-	m_pTransformCom->ReadyTransform();
+	/*
+	// 스킬 이펙트 (본인에게)
+	{
+		Engine::CreateNewTexture(L"DazzlingLight_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light/armatureName_dazzling_light_%d.png", 57);
+		Engine::CreateNewTexture(L"DivineGrace_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/divine_grace/armatureName_divine_grace_%d.png", 57);
+		Engine::CreateNewTexture(L"DivineComfort_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort/armatureName_gods_comfort_%d.png", 57);
+	}
 
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
-
-	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	m_pTextureCom->SetAnimKey(L"Vestal_Idle", 0.05f);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
+	// 스킬 이펙트 (타겟)
+	{
+		Engine::CreateNewTexture(L"DazzlingLight_Target_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light_target/armatureName_dazzling_light_target_%d.png", 57);
+		Engine::CreateNewTexture(L"DivineComfort_Target_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort_target/armatureName_gods_comfort_target_%d.png", 57);
+	}
+	*/
 
 	__super::AddComponent();
 }
@@ -177,43 +205,43 @@ void CVestal::ChangeAnim()
 		{
 		case EAnimState::IDLE:
 			m_pTextureCom->SetAnimKey(L"Vestal_Idle", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::WALK:
 			m_pTextureCom->SetAnimKey(L"Vestal_Walk", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::COMBAT:
 			m_pTextureCom->SetAnimKey(L"Vestal_Combat", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Vestal_Defend", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Vestal_MaceBash", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Vestal_DazzlingLight", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL3:
 			m_pTextureCom->SetAnimKey(L"Vestal_DivineGrace", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL4:
 			m_pTextureCom->SetAnimKey(L"Vestal_DivineComfort", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"Vestal_Affliction", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::VIRTUE:
 			m_pTextureCom->SetAnimKey(L"Vestal_Virtue", 0.02f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		}
 	}

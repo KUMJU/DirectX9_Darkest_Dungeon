@@ -13,6 +13,9 @@
 #include "InteractionObj.h"
 
 #include "Vestal.h"
+#include "Jester.h"
+#include "Highwayman.h"
+#include "ShieldBreaker.h"
 
 #include"Export_Utility.h"
 
@@ -124,6 +127,12 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	// ¿µ¿õ Å×½ºÆ®
 	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
+	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+	shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

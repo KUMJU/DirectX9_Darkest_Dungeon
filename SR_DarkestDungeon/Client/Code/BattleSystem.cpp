@@ -103,7 +103,7 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 	// 속도를 기준으로 내림차순
 	CmpBySpeed(m_vCreatures);
 	// 영웅부터 몬스터까지 빠른 속도인 creature를 반환
-	for (int i = 0; i < size(m_vCreatures); i++)
+	for (int i = 0; i < size(m_vCreatures); i++)	
 	{
 		for (int j = 0; j < size(m_vHeroes); j++)
 		{

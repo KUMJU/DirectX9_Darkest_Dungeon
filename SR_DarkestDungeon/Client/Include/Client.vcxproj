@@ -160,10 +160,13 @@
     <ClInclude Include="..\Header\DungeonSystem.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Hero.h" />
+    <ClInclude Include="..\Header\Highwayman.h" />
     <ClInclude Include="..\Header\InteractionObj.h" />
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
+    <ClInclude Include="..\Header\Jester.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\Weald_Dungeon.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\pch.h" />
@@ -193,10 +196,13 @@
     <ClCompile Include="..\Code\DungeonSystem.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Hero.cpp" />
+    <ClCompile Include="..\Code\Highwayman.cpp" />
     <ClCompile Include="..\Code\InteractionObj.cpp" />
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
+    <ClCompile Include="..\Code\Jester.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\Weald_Dungeon.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
