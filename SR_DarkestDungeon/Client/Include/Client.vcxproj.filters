@@ -13,7 +13,7 @@
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
-    <ClCompile Include="..\Code\MainLogo.cpp" />
+    <ClCompile Include="..\Code\Weald_Dungeon.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Skill.cpp" />
@@ -26,6 +26,8 @@
     <ClCompile Include="..\Code\Village.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\Code\BrigandFusilier.cpp" />
+    <ClCompile Include="..\Code\BrigandMatchman.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -41,7 +43,7 @@
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\MainApp.h" />
-    <ClInclude Include="..\Header\MainLogo.h" />
+    <ClInclude Include="..\Header\Weald_Dungeon.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\pch.h" />
     <ClInclude Include="..\Header\Player.h" />
@@ -58,6 +60,8 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\Header\BrigandFusilier.h" />
+    <ClInclude Include="..\Header\BrigandMatchman.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

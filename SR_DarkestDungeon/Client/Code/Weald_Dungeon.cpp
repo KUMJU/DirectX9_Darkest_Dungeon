@@ -1,12 +1,11 @@
 #include "pch.h"
-#include "MainLogo.h"
+#include "Weald_Dungeon.h"
 #include "Terrain.h"
 #include "Wall.h"
 #include "SkyBox.h"
 #include "Layer.h"
 #include "DynamicCamera.h"
 #include "Player.h"
-#include "Export_Utility.h"
 #include "StaticCamera.h"
 #include "DungeonSystem.h"
 #include "DungeonRoom.h"
@@ -19,18 +18,26 @@
 #include"GameMgr.h"
 
 #include "BrigandCutthroat.h"
+#include "BrigandFusilier.h"
+#include "BrigandMatchman.h"
 
-CMainLogo::CMainLogo(LPDIRECT3DDEVICE9 pGraphicDev)
+#include "Export_System.h"
+#include "Export_Utility.h"
+
+CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
+	ZeroMemory(m_szString, sizeof(m_szString));
 }
 
-CMainLogo::~CMainLogo()
+CWeald_Dungeon::~CWeald_Dungeon()
 {
 }
 
-HRESULT CMainLogo::ReadyScene()
+HRESULT CWeald_Dungeon::ReadyScene()
 {
+	// text
+	lstrcpy(m_szString, L"Weald Dungeon");
 	// Weald 던전
 	m_pWealdDungeon = make_shared<CDungeonSystem>();
 	// 던전 방1
@@ -52,7 +59,7 @@ HRESULT CMainLogo::ReadyScene()
 	return __super::ReadyScene();
 }
 
-_int CMainLogo::UpdateScene(const _float& fTimeDelta)
+_int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 {
 	// 방 1에 들어가면
 	if (GetAsyncKeyState('8') & 0x8000) {
@@ -76,17 +83,26 @@ _int CMainLogo::UpdateScene(const _float& fTimeDelta)
 	return iExit;
 }
 
-void CMainLogo::LateUpdateScene()
+void CWeald_Dungeon::LateUpdateScene()
 {
 	__super::LateUpdateScene();
 	
 }
 
-void CMainLogo::RenderScene()
+void CWeald_Dungeon::RenderScene()
 {
+	// Font
+	_vec2 df = _vec2(0.f, 0.f);
+	Engine::Render_Font(L"Font_Default", m_szString,
+		&df, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+	_vec2 fd = _vec2(20.f, 50.f);
+	Engine::Render_Font(L"Font_Default",
+		dynamic_pointer_cast<CCreature>((m_pRoom1->GetGameObjectVector())[0])->Get_String(),
+		&fd, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
-HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
+HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
@@ -127,7 +143,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f, WALLSIZEUPY, WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -135,7 +151,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 2.f, WALLSIZEUPY, WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 2.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -143,7 +159,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 1; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 2.f));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -151,7 +167,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 1; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 1.5f + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 2.f));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 1.5f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -160,7 +176,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 10; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + WALLSIZEX * 1.f, WALLSIZEUPY, WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -168,7 +184,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 10; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 2.f + PATHSIZEX + WALLSIZEX * 1.f, WALLSIZEUPY, WALLSIZEX * 2.f + WALLSIZEX / 2.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -177,7 +193,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 4; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 1.f, WALLSIZEUPY, WALLSIZEX / 2.f + WALLSIZEX * 12.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 12.f + WEALD_WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -185,7 +201,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 4; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 3.f + PATHSIZEX + WALLSIZEX * 2.f, WALLSIZEUPY, WALLSIZEX / 2.f + WALLSIZEX * 12.f + WALLSIZEX * i));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 3.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 2.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 12.f + WEALD_WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -193,7 +209,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 1.5f + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 12.f));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 1.5f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 12.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -201,7 +217,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 2; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 3.5f + PATHSIZEX + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 12.f));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 3.5f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 12.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -209,7 +225,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	for (int i = 0; i < 6; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev);
-		m_pWall->SetPos(_vec3(WALLSIZEX * 1.5f + WALLSIZEX * i, WALLSIZEUPY, WALLSIZEX * 16.f));
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 1.5f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 16.f));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 	}
@@ -222,7 +238,7 @@ HRESULT CMainLogo::Ready_Layer_Environment(tstring pLayerTag)
 	return S_OK;
 }
 
-HRESULT CMainLogo::Ready_Layer_SkyBox(tstring pLayerTag)
+HRESULT CWeald_Dungeon::Ready_Layer_SkyBox(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
@@ -235,17 +251,17 @@ HRESULT CMainLogo::Ready_Layer_SkyBox(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"OBJ_Weald_SkyBox", m_pSkyBox);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
-
+	
 	return S_OK;
 }
 
-HRESULT CMainLogo::Ready_Layer_Camera(tstring pLayerTag)
+HRESULT CWeald_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
@@ -253,7 +269,7 @@ HRESULT CMainLogo::Ready_Layer_Camera(tstring pLayerTag)
 	return S_OK;
 }
 
-HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
+HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
@@ -267,41 +283,40 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	// GameObject
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandCutthroat_3 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandCutthroat_4 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandCutthroat_5 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandCutthroat_6 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandCutthroat_7 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandCutthroat_8 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	
+	shared_ptr<CGameObject> m_pBrigandMatchman_1 = make_shared<CBrigandMatchman>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandMatchman_2 = make_shared<CBrigandMatchman>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandFusilier_1 = make_shared<CBrigandFusilier>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandFusilier_2 = make_shared<CBrigandFusilier>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandFusilier_3 = make_shared<CBrigandFusilier>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandFusilier_4 = make_shared<CBrigandFusilier>(m_pGraphicDev);
 
 	// 방에 GameObject 넣기
+	// creatures
 	vector<shared_ptr<CGameObject>> Room1_v1;
 	Room1_v1.push_back(m_pBrigandCutthroat_1);
 	Room1_v1.push_back(m_pBrigandCutthroat_2);
-	Room1_v1.push_back(m_pBrigandCutthroat_3);
-	Room1_v1.push_back(m_pBrigandCutthroat_4);
-	Room1_v1.push_back(m_pBrigandCutthroat_5);
-	Room1_v1.push_back(m_pBrigandCutthroat_6);
-	Room1_v1.push_back(m_pBrigandCutthroat_7);
-	Room1_v1.push_back(m_pBrigandCutthroat_8);
-
+	Room1_v1.push_back(m_pBrigandMatchman_1);
+	Room1_v1.push_back(m_pBrigandMatchman_2);
+	Room1_v1.push_back(m_pBrigandFusilier_1);
+	Room1_v1.push_back(m_pBrigandFusilier_2);
+	Room1_v1.push_back(m_pBrigandFusilier_3);
+	Room1_v1.push_back(m_pBrigandFusilier_4);
 	m_pRoom1->PushGameObjectVector(Room1_v1);
-
+	
+	// heroes
 	vector<shared_ptr<CGameObject>> Room1_v2;
 	Room1_v2.push_back(m_pBrigandCutthroat_1);
 	Room1_v2.push_back(m_pBrigandCutthroat_2);
-	Room1_v2.push_back(m_pBrigandCutthroat_3);
-	Room1_v2.push_back(m_pBrigandCutthroat_4);
-
+	Room1_v2.push_back(m_pBrigandFusilier_3);
+	Room1_v2.push_back(m_pBrigandFusilier_4);
 	m_pRoom1->PushHeroesVector(Room1_v2);
-
+	
+	// monsters
 	vector<shared_ptr<CGameObject>> Room1_v3;
-	Room1_v3.push_back(m_pBrigandCutthroat_5);
-	Room1_v3.push_back(m_pBrigandCutthroat_6);
-	Room1_v3.push_back(m_pBrigandCutthroat_7);
-	Room1_v3.push_back(m_pBrigandCutthroat_8);
-
+	Room1_v3.push_back(m_pBrigandMatchman_1);
+	Room1_v3.push_back(m_pBrigandMatchman_2);
+	Room1_v3.push_back(m_pBrigandFusilier_1);
+	Room1_v3.push_back(m_pBrigandFusilier_2);
 	m_pRoom1->PushMonstersVector(Room1_v3);
 
 	// 배틀시스템 넣기
@@ -316,25 +331,24 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	vector<shared_ptr<CDungeonRoom>> Dungeon1_v;
 	Dungeon1_v.push_back(m_pRoom1);
 	Dungeon1_v.push_back(m_pRoom2);
-
 	m_pWealdDungeon->PushDungeonRoomVector(Dungeon1_v);
 
 	// 던전 object들 위치 잡아놓기
 	// 1번 방
 	m_pRoom1->FormBattlePosition(Room1_v2, Room1_v3,
-		-PI / 2.f, _vec3(WALLSIZEX + PATHSIZEX, WALLSIZEX * 14.f, 0.f));
+		-PI / 2.f, _vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX, WEALD_WALLSIZEX * 14.f, 0.f));
 
 	m_pWealdDungeon->CurrentRoom(10);
 	
 	// Layer에 GameObject 넣기
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_3);
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_4);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_7);
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_8);
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_5);
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_6);
+	m_pLayer->CreateGameObject(L"Obj_BrigandMatchman", m_pBrigandMatchman_1);
+	m_pLayer->CreateGameObject(L"Obj_BrigandMatchman", m_pBrigandMatchman_2);
+	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_1);
+	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_2);
+	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_3);
+	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_4);
 
 
 //PlayerObj
@@ -353,7 +367,7 @@ HRESULT CMainLogo::Ready_Layer_GameObject(tstring pLayerTag)
 	return S_OK;
 }
 
-HRESULT CMainLogo::Ready_Layer_UI(tstring pLayerTag)
+HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });

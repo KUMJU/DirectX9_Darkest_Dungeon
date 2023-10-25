@@ -25,7 +25,6 @@ public:
 	}
 
 public:
-	void Ready();
 	void Update(const _float& fTimeDelta); // 턴 진행중
 
 public:
@@ -61,5 +60,6 @@ private:
 	_float  m_fTime = BATTLEINTERVEL;	// 매 크리처 턴사이 간격
 	_bool	m_bNext = false;
 	_bool	m_bHero = false;			// 공격 주체가 영웅인지?
+	_bool	m_bCounting = false;
 };
 

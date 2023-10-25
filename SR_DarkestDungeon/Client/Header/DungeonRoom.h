@@ -31,7 +31,7 @@ public:
 	}
 
 	// 전투시 카메라 위치 반환 함수
-	_vec3	GetBattleCameraPos() { return _vec3(WALLSIZEX + PATHSIZEX + 10.f, 3.f, WALLSIZEX * 14.f + 4.f); }
+	_vec3	GetBattleCameraPos() { return _vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 10.f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f); }
 
 public:
 	void	MakeDisableAllObject();

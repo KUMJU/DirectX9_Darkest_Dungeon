@@ -1,7 +1,7 @@
 #include"pch.h"
 #include "MainApp.h"
 #include"SceneMgr.h"
-#include"MainLogo.h"
+#include"Weald_Dungeon.h"
 #include "Village.h"
 
 CMainApp::CMainApp()
@@ -25,7 +25,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 
 
-    shared_ptr<CScene> pMainLogo = make_shared<CMainLogo>(m_pGraphicDev);
+    shared_ptr<CScene> pMainLogo = make_shared<CWeald_Dungeon>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
 
