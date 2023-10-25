@@ -7,6 +7,7 @@ CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
 	memset(&m_tCommonStat, NULL, sizeof(STAT));
+	ZeroMemory(m_szString, sizeof(m_szString));
 }
 
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
@@ -59,6 +60,21 @@ void CCreature::LateUpdateGameObject()
 
 void CCreature::RenderGameObject()
 {
+	TCHAR szBuff[32] = { };
+	_stprintf_s(szBuff, TEXT("%d"), GetHp());
+	lstrcpy(m_szString, szBuff);
+}
+
+_bool CCreature::IsAttacking()
+{
+	for (int i = 0; i < 7; i++)
+	{
+		if (m_bAttacking[i])
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 //shared_ptr<CSkill> CCreature::GetSkill(tstring _strSkillName)
@@ -103,15 +119,6 @@ void CCreature::StartCalculate()
 	{
 		m_bState[2] = false;
 		m_bMyTurn = false;
-		m_bDone = true;
-	}
-
-	// Á×¾ú´ÂÁö
-	if (m_tCommonStat.iHp <= 0)
-	{
-		m_bState[3] = true;
-		m_bMyTurn = false;
-		m_bDone = true;
 	}
 }
 

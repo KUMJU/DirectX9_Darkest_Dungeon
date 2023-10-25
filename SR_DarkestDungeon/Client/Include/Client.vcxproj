@@ -151,6 +151,8 @@
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
     <ClInclude Include="..\Header\BrigandCutthroat.h" />
+    <ClInclude Include="..\Header\BrigandFusilier.h" />
+    <ClInclude Include="..\Header\BrigandMatchman.h" />
     <ClInclude Include="..\Header\Creature.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Door.h" />
@@ -162,7 +164,7 @@
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\MainApp.h" />
-    <ClInclude Include="..\Header\MainLogo.h" />
+    <ClInclude Include="..\Header\Weald_Dungeon.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\pch.h" />
     <ClInclude Include="..\Header\Player.h" />
@@ -183,6 +185,8 @@
   <ItemGroup>
     <ClCompile Include="..\Code\BattleSystem.cpp" />
     <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
+    <ClCompile Include="..\Code\BrigandFusilier.cpp" />
+    <ClCompile Include="..\Code\BrigandMatchman.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
     <ClCompile Include="..\Code\Door.cpp" />
     <ClCompile Include="..\Code\DungeonRoom.cpp" />
@@ -193,7 +197,7 @@
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
-    <ClCompile Include="..\Code\MainLogo.cpp" />
+    <ClCompile Include="..\Code\Weald_Dungeon.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Skill.cpp" />

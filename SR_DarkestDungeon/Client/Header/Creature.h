@@ -41,6 +41,9 @@ enum class EAnimState
 	SKILL2,
 	SKILL3,
 	SKILL4,
+	SKILL5,
+	SKILL6,
+	SKILL7,
 
 	// 영웅용
 	AFFLICTION,		// 붕괴
@@ -81,6 +84,8 @@ public:
 		m_pVecSkill = _vVec;
 	}
 
+	_int	GetSkillNum() { return size(m_pVecSkill); }
+
 
 	STAT	GetCommonStat() { return m_tCommonStat; }
 	void	SetCommonStat(STAT _tStat) { m_tCommonStat = _tStat; }
@@ -89,12 +94,14 @@ public:
 	void	SetPosition(_int _iPosition) { m_iPosition += _iPosition; }
 
 	void	SetHitted(_bool _bHitted) { m_bHitted = _bHitted; }
-	void	SetAttacking1(_bool _bAttacking1) { m_bAttacking1 = _bAttacking1; }
-	void	SetAttacking2(_bool _bAttacking2) { m_bAttacking2 = _bAttacking2; }
 	void	SetEffectOn(_bool _bEffectOn) { m_bEffectOn = _bEffectOn; }
+	_bool	GetAttacking(_int _iIndex) { return m_bAttacking[_iIndex]; }
+	void	SetAttacking(_bool _bAttacking, _int _iIndex) { m_bAttacking[_iIndex] = _bAttacking; }
+	_bool	IsAttacking();	// 공격하고 있는지
 
 	_bool	GetIsStun() { return m_bState[2]; }
-	_bool	GetIsCorpse() { return m_bState[3]; }
+	_bool	GetIsCorpse() { return m_bCorpse; }
+	_bool	GetIsDeath() { return m_bDeath; }
 	void	SetBlight(_bool _bBlight) { m_bState[0] = true; }
 	void	SetBleed(_bool _bBleed) { m_bState[1] = true; }
 	void	SetStun(_bool _bStun) { m_bState[2] = true; }
@@ -115,6 +122,8 @@ public:
 
 	_int	GetOrder() { return m_tCommonStat.iOrder; }
 	void	SetOrder(_int _iValue) { m_tCommonStat.iOrder = _iValue; }
+
+	const _tchar* Get_String() const { return m_szString; }
 
 	void	StartCalculate();
 
@@ -171,6 +180,7 @@ protected:
 	_int		m_iPosition;				// 위치 (0~3)
 
 	_bool		m_bDeath = false;			// 사망 여부(몬스터는 시체까지 소멸할때, 영웅은 사망할때)
+	_bool		m_bCorpse = false;			// 몬스터의 시체여부
 	_bool		m_bState[4] = { false };	// 순서대로 중독, 출혈, 기절, 시체 여부
 
 	_int		m_bBlightDot[4] = { 0 };	// 턴마다 중독 도트뎀
@@ -196,8 +206,11 @@ protected:
 	_bool		m_bAbleAct = true;			// 이번 턴에 행동 가능한지 여부(기절이나 시체사라지면 불가능)
 
 	// 스킬 사용중
-	_bool		m_bAttacking1 = false;
-	_bool		m_bAttacking2 = false;
+	_bool		m_bAttacking[7] = {0};
+	//_bool		m_bAttacking1 = false;
+	//_bool		m_bAttacking2 = false;
+
+	_tchar		m_szString[128];	// 체력 출력
 
 protected:
 	virtual void	Free();

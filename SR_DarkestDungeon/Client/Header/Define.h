@@ -1,9 +1,10 @@
 #pragma once
 
 // Weald Dungeon
-#define WALLSIZEX 12.f
-#define WALLSIZEUPY 5.f
-#define PATHSIZEX 18.f
+#define WEALD_WALLSIZEX 12.f
+#define WEALD_WALLSIZEUPY 5.f
+#define WEALD_PATHSIZEX 18.f
 
 // Time
 #define BATTLEINTERVEL 1.f
+#define CORPSEINTERVEL 0.2f

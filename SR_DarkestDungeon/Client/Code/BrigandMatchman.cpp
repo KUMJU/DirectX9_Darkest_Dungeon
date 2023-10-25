@@ -1,46 +1,46 @@
 #include "pch.h"
-#include "BrigandCutthroat.h"
+#include "BrigandMatchman.h"
 #include"Export_Utility.h"
 
-CBrigandCutthroat::CBrigandCutthroat(LPDIRECT3DDEVICE9 pGraphicDev)
+CBrigandMatchman::CBrigandMatchman(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 {
 }
 
-CBrigandCutthroat::CBrigandCutthroat(const CCreature& rhs)
+CBrigandMatchman::CBrigandMatchman(const CCreature& rhs)
 	: CMonster(rhs)
 {
 }
 
-CBrigandCutthroat::~CBrigandCutthroat()
+CBrigandMatchman::~CBrigandMatchman()
 {
 }
 
-HRESULT CBrigandCutthroat::ReadyGameObject()
+HRESULT CBrigandMatchman::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
 	// 스탯 설정
 	m_tCommonStat.iHp = 100;
 	m_tCommonStat.iDodge = 10;
-	m_tCommonStat.iSpeed = 3;
+	m_tCommonStat.iSpeed = 4;
 	m_tCommonStat.iAttackPower = 10;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
-	int Skill1_Dot[2] = {1,3};
-	_bool	m_bArrAttack1[6] = { 0, 0, 1, 0, 0, 0};
-	shared_ptr<CSkill> m_pBrigandCutthroat_1 = make_shared<CSkill>
-		(L"Attack1", L"Brigand Cutthroat_Attack1", Skill1_Dot, 0.f, 1.2f, 0.f,
+	int Skill1_Dot[2] = { 0,0 };
+	_bool	m_bArrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
+	shared_ptr<CSkill> m_pBrigandMatchman_1 = make_shared<CSkill>
+		(L"Attack1", L"Brigand Matchman_Attack1", Skill1_Dot, 0.f, 1.f, 0.f,
 			m_bArrAttack1, 0, 0);
-	pVecSkill.push_back(m_pBrigandCutthroat_1);
+	pVecSkill.push_back(m_pBrigandMatchman_1);
 
-	int Skill2_Dot[2] = { 2,3 };
-	_bool	m_bArrAttack2[6] = { 0, 0, 1, 0, 0, 0 };
-	shared_ptr<CSkill> m_pBrigandCutthroat_2 = make_shared<CSkill>
-		(L"Attack2", L"Brigand Cutthroat_Attack2", Skill2_Dot, 0.f, 1.5f, 0.f,
+	int Skill2_Dot[2] = { 0,0 };
+	_bool	m_bArrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
+	shared_ptr<CSkill> m_pBrigandMatchman_2 = make_shared<CSkill>
+		(L"Attack2", L"Brigand Matchman_Attack2", Skill2_Dot, 0.f, 1.1f, 0.f,
 			m_bArrAttack2, 0, 0);
-	pVecSkill.push_back(m_pBrigandCutthroat_2);
+	pVecSkill.push_back(m_pBrigandMatchman_2);
 	SetSkill(pVecSkill);
 
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
@@ -52,7 +52,7 @@ HRESULT CBrigandCutthroat::ReadyGameObject()
 	return E_NOTIMPL;
 }
 
-_int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
+_int CBrigandMatchman::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
@@ -64,24 +64,22 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 		switch (m_eCurAnimState)
 		{
 		case EAnimState::COMBAT:
-			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.05f);
+			m_pTextureCom->SetAnimKey(L"Brigand Matchman_Combat", 0.05f);
 			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
-			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Hitted", 0.02f);
-			m_pTransformCom->SetScale(2.f * 225.f / 232.f, 2.f * 317.f / 311.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Brigand Matchman_Hitted", 0.02f);
+			m_pTransformCom->SetScale(2.f * 238.f / 179.f, 2.f * 371.f / 356.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
-			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack1", 0.02f);
-			m_pTransformCom->SetScale(2.f * 427.f / 232.f, 2.f * 268.f / 311.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Brigand Matchman_Attack1", 0.02f);
+			m_pTransformCom->SetScale(2.f * 497.f / 179.f, 2.f * 257.f / 356.f, 1.f);
 			break;
 		case EAnimState::SKILL2:
-			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack2", 0.02f);
-			m_pTransformCom->SetScale(2.f * 232.f / 232.f, 2.f * 365.f / 311.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Brigand Matchman_Attack2", 0.02f);
+			m_pTransformCom->SetScale(2.f * 366.f / 179.f, 2.f * 442.f / 356.f, 1.f);
 			break;
 		case EAnimState::CORPSE:
-			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Dead", 0.02f);
-			m_pTransformCom->SetScale(2.f * 215.f / 232.f, 2.f * 158.f / 311.f, 1.f);
 			break;
 		}
 	}
@@ -127,12 +125,12 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 		m_ePrevAnimState = m_eCurAnimState;
 		m_eCurAnimState = EAnimState::DEATH;
 	}
-	else if (m_bCorpse)
+	else if (m_tCommonStat.iHp <= 0)
 	{
 		m_ePrevAnimState = m_eCurAnimState;
 		m_eCurAnimState = EAnimState::CORPSE;
 	}
-	else if (m_bHitted == true && !m_bCorpse)
+	else if (m_bHitted == true && m_tCommonStat.iHp > 0)
 	{
 		m_ePrevAnimState = m_eCurAnimState;
 		m_eCurAnimState = EAnimState::BESHOT;
@@ -149,7 +147,7 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 		m_bCorpse = true;
 		m_tCommonStat.iHp = 20;
 	}
-	
+
 	// 사망 여부
 	if (m_tCommonStat.iHp <= 0 && m_bCorpse)
 	{
@@ -195,12 +193,12 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 	return iExit;
 }
 
-void CBrigandCutthroat::LateUpdateGameObject()
+void CBrigandMatchman::LateUpdateGameObject()
 {
 	__super::LateUpdateGameObject();
 }
 
-void CBrigandCutthroat::RenderGameObject()
+void CBrigandMatchman::RenderGameObject()
 {
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
@@ -220,18 +218,16 @@ void CBrigandCutthroat::RenderGameObject()
 	__super::RenderGameObject();
 }
 
-void CBrigandCutthroat::AddComponent()
+void CBrigandMatchman::AddComponent()
 {
-	Engine::CreateNewTexture(L"Brigand Cutthroat_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/Combat/armatureName_combat_%d.png", 33);
-	Engine::CreateNewTexture(L"Brigand Cutthroat_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/1.png", 1);
-	Engine::CreateNewTexture(L"Brigand Cutthroat_Attack2", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/2.png", 1);
-	Engine::CreateNewTexture(L"Brigand Cutthroat_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/3.png", 1);
-	Engine::CreateNewTexture(L"Brigand Cutthroat_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/4.png", 1);
+	Engine::CreateNewTexture(L"Brigand Matchman_Combat", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Matchman/Combat/armatureName_combat_%d.png", 36);
+	Engine::CreateNewTexture(L"Brigand Matchman_Attack1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Matchman/1.png", 1);
+	Engine::CreateNewTexture(L"Brigand Matchman_Attack2", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Matchman/2.png", 1);
+	Engine::CreateNewTexture(L"Brigand Matchman_Hitted", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Matchman/3.png", 1);
 
 	shared_ptr<CComponent> pComponent;
 
@@ -243,22 +239,13 @@ void CBrigandCutthroat::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.05f);
+	m_pTextureCom->SetAnimKey(L"Brigand Matchman_Combat", 0.05f);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
-
-	//pComponent = m_pEffectTransformCom = make_shared<CTransform>();
-	//NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
-	//m_pEffectTransformCom->ReadyTransform();
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
-	//
-	//pComponent = m_pEffectTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	//m_pEffectTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.05f);
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
 	__super::AddComponent();
 }
 
-void CBrigandCutthroat::Free()
+void CBrigandMatchman::Free()
 {
 	__super::Free();
 }

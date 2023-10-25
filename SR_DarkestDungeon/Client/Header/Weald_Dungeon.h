@@ -6,11 +6,11 @@
 class CDungeonSystem;
 class CDungeonRoom;
 
-class CMainLogo : public Engine::CScene
+class CWeald_Dungeon : public Engine::CScene
 {
 public:
-	explicit CMainLogo(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CMainLogo();
+	explicit CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CWeald_Dungeon();
 
 public:
 	virtual HRESULT ReadyScene() override;
@@ -19,10 +19,7 @@ public:
 	virtual void RenderScene() override;
 
 public:
-	// 추후에 던전시스템으로 옮길 예정
-	// 열 맞춰서 배치하는 기능
-	//void	FormBattlePosition(vector<shared_ptr<CGameObject>> _pHeroes, vector<shared_ptr<CGameObject>> _pMonsters,
-	//	_float _fAngle, _vec3 _vOrigin);
+	const _tchar* Get_String() const { return m_szString; }
 
 private:
 
@@ -33,10 +30,12 @@ private:
 	HRESULT				Ready_Layer_GameObject(tstring pLayerTag);
 	HRESULT				Ready_Layer_UI(tstring pLayerTag);
 
-	shared_ptr<CDungeonSystem> m_pWealdDungeon = {};
-	shared_ptr<CDungeonRoom> m_pRoom1 = {};
-	shared_ptr<CDungeonRoom> m_pRoom2 = {};
+	shared_ptr<CDungeonSystem> m_pWealdDungeon = {};	// 던전1
+	shared_ptr<CDungeonRoom> m_pRoom1 = {};				// 방1
+	shared_ptr<CDungeonRoom> m_pRoom2 = {};				// 방2
 
 	_bool				m_bTestBattle = false;
+
+	_tchar		m_szString[128];
 };
 
