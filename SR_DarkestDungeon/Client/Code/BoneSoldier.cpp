@@ -1,22 +1,22 @@
 #include "pch.h"
-#include "BrigandFusilier.h"
+#include "BoneSoldier.h"
 #include"Export_Utility.h"
 
-CBrigandFusilier::CBrigandFusilier(LPDIRECT3DDEVICE9 pGraphicDev)
+CBoneSoldier::CBoneSoldier(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 {
 }
 
-CBrigandFusilier::CBrigandFusilier(const CCreature& rhs)
+CBoneSoldier::CBoneSoldier(const CCreature& rhs)
 	: CMonster(rhs)
 {
 }
 
-CBrigandFusilier::~CBrigandFusilier()
+CBoneSoldier::~CBoneSoldier()
 {
 }
 
-HRESULT CBrigandFusilier::ReadyGameObject()
+HRESULT CBoneSoldier::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
@@ -24,19 +24,19 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 
 	// 스탯 설정
 	m_tCommonStat.iHp = 30;
-	m_tCommonStat.iDodge = 8;
-	m_tCommonStat.iSpeed = 5;
-	m_tCommonStat.iAttackPower = 5;
+	m_tCommonStat.iDodge = 10;
+	m_tCommonStat.iSpeed = 6;
+	m_tCommonStat.iAttackPower = 10;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
-	int Skill1_Dot[2] = { 0,0 };
-	_bool	bArrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
+	int Skill1_Dot[2] = { 3,2 };
+	_bool	m_bArrAttack1[6] = { 0, 0, 1, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
-	shared_ptr<CSkill> m_pBrigandFusilier_1 = make_shared<CSkill>
-		(L"Attack1", L"Brigand Fusilier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.f, 0.f,
-			bArrAttack1, 0, 0, true);
-	pVecSkill.push_back(m_pBrigandFusilier_1);
+	shared_ptr<CSkill> m_pBoneSoldier_1 = make_shared<CSkill>
+		(L"Attack1", L"Bone Soldier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.8f, 0.f,
+			m_bArrAttack1, 0, 10);
+	pVecSkill.push_back(m_pBoneSoldier_1);
 
 	SetSkill(pVecSkill);
 
@@ -49,7 +49,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	return E_NOTIMPL;
 }
 
-_int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
+_int CBoneSoldier::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
@@ -61,24 +61,24 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		switch (m_eCurAnimState)
 		{
 		case EAnimState::COMBAT:
-			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Combat", 0.05f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Combat", 0.05f);
 			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
-			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Hitted", 0.02f);
-			m_pTransformCom->SetScale(2.f * 207.f / 230.f, 2.f * 291.f / 291.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Hitted", 0.02f);
+			m_pTransformCom->SetScale(2.f * 171.f / 205.f, 2.f * 269.f / 310.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
-			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Attack1", 0.02f);
-			m_pTransformCom->SetScale(2.f * 207.f / 230.f, 2.f * 291.f / 291.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Attack1", 0.02f);
+			m_pTransformCom->SetScale(2.f * 323.f / 205.f, 2.f * 300.f / 310.f, 1.f);
 			break;
 		case EAnimState::CORPSE:
-			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Dead", 0.02f);
-			m_pTransformCom->SetScale(2.f * 215 / 230.f, 2.f * 137 / 291.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Dead", 0.02f);
+			m_pTransformCom->SetScale(2.f * 215.f / 205.f, 2.f * 146.f / 310.f, 1.f);
 			break;
 		case EAnimState::DEATH:
-			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Death", 0.02f);
-			m_pTransformCom->SetScale(2.f * 232.f / 230.f, 2.f * 311.f / 291.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Death", 0.02f);
+			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
 			break;
 		}
 	}
@@ -183,12 +183,12 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 	return iExit;
 }
 
-void CBrigandFusilier::LateUpdateGameObject()
+void CBoneSoldier::LateUpdateGameObject()
 {
 	__super::LateUpdateGameObject();
 }
 
-void CBrigandFusilier::RenderGameObject()
+void CBoneSoldier::RenderGameObject()
 {
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
@@ -208,17 +208,17 @@ void CBrigandFusilier::RenderGameObject()
 	__super::RenderGameObject();
 }
 
-void CBrigandFusilier::AddComponent()
+void CBoneSoldier::AddComponent()
 {
-	Engine::CreateNewTexture(L"Brigand Fusilier_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/Combat/armatureName_combat_%d.png", 34);
-	Engine::CreateNewTexture(L"Brigand Fusilier_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/1.png", 1);
-	Engine::CreateNewTexture(L"Brigand Fusilier_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/2.png", 1);
-	Engine::CreateNewTexture(L"Brigand Fusilier_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/3.png", 1);
-	Engine::CreateNewTexture(L"Brigand Fusilier_Death", TEX_NORMAL,
+	Engine::CreateNewTexture(L"Bone Soldier_Combat", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/Bone Soldier/combat/armatureName_combat_%d.png", 28);
+	Engine::CreateNewTexture(L"Bone Soldier_Attack1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/1.png", 1);
+	Engine::CreateNewTexture(L"Bone Soldier_Dead", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/2.png", 1);
+	Engine::CreateNewTexture(L"Bone Soldier_Hitted", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/3.png", 1);
+	Engine::CreateNewTexture(L"Bone Soldier_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1);
 
 	shared_ptr<CComponent> pComponent;
@@ -231,7 +231,7 @@ void CBrigandFusilier::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Combat", 0.05f);
+	m_pTextureCom->SetAnimKey(L"Bone Soldier_Combat", 0.05f);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
 	//pComponent = m_pEffectTransformCom = make_shared<CTransform>();
@@ -240,13 +240,13 @@ void CBrigandFusilier::AddComponent()
 	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	//
 	//pComponent = m_pEffectTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	//m_pEffectTextureCom->SetAnimKey(L"Brigand Cutthroat_Combat", 0.05f);
+	//m_pEffectTextureCom->SetAnimKey(L"Bone Soldier_Combat", 0.05f);
 	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
 	__super::AddComponent();
 }
 
-void CBrigandFusilier::Free()
+void CBoneSoldier::Free()
 {
 	__super::Free();
 }

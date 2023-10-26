@@ -150,6 +150,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
+    <ClInclude Include="..\Header\BoneCourtier.h" />
+    <ClInclude Include="..\Header\BoneDefender.h" />
+    <ClInclude Include="..\Header\BoneSoldier.h" />
     <ClInclude Include="..\Header\BrigandBloodletter.h" />
     <ClInclude Include="..\Header\BrigandCutthroat.h" />
     <ClInclude Include="..\Header\CameraMgr.h" />
@@ -188,6 +191,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BattleSystem.cpp" />
+    <ClCompile Include="..\Code\BoneCourtier.cpp" />
+    <ClCompile Include="..\Code\BoneDefender.cpp" />
+    <ClCompile Include="..\Code\BoneSoldier.cpp" />
     <ClCompile Include="..\Code\BrigandBloodletter.cpp" />
     <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
     <ClCompile Include="..\Code\BrigandFusilier.cpp" />

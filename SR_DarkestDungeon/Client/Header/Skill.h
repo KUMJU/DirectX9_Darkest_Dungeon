@@ -46,11 +46,12 @@ public:
 	_bool		IsUnlocked() { return m_bUnlocked; }
 	void		SetUnlocked(_bool _bUnlocekd) { m_bUnlocked = _bUnlocekd; }
 
+	_int		GetStress() { return m_iStress; }
 	_int		GetLevel() { return m_iLevel; }
 	void		UpgradeLevel() { m_iLevel++; }
 
 	_int		GetMoveCnt() { return m_iMoveCnt; }
-	_int* GetDotDamage() { return m_iDotDamage; }
+	_int*		GetDotDamage() { return m_iDotDamage; }
 	_int		GetHeal() { return m_iHeal; }
 	_float		GetStunRatio() { return m_fStunRatio; }
 	_float		GetDamageRatio() { return m_fDamageRatio; }
