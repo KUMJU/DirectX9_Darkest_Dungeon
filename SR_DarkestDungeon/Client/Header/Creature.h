@@ -122,6 +122,9 @@ public:
 	void	IncreaseHP(_int _iValue) { m_tCommonStat.iHp += _iValue; }
 	void	DecreaseHP(_int _iValue) { m_tCommonStat.iHp -= _iValue; }
 
+	_int	GetCurrentBleed() { return m_bBleedDot[0]; }
+	_int	GetCurrentPoision() { return m_bBlightDot[0]; }
+
 	_int	GetDodge() { return m_tCommonStat.iDodge; }
 	void	SetDodge(_int _iValue) { m_tCommonStat.iDodge = _iValue; }
 
@@ -135,6 +138,8 @@ public:
 	void	SetOrder(_int _iValue) { m_tCommonStat.iOrder = _iValue; }
 
 	const _tchar* Get_String() const { return m_szString; }
+	const _tchar* Get_String2() const { return m_szString2; }
+	const _tchar* Get_String3() const { return m_szString3; }
 
 	void	StartCalculate();
 
@@ -225,7 +230,9 @@ protected:
 
 	_int		m_iSize = 1;	// 캐릭터 크기
 
-	_tchar		m_szString[128];	// 체력 출력
+	_tchar		m_szString[128];
+	_tchar		m_szString2[128];
+	_tchar		m_szString3[128];
 
 	_bool		m_bMoving = false;		// 움직이는중(기술, 당기기 등)
 	_vec3		m_vTargetPos = { 0, 0, 0 };	// 목적지

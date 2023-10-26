@@ -23,18 +23,19 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	m_iSize = 1;
 
 	// 스탯 설정
-	m_tCommonStat.iHp = 5;
+	m_tCommonStat.iHp = 30;
 	m_tCommonStat.iDodge = 8;
 	m_tCommonStat.iSpeed = 5;
-	m_tCommonStat.iAttackPower = 10;
+	m_tCommonStat.iAttackPower = 5;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
 	int Skill1_Dot[2] = { 0,0 };
-	_bool	m_bArrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
+	_bool	bArrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
+	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBrigandFusilier_1 = make_shared<CSkill>
-		(L"Attack1", L"Brigand Fusilier_Attack1", Skill1_Dot, 0.f, 1.2f, 0.f,
-			m_bArrAttack1, 0, 0);
+		(L"Attack1", L"Brigand Fusilier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.4f, 0.f,
+			bArrAttack1, 0, 0, true);
 	pVecSkill.push_back(m_pBrigandFusilier_1);
 
 	SetSkill(pVecSkill);
@@ -145,7 +146,7 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		BleedCure();
 		BlightCure();
 		m_bCorpse = true;
-		m_tCommonStat.iHp = 12;
+		m_tCommonStat.iHp = 10;
 	}
 
 	// 사망 여부

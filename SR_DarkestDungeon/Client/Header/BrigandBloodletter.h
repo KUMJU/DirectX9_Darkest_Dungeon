@@ -2,15 +2,15 @@
 #include "Monster.h"
 
 #define	HITTEDTIME	1.f
-#define	ATTACK1TIME	0.5f
-#define	ATTACK2TIME	0.5f
+#define	ATTACK1TIME	1.f
+#define	ATTACK2TIME	1.f
 
-class CBrigandMatchman : public CMonster
+class CBrigandBloodletter : public CMonster
 {
 public:
-	explicit CBrigandMatchman(LPDIRECT3DDEVICE9 pGraphicDev);
-	CBrigandMatchman(const CCreature& rhs);
-	virtual ~CBrigandMatchman();
+	explicit CBrigandBloodletter(LPDIRECT3DDEVICE9 pGraphicDev);
+	CBrigandBloodletter(const CCreature& rhs);
+	virtual ~CBrigandBloodletter();
 
 public:
 	virtual HRESULT ReadyGameObject() override;
