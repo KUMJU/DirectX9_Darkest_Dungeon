@@ -41,6 +41,8 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 
+	m_vPos = *m_pTransformCom->GetPos();
+
 	//빌보드 시작
 	_matrix matWorld;
 
@@ -191,6 +193,33 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 
 	// 나
 	m_bEffectOn = true;
+}
+
+void CCreature::MovePos(_vec3 _vPos, const _float& fTimeDelta, _float _fSpeed)
+{
+	_vec3		vDir;
+	vDir = _vPos - m_vPos;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+	m_pTransformCom->MoveForward(&vDir, fTimeDelta, _fSpeed);
+	int a = 3;
+}
+
+_float CCreature::MovingSpeed(_vec3 _vPos, _float _fMovingTime)
+{
+	_vec3		vDir;
+	vDir = _vPos - m_vPos;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+	_float m_fSpeed = 0.f;
+	if (vDir.x != 0)
+		m_fSpeed = (_vPos - m_vPos).x / vDir.x / _fMovingTime;
+	else if (vDir.y != 0)
+		m_fSpeed = (_vPos - m_vPos).y / vDir.y / _fMovingTime;
+	else if (vDir.z != 0)
+		m_fSpeed = (_vPos - m_vPos).z / vDir.z / _fMovingTime;
+
+	return m_fSpeed;
 }
 
 void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)

@@ -20,8 +20,10 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_iSize = 1;
+
 	// 스탯 설정
-	m_tCommonStat.iHp = 80;
+	m_tCommonStat.iHp = 5;
 	m_tCommonStat.iDodge = 8;
 	m_tCommonStat.iSpeed = 5;
 	m_tCommonStat.iAttackPower = 10;
@@ -73,6 +75,10 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Dead", 0.02f);
 			m_pTransformCom->SetScale(2.f * 215 / 230.f, 2.f * 137 / 291.f, 1.f);
 			break;
+		case EAnimState::DEATH:
+			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Death", 0.02f);
+			m_pTransformCom->SetScale(2.f * 232.f / 230.f, 2.f * 311.f / 291.f, 1.f);
+			break;
 		}
 	}
 
@@ -117,12 +123,12 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		m_ePrevAnimState = m_eCurAnimState;
 		m_eCurAnimState = EAnimState::DEATH;
 	}
-	else if (m_tCommonStat.iHp <= 0)
+	else if (m_bCorpse)
 	{
 		m_ePrevAnimState = m_eCurAnimState;
 		m_eCurAnimState = EAnimState::CORPSE;
 	}
-	else if (m_bHitted == true && m_tCommonStat.iHp > 0)
+	else if (m_bHitted == true && !m_bCorpse)
 	{
 		m_ePrevAnimState = m_eCurAnimState;
 		m_eCurAnimState = EAnimState::BESHOT;
@@ -136,8 +142,10 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 	// 시체 여부
 	if (m_tCommonStat.iHp <= 0 && !m_bCorpse && !m_bDeath)
 	{
+		BleedCure();
+		BlightCure();
 		m_bCorpse = true;
-		m_tCommonStat.iHp = 20;
+		m_tCommonStat.iHp = 12;
 	}
 
 	// 사망 여부
@@ -209,6 +217,8 @@ void CBrigandFusilier::AddComponent()
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/2.png", 1);
 	Engine::CreateNewTexture(L"Brigand Fusilier_Hitted", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/3.png", 1);
+	Engine::CreateNewTexture(L"Brigand Fusilier_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1);
 
 	shared_ptr<CComponent> pComponent;
 

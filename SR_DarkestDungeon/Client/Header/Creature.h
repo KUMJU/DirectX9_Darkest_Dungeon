@@ -86,12 +86,23 @@ public:
 
 	_int	GetSkillNum() { return size(m_pVecSkill); }
 
+	_bool	GetMoving() { return m_bMoving; }
+	void	SetMoving(_bool _bMoving) { m_bMoving = _bMoving; }
+
+	_float	GetMovingSpeed() { return m_fMovingSpeed; }
+	void	SetMovingSpeed(_float _bMovingSpeed) { m_fMovingSpeed = _bMovingSpeed; }
+
+	_vec3	GetTargetPos() { return m_vTargetPos; }
+	void	SetTargetPos(_vec3 _vTargetPos) { m_vTargetPos = _vTargetPos; }
 
 	STAT	GetCommonStat() { return m_tCommonStat; }
 	void	SetCommonStat(STAT _tStat) { m_tCommonStat = _tStat; }
 
 	_int	GetPosition() { return m_iPosition; }
 	void	SetPosition(_int _iPosition) { m_iPosition += _iPosition; }
+
+	_int	GetSize() { return m_iSize; }
+	void	SetSize(_int _iSize) { m_iSize = _iSize; }
 
 	void	SetHitted(_bool _bHitted) { m_bHitted = _bHitted; }
 	void	SetEffectOn(_bool _bEffectOn) { m_bEffectOn = _bEffectOn; }
@@ -137,6 +148,8 @@ public:
 	void	SetAbleAct(_bool _bAbleAct) { m_bAbleAct = _bAbleAct; }
 
 	virtual void	AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill);
+	void	MovePos(_vec3 _vPos, const _float& fTimeDelta, _float _fSpeed);
+	_float	MovingSpeed(_vec3 _vPos, _float _fMovingTime);
 
 protected:
 
@@ -210,7 +223,13 @@ protected:
 	//_bool		m_bAttacking1 = false;
 	//_bool		m_bAttacking2 = false;
 
+	_int		m_iSize = 1;	// 캐릭터 크기
+
 	_tchar		m_szString[128];	// 체력 출력
+
+	_bool		m_bMoving = false;		// 움직이는중(기술, 당기기 등)
+	_vec3		m_vTargetPos = { 0, 0, 0 };	// 목적지
+	_float		m_fMovingSpeed = 0.f;
 
 protected:
 	virtual void	Free();

@@ -20,23 +20,25 @@ HRESULT CBrigandCutthroat::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_iSize = 1;
+
 	// 스탯 설정
-	m_tCommonStat.iHp = 100;
+	m_tCommonStat.iHp = 5;
 	m_tCommonStat.iDodge = 10;
 	m_tCommonStat.iSpeed = 3;
 	m_tCommonStat.iAttackPower = 10;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
-	int Skill1_Dot[2] = {1,3};
-	_bool	m_bArrAttack1[6] = { 0, 0, 1, 0, 0, 0};
+	int Skill1_Dot[2] = { 0,0 };
+	_bool	m_bArrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
 	shared_ptr<CSkill> m_pBrigandCutthroat_1 = make_shared<CSkill>
 		(L"Attack1", L"Brigand Cutthroat_Attack1", Skill1_Dot, 0.f, 1.2f, 0.f,
 			m_bArrAttack1, 0, 0);
 	pVecSkill.push_back(m_pBrigandCutthroat_1);
 
-	int Skill2_Dot[2] = { 2,3 };
-	_bool	m_bArrAttack2[6] = { 0, 0, 1, 0, 0, 0 };
+	int Skill2_Dot[2] = { 0,0 };
+	_bool	m_bArrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
 	shared_ptr<CSkill> m_pBrigandCutthroat_2 = make_shared<CSkill>
 		(L"Attack2", L"Brigand Cutthroat_Attack2", Skill2_Dot, 0.f, 1.5f, 0.f,
 			m_bArrAttack2, 0, 0);
@@ -82,6 +84,10 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Dead", 0.02f);
 			m_pTransformCom->SetScale(2.f * 215.f / 232.f, 2.f * 158.f / 311.f, 1.f);
+			break;
+		case EAnimState::DEATH:
+			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Death", 0.02f);
+			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
 			break;
 		}
 	}
@@ -146,10 +152,12 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 	// 시체 여부
 	if (m_tCommonStat.iHp <= 0 && !m_bCorpse && !m_bDeath)
 	{
+		BleedCure();
+		BlightCure();
 		m_bCorpse = true;
-		m_tCommonStat.iHp = 20;
+		m_tCommonStat.iHp = 12;
 	}
-	
+
 	// 사망 여부
 	if (m_tCommonStat.iHp <= 0 && m_bCorpse)
 	{
@@ -232,6 +240,8 @@ void CBrigandCutthroat::AddComponent()
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/3.png", 1);
 	Engine::CreateNewTexture(L"Brigand Cutthroat_Hitted", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/4.png", 1);
+	Engine::CreateNewTexture(L"Brigand Cutthroat_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1);
 
 	shared_ptr<CComponent> pComponent;
 
