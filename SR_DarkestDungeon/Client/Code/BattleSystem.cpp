@@ -118,6 +118,9 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 				dynamic_pointer_cast<CCreature>(m_vCreatures[i])->GetCommonStat().iSpeed)
 				&& !dynamic_pointer_cast<CCreature>(m_vCreatures[i])->GetDone())
 			{
+
+				dynamic_pointer_cast<CCreature>(iter)->SetTurn(true);
+
 				dynamic_pointer_cast<CCreature>(m_vCreatures[i])->SetTurn(true);
 				m_bHero = true;
 				return m_vCreatures[i];

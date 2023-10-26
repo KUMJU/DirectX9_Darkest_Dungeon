@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
     <ClInclude Include="..\Header\BrigandCutthroat.h" />
+    <ClInclude Include="..\Header\CameraMgr.h" />
     <ClInclude Include="..\Header\Creature.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Door.h" />
@@ -183,6 +184,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\BattleSystem.cpp" />
     <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
+    <ClCompile Include="..\Code\CameraMgr.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
     <ClCompile Include="..\Code\Door.cpp" />
     <ClCompile Include="..\Code\DungeonRoom.cpp" />

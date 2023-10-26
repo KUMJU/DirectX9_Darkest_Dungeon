@@ -17,6 +17,7 @@
 #include"Item.h"
 
 #include"GameMgr.h"
+#include"CameraMgr.h"
 
 #include "BrigandCutthroat.h"
 
@@ -247,6 +248,8 @@ HRESULT CMainLogo::Ready_Layer_Camera(tstring pLayerTag)
 	// Camera
 	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
+
+	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

@@ -23,8 +23,6 @@ HRESULT CPlayer::ReadyGameObject()
 	return S_OK;
 }
 
-
-
 _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 {
 	if(!m_bLock)

@@ -26,6 +26,7 @@
     <ClCompile Include="..\Code\Village.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\Code\CameraMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -58,6 +59,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\Header\CameraMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -65,5 +67,10 @@
   <ItemGroup>
     <Image Include="Client.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CameraMgr">
+      <UniqueIdentifier>{a513df5c-1428-4586-8b06-102025177639}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

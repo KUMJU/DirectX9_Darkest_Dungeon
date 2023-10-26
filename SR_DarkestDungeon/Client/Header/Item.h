@@ -37,6 +37,10 @@ public:
 	void SetDropItemInfo(_vec3 _vPosition, const tstring& _strName);
 	void SetScale(_vec3 _vScale);
 
+
+	//TestCode
+	void KeyInput();
+
 protected:
 	void AddComponent();
 	//필드에 떠있을때 위 아래로 둥둥 띄워주는 효과

@@ -1,6 +1,7 @@
 #include"pch.h"
 #include"Item.h"
 #include"Export_Utility.h"
+#include"CameraMgr.h"
 
 CItem::CItem(LPDIRECT3DDEVICE9 _pGraphicDev)
 	:CGameObject(_pGraphicDev)
@@ -19,7 +20,8 @@ HRESULT CItem::ReadyGameObject()
 }
 
 _int CItem::UpdateGameObject(const _float& fTimeDelta)
-{	
+{
+	KeyInput();
 	m_fTime = fTimeDelta;
 	_vec3 vPos;
 	m_pTransCom->GetInfo(INFO_POS, &vPos);
@@ -91,6 +93,42 @@ void CItem::SetDropItemInfo(_vec3 _vPosition, const tstring& _strName )
 void CItem::SetScale(_vec3 _vScale)
 {
 	m_pTransCom->SetScale(_vScale.x, _vScale.y, _vScale.z);
+}
+
+void CItem::KeyInput()
+{
+	if (GetAsyncKeyState('O') & 0x8000) {
+		_vec3 vPos;
+		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
+		vPos.z -= 2.f;
+		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, vPos);
+	}
+
+	if (GetAsyncKeyState('P') & 0x8000) {
+		_vec3 vPos;
+		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
+		vPos.z -= 10.f;
+		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, vPos);
+	}
+
+	if (GetAsyncKeyState('L') & 0x8000) {
+		CCameraMgr::GetInstance()->SetFPSMode();
+	}
+
+	if (GetAsyncKeyState('K') & 0x8000) {
+		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
+	}
+
+	if (GetAsyncKeyState('I') & 0x8000) {
+		_vec3 vPos, vDst;
+		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
+		vDst = vPos;
+
+		vDst.x += 20.f;
+
+		CCameraMgr::GetInstance()->CameraOrbit(ECameraMode::ORBIT, vDst, vPos);
+	}
+
 }
 
 void CItem::AddComponent()

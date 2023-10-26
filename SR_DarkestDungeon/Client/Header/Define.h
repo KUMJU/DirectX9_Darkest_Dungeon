@@ -6,4 +6,4 @@
 #define PATHSIZEX 18.f
 
 // Time
-#define BATTLEINTERVEL 1.f
+#define BATTLEINTERVEL 0.5f

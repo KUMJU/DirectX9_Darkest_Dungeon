@@ -3,6 +3,7 @@
 #include"SceneMgr.h"
 #include"MainLogo.h"
 #include "Village.h"
+#include"CameraMgr.h"
 
 CMainApp::CMainApp()
 {
@@ -87,6 +88,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 void CMainApp::Free()
 {
+	CCameraMgr::DestroyInstance();
 	Engine::Release_Utility();
 	Engine::Release_System();
 }

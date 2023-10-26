@@ -15,7 +15,6 @@ BEGIN(Engine)
 class CRcTex;
 class CTexture;
 class CTransform;
-class CAnimator;
 
 END
 
