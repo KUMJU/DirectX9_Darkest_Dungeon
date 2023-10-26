@@ -8,6 +8,7 @@
 // Time
 #define BATTLEINTERVEL 1.f
 #define CORPSEINTERVEL 0.2f
+#define MOVINGINTERVEL 1.f
 
 #define	HITTEDTIME	1.f
 #define	ATTACKTIME	0.5f

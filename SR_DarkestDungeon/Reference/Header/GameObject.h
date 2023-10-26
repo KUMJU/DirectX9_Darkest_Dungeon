@@ -28,6 +28,7 @@ public:
 	void SetEnable(_bool _bValue) { m_bEnable = _bValue; }
 
 	void SetPos(_vec3 _vPos) { m_vPos = _vPos; }
+	_vec3 GetPos() { return m_vPos; }
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
 	void SetColliding(_bool _bColliding) { m_bColliding = _bColliding; }

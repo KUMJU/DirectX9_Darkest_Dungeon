@@ -38,11 +38,6 @@ public:
 	void	MakeAbleAllObject();
 	void	BattleUpdate(const _float& fTimeDelta);		// 싸움
 
-public:
-	// 전투진형 배치
-	void	FormBattlePosition(vector<shared_ptr<CGameObject>>& _pHeroes, vector<shared_ptr<CGameObject>>& _pMonsters,
-		_float _fAngle, _vec3 _vOrigin);
-
 private:
 	vector<shared_ptr<CGameObject>>		m_vGameObject = {};
 	vector<shared_ptr<CGameObject>>		m_vHeroes = {};
