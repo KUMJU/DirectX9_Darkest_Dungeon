@@ -26,6 +26,7 @@
     <ClCompile Include="..\Code\Village.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\Code\CameraMgr.cpp" />
     <ClCompile Include="..\Code\BrigandFusilier.cpp" />
     <ClCompile Include="..\Code\BrigandMatchman.cpp" />
     <ClCompile Include="..\Code\Jester.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="..\Header\BrigandMatchman.h" />
     <ClInclude Include="..\Header\Highwayman.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
+    <ClInclude Include="..\Header\CameraMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -75,5 +77,10 @@
   <ItemGroup>
     <Image Include="Client.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CameraMgr">
+      <UniqueIdentifier>{a513df5c-1428-4586-8b06-102025177639}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

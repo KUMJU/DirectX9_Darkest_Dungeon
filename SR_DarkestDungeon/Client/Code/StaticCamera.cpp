@@ -26,13 +26,15 @@ HRESULT CStaticCamera::ReadyGameObject()
 
 _int CStaticCamera::UpdateGameObject(const _float& fTimeDelta)
 {
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	m_deltaTime = fTimeDelta;
 	return 0;
 }
 
 void CStaticCamera::LateUpdateGameObject()
-{
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+
 
 	m_vUp = _vec3(0.f, 1.f, 0.f);
 	_vec3 vLook, vPos;
@@ -40,19 +42,11 @@ void CStaticCamera::LateUpdateGameObject()
 
 	_matrix matYpos;
 
-	D3DXQUATERNION qRot;
-	D3DXQUATERNION qRot2;
-	int a;
 	switch (m_eCurrentState)
 	{
 	case ECameraMode::IDLE:
 
-		m_vAt;
-		m_vEye;
-		a = 5;
-
 		break;
-
 	case ECameraMode::FPS:
 
 		m_matView = *(m_pPlrTransCom->GetWorld());
@@ -60,152 +54,243 @@ void CStaticCamera::LateUpdateGameObject()
 		D3DXMatrixInverse(&m_matView, 0, &m_matView);
 
 		break;
-	case ECameraMode::LOOKBACK:
 
-		LookBack();
-
+	case ECameraMode::ROTATION:
+		ChangeCamEyePos();
 		break;
-	case ECameraMode::BATTLE:
 
-		//if (m_fActTime >= m_fTotalTime) {
-		//	m_vEye = m_vDstVec;
-		//	m_eCurrentState = ECameraMode::IDLE;
-		//}
-		//D3DXQuaternionIdentity(&qRot2);
-		//D3DXQuaternionRotationAxis(&qRot, &m_vUp, m_fAngle * m_deltaTime);
-		//D3DXMatrixRotationQuaternion(&matYpos, &qRot);
-
-		//D3DXQuaternionSlerp(&qRot, &qRot2, &qRot, 0.f);
-		//D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matYpos);
-		//D3DXVec3TransformCoord(&m_vAt, &m_vAt, &matYpos);
-
-
-		//D3DXVec3Normalize(&test1, &m_vAt);
-		//D3DXVec3Normalize(&test2, &m_vEye);
-
-
-		//m_vAt += test1 * 2.f * m_deltaTime;
-		//m_vEye += test2 * 2.f * m_deltaTime;
-
-		//m_fActTime += m_deltaTime;
-
-
-
-		D3DXQuaternionIdentity(&qRot2);
-		D3DXQuaternionRotationAxis(&qRot, &m_vUp, D3DXToRadian(-2.f));
-		D3DXMatrixRotationQuaternion(&matYpos, &qRot);
-
-		D3DXQuaternionSlerp(&qRot, &qRot2, &qRot, 0.f);
-		D3DXVec3TransformNormal(&m_vEye, &m_vEye, &matYpos);
-
-		
-
-		m_fAngle += 2.f;
-
-		//돌렸던 고개를 원상복구
-		if (m_fAngle >= 90.f) {
-			m_eCurrentState = ECameraMode::IDLE;
-			m_fAngle = 0.f;
-		}
-
+	case ECameraMode::ORBIT:
+		ChangeCamAtPos();
 		break;
+
+	case ECameraMode::ZOOMIN:
+		MovingDirect();
+		break;
+
+	case ECameraMode::ZOOMOUT:
+		MovingDirect();
+		break;
+
 	case ECameraMode::ENUM_END:
 
 		break;
+
 	default:
 		break;
 	}
 
 
-	KeyInput();
-
 }
 
-void CStaticCamera::KeyInput()
+
+void CStaticCamera::ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegree, _float _fTime)
 {
-	if (GetAsyncKeyState('O') & 0x8000) {
+	CamReset();
 
-		if (m_eCurrentState != ECameraMode::LOOKBACK) {
-			m_eCurrentState = ECameraMode::LOOKBACK;
-		}
-	}
-
-	if (GetAsyncKeyState('P') & 0x8000) {
-
-		if (m_eCurrentState != ECameraMode::BATTLE) {
-			_vec3 vNewEyePos = m_vAt + _vec3{ 4.f, 0.f, 0.f };
-		//	ChangeCamEyePos(vNewEyePos);
-			m_eCurrentState = ECameraMode::BATTLE;
-		}
-	}
-
-}
-
-void CStaticCamera::LookBack()
-{
-	_matrix matYpos;
-
-	D3DXQUATERNION qRot;
-	D3DXQUATERNION qRot2;
-
-	D3DXQuaternionIdentity(&qRot2);
-	D3DXQuaternionSlerp(&qRot, &qRot2, &qRot, 0.f);
-
-	D3DXQuaternionRotationAxis(&qRot, &m_vUp, D3DXToRadian(2.f * m_fDir));
-	D3DXMatrixRotationQuaternion(&matYpos, &qRot);
-
-	D3DXVec3TransformNormal(&m_vAt, &m_vAt, &matYpos);
-
-	m_fAngle += 2.f * m_fDir;
-	
-	//돌렸던 고개를 원상복구
-	if (m_fDir < 0.f) {
-		if (m_fAngle <= 0.f) {
-			m_eCurrentState = ECameraMode::FPS;
-			m_fAngle = 0.f;
-			m_fDir *= -1.f;
-		}
-	}
-	//뒤로 고개를 돌릴 때 
-	else {
-		if (m_fAngle >= 180.f) {
-			m_eCurrentState = ECameraMode::IDLE;
-			m_fDir *= -1.f;
-		}
+	if (_eCamType == ECameraMode::ROTATION) {
+		m_eCurrentState = _eCamType;
+		m_fAngle = _fDegree / _fTime;
+		m_fTotalTime = _fTime;
+		m_fTotalAngle = _fDegree;
 	}
 }
 
-void CStaticCamera::ChangeCamEyePos(_vec3 _vDst, _float _fTime)
+void CStaticCamera::ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _vec3 _vCenter, _float _fTime)
 {
 
-	_vec3 vTemp1 = m_vAt - m_vEye;
-	_vec3 vTemp2 = m_vAt - _vDst;
+	if (_eCamType == ECameraMode::ROTATION)
+		return;
 
-	vTemp2.y = 0.f;
-	D3DXVec3Normalize(&vTemp1, &vTemp1);
-	D3DXVec3Normalize(&vTemp2, &vTemp2);
+	CamReset();
 
-	_float fVecDot = D3DXVec3Dot(&vTemp1, &vTemp2);
-	
-	m_fTotalTime = _fTime;
-	m_fAngle = acosf(fVecDot) / _fTime;
-
+	m_eCurrentState = _eCamType;
 	m_vDstVec = _vDst;
-	m_fActTime = 0.f;
+	m_fTotalTime = _fTime;
+
+
+	_vec3 vCurrentPos;
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0 , &matView);
+
+	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
+	
+	_vCenter.y = vCurrentPos.y;
+	_vDst.y = vCurrentPos.y;
+
+	_float fXLen = fabsf(vCurrentPos.x - _vDst.x);
+	_float fZLen = fabsf(vCurrentPos.z - _vDst.z);
+
+	m_vSpeed.x = fXLen / _fTime;
+	m_vSpeed.z = fZLen / _fTime;
+
+	_vec3 vDirVec1 = _vCenter - _vDst;
+	_vec3 vDirVec2 = _vCenter - vCurrentPos;
+
+	D3DXVec3Normalize(&vDirVec1, &vDirVec1);
+	D3DXVec3Normalize(&vDirVec2, &vDirVec2);
+
+	_float fAngle = D3DXVec3Dot(&vDirVec1, &vDirVec2);
+	m_fAngle = acosf(fAngle);
+
+	m_fTotalAngle = m_fAngle;
+	_float fDegree = D3DXToDegree(m_fAngle);
+	m_vOrigin = vCurrentPos;
+
+	m_matOrigin = matView;
+
+	m_fAngle = m_fAngle / _fTime;
+
 }
 
-void CStaticCamera::ChangeCamAtPos(_vec3 _vDst, _float _fTime)
+void CStaticCamera::MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float _fTime)
 {
+	m_eCurrentState = _eCamType;
+
+	CamReset();
+
+	_vec3 vCurrentPos;
+
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0, &matView);
+	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
+
+	m_fTotalTime = _fTime;
+	_vec3 vDir = _vDst - vCurrentPos;
+	m_vSpeed.x =  D3DXVec3Length(&vDir);
+	m_vSpeed.x /= _fTime;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	m_vDir = vDir;
+	m_vDir.y = 0.f;
+	m_vDstVec = _vDst;
+
+
+}
+
+
+void CStaticCamera::ChangeCamEyePos()
+{
+	D3DXQUATERNION q;
+	_matrix matYpos, matView;
+	_vec3 vUpvec = { 0.f, 1.f , 0.f };
+
+	m_fActTime += m_deltaTime;
+
+	_float fCalAngle = D3DXToRadian(m_fAngle) * m_deltaTime;
+
+	if (m_fActTime + m_deltaTime >= m_fTotalTime) {
+		fCalAngle = D3DXToRadian(m_fTotalAngle) - m_fCurrentAngle;
+		return;
+	}
+
+	if (m_fActTime >= m_fTotalTime) {
+		m_eCurrentState = ECameraMode::IDLE;
+		return;
+	}
+
+	D3DXQuaternionRotationAxis(&q, &vUpvec, fCalAngle);
+
+	//쿼터니언을 행렬로 변환
+	D3DXMatrixRotationQuaternion(&matYpos, &q);
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0, &matView);
+
+	m_matView = matYpos * matView;
+	D3DXMatrixInverse(&m_matView, 0, &m_matView);
+
+	m_fCurrentAngle += D3DXToRadian(m_fAngle) * m_deltaTime;
+
+	if (m_fActTime >= m_fTotalTime) {
+		m_eCurrentState = ECameraMode::IDLE;
+		return;
+	}
+
+}
+
+void CStaticCamera::ChangeCamAtPos()
+{
+	D3DXQUATERNION q,qRot; 
+	_matrix matYpos, matRot, matTrans, matRot2, matView , matParent , matWorld;
+	_vec3 vUpvec = { 0.f, 1.f , 0.f };
+	_vec3 vPos;
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0, &matView);
+
+	//D3DXQuaternionSlerp
+
+	D3DXMatrixIdentity(&matWorld);
+	//특정 vector 축으로 회전하는 쿼터니언 생성
+	D3DXQuaternionRotationAxis(&q, &vUpvec, -1.f * m_fAngle * m_deltaTime);
+
+	memcpy(&vPos, &matView.m[3][0], sizeof(_vec3));
+	
+
+	//쿼터니언을 행렬로 변환
+	D3DXMatrixRotationQuaternion(&matYpos, &q);
+	D3DXMatrixTranslation(&matTrans, m_vSpeed.x * m_deltaTime, 0.f, m_vSpeed.z * 0.2f* m_deltaTime);
+	D3DXMatrixTranslation(&matParent, m_vDstVec.x * m_deltaTime, 0.f , m_vDstVec.z * m_deltaTime);
+
+	//스 * 자 * 이 * 공 * 부
+	matView *= matTrans * matYpos;
+	m_matView = matView;
+	D3DXMatrixInverse(&m_matView, 0, &m_matView);
+
+	m_fActTime += m_deltaTime;
+	m_fCurrentAngle += m_fAngle * m_deltaTime;
+
+	if (m_fTotalTime <= m_fActTime) {
+		m_eCurrentState = ECameraMode::IDLE;
+	}
+
+}
+
+void CStaticCamera::MovingDirect()
+{
+	_vec3 vCurrentPos, vCurPos2;
+	_matrix matView;
+
+	m_fActTime += m_deltaTime;
+
+	if (m_fTotalTime <= m_fActTime) {
+		m_eCurrentState = ECameraMode::IDLE;
+	}
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0, &matView);
+	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
+	vCurPos2 = vCurrentPos;
+
+	m_fLerp += 0.3 * m_deltaTime;
+
+	if (m_fLerp > 0.8f)
+		m_fLerp = 0.8f;
+
+	D3DXVec3Lerp(&vCurrentPos, &vCurrentPos, &m_vDstVec, m_fLerp);
+
+	memcpy(&matView.m[3][0] , &vCurrentPos , sizeof(_vec3));
+	D3DXMatrixInverse(&matView, 0, &matView);
+
+	m_matView = matView;
+
+
+}
+
+void CStaticCamera::CamReset()
+{
+	m_fLerp = 0.f;
+	m_fAngle = 0.f;
+	m_fTotalAngle = 0.f;
+	m_fCurrentAngle = 0.f;
+	m_fTotalTime = 0.f;
+	m_fActTime = 0.f;
+	m_fDir = 1.f;
 }
 
 void CStaticCamera::ShakingCamera()
-{
-}
-
-void CStaticCamera::ZoomIn()
-{
-}
-
-void CStaticCamera::ZoomOut()
 {
 }

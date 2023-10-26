@@ -60,7 +60,7 @@ void CPlayerHand::LateUpdateGameObject()
 	D3DXVec3Normalize(&vLook, &vLook);
 	D3DXVec3Normalize(&vRight, &vRight);
 
-	vPos = vPos + ((vLook* 4.5f + vRight * -3.f));
+	vPos = vPos + ((vLook* 4.5f + vUp*1.f + vRight * -3.f));
 	//anti venom : 4.2f 
 
 	if (m_bWalking) {
