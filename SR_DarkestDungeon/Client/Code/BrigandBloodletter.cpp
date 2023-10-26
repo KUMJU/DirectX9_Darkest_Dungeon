@@ -23,7 +23,7 @@ HRESULT CBrigandBloodletter::ReadyGameObject()
 	m_iSize = 1;
 
 	// Ω∫≈» º≥¡§
-	m_tCommonStat.iHp = 40;
+	m_tCommonStat.iHp = 50;
 	m_tCommonStat.iDodge = 10;
 	m_tCommonStat.iSpeed = 2;
 	m_tCommonStat.iAttackPower = 5;

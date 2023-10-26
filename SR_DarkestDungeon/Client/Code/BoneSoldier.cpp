@@ -34,7 +34,7 @@ HRESULT CBoneSoldier::ReadyGameObject()
 	_bool	m_bArrAttack1[6] = { 0, 0, 1, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneSoldier_1 = make_shared<CSkill>
-		(L"Attack1", L"Bone Soldier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.5f, 0.f,
+		(L"Attack1", L"Bone Soldier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.8f, 0.f,
 			m_bArrAttack1, 0, 10);
 	pVecSkill.push_back(m_pBoneSoldier_1);
 

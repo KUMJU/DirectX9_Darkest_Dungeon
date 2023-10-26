@@ -34,7 +34,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	_bool	bArrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBrigandFusilier_1 = make_shared<CSkill>
-		(L"Attack1", L"Brigand Fusilier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.4f, 0.f,
+		(L"Attack1", L"Brigand Fusilier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.f, 0.f,
 			bArrAttack1, 0, 0, true);
 	pVecSkill.push_back(m_pBrigandFusilier_1);
 
