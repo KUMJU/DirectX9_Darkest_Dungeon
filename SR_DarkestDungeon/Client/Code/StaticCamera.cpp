@@ -32,7 +32,7 @@ _int CStaticCamera::UpdateGameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-void CStaticCamera::LateUpdateGameObject()
+void CStaticCamera::LateUpdateGameObject(){
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 
 
