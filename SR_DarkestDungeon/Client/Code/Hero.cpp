@@ -192,7 +192,7 @@ void CHero::ChangeAnimState()
 	{
 		m_ePrevAnimState = m_eCurAnimState;
 		m_eCurAnimState = EAnimState::COMBAT;
-	}
+	}	
 }
 
 void CHero::SetAnimDelay(const _float& fTimeDelta)

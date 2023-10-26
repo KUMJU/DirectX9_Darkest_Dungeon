@@ -142,10 +142,13 @@ void CShieldBreaker::AddComponent()
 {
 	// 영웅 애니메이션
 	{
+		Engine::CreateNewTexture(L"Impale_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing/armatureName_spearing_%d.png", 31);
+
 		Engine::CreateNewTexture(L"ShieldBreaker_Combat", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Combat/armatureName_combat_%d.png", 27);
 		Engine::CreateNewTexture(L"ShieldBreaker_Idle", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Idle/armatureName_idle_%d.png", 21);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Idle/armatureName_idle_%d.png", 29);
 		Engine::CreateNewTexture(L"ShieldBreaker_Walk", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Walk/armatureName_walk_%d.png", 33);
 
@@ -178,27 +181,24 @@ void CShieldBreaker::AddComponent()
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Impale_Img.png", 1);
 	}
 
-	/*
 	// 스킬 이펙트 (본인에게)
 	{
 		Engine::CreateNewTexture(L"AddersKiss_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss/armatureName_adders_kiss_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss/armatureName_adders_kiss_%d.png", 40);
 		Engine::CreateNewTexture(L"Pierce_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/pierce/armatureName_pierce_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/pierce/armatureName_pierce_%d.png", 30);
 		Engine::CreateNewTexture(L"Puncture_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/break_guard/armatureName_break_guard_%d.png", 57);
-		Engine::CreateNewTexture(L"AAAA_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing/armatureName_spearing_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/break_guard/armatureName_break_guard_%d.png", 40);
+		
 	}
 
 	// 스킬 이펙트 (타겟)
 	{
 		Engine::CreateNewTexture(L"AddersKiss_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss_target/armatureName_adders_kiss_target_%d.png", 57);
-		Engine::CreateNewTexture(L"Impale_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing_target/armatureName_spearing_target_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss_target/armatureName_adders_kiss_target_%d.png", 40);
+		//Engine::CreateNewTexture(L"Impale_Target_Effect", TEX_NORMAL,
+			//L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing_target/armatureName_spearing_target_%d.png", 40);
 	}
-	*/
 	
 
 	__super::AddComponent();
