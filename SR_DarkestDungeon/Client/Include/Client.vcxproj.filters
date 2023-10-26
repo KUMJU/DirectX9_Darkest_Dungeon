@@ -28,10 +28,10 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\Code\CameraMgr.cpp" />
     <ClCompile Include="..\Code\BrigandFusilier.cpp" />
-    <ClCompile Include="..\Code\BrigandMatchman.cpp" />
     <ClCompile Include="..\Code\Jester.cpp" />
     <ClCompile Include="..\Code\Highwayman.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
+    <ClCompile Include="..\Code\BrigandBloodletter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -66,10 +66,10 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\Header\Jester.h" />
     <ClInclude Include="..\Header\BrigandFusilier.h" />
-    <ClInclude Include="..\Header\BrigandMatchman.h" />
     <ClInclude Include="..\Header\Highwayman.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\CameraMgr.h" />
+    <ClInclude Include="..\Header\BrigandBloodletter.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

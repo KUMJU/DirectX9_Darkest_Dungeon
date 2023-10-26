@@ -65,9 +65,11 @@ private:
 	shared_ptr<CGameObject>			m_pCurrentCreature = nullptr;
 
 	_float  m_fBattleTime = BATTLEINTERVEL;		// 매 크리처 턴사이 간격
-	_float	m_fMovingTime = MOVINGINTERVEL;		// 크리처 죽으면 옮기는 시간
+	_float	m_fDeathMovingTime = DEATHMOVINGINTERVEL;		// 크리처 죽으면 옮기는 시간
+	_float	m_fSkillMovingTime = SKILLMOVINGINTERVEL;		// 스킬로 인한 움직이는 시간
 	_bool	m_bNext = false;
-	_bool	m_bDeathMoving = false;
+	_bool	m_bDeathMoving = false;		// 사망으로 인한 이동
+	_bool	m_bSkillMoving = false;		// 기술로 인한 이동
 	_bool	m_bHero = false;			// 공격 주체가 영웅인지?
 	_bool	m_bCounting = false;
 

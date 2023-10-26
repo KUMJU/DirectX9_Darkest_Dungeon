@@ -2,7 +2,7 @@
 #include "Monster.h"
 
 #define	HITTEDTIME	1.f
-#define	ATTACK1TIME	0.5f
+#define	ATTACK1TIME	1.f
 
 class CBrigandFusilier : public CMonster
 {

@@ -17,7 +17,7 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 	// 죽은애 있으면 위치 갱신
 	if (m_bDeathMoving)
 	{
-		m_fMovingTime -= fTimeDelta;
+		m_fDeathMovingTime -= fTimeDelta;
 		for (auto& iter : m_vHeroes)
 		{
 			if (dynamic_pointer_cast<CCreature>(iter)->GetMoving())
@@ -35,10 +35,46 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 			}
 		}
 
-		if (m_fMovingTime < 0.f)
+		if (m_fDeathMovingTime < 0.f)
 		{
 			m_bDeathMoving = false;
-			m_fMovingTime = MOVINGINTERVEL;
+			m_fDeathMovingTime = DEATHMOVINGINTERVEL;
+			for (auto& iter : m_vHeroes)
+			{
+				dynamic_pointer_cast<CCreature>(iter)->SetMoving(false);
+			}
+			for (auto& iter : m_vMonsters)
+			{
+				dynamic_pointer_cast<CCreature>(iter)->SetMoving(false);
+			}
+		}
+	}
+
+	// 움직이는 스킬 위치 갱신
+	if (m_bSkillMoving)
+	{
+		m_fSkillMovingTime -= fTimeDelta;
+		for (auto& iter : m_vHeroes)
+		{
+			if (dynamic_pointer_cast<CCreature>(iter)->GetMoving())
+			{
+				dynamic_pointer_cast<CCreature>(iter)->MovePos(dynamic_pointer_cast<CCreature>(iter)->GetTargetPos(),
+					fTimeDelta, dynamic_pointer_cast<CCreature>(iter)->GetMovingSpeed());
+			}
+		}
+		for (auto& iter : m_vMonsters)
+		{
+			if (dynamic_pointer_cast<CCreature>(iter)->GetMoving())
+			{
+				dynamic_pointer_cast<CCreature>(iter)->MovePos(dynamic_pointer_cast<CCreature>(iter)->GetTargetPos(),
+					fTimeDelta, dynamic_pointer_cast<CCreature>(iter)->GetMovingSpeed());
+			}
+		}
+
+		if (m_fSkillMovingTime < 0.f)
+		{
+			m_bSkillMoving = false;
+			m_fSkillMovingTime = SKILLMOVINGINTERVEL;
 			for (auto& iter : m_vHeroes)
 			{
 				dynamic_pointer_cast<CCreature>(iter)->SetMoving(false);
@@ -87,7 +123,7 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 	{
 		DeadCheck();
 		// 크리처 종류에 따라 행동
-		// 출혈, 독뎀 반영, 기절이면 기절 줄어들기
+		// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽음상태로
 		dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate();
 
 		// 종료 조건
@@ -125,14 +161,15 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 			{
 				while (1)
 				{
-					iTarget = rand() % (size(m_vMonsters) - iDeathMonsters);
-					if (!dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->GetIsDeath())
-					{
-						break;
-					}
 					if (HeroesAllDead() || MonstersAllDead())
 					{
 						EndBattle();
+						break;
+					}
+					iTarget = rand() % (size(m_vMonsters) - iDeathMonsters);
+					if (!dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->GetIsDeath() &&
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetTargetPos()[iTarget])
+					{
 						break;
 					}
 				}
@@ -141,14 +178,15 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 			{
 				while (1)
 				{
-					iTarget = rand() % (size(m_vHeroes) - iDeathHeroes);
-					if (!dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->GetIsDeath())
-					{
-						break;
-					}
 					if (HeroesAllDead() || MonstersAllDead())
 					{
 						EndBattle();
+						break;
+					}
+					iTarget = rand() % (size(m_vHeroes) - iDeathHeroes);
+					if (!dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->GetIsDeath() &&
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetTargetPos()[iTarget])
+					{
 						break;
 					}
 				}
@@ -156,17 +194,101 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 
 			if (m_bHero)
 			{
-				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
-				(dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
-				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
-				dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetHitted(true);
+				// 광역기 공격일 경우
+				if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->IsTargetAll())
+				{
+					for (int i = 0; i < size(m_vMonsters); i++)
+					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+						(dynamic_pointer_cast<CCreature>(m_vMonsters[i]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
+						dynamic_pointer_cast<CCreature>(m_vMonsters[i])->SetHitted(true);
+					}
+				}
+				// 이동 공격일 경우
+				else if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetMoveCnt() != 0)
+				{
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+					(dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
+					dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetHitted(true);
+
+					int iMovePos = dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetMoveCnt();
+					if (dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos]) &&
+						!dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->GetIsDeath() &&
+						!dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->GetIsDeath())
+					{
+						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetMoving(true);
+						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetTargetPos(m_vMonsters[iTarget + iMovePos]->GetPos());
+						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetMovingSpeed(
+							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->MovingSpeed(m_vMonsters[iTarget + iMovePos]->GetPos(), SKILLMOVINGINTERVEL));
+
+						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetMoving(true);
+						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetTargetPos(m_vMonsters[iTarget]->GetPos());
+						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetMovingSpeed(
+							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->MovingSpeed(m_vMonsters[iTarget]->GetPos(), SKILLMOVINGINTERVEL));
+						m_bSkillMoving = true;
+						shared_ptr<CGameObject> pObj = m_vMonsters[iTarget];
+						m_vMonsters[iTarget] = m_vMonsters[iTarget + iMovePos];
+						m_vMonsters[iTarget + iMovePos] = pObj;
+					}
+				}
+				else
+				{
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+					(dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
+					dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetHitted(true);
+				}
 			}
 			else
 			{
-				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
-				(dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
-				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
-				dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetHitted(true);
+				// 광역기 공격일 경우
+				if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->IsTargetAll())
+				{
+					for (int i = 0; i < size(m_vHeroes); i++)
+					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+						(dynamic_pointer_cast<CCreature>(m_vHeroes[i]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
+						dynamic_pointer_cast<CCreature>(m_vHeroes[i])->SetHitted(true);
+					}
+				}
+				// 이동 공격일 경우
+				else if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetMoveCnt() != 0)
+				{
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+					(dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
+					dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetHitted(true);
+
+					int iMovePos = dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetMoveCnt();
+					if (dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos]) &&
+						!dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->GetIsDeath() &&
+						!dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->GetIsDeath())
+					{
+						dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetMoving(true);
+						dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetTargetPos(m_vHeroes[iTarget + iMovePos]->GetPos());
+						dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetMovingSpeed(
+							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->MovingSpeed(m_vHeroes[iTarget + iMovePos]->GetPos(), SKILLMOVINGINTERVEL));
+
+						dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->SetMoving(true);
+						dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->SetTargetPos(m_vHeroes[iTarget]->GetPos());
+						dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->SetMovingSpeed(
+							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->MovingSpeed(m_vHeroes[iTarget]->GetPos(), SKILLMOVINGINTERVEL));
+						m_bSkillMoving = true;
+						shared_ptr<CGameObject> pObj = m_vHeroes[iTarget];
+						m_vHeroes[iTarget] = m_vHeroes[iTarget + iMovePos];
+						m_vHeroes[iTarget + iMovePos] = pObj;
+					}
+				}
+				else
+				{
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
+					(dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
+					dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetHitted(true);
+				}
 			}
 		}
 		// 크리처 턴 엔드
@@ -255,6 +377,22 @@ void CBattleSystem::NextTurn()
 
 void CBattleSystem::EndBattle()
 {
+	// 죽은 진영 시체 전부 없애기
+	if (HeroesAllDead())
+	{
+		for (auto& iter : m_vHeroes)
+		{
+			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100.f);
+		}
+	}
+	else
+	{
+		for (auto& iter : m_vMonsters)
+		{
+			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100.f);
+		}
+	}
+	
 	int a = 3;
 }
 
@@ -296,7 +434,7 @@ void CBattleSystem::DeadCheck()
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetMoving(true);
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTargetPos(m_vHeroes[j - 1]->GetPos());
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetMovingSpeed(
-					dynamic_pointer_cast<CCreature>(m_vHeroes[j])->MovingSpeed(m_vHeroes[j - 1]->GetPos(), MOVINGINTERVEL));
+					dynamic_pointer_cast<CCreature>(m_vHeroes[j])->MovingSpeed(m_vHeroes[j - 1]->GetPos(), DEATHMOVINGINTERVEL));
 			}
 
 			for (int j = i + 1; j < size(m_vHeroes); j++)
@@ -319,7 +457,7 @@ void CBattleSystem::DeadCheck()
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetMoving(true);
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetTargetPos(m_vMonsters[j - 1]->GetPos());
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetMovingSpeed(
-					dynamic_pointer_cast<CCreature>(m_vMonsters[j])->MovingSpeed(m_vMonsters[j - 1]->GetPos(), MOVINGINTERVEL));
+					dynamic_pointer_cast<CCreature>(m_vMonsters[j])->MovingSpeed(m_vMonsters[j - 1]->GetPos(), DEATHMOVINGINTERVEL));
 			}
 
 			for (int j = i + 1; j < size(m_vMonsters); j++)

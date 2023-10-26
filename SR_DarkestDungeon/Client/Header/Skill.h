@@ -17,9 +17,9 @@ public:
 	// (스킬 이름, 스킬 애니메이션(크리처의 애니메이션), 도트뎀[데미지][라운드],
 	//    스턴 확률, 공격력 계수, 치명타 확률
 	//    공격종류, 영웅을 움직이게 할 칸수, 영웅에게 줄 스트레스)
-	CSkill(tstring _strSkillName, tstring _strAnimKey, _int* _iDotDamage,
+	CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos, _int* _iDotDamage,
 		_float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
-		_bool* _bArrAttack, _int _iMoveCnt = 0, _int _iStress = 0);
+		_bool* _bArrAttack, _int _iMoveCnt = 0, _int _iStress = 0, _bool _bTargetAll = 0);
 
 	CSkill(const CSkill& rhs);
 	virtual ~CSkill();

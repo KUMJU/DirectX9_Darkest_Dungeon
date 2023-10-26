@@ -8,6 +8,8 @@ CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	memset(&m_tCommonStat, NULL, sizeof(STAT));
 	ZeroMemory(m_szString, sizeof(m_szString));
+	ZeroMemory(m_szString2, sizeof(m_szString2));
+	ZeroMemory(m_szString3, sizeof(m_szString3));
 }
 
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
@@ -65,6 +67,14 @@ void CCreature::RenderGameObject()
 	TCHAR szBuff[32] = { };
 	_stprintf_s(szBuff, TEXT("%d"), GetHp());
 	lstrcpy(m_szString, szBuff);
+
+	TCHAR szBuff2[32] = { };
+	_stprintf_s(szBuff, TEXT("%d"), GetCurrentBleed());
+	lstrcpy(m_szString2, szBuff);
+
+	TCHAR szBuff3[32] = { };
+	_stprintf_s(szBuff, TEXT("%d"), GetCurrentPoision());
+	lstrcpy(m_szString3, szBuff);
 }
 
 _bool CCreature::IsAttacking()
@@ -121,6 +131,23 @@ void CCreature::StartCalculate()
 	{
 		m_bState[2] = false;
 		m_bMyTurn = false;
+	}
+
+	// 시체 여부	
+	if (m_tCommonStat.iHp <= 0 && !m_bCorpse && !m_bDeath)
+	{
+		BleedCure();
+		BlightCure();
+		m_bCorpse = true;
+		m_tCommonStat.iHp = 10;
+	}
+
+	// 사망 여부
+	if (m_tCommonStat.iHp <= 0 && m_bCorpse)
+	{
+		m_bCorpse = false;
+		m_bDeath = true;
+		m_tCommonStat.iHp = -100;
 	}
 }
 

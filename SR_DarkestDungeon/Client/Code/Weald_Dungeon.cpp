@@ -20,7 +20,7 @@
 
 #include "BrigandCutthroat.h"
 #include "BrigandFusilier.h"
-#include "BrigandMatchman.h"
+#include "BrigandBloodletter.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -97,45 +97,56 @@ void CWeald_Dungeon::RenderScene()
 	Engine::Render_Font(L"Font_Default", m_szString,
 		&vDungeonName, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	_vec2 vObject1_Hp = _vec2(400.f, 100.f);
+	_vec2 vFontPos = _vec2(400.f, 100.f);
 	Engine::Render_Font(L"Font_Default",
 		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[0])->Get_String(),
-		&vObject1_Hp, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	_vec2 vObject2_Hp = _vec2(300.f, 100.f);
+	vFontPos = _vec2(400.f, 200.f);
 	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[1])->Get_String(),
-		&vObject2_Hp, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[0])->Get_String2(),
+		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	_vec2 vObject3_Hp = _vec2(200.f, 100.f);
+	vFontPos = _vec2(400.f, 300.f);
 	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[2])->Get_String(),
-		&vObject3_Hp, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[0])->Get_String3(),
+		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	_vec2 vObject4_Hp = _vec2(100.f, 100.f);
-	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[3])->Get_String(),
-		&vObject4_Hp, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	for (int i = 0; i < 3; i++)
+	{
+		vFontPos = _vec2(300.f - i*100.f, 100.f);
+		Engine::Render_Font(L"Font_Default",
+			dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[i + 1])->Get_String(),
+			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	_vec2 vObject5_Hp = _vec2(600.f, 100.f);
-	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetMonstersVector())[0])->Get_String(),
-		&vObject5_Hp, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		vFontPos = _vec2(300.f - i * 100.f, 200.f);
+		Engine::Render_Font(L"Font_Default",
+			dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[i + 1])->Get_String2(),
+			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	_vec2 vObject6_Hp = _vec2(700.f, 100.f);
-	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetMonstersVector())[1])->Get_String(),
-		&vObject6_Hp, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		vFontPos = _vec2(300.f - i * 100.f, 300.f);
+		Engine::Render_Font(L"Font_Default",
+			dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetHeroesVector())[i + 1])->Get_String3(),
+			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	}
 
-	_vec2 vObject7_Hp = _vec2(800.f, 100.f);
-	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetMonstersVector())[2])->Get_String(),
-		&vObject7_Hp, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	for (int i = 0; i < 4; i++)
+	{
+		vFontPos = _vec2(600.f + i * 100.f, 100.f);
+		Engine::Render_Font(L"Font_Default",
+			dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetMonstersVector())[i])->Get_String(),
+			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	_vec2 vObject8_Hp = _vec2(900.f, 100.f);
-	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetMonstersVector())[3])->Get_String(),
-		&vObject8_Hp, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		vFontPos = _vec2(600.f + i * 100.f, 200.f);
+		Engine::Render_Font(L"Font_Default",
+			dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetMonstersVector())[i])->Get_String2(),
+			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+		vFontPos = _vec2(600.f + i * 100.f, 300.f);
+		Engine::Render_Font(L"Font_Default",
+			dynamic_pointer_cast<CCreature>((m_pRoom1->GetBattleSystem()->GetMonstersVector())[i])->Get_String3(),
+			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	}
 }
 
 HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
@@ -321,8 +332,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// GameObject
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandCutthroat_3 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandCutthroat_4 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandBloodletter2 = make_shared<CBrigandBloodletter>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBrigandBloodletter1 = make_shared<CBrigandBloodletter>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandFusilier_1 = make_shared<CBrigandFusilier>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandFusilier_2 = make_shared<CBrigandFusilier>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandFusilier_3 = make_shared<CBrigandFusilier>(m_pGraphicDev);
@@ -332,9 +343,9 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// creatures
 	vector<shared_ptr<CGameObject>> Room1_v1;
 	Room1_v1.push_back(m_pBrigandCutthroat_1);
+	Room1_v1.push_back(m_pBrigandBloodletter1);
+	Room1_v1.push_back(m_pBrigandBloodletter2);
 	Room1_v1.push_back(m_pBrigandCutthroat_2);
-	Room1_v1.push_back(m_pBrigandCutthroat_3);
-	Room1_v1.push_back(m_pBrigandCutthroat_4);
 	Room1_v1.push_back(m_pBrigandFusilier_1);
 	Room1_v1.push_back(m_pBrigandFusilier_2);
 	Room1_v1.push_back(m_pBrigandFusilier_3);
@@ -344,15 +355,15 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// heroes
 	vector<shared_ptr<CGameObject>> Room1_v2;
 	Room1_v2.push_back(m_pBrigandCutthroat_1);
-	Room1_v2.push_back(m_pBrigandCutthroat_2);
+	Room1_v2.push_back(m_pBrigandBloodletter1);
 	Room1_v2.push_back(m_pBrigandFusilier_3);
 	Room1_v2.push_back(m_pBrigandFusilier_4);
 	m_pRoom1->PushHeroesVector(Room1_v2);
 
 	// monsters
 	vector<shared_ptr<CGameObject>> Room1_v3;
-	Room1_v3.push_back(m_pBrigandCutthroat_3);
-	Room1_v3.push_back(m_pBrigandCutthroat_4);
+	Room1_v3.push_back(m_pBrigandBloodletter2);
+	Room1_v3.push_back(m_pBrigandCutthroat_2);
 	Room1_v3.push_back(m_pBrigandFusilier_1);
 	Room1_v3.push_back(m_pBrigandFusilier_2);
 	m_pRoom1->PushMonstersVector(Room1_v3);
@@ -381,8 +392,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// Layer¿¡ GameObject ³Ö±â
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_3);
-	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_4);
+	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBrigandBloodletter2);
+	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBrigandBloodletter1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_2);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_3);

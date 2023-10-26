@@ -16,12 +16,13 @@ CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, t
 	memcpy(m_iDotDamage, _iDotDamage, sizeof(_int) * 2);
 }
 
-CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, _int* _iDotDamage,
+CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos, _int* _iDotDamage,
 	_float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
-	_bool* _bArrAttack, _int _iMoveCnt, _int _iStress)
+	_bool* _bArrAttack, _int _iMoveCnt, _int _iStress, _bool _bTargetAll)
 	: m_strSkillName(_strSkillName), m_strAnimKey(_strAnimKey), m_iMoveCnt(_iMoveCnt), m_iStress(_iStress),
-	m_fStunRatio(_fStunRatio), m_fDamageRatio(_fDamageRatio), m_fCriticalRatio(_fCriticalRatio)
+	m_fStunRatio(_fStunRatio), m_fDamageRatio(_fDamageRatio), m_fCriticalRatio(_fCriticalRatio), m_bTargetAll(_bTargetAll)
 {
+	memcpy(m_arrTargetPos, _arrTargetPos, sizeof(_bool) * 4);
 	memcpy(m_bArrAttack, _bArrAttack, sizeof(_bool) * 6);
 	memcpy(m_iDotDamage, _iDotDamage, sizeof(_int) * 2);
 }
