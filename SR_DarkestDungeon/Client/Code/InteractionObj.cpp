@@ -37,7 +37,7 @@ _int CInteractionObj::UpdateGameObject(const _float& fTimeDelta)
 	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 
 	// 상호 작용 중이 아니고, 상호 작용 거리 안에 드는 경우
-	if (!m_bInteracting && 5.f > CalcDistance())
+	if (!m_bInteracting && 7.f > CalcDistance())
 	{
 		GetInteractionKey(fTimeDelta);
 	}

@@ -66,8 +66,16 @@ void CTerrain::AddComponent()
 
 	pComponent = m_pBufferCom = make_shared<CTerrainTex>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Terrain AddComponent Failed");
-	dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV,L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp");
-	m_mapComponent[ID_STATIC].insert({ L"Com_Weald_FloorTexture", pComponent });
+	if (L"Village_FloorTexture" == m_strKeyName)
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX / 5, VTXCNTZ / 5, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp");
+
+	else if(L"Inside_FloorTexture" == m_strKeyName)
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX / 20, VTXCNTZ / 20, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp");
+
+	else
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp");
+	
+	m_mapComponent[ID_STATIC].insert({ m_strKeyName, pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Texture AddComponent Failed");

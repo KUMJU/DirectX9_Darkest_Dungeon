@@ -28,6 +28,7 @@ public:
 	void SetEnable(_bool _bValue) { m_bEnable = _bValue; }
 
 	void SetPos(_vec3 _vPos) { m_vPos = _vPos; }
+	void SetScale(_vec3 _vScale) { m_vScale = _vScale; }
 	_vec3 GetPos() { return m_vPos; }
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
@@ -64,6 +65,8 @@ protected:
 
 	_vec3 m_vPos = _vec3{ 0.f, 0.f, 0.f };
 	_vec3 m_vAngle = _vec3{ 0.f, 0.f, 0.f };
+	_vec3 m_vScale = _vec3{ 1.f, 1.f, 1.f };
+
 	_float			m_fViewZ;
 
 	_bool m_bLock = false;

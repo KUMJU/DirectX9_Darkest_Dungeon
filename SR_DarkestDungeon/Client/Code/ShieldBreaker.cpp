@@ -87,7 +87,6 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 	// 테스트용
 	{
-		m_vPos = { 35.f, 3.f, 20.f };
 		m_eAnimState = EAnimState::IDLE;
 		m_vAngle = { 0.f, PI / 2, 0.f };
 
@@ -97,7 +96,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		m_pTransformCom->SetAngle(m_vAngle);
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
 
-		m_pTextureCom->SetAnimKey(L"ShieldBreaker_Idle", 0.02f);
+		m_pTextureCom->SetAnimKey(L"ShieldBreaker_Idle", 0.04f);
 	}
 
 	return S_OK;
@@ -142,15 +141,12 @@ void CShieldBreaker::AddComponent()
 {
 	// 영웅 애니메이션
 	{
-		Engine::CreateNewTexture(L"Impale_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing/armatureName_spearing_%d.png", 31);
-
 		Engine::CreateNewTexture(L"ShieldBreaker_Combat", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Combat/armatureName_combat_%d.png", 27);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Combat/armatureName_combat_%d.png", 13);
 		Engine::CreateNewTexture(L"ShieldBreaker_Idle", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Idle/armatureName_idle_%d.png", 29);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Idle/armatureName_idle_%d.png", 15);
 		Engine::CreateNewTexture(L"ShieldBreaker_Walk", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Walk/armatureName_walk_%d.png", 33);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Walk/armatureName_walk_%d.png", 16);
 
 		Engine::CreateNewTexture(L"ShieldBreaker_Pierce", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Pierce.png", 1);
@@ -184,20 +180,22 @@ void CShieldBreaker::AddComponent()
 	// 스킬 이펙트 (본인에게)
 	{
 		Engine::CreateNewTexture(L"AddersKiss_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss/armatureName_adders_kiss_%d.png", 40);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss/armatureName_adders_kiss_%d.png", 20);
 		Engine::CreateNewTexture(L"Pierce_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/pierce/armatureName_pierce_%d.png", 30);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/pierce/armatureName_pierce_%d.png", 15);
 		Engine::CreateNewTexture(L"Puncture_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/break_guard/armatureName_break_guard_%d.png", 40);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/break_guard/armatureName_break_guard_%d.png", 20);
+		Engine::CreateNewTexture(L"Impale_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing/armatureName_spearing_%d.png", 16);
 		
 	}
 
 	// 스킬 이펙트 (타겟)
 	{
 		Engine::CreateNewTexture(L"AddersKiss_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss_target/armatureName_adders_kiss_target_%d.png", 40);
-		//Engine::CreateNewTexture(L"Impale_Target_Effect", TEX_NORMAL,
-			//L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing_target/armatureName_spearing_target_%d.png", 40);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss_target/armatureName_adders_kiss_target_%d.png", 20);
+		Engine::CreateNewTexture(L"Impale_Target_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing_target/armatureName_spearing_target_%d.png", 20);
 	}
 	
 
@@ -212,43 +210,43 @@ void CShieldBreaker::ChangeAnim()
 		switch (m_eCurAnimState)
 		{
 		case EAnimState::IDLE:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Idle", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Idle", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::WALK:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Walk", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Walk", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::COMBAT:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Combat", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Combat", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Defend", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Defend", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Pierce", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Pierce", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL2:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Puncture", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Puncture", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL3:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_AddersKiss", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_AddersKiss", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL4:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Impale", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Impale", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::AFFLICTION:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Affliction", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Affliction", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::VIRTUE:
-			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Virtue", 0.02f);
+			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Virtue", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		}

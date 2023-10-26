@@ -61,8 +61,8 @@ void CDoor::AddComponent()
 	NULL_CHECK_MSG(pComponent, L"Transform AddComponent Failed");
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
-	m_pTransformCom->SetPosition(10.f, 1.f, 10.f);
-	m_pTransformCom->SetScale(2.f, 2.f, 2.f);
+	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+	m_pTransformCom->SetScale(1.5f, 3.5f, 1.f);
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	m_pTextureCom->SetTextureKey(L"Village_Door_Close", TEX_NORMAL);

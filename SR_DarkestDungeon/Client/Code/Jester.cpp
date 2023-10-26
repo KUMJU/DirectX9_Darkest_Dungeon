@@ -96,7 +96,6 @@ HRESULT CJester::ReadyGameObject()
 
 	// 테스트용
 	{
-		m_vPos = { 25.f, 3.f, 20.f };
 		m_eAnimState = EAnimState::IDLE;
 		m_vAngle = { 0.f, PI / 2, 0.f };
 
@@ -106,7 +105,7 @@ HRESULT CJester::ReadyGameObject()
 		m_pTransformCom->SetAngle(m_vAngle);
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
 
-		m_pTextureCom->SetAnimKey(L"Jester_Idle", 0.02f);
+		m_pTextureCom->SetAnimKey(L"Jester_Idle", 0.04f);
 	}
 
 	return S_OK;
@@ -152,11 +151,11 @@ void CJester::AddComponent()
 	// 영웅 애니메이션
 	{
 		Engine::CreateNewTexture(L"Jester_Combat", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Combat/armatureName_combat_%d.png", 29);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Combat/armatureName_combat_%d.png", 14);
 		Engine::CreateNewTexture(L"Jester_Idle", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Idle/armatureName_idle_%d.png", 29);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Idle/armatureName_idle_%d.png", 14);
 		Engine::CreateNewTexture(L"Jester_Walk", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Walk/armatureName_walk_%d.png", 33);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Walk/armatureName_walk_%d.png", 16);
 
 		Engine::CreateNewTexture(L"Jester_DirkStab", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/DirkStab.png", 1);
@@ -198,21 +197,21 @@ void CJester::AddComponent()
 	// 스킬 이펙트 (본인에게)
 	{
 		Engine::CreateNewTexture(L"BattleBallad_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad/armatureName_battle_ballad_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad/armatureName_battle_ballad_%d.png", 28);
 		Engine::CreateNewTexture(L"Finale_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale/armatureName_finale_%d.png", 40);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale/armatureName_finale_%d.png", 20);
 		Engine::CreateNewTexture(L"Solo_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo/armatureName_solo_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo/armatureName_solo_%d.png", 28);
 	}
 
 	// 스킬 이펙트 (타겟)
 	{
 		Engine::CreateNewTexture(L"BattleBallad_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad_target/armatureName_battle_ballad_target_%d.png", 40);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad_target/armatureName_battle_ballad_target_%d.png", 20);
 		Engine::CreateNewTexture(L"Finale_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 40);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 20);
 		Engine::CreateNewTexture(L"Solo_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 40);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 20);
 	}
 
 	__super::AddComponent();
@@ -226,43 +225,43 @@ void CJester::ChangeAnim()
 		switch (m_eCurAnimState)
 		{
 		case EAnimState::IDLE:
-			m_pTextureCom->SetAnimKey(L"Jester_Idle", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Idle", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::WALK:
-			m_pTextureCom->SetAnimKey(L"Jester_Walk", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Walk", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::COMBAT:
-			m_pTextureCom->SetAnimKey(L"Jester_Combat", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Combat", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
-			m_pTextureCom->SetAnimKey(L"Jester_Defend", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Defend", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
-			m_pTextureCom->SetAnimKey(L"Jester_DirkStab", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_DirkStab", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL2:
-			m_pTextureCom->SetAnimKey(L"Jester_Harvest", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Harvest", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL3:
-			m_pTextureCom->SetAnimKey(L"Jester_Finale", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Finale", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL4:
-			m_pTextureCom->SetAnimKey(L"Jester_Solo", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Solo", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::AFFLICTION:
-			m_pTextureCom->SetAnimKey(L"Jester_Affliction", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Affliction", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::VIRTUE:
-			m_pTextureCom->SetAnimKey(L"Jester_Virtue", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Jester_Virtue", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		}

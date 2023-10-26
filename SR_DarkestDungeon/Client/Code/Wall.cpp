@@ -7,6 +7,11 @@ CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
+CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName)
+	: Engine::CGameObject(pGraphicDev), m_strKeyName(_KeyName)
+{
+}
+
 CWall::CWall(const CWall& rhs)
 	: Engine::CGameObject(rhs)
 {
@@ -58,12 +63,22 @@ void CWall::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	m_pTextureCom2->SetTextureKey(L"Com_Weald_BackWallTexture", TEX_NORMAL);
-	m_pTextureCom2->SetTexture(0);
-	m_pBufferCom2->RenderBuffer();
+	if (m_strKeyName != L"")
+	{
+		m_pTextureCom->SetTextureKey(m_strKeyName, TEX_NORMAL);
+		m_pTextureCom->SetTexture(m_iNum / 3);
+	}
 
-	m_pTextureCom->SetTextureKey(L"Com_Weald_WallTexture", TEX_NORMAL);
-	m_pTextureCom->SetTexture(m_iNum);
+	else
+	{
+		m_pTextureCom2->SetTextureKey(L"Com_Weald_BackWal lTexture", TEX_NORMAL);
+		m_pTextureCom2->SetTexture(0);
+		m_pBufferCom2->RenderBuffer();
+
+		m_pTextureCom->SetTextureKey(L"Com_Weald_WallTexture", TEX_NORMAL);
+		m_pTextureCom->SetTexture(m_iNum);
+	}
+
 	m_pBufferCom->RenderBuffer();
 	m_pColliderCom->RenderCollider();
 
