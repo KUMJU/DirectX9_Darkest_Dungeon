@@ -31,6 +31,9 @@
     <ClCompile Include="..\Code\Jester.cpp" />
     <ClCompile Include="..\Code\Highwayman.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
+    <ClCompile Include="..\Code\Inside.cpp" />
+    <ClCompile Include="..\Code\CardGame.cpp" />
+    <ClCompile Include="..\Code\Outside.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -68,6 +71,9 @@
     <ClInclude Include="..\Header\BrigandMatchman.h" />
     <ClInclude Include="..\Header\Highwayman.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
+    <ClInclude Include="..\Header\Inside.h" />
+    <ClInclude Include="..\Header\CardGame.h" />
+    <ClInclude Include="..\Header\Outside.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

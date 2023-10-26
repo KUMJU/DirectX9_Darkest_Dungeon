@@ -85,7 +85,6 @@ HRESULT CHighwayman::ReadyGameObject()
 
 	// 테스트용
 	{
-		m_vPos = { 30.f, 3.f, 20.f };
 		m_eAnimState = EAnimState::IDLE;
 		m_vAngle = { 0.f, PI / 2, 0.f };
 
@@ -95,7 +94,7 @@ HRESULT CHighwayman::ReadyGameObject()
 		m_pTransformCom->SetAngle(m_vAngle);
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
 
-		m_pTextureCom->SetAnimKey(L"Highwayman_Idle", 0.02f);
+		m_pTextureCom->SetAnimKey(L"Highwayman_Idle", 0.04f);
 	}
 
 	return S_OK;
@@ -141,11 +140,11 @@ void CHighwayman::AddComponent()
 	// 영웅 애니메이션
 	{
 		Engine::CreateNewTexture(L"Highwayman_Combat", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Combat/armatureName_combat_%d.png", 29);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Combat/armatureName_combat_%d.png", 14);
 		Engine::CreateNewTexture(L"Highwayman_Idle", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Idle/armatureName_idle_%d.png", 29);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Idle/armatureName_idle_%d.png", 15);
 		Engine::CreateNewTexture(L"Highwayman_Walk", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Walk/armatureName_walk_%d.png", 33);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Walk/armatureName_walk_%d.png", 16);
 
 		Engine::CreateNewTexture(L"Highwayman_WickedSlice", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/WickedSlice.png", 1);
@@ -179,15 +178,15 @@ void CHighwayman::AddComponent()
 	// 스킬 이펙트 (본인에게)
 	{
 		Engine::CreateNewTexture(L"PointBlankShot_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot/armatureName_point_blank_shot_%d.png", 38);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot/armatureName_point_blank_shot_%d.png", 19);
 	}
 
 	// 스킬 이펙트 (타겟)
 	{
 		Engine::CreateNewTexture(L"PistolShot_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/pistol_shot_target/armatureName_pistol_shot_target_%d.png", 30);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/pistol_shot_target/armatureName_pistol_shot_target_%d.png", 15);
 		Engine::CreateNewTexture(L"PointBlankShot_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot_target/armatureName_point_blank_shot_target_%d.png", 30);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot_target/armatureName_point_blank_shot_target_%d.png", 15);
 	}
 
 	__super::AddComponent();
@@ -201,43 +200,43 @@ void CHighwayman::ChangeAnim()
 		switch (m_eCurAnimState)
 		{
 		case EAnimState::IDLE:
-			m_pTextureCom->SetAnimKey(L"Highwayman_Idle", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_Idle", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::WALK:
-			m_pTextureCom->SetAnimKey(L"Highwayman_Walk", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_Walk", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::COMBAT:
-			m_pTextureCom->SetAnimKey(L"Highwayman_Combat", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_Combat", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
-			m_pTextureCom->SetAnimKey(L"Highwayman_Defend", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_Defend", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
-			m_pTextureCom->SetAnimKey(L"Highwayman_WickedSlice", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_WickedSlice", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL2:
-			m_pTextureCom->SetAnimKey(L"Highwayman_PistolShot", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_PistolShot", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL3:
-			m_pTextureCom->SetAnimKey(L"Highwayman_PointBlankShot", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_PointBlankShot", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL4:
-			m_pTextureCom->SetAnimKey(L"Highwayman_DuelistsAdvance", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_DuelistsAdvance", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::AFFLICTION:
-			m_pTextureCom->SetAnimKey(L"Highwayman_Affliction", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_Affliction", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::VIRTUE:
-			m_pTextureCom->SetAnimKey(L"Highwayman_Virtue", 0.02f);
+			m_pTextureCom->SetAnimKey(L"Highwayman_Virtue", 0.04f);
 			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		}

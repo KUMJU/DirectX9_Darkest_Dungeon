@@ -1,15 +1,17 @@
 #include"pch.h"
 #include "Village.h"
 
-#include"Terrain.h"
+#include "Terrain.h"
 #include "Wall.h"
-#include"SkyBox.h"
+#include "SkyBox.h"
 
 #include "Player.h"
-#include "Door.h"
+#include "Outside.h"
+#include "Inside.h"
 
-#include"Layer.h"
-#include"DynamicCamera.h"
+#include "Layer.h"
+#include "DynamicCamera.h"
+#include "StaticCamera.h"
 #include "InteractionObj.h"
 
 #include "Vestal.h"
@@ -66,15 +68,111 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	//Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Camera", m_pCamera);
 
 	//Terrain
 	Engine::CreateNewTexture(L"Village_FloorTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/Floor/road_citystone%d.png", 2);
+		L"../Bin/Resource/Image/Village/Floor/city_gate_floor_tile.png", 1);
 
 	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Village_FloorTexture");
 	m_pLayer->CreateGameObject(L"Obj_Terrain", m_pTerrain);
+
+	// 가장자리 벽
+	Engine::CreateNewTexture(L"Com_Village_Wall_Texture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Village/BackGround/forest_skirt_%d.png", 3);
+
+	shared_ptr<CGameObject> m_pWall;
+	// 진입방 벽
+	for (int i = 0; i < 2; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * i + WEALD_WALLSIZEX / 2, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * (WEALD_PATHSIZEX - 1)));
+		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}
+
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 2.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
+	//	m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//for (int i = 0; i < 1; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f));
+	//	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//for (int i = 0; i < 1; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 1.5f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f));
+	//	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//// 통로 1 벽
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
+	//	m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
+	//	m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//// 방 2 벽
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 12.f + WEALD_WALLSIZEX * i));
+	//	m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 3.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 2.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 12.f + WEALD_WALLSIZEX * i));
+	//	m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 1.5f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 12.f));
+	//	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 3.5f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 12.f));
+	//	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
+
+	//for (int i = 0; i < 6; i++)
+	//{
+	//	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
+	//	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 1.5f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 16.f));
+	//	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//}
 
 	//가장 최하위 순서에 돌려줄 것
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
@@ -114,25 +212,40 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
-	// 인터랙션 오브젝트 테스트
-	Engine::CreateNewTexture(L"Village_Door_Open", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/Interaction/Door/open.png", 1);
-
-	Engine::CreateNewTexture(L"Village_Door_Close", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/Interaction/Door/closed.png", 1);
-
-	shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Door", m_pDoor);
-
 	// 영웅 테스트
 	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+	m_pVestal->SetPos({ 10.f, 3.f, 20.f });
+
 	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
+	m_pJester->SetPos({ 15.f, 3.f, 20.f });
+
 	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+	m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
+
 	shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
+	m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
+
+	// 여관
+	{
+		Engine::CreateNewTexture(L"Tervarn_Outside", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Facilities/OutSide/Tavern/town_tavern_level03/armatureName_active_000.png", 1);
+
+		// 여관 외부
+		shared_ptr<CGameObject> m_pTervarnOutside = make_shared<COutside>(m_pGraphicDev, L"Tervarn_Outside");
+		m_pTervarnOutside->SetPos({ 30.f, 0.f, 40.f });
+		m_pTervarnOutside->SetScale({ 20.f, 30.f, 1.f });
+		m_pLayer->CreateGameObject(L"Obj_TervarnOutside", m_pTervarnOutside);
+
+		// 여관 내부
+		/*shared_ptr<CGameObject> m_pTervarnInside = make_shared<CInside>(m_pGraphicDev, L"Tervarn_Inside");
+		m_pTervarnInside->SetPos({ 10000.f, 0.f, 0.f });
+		m_pTervarnInside->SetScale({ 20.f, 30.f, 1.f });
+		m_pLayer->CreateGameObject(L"Obj_TervarnInside", m_pTervarnInside);*/
+	}
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

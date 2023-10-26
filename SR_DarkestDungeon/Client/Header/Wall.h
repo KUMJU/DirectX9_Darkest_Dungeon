@@ -16,6 +16,7 @@ class CWall : public CGameObject
 {
 public:
 	CWall(LPDIRECT3DDEVICE9 pGraphicDev);
+	CWall(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName);
 	CWall(const CWall& rhs);
 	virtual ~CWall();
 
@@ -49,4 +50,6 @@ private:
 	_int		m_iNum = 0;
 
 	_bool		m_bHorizontal = true;
+
+	tstring		m_strKeyName = L"";
 };

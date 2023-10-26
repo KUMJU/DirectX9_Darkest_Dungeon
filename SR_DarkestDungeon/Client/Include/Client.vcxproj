@@ -153,6 +153,7 @@
     <ClInclude Include="..\Header\BrigandCutthroat.h" />
     <ClInclude Include="..\Header\BrigandFusilier.h" />
     <ClInclude Include="..\Header\BrigandMatchman.h" />
+    <ClInclude Include="..\Header\CardGame.h" />
     <ClInclude Include="..\Header\Creature.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Door.h" />
@@ -161,11 +162,13 @@
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Hero.h" />
     <ClInclude Include="..\Header\Highwayman.h" />
+    <ClInclude Include="..\Header\Inside.h" />
     <ClInclude Include="..\Header\InteractionObj.h" />
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\Jester.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\Weald_Dungeon.h" />
     <ClInclude Include="..\Header\Monster.h" />
@@ -190,6 +193,7 @@
     <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
     <ClCompile Include="..\Code\BrigandFusilier.cpp" />
     <ClCompile Include="..\Code\BrigandMatchman.cpp" />
+    <ClCompile Include="..\Code\CardGame.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
     <ClCompile Include="..\Code\Door.cpp" />
     <ClCompile Include="..\Code\DungeonRoom.cpp" />
@@ -197,11 +201,13 @@
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Hero.cpp" />
     <ClCompile Include="..\Code\Highwayman.cpp" />
+    <ClCompile Include="..\Code\Inside.cpp" />
     <ClCompile Include="..\Code\InteractionObj.cpp" />
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\Jester.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\Outside.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\Weald_Dungeon.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />

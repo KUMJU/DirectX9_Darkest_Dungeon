@@ -1,0 +1,61 @@
+#include "pch.h"
+#include "Inside.h"
+
+#include "Export_Utility.h"
+#include "Export_System.h"
+
+#include "Terrain.h"
+
+CInside::CInside(LPDIRECT3DDEVICE9 pGraphicDev)
+    : Engine::CGameObject(pGraphicDev)
+{
+}
+
+CInside::CInside(const CInside& rhs)
+    : Engine::CGameObject(rhs)
+{
+}
+
+CInside::~CInside()
+{
+}
+
+HRESULT CInside::ReadyGameObject()
+{
+    shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Inside_FloorTexture");
+    m_vecGameObject.push_back(m_pTerrain);
+
+    for (auto& iter : m_vecGameObject) {
+        iter->AwakeGameObject();
+        iter->ReadyGameObject();
+    }
+
+    return E_NOTIMPL;
+}
+
+_int CInside::UpdateGameObject(const _float& fTimeDelta)
+{
+    Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
+
+    for (auto& iter : m_vecGameObject) {
+        iter->UpdateGameObject(fTimeDelta);
+    }
+
+    _int iExit = __super::UpdateGameObject(fTimeDelta);
+
+    return iExit;
+}
+
+void CInside::LateUpdateGameObject()
+{
+    for (auto& iter : m_vecGameObject) {
+        iter->LateUpdateGameObject();
+    }
+}
+
+void CInside::RenderGameObject()
+{
+    for (auto& iter : m_vecGameObject) {
+        iter->RenderGameObject();
+    }
+}

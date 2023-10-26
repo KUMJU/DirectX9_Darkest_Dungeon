@@ -18,13 +18,6 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
 
-	Engine::CreateNewTexture(L"Highwayman_Idle", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Idle/armatureName_idle_%d.png", 30);
-	Engine::CreateNewTexture(L"Highwayman_Walk", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Walk/armatureName_walk_%d.png",32);
-
-
-
     shared_ptr<CScene> pMainLogo = make_shared<CVillage>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
