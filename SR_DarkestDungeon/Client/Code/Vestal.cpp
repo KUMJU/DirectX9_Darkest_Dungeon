@@ -173,25 +173,27 @@ void CVestal::AddComponent()
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineComfortImg.png", 1);
 	}
 
-	/*
 	// 스킬 이펙트 (본인에게)
 	{
 		Engine::CreateNewTexture(L"DazzlingLight_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light/armatureName_dazzling_light_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light/armatureName_dazzling_light_%d.png", 40);
 		Engine::CreateNewTexture(L"DivineGrace_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/divine_grace/armatureName_divine_grace_%d.png", 57);
-		Engine::CreateNewTexture(L"DivineComfort_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort/armatureName_gods_comfort_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/divine_grace/armatureName_divine_grace_%d.png", 40);
+		//Engine::CreateNewTexture(L"DivineComfort_Effect", TEX_NORMAL,
+			//L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort/armatureName_gods_comfort_%d.png", 40);
+		//Engine::CreateNewTexture(L"Test_Effect", TEX_NORMAL,
+		//	L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_illumination/armatureName_gods_illumination_%d.png", 40);
 	}
 
 	// 스킬 이펙트 (타겟)
 	{
 		Engine::CreateNewTexture(L"DazzlingLight_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light_target/armatureName_dazzling_light_target_%d.png", 57);
-		Engine::CreateNewTexture(L"DivineComfort_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort_target/armatureName_gods_comfort_target_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light_target/armatureName_dazzling_light_target_%d.png", 40);
+		//Engine::CreateNewTexture(L"DivineComfort_Target_Effect", TEX_NORMAL,
+			//L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort_target/armatureName_gods_comfort_target_%d.png", 40);
+		//Engine::CreateNewTexture(L"Test_Target_Effect", TEX_NORMAL,
+		//	L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_illumination_target/armatureName_gods_illumination_target_%d.png", 40);
 	}
-	*/
 
 	__super::AddComponent();
 }

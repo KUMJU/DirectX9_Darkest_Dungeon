@@ -42,6 +42,20 @@ HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType
 		{
 		case TEX_NORMAL:
 			FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture), E_FAIL);
+			/*FAILED_CHECK_RETURN(D3DXCreateTextureFromFileEx(m_pGraphicDev,
+				szFileName,
+				D3DX_DEFAULT,
+				D3DX_DEFAULT,
+				D3DX_DEFAULT,
+				0,
+				D3DFMT_X8B8G8R8,
+				D3DPOOL_MANAGED,
+				D3DX_DEFAULT,
+				D3DX_DEFAULT,
+				0,
+				NULL,
+				NULL,
+				(LPDIRECT3DTEXTURE9*)&pTexture));*/
 			break;
 
 		case TEX_CUBE:

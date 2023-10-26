@@ -195,13 +195,12 @@ void CJester::AddComponent()
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Skill/Solo_Img.png", 1);
 	}
 
-	/*
 	// 스킬 이펙트 (본인에게)
 	{
 		Engine::CreateNewTexture(L"BattleBallad_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad/armatureName_battle_ballad_%d.png", 57);
 		Engine::CreateNewTexture(L"Finale_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale/armatureName_finale_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale/armatureName_finale_%d.png", 40);
 		Engine::CreateNewTexture(L"Solo_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo/armatureName_solo_%d.png", 57);
 	}
@@ -209,13 +208,12 @@ void CJester::AddComponent()
 	// 스킬 이펙트 (타겟)
 	{
 		Engine::CreateNewTexture(L"BattleBallad_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad_target/armatureName_battle_ballad_target_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad_target/armatureName_battle_ballad_target_%d.png", 40);
 		Engine::CreateNewTexture(L"Finale_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 40);
 		Engine::CreateNewTexture(L"Solo_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 40);
 	}
-	*/
 
 	__super::AddComponent();
 }

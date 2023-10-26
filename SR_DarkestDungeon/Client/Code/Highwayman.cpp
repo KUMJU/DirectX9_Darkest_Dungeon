@@ -176,21 +176,19 @@ void CHighwayman::AddComponent()
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/DuelistsAdvance_Img.png", 1);
 	}
 
-	/*
 	// 스킬 이펙트 (본인에게)
 	{
 		Engine::CreateNewTexture(L"PointBlankShot_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot/armatureName_point_blank_shot_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot/armatureName_point_blank_shot_%d.png", 38);
 	}
 
 	// 스킬 이펙트 (타겟)
 	{
 		Engine::CreateNewTexture(L"PistolShot_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/pistol_shot_target/armatureName_pistol_shot_target_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/pistol_shot_target/armatureName_pistol_shot_target_%d.png", 30);
 		Engine::CreateNewTexture(L"PointBlankShot_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot_target/armatureName_point_blank_shot_target_%d.png", 57);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot_target/armatureName_point_blank_shot_target_%d.png", 30);
 	}
-	*/
 
 	__super::AddComponent();
 }
