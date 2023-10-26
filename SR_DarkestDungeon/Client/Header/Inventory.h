@@ -24,8 +24,19 @@ public:
 
 public:
 	void InsertItem(shared_ptr<CItem> _pItem) {
-		if(m_itemList.size() <= 10)
+		if (m_itemList.size() <= 10) {
 			m_itemList.push_back(_pItem);
+			_pItem->AwakeGameObject();
+			_pItem->SetPos({ -182.f + (m_iTotalItemNum * 20.f) , -320.f ,0.f });
+			_pItem->SetScale({ 20.f, 38.f, 1.f });
+			_pItem->ReadyGameObject();
+			++m_iTotalItemNum;
+
+		}
+	}
+
+	void DeleteItem() {
+
 	}
 
 protected:
@@ -34,6 +45,9 @@ protected:
 private:
 	shared_ptr<CTexture> m_pTextureCom;
 	list<shared_ptr<CGameObject>> m_itemList;
+
+	_int m_iTotalItemNum = 0;
+	_int m_iCurrentCursor = 0;
 
 };
 

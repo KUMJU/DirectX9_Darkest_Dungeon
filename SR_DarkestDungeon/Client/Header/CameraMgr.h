@@ -27,6 +27,7 @@ public: //Camera Moving
 
 public: //Camera Effect : 아직 작업 안함
 
+	void AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.1f);
 
 private:
 

@@ -41,6 +41,8 @@ HRESULT CSceneMgr::ChangeScene(shared_ptr<CScene> _newScene)
 		m_pCurrentScene.reset();
 	}
 
+	CResourceMgr::GetInstance()->RemoveAllTexture();
+
 	Engine::ClearRenderGroup();
 	m_pCurrentScene = _newScene;
 

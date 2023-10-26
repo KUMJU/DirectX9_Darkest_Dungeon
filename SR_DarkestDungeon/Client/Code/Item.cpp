@@ -16,6 +16,10 @@ HRESULT CItem::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 	m_eCollideID = ECollideID::ITEM;
+	if (!m_bOnField) {
+		m_pTransCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+	}
+
 	return S_OK;
 }
 
@@ -82,18 +86,38 @@ void CItem::RenderGameObject()
 
 void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
 {
-	_int a = 3;
+
+
 }
 
-void CItem::SetDropItemInfo(_vec3 _vPosition, const tstring& _strName )
+void CItem::SetDropItemInfo(_vec3 _vPos, const tstring& _strName )
 {
-	m_vPosition = _vPosition;
+	m_vPos = _vPos;
 	m_strItemKey = _strName;
 }
 
 void CItem::SetScale(_vec3 _vScale)
 {
 	m_pTransCom->SetScale(_vScale.x, _vScale.y, _vScale.z);
+}
+
+void CItem::GetUITextureKeyName(const tstring& _strOriginName)
+{
+
+	tstring strKey = L"";
+
+	if (L"Player_Item_Antivenom" == _strOriginName) {
+		strKey = L"Item_UI_Antivenom";
+	}
+	else if(L"Player_Item_Shovel" == _strOriginName) {
+		strKey = L"Item_UI_Shovel";
+	}
+	else if (L"Player_Item_Bandage" == _strOriginName) {
+		strKey = L"Item_UI_Bandage";
+	}
+
+
+	m_strItemKey = strKey;
 }
 
 void CItem::KeyInput()
@@ -130,6 +154,10 @@ void CItem::KeyInput()
 		CCameraMgr::GetInstance()->CameraOrbit(ECameraMode::ORBIT, vDst, vPos);
 	}
 
+	if (GetAsyncKeyState('U') & 0x8000) {
+		CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.1f);
+	}
+
 }
 
 void CItem::AddComponent()
@@ -148,7 +176,7 @@ void CItem::AddComponent()
 	NULL_CHECK_MSG(pComponent, L"Make Player Item TransformCom Failed");
 	m_pTransCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
-	m_pTransCom->SetPosition(m_vPosition.x, m_vPosition.y, m_vPosition.z);
+	m_pTransCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	NULL_CHECK_MSG(pComponent, L"Make Player Item ColliderCom Failed");

@@ -79,6 +79,10 @@ void CStaticCamera::LateUpdateGameObject(){
 		break;
 	}
 
+	if (!m_qEffectQueue.empty())
+		CameraEffectProcess();
+
+
 
 }
 
@@ -260,14 +264,15 @@ void CStaticCamera::MovingDirect()
 		m_eCurrentState = ECameraMode::IDLE;
 	}
 
+	
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
 	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
 	vCurPos2 = vCurrentPos;
 
-	m_fLerp += 0.3 * m_deltaTime;
+	m_fLerp += (_float)0.3 * m_deltaTime;
 
-	if (m_fLerp > 0.8f)
+	if (m_fLerp > 0.8f) 
 		m_fLerp = 0.8f;
 
 	D3DXVec3Lerp(&vCurrentPos, &vCurrentPos, &m_vDstVec, m_fLerp);
@@ -291,6 +296,75 @@ void CStaticCamera::CamReset()
 	m_fDir = 1.f;
 }
 
+void CStaticCamera::AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude)
+{
+
+	unique_ptr<tagEffectInfo> pEffectInfo = make_unique<tagEffectInfo>();
+	
+	pEffectInfo->eEffectType = _eEffect;
+	pEffectInfo->fTime = _fTime;
+	pEffectInfo->fAmplitude = _fAmplitude;
+	pEffectInfo->MoveDistance = 0.f;
+	pEffectInfo->fActTime = 0.f;
+	pEffectInfo->fDir = 1.f;
+
+	m_qEffectQueue.push(std::move(pEffectInfo));
+
+}
+
+void CStaticCamera::CameraEffectProcess()
+{
+	switch (m_qEffectQueue.front()->eEffectType)
+	{
+	case EEffectState::SHAKING:
+		ShakingCamera();
+		break;
+	case EEffectState::FADEIN:
+		break;
+	case EEffectState::FADEOUT:
+		break;
+	case EEffectState::ENUM_END:
+		break;
+	default:
+		break;
+	}
+	
+
+}
+
+//방향 Vertical 고정
 void CStaticCamera::ShakingCamera()
 {
+	_vec3 vCurrentPos;
+	_matrix matView;
+
+	_float fDir = m_qEffectQueue.front()->fDir;
+
+	//이동거리 구하기
+	_float fDistance = fDir * 10.f * m_deltaTime;
+
+	//한 방향으로 진폭만큼 이동했을시 방향 전환
+	if (fabsf(m_qEffectQueue.front()->MoveDistance + fDistance) >= m_qEffectQueue.front()->fAmplitude) {
+		fDistance = m_qEffectQueue.front()->fAmplitude * fDir - m_qEffectQueue.front()->MoveDistance;
+		m_qEffectQueue.front()->MoveDistance = m_qEffectQueue.front()->fAmplitude * fDir;
+		m_qEffectQueue.front()->fDir *= -1.f;
+	}
+	else {
+		m_qEffectQueue.front()->MoveDistance += fDistance;
+	}
+
+	//현재 카메라 position에 더해주기
+	memcpy(&vCurrentPos, &m_matView.m[3][0], sizeof(_vec3));
+
+	vCurrentPos.y += fDistance;
+
+	memcpy(&m_matView.m[3][0], &vCurrentPos, sizeof(_vec3));
+
+	//지속시간 측정 후, 지정한 시간에 도달하면 pop을 해 없애준다
+	m_qEffectQueue.front()->fActTime += m_deltaTime;
+	
+	if (m_qEffectQueue.front()->fActTime >= m_qEffectQueue.front()->fTime)
+		m_qEffectQueue.pop();
+	
+
 }

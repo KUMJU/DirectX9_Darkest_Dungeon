@@ -167,14 +167,8 @@ void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 	if (ECollideID::ITEM == _pObj->GetColType())
 	{
 		shared_ptr<CItem> pNewItem = make_shared<CItem>(m_pGraphicDev);
-		pNewItem->SetDropItemInfo({ -182.f, -320.f ,0.f }, L"Item_UI_Antivenom");
-
-		pNewItem->AwakeGameObject();
-		pNewItem->ReadyGameObject();
+		pNewItem->GetUITextureKeyName(dynamic_pointer_cast<CItem>(_pObj)->GetItemKeyName());
 		pNewItem->SetOnField(false);
-		//임시로 고정값으로 해둠
-		pNewItem->SetScale({ 20.f, 38.f, 1.f });
-
 		InsertItem(pNewItem);
 
 		_pObj->SetActive(false);

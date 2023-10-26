@@ -32,3 +32,8 @@ void CCameraMgr::CameraRotation(ECameraMode _eType, _float _fDegree)
 	m_pMainCam->ChangeCameraWithDegree(_eType, _fDegree);
 
 }
+
+void CCameraMgr::AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude)
+{
+	m_pMainCam->AddCameraEffect(_eEffect, _fTime, _fAmplitude);
+}

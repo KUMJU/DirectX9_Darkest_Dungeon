@@ -26,6 +26,9 @@ enum class EEffectState {
 
 struct tagEffectInfo {
 	EEffectState eEffectType;
+	_float		 fAmplitude;
+	_float		 fDir;
+	_float		 MoveDistance;
 	_float		 fTime;
 	_float		 fActTime;
 };
@@ -53,7 +56,8 @@ public:
 	void ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _vec3 _vCenter, _float _fTime = 1.5f);
 	//최종 포지션을 잡고 직선을 그리며 카메라 포지션 옮기기 : 줌인, 줌아웃, 카메라 무빙
 	void MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float _fTime = 1.5f);
-
+	//카메라 이펙트 세팅
+	void AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.5f);
 private:
 //Moving Function
 
@@ -68,6 +72,7 @@ private:
 
 private:
 //Camera Effect
+	void CameraEffectProcess();
 	void ShakingCamera();
 
 private:
@@ -100,6 +105,6 @@ private:
 	_float m_fDir = 1.f;
 
 private:
-	queue<tagEffectInfo> m_qEffectQueue;
+	queue<unique_ptr<tagEffectInfo>> m_qEffectQueue;
 
 };
