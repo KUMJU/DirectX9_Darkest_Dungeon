@@ -157,7 +157,6 @@
     <ClInclude Include="..\Header\BrigandCutthroat.h" />
     <ClInclude Include="..\Header\CameraMgr.h" />
     <ClInclude Include="..\Header\BrigandFusilier.h" />
-    <ClInclude Include="..\Header\BrigandMatchman.h" />
     <ClInclude Include="..\Header\CardGame.h" />
     <ClInclude Include="..\Header\Creature.h" />
     <ClInclude Include="..\Header\Define.h" />
@@ -202,7 +201,6 @@
     <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
     <ClCompile Include="..\Code\BrigandFusilier.cpp" />
     <ClCompile Include="..\Code\CameraMgr.cpp" />
-    <ClCompile Include="..\Code\BrigandMatchman.cpp" />
     <ClCompile Include="..\Code\CardGame.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
     <ClCompile Include="..\Code\Door.cpp" />

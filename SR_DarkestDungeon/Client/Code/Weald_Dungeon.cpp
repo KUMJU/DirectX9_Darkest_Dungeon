@@ -18,6 +18,8 @@
 #include"GameMgr.h"
 #include"CameraMgr.h"
 
+#include"Village.h"
+
 #include "BrigandCutthroat.h"
 #include "BrigandFusilier.h"
 #include "BrigandBloodletter.h"
@@ -84,6 +86,12 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
+
+	if (GetAsyncKeyState('3') & 0x8000) {
+		shared_ptr<CVillage> pScene = make_shared<CVillage>(m_pGraphicDev);
+		CSceneMgr::GetInstance()->ChangeScene(pScene);
+		pScene->ReadyScene();
+	}
 
 	return iExit;
 }

@@ -19,9 +19,6 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
 
-
-
-
     shared_ptr<CScene> pMainLogo = make_shared<CWeald_Dungeon>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();

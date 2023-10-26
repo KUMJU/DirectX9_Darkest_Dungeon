@@ -71,7 +71,7 @@ void CWall::RenderGameObject()
 
 	else
 	{
-		m_pTextureCom2->SetTextureKey(L"Com_Weald_BackWal lTexture", TEX_NORMAL);
+		m_pTextureCom2->SetTextureKey(L"Com_Weald_BackWallTexture", TEX_NORMAL);
 		m_pTextureCom2->SetTexture(0);
 		m_pBufferCom2->RenderBuffer();
 
