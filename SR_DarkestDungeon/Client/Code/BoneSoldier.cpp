@@ -1,50 +1,43 @@
 #include "pch.h"
-#include "BrigandBloodletter.h"
+#include "BoneSoldier.h"
 #include"Export_Utility.h"
 
-CBrigandBloodletter::CBrigandBloodletter(LPDIRECT3DDEVICE9 pGraphicDev)
+CBoneSoldier::CBoneSoldier(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 {
 }
 
-CBrigandBloodletter::CBrigandBloodletter(const CCreature& rhs)
+CBoneSoldier::CBoneSoldier(const CCreature& rhs)
 	: CMonster(rhs)
 {
 }
 
-CBrigandBloodletter::~CBrigandBloodletter()
+CBoneSoldier::~CBoneSoldier()
 {
 }
 
-HRESULT CBrigandBloodletter::ReadyGameObject()
+HRESULT CBoneSoldier::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
 	m_iSize = 1;
 
 	// 스탯 설정
-	m_tCommonStat.iHp = 40;
+	m_tCommonStat.iHp = 30;
 	m_tCommonStat.iDodge = 10;
-	m_tCommonStat.iSpeed = 2;
-	m_tCommonStat.iAttackPower = 5;
+	m_tCommonStat.iSpeed = 6;
+	m_tCommonStat.iAttackPower = 10;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
-	int Skill1_Dot[2] = { 1,3 };
+	int Skill1_Dot[2] = { 3,2 };
 	_bool	m_bArrAttack1[6] = { 0, 0, 1, 0, 0, 0 };
-	_bool	bTargetPos1[4] = { 1,1,1,1 };
-	shared_ptr<CSkill> m_pBrigandBloodletter_1 = make_shared<CSkill>
-		(L"Attack1", L"Brigand Bloodletter_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.2f, 0.f,
-			m_bArrAttack1, 0, 10, true);
-	pVecSkill.push_back(m_pBrigandBloodletter_1);
+	_bool	bTargetPos1[4] = { 1,1,0,0 };
+	shared_ptr<CSkill> m_pBoneSoldier_1 = make_shared<CSkill>
+		(L"Attack1", L"Bone Soldier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.5f, 0.f,
+			m_bArrAttack1, 0, 10);
+	pVecSkill.push_back(m_pBoneSoldier_1);
 
-	int Skill2_Dot[2] = { 0,0 };
-	_bool	bArrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
-	_bool	bTargetPos2[4] = { 1,0,0,0 };
-	shared_ptr<CSkill> m_pBrigandBloodletter_2 = make_shared<CSkill>
-		(L"Attack2", L"Brigand Bloodletter_Attack2", bTargetPos2, Skill2_Dot, 0.f, 2.f, 0.f,
-			bArrAttack2, 1, 30);
-	pVecSkill.push_back(m_pBrigandBloodletter_2);
 	SetSkill(pVecSkill);
 
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
@@ -56,7 +49,7 @@ HRESULT CBrigandBloodletter::ReadyGameObject()
 	return E_NOTIMPL;
 }
 
-_int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
+_int CBoneSoldier::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
@@ -68,28 +61,24 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 		switch (m_eCurAnimState)
 		{
 		case EAnimState::COMBAT:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Combat", 0.05f);
-			m_pTransformCom->SetScale(3.f, 3.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Combat", 0.05f);
+			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Hitted", 0.02f);
-			m_pTransformCom->SetScale(3.f * 330.f / 303.f, 3.f * 345.f / 382.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Hitted", 0.02f);
+			m_pTransformCom->SetScale(2.f * 171.f / 205.f, 2.f * 269.f / 310.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack1", 0.02f);
-			m_pTransformCom->SetScale(3.f * 482.f / 303.f, 3.f * 383.f / 382.f, 1.f);
-			break;
-		case EAnimState::SKILL2:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack2", 0.02f);
-			m_pTransformCom->SetScale(3.f * 474.f / 303.f, 3.f * 379.f / 382.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Attack1", 0.02f);
+			m_pTransformCom->SetScale(2.f * 323.f / 205.f, 2.f * 300.f / 310.f, 1.f);
 			break;
 		case EAnimState::CORPSE:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Dead", 0.02f);
-			m_pTransformCom->SetScale(3.f * 375.f / 303.f, 3.f * 167.f / 382.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Dead", 0.02f);
+			m_pTransformCom->SetScale(2.f * 215.f / 205.f, 2.f * 146.f / 310.f, 1.f);
 			break;
 		case EAnimState::DEATH:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Death", 0.02f);
-			m_pTransformCom->SetScale(3.f, 3.f, 1.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Death", 0.02f);
+			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
 			break;
 		}
 	}
@@ -190,27 +179,16 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 		}
 	}
 
-	// 공격2 시간
-	if (GetAttacking(1))
-	{
-		m_fAttack2Time -= fTimeDelta;
-		if (m_fAttack2Time < 0.f)
-		{
-			SetAttacking(false, 1);
-			m_fAttack2Time = ATTACK2TIME;
-		}
-	}
-
 
 	return iExit;
 }
 
-void CBrigandBloodletter::LateUpdateGameObject()
+void CBoneSoldier::LateUpdateGameObject()
 {
 	__super::LateUpdateGameObject();
 }
 
-void CBrigandBloodletter::RenderGameObject()
+void CBoneSoldier::RenderGameObject()
 {
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
@@ -230,19 +208,17 @@ void CBrigandBloodletter::RenderGameObject()
 	__super::RenderGameObject();
 }
 
-void CBrigandBloodletter::AddComponent()
+void CBoneSoldier::AddComponent()
 {
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/Combat/armatureName_combat_%d.png", 36);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/1.png", 1);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Attack2", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/2.png", 1);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/3.png", 1);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/4.png", 1);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Death", TEX_NORMAL,
+	Engine::CreateNewTexture(L"Bone Soldier_Combat", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/Bone Soldier/combat/armatureName_combat_%d.png", 28);
+	Engine::CreateNewTexture(L"Bone Soldier_Attack1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/1.png", 1);
+	Engine::CreateNewTexture(L"Bone Soldier_Dead", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/2.png", 1);
+	Engine::CreateNewTexture(L"Bone Soldier_Hitted", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/3.png", 1);
+	Engine::CreateNewTexture(L"Bone Soldier_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1);
 
 	shared_ptr<CComponent> pComponent;
@@ -255,7 +231,7 @@ void CBrigandBloodletter::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Combat", 0.05f);
+	m_pTextureCom->SetAnimKey(L"Bone Soldier_Combat", 0.05f);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
 	//pComponent = m_pEffectTransformCom = make_shared<CTransform>();
@@ -264,13 +240,13 @@ void CBrigandBloodletter::AddComponent()
 	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	//
 	//pComponent = m_pEffectTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	//m_pEffectTextureCom->SetAnimKey(L"Brigand Bloodletter_Combat", 0.05f);
+	//m_pEffectTextureCom->SetAnimKey(L"Bone Soldier_Combat", 0.05f);
 	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
 	__super::AddComponent();
 }
 
-void CBrigandBloodletter::Free()
+void CBoneSoldier::Free()
 {
 	__super::Free();
 }

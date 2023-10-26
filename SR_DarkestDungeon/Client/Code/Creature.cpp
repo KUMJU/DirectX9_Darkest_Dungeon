@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Creature.h"
+#include "Hero.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -200,18 +201,18 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	{
 		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 		_pCreature->SetPosition(_pSkill->GetMoveCnt());
-
-		// 동료 크리처들도 움직여주기
-		// 수정 필요
-		// 이건 구조에 따라 잘,,,,
 	}
 
 	// 힐
 	if (arrAttack[5])
 	{
 		_pCreature->IncreaseHP(_pSkill->GetHeal());
+	}
 
-		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
+	// 스트레스 처리
+	if (dynamic_pointer_cast<CHero>(_pCreature))
+	{
+		dynamic_pointer_cast<CHero>(_pCreature)->IncreaseStress(_pSkill->GetStress());
 	}
 
 	// 상대

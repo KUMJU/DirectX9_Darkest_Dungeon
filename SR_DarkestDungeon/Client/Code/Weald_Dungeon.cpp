@@ -22,6 +22,10 @@
 #include "BrigandFusilier.h"
 #include "BrigandBloodletter.h"
 
+#include "BoneCourtier.h"
+#include "BoneDefender.h"
+#include "BoneSoldier.h"
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -332,40 +336,40 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// GameObject
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandBloodletter2 = make_shared<CBrigandBloodletter>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBoneDefender1 = make_shared<CBoneDefender>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandBloodletter1 = make_shared<CBrigandBloodletter>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandFusilier_1 = make_shared<CBrigandFusilier>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandFusilier_2 = make_shared<CBrigandFusilier>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandFusilier_3 = make_shared<CBrigandFusilier>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBrigandFusilier_4 = make_shared<CBrigandFusilier>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBoneSoldier_1 = make_shared<CBoneSoldier>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBoneCourtier_1 = make_shared<CBoneCourtier>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pBoneSoldier_2 = make_shared<CBoneSoldier>(m_pGraphicDev);
 
 	// 방에 GameObject 넣기
 	// creatures
 	vector<shared_ptr<CGameObject>> Room1_v1;
 	Room1_v1.push_back(m_pBrigandCutthroat_1);
 	Room1_v1.push_back(m_pBrigandBloodletter1);
-	Room1_v1.push_back(m_pBrigandBloodletter2);
+	Room1_v1.push_back(m_pBoneDefender1);
 	Room1_v1.push_back(m_pBrigandCutthroat_2);
 	Room1_v1.push_back(m_pBrigandFusilier_1);
-	Room1_v1.push_back(m_pBrigandFusilier_2);
-	Room1_v1.push_back(m_pBrigandFusilier_3);
-	Room1_v1.push_back(m_pBrigandFusilier_4);
+	Room1_v1.push_back(m_pBoneSoldier_1);
+	Room1_v1.push_back(m_pBoneCourtier_1);
+	Room1_v1.push_back(m_pBoneSoldier_2);
 	m_pRoom1->PushGameObjectVector(Room1_v1);
 
 	// heroes
 	vector<shared_ptr<CGameObject>> Room1_v2;
-	Room1_v2.push_back(m_pBrigandCutthroat_1);
-	Room1_v2.push_back(m_pBrigandBloodletter1);
-	Room1_v2.push_back(m_pBrigandFusilier_3);
-	Room1_v2.push_back(m_pBrigandFusilier_4);
+	Room1_v2.push_back(m_pBoneDefender1);
+	Room1_v2.push_back(m_pBoneSoldier_1);
+	Room1_v2.push_back(m_pBoneSoldier_2);
+	Room1_v2.push_back(m_pBoneCourtier_1);
 	m_pRoom1->PushHeroesVector(Room1_v2);
 
 	// monsters
 	vector<shared_ptr<CGameObject>> Room1_v3;
-	Room1_v3.push_back(m_pBrigandBloodletter2);
+	Room1_v3.push_back(m_pBrigandBloodletter1);
+	Room1_v3.push_back(m_pBrigandCutthroat_1);
 	Room1_v3.push_back(m_pBrigandCutthroat_2);
 	Room1_v3.push_back(m_pBrigandFusilier_1);
-	Room1_v3.push_back(m_pBrigandFusilier_2);
 	m_pRoom1->PushMonstersVector(Room1_v3);
 
 	// 배틀시스템 넣기
@@ -392,12 +396,12 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// Layer에 GameObject 넣기
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
-	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBrigandBloodletter2);
+	m_pLayer->CreateGameObject(L"Obj_BoneDefender", m_pBoneDefender1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBrigandBloodletter1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_1);
-	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_2);
-	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_3);
-	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_4);
+	m_pLayer->CreateGameObject(L"Obj_BoneCourtier", m_pBoneCourtier_1);
+	m_pLayer->CreateGameObject(L"Obj_BoneSoldier", m_pBoneSoldier_1);
+	m_pLayer->CreateGameObject(L"Obj_BoneSoldier", m_pBoneSoldier_2);
 
 
 //PlayerObj

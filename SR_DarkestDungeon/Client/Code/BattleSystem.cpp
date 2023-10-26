@@ -121,10 +121,10 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 	// 크리처의 턴일때
 	if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn() && m_bNext && !m_bDeathMoving)
 	{
-		DeadCheck();
 		// 크리처 종류에 따라 행동
 		// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽음상태로
 		dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate();
+		DeadCheck();
 
 		// 종료 조건
 		if (HeroesAllDead() || MonstersAllDead())

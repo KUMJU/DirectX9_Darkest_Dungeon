@@ -32,6 +32,9 @@
     <ClCompile Include="..\Code\Highwayman.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\BrigandBloodletter.cpp" />
+    <ClCompile Include="..\Code\BoneCourtier.cpp" />
+    <ClCompile Include="..\Code\BoneDefender.cpp" />
+    <ClCompile Include="..\Code\BoneSoldier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -70,6 +73,9 @@
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\CameraMgr.h" />
     <ClInclude Include="..\Header\BrigandBloodletter.h" />
+    <ClInclude Include="..\Header\BoneCourtier.h" />
+    <ClInclude Include="..\Header\BoneDefender.h" />
+    <ClInclude Include="..\Header\BoneSoldier.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
