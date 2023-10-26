@@ -34,9 +34,12 @@ public:
 	_bool GetOnFieldState() { return m_bOnField; }
 
 	//몬스터가 죽고 아이템이 드랍될 때 포지션, 텍스쳐 값을 지정해줄 수 있음(필수로 해줄 것)
-	void SetDropItemInfo(_vec3 _vPosition, const tstring& _strName);
+	void SetDropItemInfo(_vec3 _vPos, const tstring& _strName);
 	void SetScale(_vec3 _vScale);
 
+	//플로팅 아이템 텍스쳐 키값을 통해 UI 텍스쳐 키값을 반환받음
+	void GetUITextureKeyName(const tstring& _strOriginName);
+	tstring GetItemKeyName() { return m_strItemKey; }
 
 	//TestCode
 	void KeyInput();
@@ -45,7 +48,6 @@ protected:
 	void AddComponent();
 	//필드에 떠있을때 위 아래로 둥둥 띄워주는 효과
 	void FloatingOnField();
-
 
 private:
 	//Componenet
