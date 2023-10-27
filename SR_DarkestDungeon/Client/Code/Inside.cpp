@@ -30,7 +30,7 @@ HRESULT CInside::ReadyGameObject()
         iter->ReadyGameObject();
     }
 
-    return E_NOTIMPL;
+    return S_OK;
 }
 
 _int CInside::UpdateGameObject(const _float& fTimeDelta)

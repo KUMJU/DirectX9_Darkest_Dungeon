@@ -30,6 +30,7 @@ public:
 	void SetPos(_vec3 _vPos) { m_vPos = _vPos; }
 	void SetScale(_vec3 _vScale) { m_vScale = _vScale; }
 	_vec3 GetPos() { return m_vPos; }
+	_vec3 GetScale() { return m_vScale; }
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
 	void SetColliding(_bool _bColliding) { m_bColliding = _bColliding; }

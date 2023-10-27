@@ -10,3 +10,11 @@ enum class EAttackType {
 	STRESS,			// 스트레스
 	ENUM_END
 };
+
+enum class EFacilityType
+{
+	TERVARN,
+	GUILD,
+
+	ENUM_END
+};

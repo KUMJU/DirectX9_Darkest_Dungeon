@@ -66,13 +66,13 @@ void CTerrain::AddComponent()
 
 	pComponent = m_pBufferCom = make_shared<CTerrainTex>(m_pGraphicDev);
 	if (L"Village_FloorTexture" == m_strKeyName)
-		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX / 5, VTXCNTZ / 5, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp");
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VILLAGE_TILESIZE * 10, VILLAGE_TILESIZE * 10, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp", VILLAGE_TILECNT, VILLAGE_TILECNT);
 
 	else if(L"Inside_FloorTexture" == m_strKeyName)
-		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX / 20, VTXCNTZ / 20, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp");
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX / 20, VTXCNTZ / 20, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 5, 5);
 
 	else
-		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp");
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
 	
 	m_mapComponent[ID_STATIC].insert({ m_strKeyName, pComponent });
 

@@ -23,17 +23,27 @@ CWall::~CWall()
 
 HRESULT CWall::ReadyGameObject()
 {
+	if (m_strKeyName == L"")
+		m_vScale = { 6.f, 6.f, 6.f };
+
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(6.f, 6.f, 6.f);
+	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
 	
 	m_pTransformCom->SetAngle(m_vAngle);
+
 	if (PI / 2.f == m_vAngle.y)
 	{
 		m_bHorizontal = true;
 		m_pColliderCom->SetScale({ 12.f, 12.f, 1.f });
 	}
 	else
+	{
 		m_bHorizontal = false;
+		m_pColliderCom->SetScale({ 1.f, 12.f, 12.f });
+	}
+
+	if (m_strKeyName != L"")
+		m_pColliderCom->SetScale({ m_vScale.x * 2, m_vScale.y * 2, m_vScale.z * 2 });
 	m_pTransformCom->Rotation(ROT_Y, PI /2.f);
 	m_iNum = rand() % 9;
 
@@ -115,6 +125,5 @@ void CWall::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 1.f, 12.f, 12.f });
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 }

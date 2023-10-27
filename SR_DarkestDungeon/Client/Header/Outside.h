@@ -13,7 +13,7 @@ END
 class COutside : public CGameObject
 {
 public:
-	COutside(LPDIRECT3DDEVICE9 pGraphicDev, tstring _strKey);
+	COutside(LPDIRECT3DDEVICE9 pGraphicDev, EFacilityType _eFacilityType);
 	COutside(const COutside& rhs);
 	virtual ~COutside();
 
@@ -35,6 +35,7 @@ protected:
 
 protected:
 	vector<shared_ptr<CGameObject>>		m_vecGameObject = {};
+	EFacilityType						m_eFacilityType;
 	tstring								m_strKey;
 };
 

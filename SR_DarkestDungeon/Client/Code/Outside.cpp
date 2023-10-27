@@ -6,8 +6,8 @@
 
 #include "Door.h"
 
-COutside::COutside(LPDIRECT3DDEVICE9 pGraphicDev, tstring _strKey)
-	: Engine::CGameObject(pGraphicDev), m_strKey(_strKey)
+COutside::COutside(LPDIRECT3DDEVICE9 pGraphicDev, EFacilityType _eFacilityType)
+	: Engine::CGameObject(pGraphicDev), m_eFacilityType(_eFacilityType)
 {
 }
 
@@ -23,7 +23,7 @@ COutside::~COutside()
 HRESULT COutside::ReadyGameObject()
 {
 
-	shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::TERVARN);
 
 	if (L"Tervarn_Outside" == m_strKey)
 	{
@@ -100,6 +100,17 @@ void COutside::AddComponent()
 	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
+	switch (m_eFacilityType)
+	{
+	case EFacilityType::TERVARN:
+		m_strKey = L"Tervarn_Outside";
+		break;
+	case EFacilityType::GUILD:
+		m_strKey = L"Guild_Outside";
+		break;
+	case EFacilityType::ENUM_END:
+		break;
+	}
 	m_pTextureCom->SetTextureKey(m_strKey, TEX_NORMAL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Texture",pComponent });
 }

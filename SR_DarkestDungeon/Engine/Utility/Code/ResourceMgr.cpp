@@ -506,11 +506,15 @@ void CResourceMgr::VillageTextureLoad()
 
 	//바닥
 	CreateNewTexture(L"Village_FloorTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/Floor/city_gate_floor_tile.png", 1, bDefault);
+		L"../Bin/Resource/Image/Village/Floor/WholeTerrain2.jpg", 1, bDefault);
 	
 	//가장자리 벽
 	CreateNewTexture(L"Com_Village_Wall_Texture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Village/BackGround/forest_skirt_%d.png", 3, bDefault);
+
+	//외곽 건물 그림자
+	CreateNewTexture(L"Com_Village_Back_Texture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Village/BackGround/city_back_%d.png", 3, bDefault);
 
 	// SkyBox
 	CreateNewTexture(L"Village_SkyBoxTexture", TEX_CUBE,

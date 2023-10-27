@@ -1,9 +1,10 @@
 #pragma once
 #include "InteractionObj.h"
+
 class CDoor : public CInteractionObj
 {
 public:
-	CDoor(LPDIRECT3DDEVICE9 pGraphicDev);
+	CDoor(LPDIRECT3DDEVICE9 pGraphicDev, EFacilityType _eDoorType);
 	CDoor(const CDoor& rhs);
 	virtual ~CDoor();
 
@@ -15,6 +16,7 @@ public:
 
 protected:
 	virtual void			AddComponent();
+	virtual void			GetInteractionKey(const _float& fTimeDelta);
 
 protected:
 
@@ -28,5 +30,8 @@ protected:
 	virtual void	FinishInteraction();
 
 	virtual void	ChangeTexture();
+
+protected:
+	EFacilityType m_eDoorType;
 };
 

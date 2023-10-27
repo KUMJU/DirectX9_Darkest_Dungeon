@@ -174,6 +174,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"OBJ_Terrain", m_pTerrain);
 
 	shared_ptr<CGameObject> m_pWall;
+
 	// 진입방 벽
 	for (int i = 0; i < 2; i++)
 	{

@@ -78,14 +78,30 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_Terrain", m_pTerrain);
 
 	shared_ptr<CGameObject> m_pWall;
-	// 진입방 벽
-	for (int i = 0; i < 2; i++)
+
+	// 가장자리 나무
+	/*for (int i = 0; i < 9; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Wall_Texture");
-		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * i + WEALD_WALLSIZEX / 2, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * (WEALD_PATHSIZEX - 1)));
+		m_pWall->SetPos(_vec3(VILLAGE_TILESIZE * i + VILLAGE_TILESIZE, VILLAGE_WALLSIZEUPY * 2 + 1, (VILLAGE_TILESIZE - 1) * (VILLAGE_TILESIZE - 1) - 2));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 2, VILLAGE_WALLSIZE * 2, 1));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	}*/
+
+
+	// 외곽 건물 그림자
+	for (int i = 0; i < 6; i++)
+	{
+		m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Village_Back_Texture");
+		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 2, VILLAGE_WALLSIZE * 2 * (rand() % 10 + 6) / 10, 1));
+		m_pWall->SetPos(_vec3(VILLAGE_TILESIZE * i + VILLAGE_TILESIZE + (VILLAGE_TILESIZE - 5) * i, m_pWall->GetScale().y / 2  + 1, (VILLAGE_TILESIZE - 1) * (VILLAGE_TILESIZE - 1) - 2));
+		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Back", m_pWall);
 	}
+
+	// 마을 입구
+
 
 	//for (int i = 0; i < 2; i++)
 	//{
@@ -205,7 +221,7 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
 	// 영웅 테스트
-	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+	/*shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
 	m_pVestal->SetPos({ 10.f, 3.f, 20.f });
 
@@ -219,13 +235,13 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 	shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
-	m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
+	m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });*/
 
 	// 여관
 	{
 
 		// 여관 외부
-		shared_ptr<CGameObject> m_pTervarnOutside = make_shared<COutside>(m_pGraphicDev, L"Tervarn_Outside");
+		shared_ptr<CGameObject> m_pTervarnOutside = make_shared<COutside>(m_pGraphicDev, EFacilityType::TERVARN);
 		m_pTervarnOutside->SetPos({ 30.f, 0.f, 40.f });
 		m_pTervarnOutside->SetScale({ 20.f, 30.f, 1.f });
 		m_pLayer->CreateGameObject(L"Obj_TervarnOutside", m_pTervarnOutside);
