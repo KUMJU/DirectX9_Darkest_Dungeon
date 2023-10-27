@@ -12,7 +12,7 @@ CAnimator::~CAnimator()
 
 void CAnimator::SetAnimTexture()
 {
-    m_pGraphicDev->SetTexture(0, (*m_vecTexture)[m_tAnimFrame.iCurrentFrame]);
+    m_pGraphicDev->SetTexture(0, ((*m_vecTexture)[m_tAnimFrame.iCurrentFrame])->pTexture);
 }
 
 _int CAnimator::UpdateComponent(const _float& fTimeDelta)
@@ -54,7 +54,7 @@ HRESULT CAnimator::SetAnimKey(const tstring& _keyName, float _fAnimTime)
 
     m_tAnimFrame.iCurrentFrame = 0;
     m_tAnimFrame.fTime = _fAnimTime;
-    m_tAnimFrame.iMaxFrame = m_vecTexture->size();
+    m_tAnimFrame.iMaxFrame = (_uint)m_vecTexture->size();
 
     m_fActTime = 0.f;
 

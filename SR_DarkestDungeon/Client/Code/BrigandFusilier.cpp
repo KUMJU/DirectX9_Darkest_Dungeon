@@ -210,23 +210,12 @@ void CBrigandFusilier::RenderGameObject()
 
 void CBrigandFusilier::AddComponent()
 {
-	Engine::CreateNewTexture(L"Brigand Fusilier_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/Combat/armatureName_combat_%d.png", 34);
-	Engine::CreateNewTexture(L"Brigand Fusilier_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/1.png", 1);
-	Engine::CreateNewTexture(L"Brigand Fusilier_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/2.png", 1);
-	Engine::CreateNewTexture(L"Brigand Fusilier_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/3.png", 1);
-	Engine::CreateNewTexture(L"Brigand Fusilier_Death", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1);
 
 	shared_ptr<CComponent> pComponent;
 
 	_vec3 vPosTemp = { 0.f,0.f,0.f };
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();
-	NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 

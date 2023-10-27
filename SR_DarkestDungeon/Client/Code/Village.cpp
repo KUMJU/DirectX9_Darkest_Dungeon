@@ -18,6 +18,7 @@
 #include "Jester.h"
 #include "Highwayman.h"
 #include "ShieldBreaker.h"
+#include"ResourceMgr.h"
 
 #include"Export_Utility.h"
 
@@ -32,6 +33,8 @@ CVillage::~CVillage()
 
 HRESULT CVillage::ReadyScene()
 {
+	CResourceMgr::GetInstance()->VillageTextureLoad();
+
 	Ready_Layer_Environment(L"Layer_3_Environment");
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
 	Ready_Layer_GameObject(L"Layer_4_GameObj");
@@ -71,16 +74,8 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Camera", m_pCamera);
 
-	//Terrain
-	Engine::CreateNewTexture(L"Village_FloorTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/Floor/city_gate_floor_tile.png", 1);
-
 	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Village_FloorTexture");
 	m_pLayer->CreateGameObject(L"Obj_Terrain", m_pTerrain);
-
-	// 가장자리 벽
-	Engine::CreateNewTexture(L"Com_Village_Wall_Texture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/BackGround/forest_skirt_%d.png", 3);
 
 	shared_ptr<CGameObject> m_pWall;
 	// 진입방 벽
@@ -186,9 +181,6 @@ HRESULT CVillage::Ready_Layer_SkyBox(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	// SkyBox
-	Engine::CreateNewTexture(L"Village_SkyBoxTexture", TEX_CUBE,
-		L"../Bin/Resource/Image/SkyBox/VillageSkyBox.dds", 1);
 
 	shared_ptr<CGameObject> m_pSkyBox = make_shared<CSkyBox>(m_pGraphicDev, L"Village_SkyBoxTexture");
 	m_pLayer->CreateGameObject(L"Obj_Village_SkyBox", m_pSkyBox);
@@ -231,8 +223,6 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 	// 여관
 	{
-		Engine::CreateNewTexture(L"Tervarn_Outside", TEX_NORMAL,
-			L"../Bin/Resource/Image/Village/Facilities/OutSide/Tavern/town_tavern_level03/armatureName_active_000.png", 1);
 
 		// 여관 외부
 		shared_ptr<CGameObject> m_pTervarnOutside = make_shared<COutside>(m_pGraphicDev, L"Tervarn_Outside");

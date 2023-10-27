@@ -15,7 +15,10 @@ CGraphicDev::~CGraphicDev()
 HRESULT CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _uint& iSizeX, const _uint& iSizeY, CGraphicDev** ppGraphicDev)
 {
 	m_pSDK = Direct3DCreate9(D3D_SDK_VERSION);
-	NULL_CHECK_RETURN(m_pSDK, E_FAIL);
+
+	if (NULL == m_pSDK) {
+		return E_FAIL;
+	}
 
 
 	D3DCAPS9			DeviceCaps;

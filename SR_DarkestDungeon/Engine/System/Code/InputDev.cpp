@@ -14,14 +14,20 @@ CInputDev::~CInputDev(void)
 HRESULT CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 {
 	// DInput 컴객체를 생성하는 함수
-	FAILED_CHECK_RETURN(DirectInput8Create(hInst,
+	if (FAILED(DirectInput8Create(hInst,
 		DIRECTINPUT_VERSION,
 		IID_IDirectInput8,
 		(void**)&m_pInputSDK,
-		NULL), E_FAIL);
+		NULL))) 
+	{
+
+		return E_FAIL;
+	}
 
 	// 키보드 객체 생성
-	FAILED_CHECK_RETURN(m_pInputSDK->CreateDevice(GUID_SysKeyboard, &m_pKeyBoard, nullptr), E_FAIL);
+
+	if(FAILED(m_pInputSDK->CreateDevice(GUID_SysKeyboard, &m_pKeyBoard, nullptr)))
+		return E_FAIL;
 
 	// 생성된 키보드 객체의 대한 정보를 컴 객체에게 전달하는 함수
 	m_pKeyBoard->SetDataFormat(&c_dfDIKeyboard);
@@ -34,7 +40,8 @@ HRESULT CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 
 
 	// 마우스 객체 생성
-	FAILED_CHECK_RETURN(m_pInputSDK->CreateDevice(GUID_SysMouse, &m_pMouse, nullptr), E_FAIL);
+	if(FAILED(m_pInputSDK->CreateDevice(GUID_SysMouse, &m_pMouse, nullptr)))
+		return E_FAIL;
 
 	// 생성된 마우스 객체의 대한 정보를 컴 객체에게 전달하는 함수
 	m_pMouse->SetDataFormat(&c_dfDIMouse);

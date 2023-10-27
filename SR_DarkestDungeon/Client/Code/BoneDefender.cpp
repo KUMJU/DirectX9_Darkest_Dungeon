@@ -232,25 +232,15 @@ void CBoneDefender::RenderGameObject()
 
 void CBoneDefender::AddComponent()
 {
-	Engine::CreateNewTexture(L"Bone Defender_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/Combat/armatureName_combat_%d.png", 30);
-	Engine::CreateNewTexture(L"Bone Defender_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/1.png", 1);
-	Engine::CreateNewTexture(L"Bone Defender_Attack2", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/2.png", 1);
-	Engine::CreateNewTexture(L"Bone Defender_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/3.png", 1);
-	Engine::CreateNewTexture(L"Bone Defender_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/4.png", 1);
-	Engine::CreateNewTexture(L"Bone Defender_Death", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1);
 
 	shared_ptr<CComponent> pComponent;
 
 	_vec3 vPosTemp = { 0.f,0.f,0.f };
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();
-	NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
+	if (nullptr == pComponent) {
+		//MSG_BOX("Make BoneDefender TransformCom Failed");
+	}
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 

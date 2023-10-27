@@ -65,7 +65,6 @@ void CTerrain::AddComponent()
 	shared_ptr<CComponent> pComponent;
 
 	pComponent = m_pBufferCom = make_shared<CTerrainTex>(m_pGraphicDev);
-	NULL_CHECK_MSG(pComponent, L"Terrain AddComponent Failed");
 	if (L"Village_FloorTexture" == m_strKeyName)
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX / 5, VTXCNTZ / 5, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp");
 
@@ -78,11 +77,9 @@ void CTerrain::AddComponent()
 	m_mapComponent[ID_STATIC].insert({ m_strKeyName, pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
-	NULL_CHECK_MSG(pComponent, L"Texture AddComponent Failed");
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
 	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
-	NULL_CHECK_MSG(pComponent, L"Transform AddComponent Failed");
 	//m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 }

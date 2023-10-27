@@ -14,7 +14,9 @@ CFrameMgr::~CFrameMgr()
 _bool CFrameMgr::IsPermit_Call(const _tchar* pFrameTag, const _float& fTimeDelta)
 {
 	shared_ptr<CFrame> pFrame = Find_Frame(pFrameTag);
-	NULL_CHECK_RETURN(pFrame, false);
+
+	if (nullptr == pFrame)
+		return false;
 
 	return pFrame->IsPermit_Call(fTimeDelta);
 }
@@ -27,7 +29,10 @@ HRESULT CFrameMgr::Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit
 		return E_FAIL;
 
 	pFrame = CFrame::Create(fCallLimit);
-	NULL_CHECK_RETURN(pFrame, E_FAIL);
+
+	if (nullptr == pFrame) {
+		return E_FAIL;
+	}
 
 	m_mapFrame.insert({ pFrameTag, pFrame });
 

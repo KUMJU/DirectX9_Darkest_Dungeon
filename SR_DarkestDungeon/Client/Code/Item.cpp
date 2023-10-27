@@ -173,13 +173,11 @@ void CItem::AddComponent()
 	m_pTextureCom->SetTextureKey(m_strItemKey, TEXTUREID::TEX_NORMAL);
 
 	pComponent = m_pTransCom = make_shared<CTransform>();
-	NULL_CHECK_MSG(pComponent, L"Make Player Item TransformCom Failed");
 	m_pTransCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
-	NULL_CHECK_MSG(pComponent, L"Make Player Item ColliderCom Failed");
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
 	m_pColliderCom->SetScale({ 2.f, 2.f, 2.f });
 	m_pColliderCom->SetPos(m_pTransCom->GetPos());

@@ -39,9 +39,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-    FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_Immediate"), FALSE);
-    FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), FALSE);
-    FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame60", 60.f), FALSE);
+    if (FAILED(Engine::Ready_Timer(L"Timer_Immediate"))) {
+      //  MSG_BOX("Ready Timer Immediate Failed!");
+        return FALSE;
+    }
+
+    if (FAILED(Engine::Ready_Timer(L"Timer_FPS60"))) {
+      //  MSG_BOX("Ready Timer FPS60 Failed!");
+        return FALSE;
+    }
+
+    if (FAILED(Engine::Ready_Frame(L"Frame60", 60.f))) {
+       // MSG_BOX("Ready Frame Failed!");
+        return FALSE;
+    }
 
     // 애플리케이션 초기화를 수행합니다:
     if (!InitInstance (hInstance, nCmdShow))
