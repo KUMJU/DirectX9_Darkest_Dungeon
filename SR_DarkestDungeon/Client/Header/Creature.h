@@ -89,11 +89,17 @@ public:
 	_bool	GetMoving() { return m_bMoving; }
 	void	SetMoving(_bool _bMoving) { m_bMoving = _bMoving; }
 
+	_bool	GetAttackMoving() { return m_bAttackMoving; }
+	void	SetAttackMoving(_bool _bMoving) { m_bAttackMoving = _bMoving; }
+
 	_float	GetMovingSpeed() { return m_fMovingSpeed; }
 	void	SetMovingSpeed(_float _bMovingSpeed) { m_fMovingSpeed = _bMovingSpeed; }
 
 	_vec3	GetTargetPos() { return m_vTargetPos; }
 	void	SetTargetPos(_vec3 _vTargetPos) { m_vTargetPos = _vTargetPos; }
+
+	_vec3	GetTargetPos2() { return m_vTargetPos2; }
+	void	SetTargetPos2(_vec3 _vTargetPos) { m_vTargetPos2 = _vTargetPos; }
 
 	STAT	GetCommonStat() { return m_tCommonStat; }
 	void	SetCommonStat(STAT _tStat) { m_tCommonStat = _tStat; }
@@ -104,6 +110,7 @@ public:
 	_int	GetSize() { return m_iSize; }
 	void	SetSize(_int _iSize) { m_iSize = _iSize; }
 
+	_bool	GetHitted() { return m_bHitted; }
 	void	SetHitted(_bool _bHitted) { m_bHitted = _bHitted; }
 	void	SetEffectOn(_bool _bEffectOn) { m_bEffectOn = _bEffectOn; }
 	_bool	GetAttacking(_int _iIndex) { return m_bAttacking[_iIndex]; }
@@ -224,9 +231,7 @@ protected:
 	_bool		m_bAbleAct = true;			// 이번 턴에 행동 가능한지 여부(기절이나 시체사라지면 불가능)
 
 	// 스킬 사용중
-	_bool		m_bAttacking[7] = {0};
-	//_bool		m_bAttacking1 = false;
-	//_bool		m_bAttacking2 = false;
+	_bool		m_bAttacking[7] = { 0 };
 
 	_int		m_iSize = 1;	// 캐릭터 크기
 
@@ -234,8 +239,10 @@ protected:
 	_tchar		m_szString2[128];
 	_tchar		m_szString3[128];
 
-	_bool		m_bMoving = false;		// 움직이는중(기술, 당기기 등)
-	_vec3		m_vTargetPos = { 0, 0, 0 };	// 목적지
+	_bool		m_bMoving = false;			// 맞아서 움직이는중(기술, 당기기 등)
+	_bool		m_bAttackMoving = false;	// 공격스킬로 인해 움직이는중
+	_vec3		m_vTargetPos = { 0, 0, 0 };		// 목적지 1
+	_vec3		m_vTargetPos2 = { 0, 0, 0 };	// 목적지 2
 	_float		m_fMovingSpeed = 0.f;
 
 protected:

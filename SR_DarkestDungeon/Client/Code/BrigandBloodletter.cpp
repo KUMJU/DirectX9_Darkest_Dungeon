@@ -24,9 +24,9 @@ HRESULT CBrigandBloodletter::ReadyGameObject()
 
 	// 스탯 설정
 	m_tCommonStat.iHp = 50;
-	m_tCommonStat.iDodge = 10;
+	m_tCommonStat.iDodge = 3;
 	m_tCommonStat.iSpeed = 2;
-	m_tCommonStat.iAttackPower = 5;
+	m_tCommonStat.iAttackPower = 10;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
@@ -186,7 +186,7 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 		if (m_fAttack1Time < 0.f)
 		{
 			SetAttacking(false, 0);
-			m_fAttack1Time = ATTACK1TIME;
+			m_fAttack1Time = ATTACKTIME;
 		}
 	}
 
@@ -197,7 +197,7 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 		if (m_fAttack2Time < 0.f)
 		{
 			SetAttacking(false, 1);
-			m_fAttack2Time = ATTACK2TIME;
+			m_fAttack2Time = ATTACKTIME;
 		}
 	}
 
