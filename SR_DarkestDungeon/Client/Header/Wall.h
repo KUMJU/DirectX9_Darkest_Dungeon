@@ -40,8 +40,8 @@ private:
 	shared_ptr<CRcTex> m_pBufferCom = nullptr;
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
 
-	shared_ptr<CRcTex> m_pBufferCom2 = nullptr;
-	shared_ptr<CTexture> m_pTextureCom2 = nullptr;
+	//shared_ptr<CRcTex> m_pBufferCom2 = nullptr;
+	//shared_ptr<CTexture> m_pTextureCom2 = nullptr;
 
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
 

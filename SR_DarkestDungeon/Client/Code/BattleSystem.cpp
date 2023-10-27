@@ -302,8 +302,8 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 				if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->IsApproach())
 				{
 					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttackMoving(true);
-					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTargetPos(m_vMonsters[iTarget]->GetPos() + m_vApproachingGapR);
-					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTargetPos2(m_pCurrentCreature->GetPos());
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTargetPos(m_vMonsterLocation[iTarget] + m_vApproachingGapR);
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTargetPos2(m_vHeroLocation[iCurrentHeroIndex]);
 					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetMovingSpeed(
 						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->MovingSpeed(m_vMonsters[iTarget]->GetPos() + m_vApproachingGapR, ATTACKSKILLMOVINGINTERVEL));
 					m_bAttackSkillMoving = true;
@@ -334,12 +334,12 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 							!dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->GetIsDeath())
 						{
 							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetMoving(true);
-							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetTargetPos(m_vMonsters[iTarget + iMovePos]->GetPos());
+							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetTargetPos(m_vMonsterLocation[iTarget + iMovePos]);
 							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetMovingSpeed(
 								dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->MovingSpeed(m_vMonsters[iTarget + iMovePos]->GetPos(), SKILLMOVINGINTERVEL));
 
 							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetMoving(true);
-							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetTargetPos(m_vMonsters[iTarget]->GetPos());
+							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetTargetPos(m_vMonsterLocation[iTarget]);
 							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetMovingSpeed(
 								dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->MovingSpeed(m_vMonsters[iTarget]->GetPos(), SKILLMOVINGINTERVEL));
 							m_bSkillMoving = true;
@@ -362,8 +362,8 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 				if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->IsApproach())
 				{
 					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttackMoving(true);
-					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTargetPos(m_vHeroes[iTarget]->GetPos() + m_vApproachingGapL);
-					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTargetPos2(m_pCurrentCreature->GetPos());
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTargetPos(m_vHeroLocation[iTarget] + m_vApproachingGapL);
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTargetPos2(m_vMonsterLocation[iCurrentMonsterIndex]);
 					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetMovingSpeed(
 						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->MovingSpeed(m_vHeroes[iTarget]->GetPos() + m_vApproachingGapL, ATTACKSKILLMOVINGINTERVEL));
 					m_bAttackSkillMoving = true;
@@ -394,12 +394,12 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 							!dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->GetIsDeath())
 						{
 							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetMoving(true);
-							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetTargetPos(m_vHeroes[iTarget + iMovePos]->GetPos());
+							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetTargetPos(m_vHeroLocation[iTarget + iMovePos]);
 							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->SetMovingSpeed(
 								dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->MovingSpeed(m_vHeroes[iTarget + iMovePos]->GetPos(), SKILLMOVINGINTERVEL));
 
 							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->SetMoving(true);
-							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->SetTargetPos(m_vHeroes[iTarget]->GetPos());
+							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->SetTargetPos(m_vHeroLocation[iTarget]);
 							dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->SetMovingSpeed(
 								dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget + iMovePos])->MovingSpeed(m_vHeroes[iTarget]->GetPos(), SKILLMOVINGINTERVEL));
 							m_bSkillMoving = true;
@@ -451,6 +451,7 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 			{
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTurn(true);
 				m_bHero = true;
+				iCurrentHeroIndex = j;
 				return m_vHeroes[j];
 			}
 		}
@@ -462,6 +463,7 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 			{
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetTurn(true);
 				m_bHero = false;
+				iCurrentMonsterIndex = j;
 				return m_vMonsters[j];
 			}
 		}
@@ -559,9 +561,9 @@ void CBattleSystem::DeadCheck()
 			for (int j = i + 1; j < size(m_vHeroes); j++)
 			{
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetMoving(true);
-				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTargetPos(m_vHeroes[j - 1]->GetPos());
+				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTargetPos(m_vHeroLocation[j - 1]);
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetMovingSpeed(
-					dynamic_pointer_cast<CCreature>(m_vHeroes[j])->MovingSpeed(m_vHeroes[j - 1]->GetPos(), DEATHMOVINGINTERVEL));
+					dynamic_pointer_cast<CCreature>(m_vHeroes[j])->MovingSpeed(m_vHeroLocation[j - 1], DEATHMOVINGINTERVEL));
 			}
 
 			for (int j = i + 1; j < size(m_vHeroes); j++)
@@ -582,9 +584,9 @@ void CBattleSystem::DeadCheck()
 			for (int j = i + 1; j < size(m_vMonsters); j++)
 			{
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetMoving(true);
-				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetTargetPos(m_vMonsters[j - 1]->GetPos());
+				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetTargetPos(m_vMonsterLocation[j - 1]);
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetMovingSpeed(
-					dynamic_pointer_cast<CCreature>(m_vMonsters[j])->MovingSpeed(m_vMonsters[j - 1]->GetPos(), DEATHMOVINGINTERVEL));
+					dynamic_pointer_cast<CCreature>(m_vMonsters[j])->MovingSpeed(m_vMonsterLocation[j - 1], DEATHMOVINGINTERVEL));
 			}
 
 			for (int j = i + 1; j < size(m_vMonsters); j++)
@@ -608,18 +610,22 @@ void CBattleSystem::FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes
 		case 0:
 			dynamic_pointer_cast<CCreature>(_vHeroes[0])->SetPos(_vec3(_vOrigin.x - 6.f, _vOrigin.y, _vOrigin.z));
 			dynamic_pointer_cast<CCreature>(_vHeroes[0])->SetAngle(_vec3(0.f, _fAngle, 0.f));
+			m_vHeroLocation.push_back(_vec3(_vOrigin.x - 6.f, _vOrigin.y, _vOrigin.z));
 			break;
 		case 1:
 			dynamic_pointer_cast<CCreature>(_vHeroes[1])->SetPos(_vec3(_vOrigin.x - 8.f, _vOrigin.y, _vOrigin.z - 2.f));
 			dynamic_pointer_cast<CCreature>(_vHeroes[1])->SetAngle(_vec3(0.f, _fAngle, 0.f));
+			m_vHeroLocation.push_back(_vec3(_vOrigin.x - 8.f, _vOrigin.y, _vOrigin.z - 2.f));
 			break;
 		case 2:
 			dynamic_pointer_cast<CCreature>(_vHeroes[2])->SetPos(_vec3(_vOrigin.x - 14.f, _vOrigin.y, _vOrigin.z + 4.f));
 			dynamic_pointer_cast<CCreature>(_vHeroes[2])->SetAngle(_vec3(0.f, _fAngle, 0.f));
+			m_vHeroLocation.push_back(_vec3(_vOrigin.x - 14.f, _vOrigin.y, _vOrigin.z + 4.f));
 			break;
 		case 3:
 			dynamic_pointer_cast<CCreature>(_vHeroes[3])->SetPos(_vec3(_vOrigin.x - 16.f, _vOrigin.y, _vOrigin.z + 2.f));
 			dynamic_pointer_cast<CCreature>(_vHeroes[3])->SetAngle(_vec3(0.f, _fAngle, 0.f));
+			m_vHeroLocation.push_back(_vec3(_vOrigin.x - 16.f, _vOrigin.y, _vOrigin.z + 2.f));
 			break;
 		}
 	}
@@ -631,17 +637,21 @@ void CBattleSystem::FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes
 		case 0:
 			dynamic_pointer_cast<CCreature>(_vMonsters[0])->SetPos(_vec3(_vOrigin.x + 6.f, _vOrigin.y, _vOrigin.z));
 			dynamic_pointer_cast<CCreature>(_vMonsters[0])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
+			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 6.f, _vOrigin.y, _vOrigin.z));
 			break;
 		case 1:
 			dynamic_pointer_cast<CCreature>(_vMonsters[1])->SetPos(_vec3(_vOrigin.x + 8.f, _vOrigin.y, _vOrigin.z - 2.f));
 			dynamic_pointer_cast<CCreature>(_vMonsters[1])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
+			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 8.f, _vOrigin.y, _vOrigin.z - 2.f));
 		case 2:
 			dynamic_pointer_cast<CCreature>(_vMonsters[2])->SetPos(_vec3(_vOrigin.x + 14.f, _vOrigin.y, _vOrigin.z + 4.f));
 			dynamic_pointer_cast<CCreature>(_vMonsters[2])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
+			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 14.f, _vOrigin.y, _vOrigin.z + 4.f));
 			break;
 		case 3:
 			dynamic_pointer_cast<CCreature>(_vMonsters[3])->SetPos(_vec3(_vOrigin.x + 16.f, _vOrigin.y, _vOrigin.z + 2.f));
 			dynamic_pointer_cast<CCreature>(_vMonsters[3])->SetAngle(_vec3(0.f, _fAngle + PI, 0.f));
+			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 16.f, _vOrigin.y, _vOrigin.z + 2.f));
 			break;
 		}
 	}
