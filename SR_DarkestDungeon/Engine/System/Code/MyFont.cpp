@@ -24,8 +24,11 @@ HRESULT CMyFont::Ready_Font(const _tchar* pFontType, const _uint& iWidth, const 
 	Font_Desc.Height = iHeight;
 	Font_Desc.Weight = iWeight;
 
-	FAILED_CHECK_RETURN(D3DXCreateFontIndirect(m_pGraphicDev, &Font_Desc, &m_pFont), E_FAIL);
-	FAILED_CHECK_RETURN(D3DXCreateSprite(m_pGraphicDev, &m_pSprite), E_FAIL);
+	if(FAILED(D3DXCreateFontIndirect(m_pGraphicDev, &Font_Desc, &m_pFont)))
+		return E_FAIL;
+
+	if (FAILED(D3DXCreateSprite(m_pGraphicDev, &m_pSprite)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -50,7 +53,7 @@ shared_ptr<CMyFont> CMyFont::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar*
 	{
 		pInstance.reset();
 
-		MSG_BOX("MyFont Create Failed");
+		//MSG_BOX("MyFont Create Failed");
 		return nullptr;
 	}
 

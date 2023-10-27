@@ -16,8 +16,14 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp()
 {
-	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
+
+	if (FAILED(SetUp_DefaultSetting(&m_pGraphicDev))) {
+		//MSG_BOX("SetUpDefaultSetting Failed!");
+		return E_FAIL;
+	}
+
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
+	CResourceMgr::GetInstance()->BaseTextureLoad();
 
     shared_ptr<CScene> pMainLogo = make_shared<CWeald_Dungeon>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
@@ -52,8 +58,10 @@ void CMainApp::Render_MainApp()
 
 HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 {
-
-	FAILED_CHECK_RETURN(Engine::Ready_GraphicDev(g_hWnd, MODE_WIN, WINCX, WINCY, &m_pDeviceClass), E_FAIL);
+	if (FAILED(Engine::Ready_GraphicDev(g_hWnd, MODE_WIN, WINCX, WINCY, &m_pDeviceClass))) {
+		//MSG_BOX("Ready GraphicDev Failed!");
+		return E_FAIL;
+	}
 
 	*ppGraphicDev = m_pDeviceClass->Get_GraphicDev();
 	(*ppGraphicDev)->AddRef();
@@ -64,14 +72,16 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);  // Z¹öÆÛ¿¡ ±íÀÌ °ªÀ» ±â·ÏÇÒ Áö °áÁ¤
 
 	// Font
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"¹ÙÅÁ", 15, 20, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"±Ã¼­", 30, 30, FW_THIN), E_FAIL);
-
-
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"¹ÙÅÁ", 15, 20, FW_HEAVY))) {
+		//MSG_BOX("Ready InputDev Failed!");
+		return E_FAIL;
+	}	
 
 	// Dinput
-
-	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
+	if (FAILED(Engine::Ready_InputDev(g_hInst, g_hWnd))) {
+		//MSG_BOX("Ready InputDev Failed!");
+		return E_FAIL;
+	}
 
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);

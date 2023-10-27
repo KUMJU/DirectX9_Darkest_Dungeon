@@ -31,6 +31,8 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+#include"ResourceMgr.h"
+
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -43,6 +45,8 @@ CWeald_Dungeon::~CWeald_Dungeon()
 
 HRESULT CWeald_Dungeon::ReadyScene()
 {
+	CResourceMgr::GetInstance()->WealdDungeonTextureLoad();
+
 	// text
 	lstrcpy(m_szString, L"Weald Dungeon");
 	// Weald 던전
@@ -87,7 +91,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
 
-	if (GetAsyncKeyState('3') & 0x8000) {
+	if (GetAsyncKeyState('5') & 0x8000) {
 		shared_ptr<CVillage> pScene = make_shared<CVillage>(m_pGraphicDev);
 		CSceneMgr::GetInstance()->ChangeScene(pScene);
 		pScene->ReadyScene();
@@ -166,36 +170,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	// Terrain
-	Engine::CreateNewTexture(L"Com_Weald_FloorTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/forest_Tiles.png", 1);
-
 	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Weald_FloorTexture");
 	m_pLayer->CreateGameObject(L"OBJ_Terrain", m_pTerrain);
-
-	// Wall
-	Engine::CreateNewTexture(L"Com_Weald_WallTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_wall.%d.png", 9);
-	Engine::CreateNewTexture(L"Com_Weald_BackWallTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_mid.png", 1);
-
-	//PlayerHandItem
-	Engine::CreateNewTexture(L"Player_Item_Shovel", TEX_NORMAL,
-		L"../Bin/Resource/Image/PlayerItem/supply_shovel.png", 1);
-	Engine::CreateNewTexture(L"Player_Item_Antivenom", TEX_NORMAL,
-		L"../Bin/Resource/Image/PlayerItem/supply_antivenom.png", 1);
-	Engine::CreateNewTexture(L"Player_Item_Bandage", TEX_NORMAL,
-		L"../Bin/Resource/Image/PlayerItem/supply_bandage.png", 1);
-	Engine::CreateNewTexture(L"Item_UI_Antivenom", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1);
-	//
-
-	//UIResource
-
-	Engine::CreateNewTexture(L"UI_Inventory", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/Dungeon/panel_inventory.png", 1);
-
-	//
 
 	shared_ptr<CGameObject> m_pWall;
 	// 진입방 벽
@@ -302,9 +278,6 @@ HRESULT CWeald_Dungeon::Ready_Layer_SkyBox(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	// SkyBox
-	Engine::CreateNewTexture(L"Com_Weald_SkyBoxTexture", TEX_CUBE,
-		L"../Bin/Resource/Image/SkyBox/WealdSkyBox.dds", 1);
 
 	shared_ptr<CGameObject> m_pSkyBox = make_shared<CSkyBox>(m_pGraphicDev, L"Com_Weald_SkyBoxTexture");
 	m_pLayer->CreateGameObject(L"OBJ_Weald_SkyBox", m_pSkyBox);
@@ -437,14 +410,6 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
 	
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
-
-	//shared_ptr<CGameObject> m_pItem = make_shared<CItem>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"Obj_UITestItem", m_pItem);
-	//dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 0.f, 0.f, 0.f }, L"Item_UI_Antivenom");
-	//dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
-	//dynamic_pointer_cast<CInventory>(m_pInventory)->InsertItem(dynamic_pointer_cast<CItem>(m_pItem));
-
-
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;

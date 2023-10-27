@@ -232,25 +232,15 @@ void CBrigandBloodletter::RenderGameObject()
 
 void CBrigandBloodletter::AddComponent()
 {
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/Combat/armatureName_combat_%d.png", 36);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/1.png", 1);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Attack2", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/2.png", 1);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/3.png", 1);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/4.png", 1);
-	Engine::CreateNewTexture(L"Brigand Bloodletter_Death", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1);
 
 	shared_ptr<CComponent> pComponent;
 
 	_vec3 vPosTemp = { 0.f,0.f,0.f };
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();
-	NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
+	if (nullptr == pComponent) {
+		//MSG_BOX("Make BrigandBloodetter TransformCom Failed");
+	}
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 

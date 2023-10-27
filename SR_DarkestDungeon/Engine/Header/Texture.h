@@ -19,7 +19,7 @@ public:
 
 
 private:
-	vector<IDirect3DBaseTexture9*>*		m_vecTexture;
+	vector<shared_ptr<tagTextureInfo>>*		m_vecTexture;
 
 
 private:

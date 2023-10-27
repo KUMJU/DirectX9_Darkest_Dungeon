@@ -54,8 +54,3 @@ inline void ReadyResourceMgr(LPDIRECT3DDEVICE9 _pGraphicDev)
 {
     CResourceMgr::GetInstance()->ReadyResource(_pGraphicDev);
 }
-
-inline void CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType, wstring _pPath, const _uint& _iCnt)
-{
-    CResourceMgr::GetInstance()->CreateNewTexture(_KeyName, _eType, _pPath, _iCnt);
-}

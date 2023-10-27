@@ -137,58 +137,6 @@ void CHighwayman::RenderGameObject()
 
 void CHighwayman::AddComponent()
 {
-	// 영웅 애니메이션
-	{
-		Engine::CreateNewTexture(L"Highwayman_Combat", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Combat/armatureName_combat_%d.png", 14);
-		Engine::CreateNewTexture(L"Highwayman_Idle", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Idle/armatureName_idle_%d.png", 15);
-		Engine::CreateNewTexture(L"Highwayman_Walk", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Walk/armatureName_walk_%d.png", 16);
-
-		Engine::CreateNewTexture(L"Highwayman_WickedSlice", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/WickedSlice.png", 1);
-		Engine::CreateNewTexture(L"Highwayman_PistolShot", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/PistolShot.png", 1);
-		Engine::CreateNewTexture(L"Highwayman_PointBlankShot", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/PointBlankShot.png", 1);
-		Engine::CreateNewTexture(L"Highwayman_DuelistsAdvance", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/DuelistsAdvance.png", 1);
-
-		Engine::CreateNewTexture(L"Highwayman_Defend", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Defend.png", 1);
-		Engine::CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Afflicted.png", 1);
-		Engine::CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue.png", 1);
-	}
-
-	// 스킬 이미지
-	{
-		Engine::CreateNewTexture(L"WickedSlice_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/WickedSlice_Img.png", 1);
-		Engine::CreateNewTexture(L"PistolShot_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/PistolShot_Img.png", 1);
-		Engine::CreateNewTexture(L"PointBlankShot_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/PointBlankShot_Img.png", 1);
-		Engine::CreateNewTexture(L"DuelistsAdvance_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/DuelistsAdvance_Img.png", 1);
-	}
-
-	// 스킬 이펙트 (본인에게)
-	{
-		Engine::CreateNewTexture(L"PointBlankShot_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot/armatureName_point_blank_shot_%d.png", 19);
-	}
-
-	// 스킬 이펙트 (타겟)
-	{
-		Engine::CreateNewTexture(L"PistolShot_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/pistol_shot_target/armatureName_pistol_shot_target_%d.png", 15);
-		Engine::CreateNewTexture(L"PointBlankShot_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot_target/armatureName_point_blank_shot_target_%d.png", 15);
-	}
-
 	__super::AddComponent();
 }
 

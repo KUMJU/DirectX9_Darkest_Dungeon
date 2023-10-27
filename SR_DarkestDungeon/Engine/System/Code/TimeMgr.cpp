@@ -14,7 +14,10 @@ CTimerMgr::~CTimerMgr()
 _float CTimerMgr::Get_TimeDelta(const _tchar* pTimerTag)
 {
 	std::shared_ptr<CTimer> pTimer = Find_Timer(pTimerTag);
-	NULL_CHECK_RETURN(pTimer, 0.f);
+
+	if (nullptr == pTimer) {
+		return 0.f;
+	}
 
 	return pTimer->Get_TimeDelta();
 }
@@ -22,7 +25,9 @@ _float CTimerMgr::Get_TimeDelta(const _tchar* pTimerTag)
 void CTimerMgr::Update_TimeDelta(const _tchar* pTimerTag)
 {
 	std::shared_ptr<CTimer> pTimer = Find_Timer(pTimerTag);
-	NULL_CHECK(pTimer);
+
+	if (nullptr == pTimer)
+		return;
 
 	pTimer->Update_TimeDelta();
 
@@ -36,7 +41,9 @@ HRESULT CTimerMgr::Ready_Timer(const _tchar* pTimerTag)
 		return E_FAIL;
 
 	pTimer = CTimer::Create();
-	NULL_CHECK_RETURN(pTimer, E_FAIL);
+
+	if (nullptr == pTimer)
+		return E_FAIL;
 
 	m_mapTimers.insert({ pTimerTag, pTimer });
 

@@ -7,8 +7,8 @@
 BEGIN(Engine)
 
 struct tagFrame {
-	_int iCurrentFrame;
-	_int iMaxFrame;
+	_uint iCurrentFrame;
+	_uint iMaxFrame;
 	_float fTime;
 };
 
@@ -34,7 +34,7 @@ public:
 	_bool CheckFinish() { return m_bFinishCount; }
 
 private:
-	vector<IDirect3DBaseTexture9*>* m_vecTexture;
+	vector<shared_ptr<tagTextureInfo>>* m_vecTexture;
 
 private:
 

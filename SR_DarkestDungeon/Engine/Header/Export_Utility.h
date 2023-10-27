@@ -35,7 +35,6 @@ inline void		Release_Utility();
 
 //ResourceManager
 inline void		ReadyResourceMgr(LPDIRECT3DDEVICE9 _pGraphicDev);
-inline void		CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType, wstring _pPath, const _uint& _iCnt);
 
 #include"Export_Utility.inl"
 

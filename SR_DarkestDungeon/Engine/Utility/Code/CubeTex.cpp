@@ -28,7 +28,9 @@ HRESULT CCubeTex::ReadyBuffer(void)
 	m_dwIdxSize = sizeof(INDEX16);
 	m_IdxFmt = D3DFMT_INDEX16;
 
-	FAILED_CHECK_RETURN(CVIBuffer::ReadyBuffer(), E_FAIL);
+
+	if (FAILED(CVIBuffer::ReadyBuffer()))
+		return E_FAIL;
 
 	VTXCUBE* pVertex = nullptr;
 
