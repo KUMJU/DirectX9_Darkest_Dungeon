@@ -1,6 +1,7 @@
 #include"pch.h"
 #include "Player.h"
 #include"Export_Utility.h"
+#include"Export_System.h"
 #include"Inventory.h"
 #include "Wall.h"
 
@@ -74,6 +75,18 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 {
 
 	_vec3		vDir;
+
+	//마우스 픽킹
+	if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
+
+		POINT	ptMouse{};
+		GetCursorPos(&ptMouse);
+		ScreenToClient(g_hWnd, &ptMouse);
+
+		int a = 5; 
+
+	}
+
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 		if (m_bMoveLock[1])

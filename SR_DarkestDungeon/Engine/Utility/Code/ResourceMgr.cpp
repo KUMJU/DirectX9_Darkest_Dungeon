@@ -23,14 +23,15 @@ HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType
 		return E_FAIL;
 	
 	IDirect3DBaseTexture9* pTexture = nullptr;
-	shared_ptr<tagTextureInfo> pInfo = make_shared<tagTextureInfo>();
-	pInfo->bDelete = _bDelete;
 
 	vector<shared_ptr<tagTextureInfo>> vTempVec;
 	vTempVec.reserve(_iCnt);
 	
 	for (_uint i = 0; i < _iCnt; ++i)
 	{
+		shared_ptr<tagTextureInfo> pInfo = make_shared<tagTextureInfo>();
+		pInfo->bDelete = _bDelete;
+
 		TCHAR		szFileName[128] = L"";
 		wstring strPathCopy = _pPath;
 
@@ -492,9 +493,6 @@ void CResourceMgr::WealdDungeonTextureLoad()
 
 
 }
-
-
-
 
 void CResourceMgr::VillageTextureLoad()
 {
