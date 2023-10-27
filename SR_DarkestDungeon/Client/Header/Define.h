@@ -18,3 +18,9 @@
 #define	ATTACKTIME	1.5f
 #define CHANGETIME	1.f
 #define DELAYTIME	1.f
+
+// Village
+#define VILLAGE_WALLSIZE	6.f
+#define VILLAGE_WALLSIZEUPY 5.f
+#define VILLAGE_TILECNT		10
+#define VILLAGE_TILESIZE	12.f

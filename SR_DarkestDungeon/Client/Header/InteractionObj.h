@@ -32,7 +32,7 @@ protected:
 	_float	CalcDistance();
 
 	// 상호작용 키 UI를 띄우고 키를 입력받는 함수
-	void	GetInteractionKey(const _float& fTimeDelta);
+	virtual void	GetInteractionKey(const _float& fTimeDelta);
 
 	// 상호작용 동작
 	virtual void	Interaction() = 0;

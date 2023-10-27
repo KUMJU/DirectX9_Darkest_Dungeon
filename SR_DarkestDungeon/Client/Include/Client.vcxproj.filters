@@ -38,6 +38,8 @@
     <ClCompile Include="..\Code\BoneCourtier.cpp" />
     <ClCompile Include="..\Code\BoneDefender.cpp" />
     <ClCompile Include="..\Code\BoneSoldier.cpp" />
+    <ClCompile Include="..\Code\Tervarn.cpp" />
+    <ClCompile Include="..\Code\Decoration.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -82,6 +84,8 @@
     <ClInclude Include="..\Header\Inside.h" />
     <ClInclude Include="..\Header\CardGame.h" />
     <ClInclude Include="..\Header\Outside.h" />
+    <ClInclude Include="..\Header\Tervarn.h" />
+    <ClInclude Include="..\Header\Decoration.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

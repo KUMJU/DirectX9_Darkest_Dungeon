@@ -19,7 +19,7 @@ CTerrainTex::~CTerrainTex()
 	Free();
 }
 
-HRESULT CTerrainTex::ReadyBuffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv , const tstring& _strPath)
+HRESULT CTerrainTex::ReadyBuffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv , const tstring& _strPath, const _ulong& tileCntX, const _ulong& tileCntZ)
 {
 	m_dwVtxCnt = dwCntX * dwCntZ;
 	m_dwVtxSize = sizeof(VTXTEX);
@@ -64,15 +64,15 @@ HRESULT CTerrainTex::ReadyBuffer(const _ulong& dwCntX, const _ulong& dwCntZ, con
 			dwIndex = i * dwCntX + j;
 
 			pVertex[dwIndex].vPosition = _vec3(_float(j * dwVtxItv),
-				(pPixel[dwIndex] & 0x000000ff) / 20.f,
+				(pPixel[dwIndex] & 0x000000ff) / 100.f,
 				_float(i * dwVtxItv));
 
 			m_pPos[dwIndex] = pVertex[dwIndex].vPosition;
 
 			pVertex[dwIndex].vNormal = { 0.f, 0.f, 0.f };
 
-			pVertex[dwIndex].vTexUV = _vec2(_float(j) / (dwCntX - 1) * 20.f,
-				_float(i) / (dwCntZ - 1) * 20.f);
+			pVertex[dwIndex].vTexUV = _vec2(_float(j) / (dwCntX - 1) * tileCntX,
+				_float(i) / (dwCntZ - 1) * tileCntZ);
 		}
 	}
 

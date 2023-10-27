@@ -18,7 +18,7 @@ public:
 	_ulong		Get_VtxCntZ() { return m_iH.biHeight; }
 
 public:
-	HRESULT ReadyBuffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv, const tstring& _strPath);
+	HRESULT ReadyBuffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv, const tstring& _strPath, const _ulong& tileCntX, const _ulong& tileCntZ);
 	virtual void RenderBuffer(void) override;
 
 
