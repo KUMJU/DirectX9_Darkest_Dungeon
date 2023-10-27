@@ -38,7 +38,11 @@ void CUIObj::AddComponent()
 	m_mapComponent[ID_STATIC].insert({ L"Com_RcTex",pComponent });
 
 	pComponent = m_pTransCom = make_shared<CTransform>();
-	NULL_CHECK_MSG(pComponent, L"Make Player Item TransformCom Failed");
+
+	if (nullptr == pComponent) {
+		//MSG_BOX("Make UI Comopnent Failed!");
+	}
+
 	m_pTransCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 }

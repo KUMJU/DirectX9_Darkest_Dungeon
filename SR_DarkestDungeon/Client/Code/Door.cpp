@@ -49,16 +49,13 @@ void CDoor::AddComponent()
 	shared_ptr<CComponent> pComponent;
 
 	pComponent = m_pBufferCom = make_shared<CRcTex>(m_pGraphicDev);
-	NULL_CHECK_MSG(pComponent, L"RcTex AddComponent Failed");
 	dynamic_pointer_cast<CRcTex>(m_pBufferCom)->ReadyBuffer();
 	m_mapComponent[ID_STATIC].insert({ L"Com_RcTex", pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
-	NULL_CHECK_MSG(pComponent, L"Texture AddComponent Failed");
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
 	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
-	NULL_CHECK_MSG(pComponent, L"Transform AddComponent Failed");
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);

@@ -139,66 +139,6 @@ void CShieldBreaker::RenderGameObject()
 
 void CShieldBreaker::AddComponent()
 {
-	// 영웅 애니메이션
-	{
-		Engine::CreateNewTexture(L"ShieldBreaker_Combat", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Combat/armatureName_combat_%d.png", 13);
-		Engine::CreateNewTexture(L"ShieldBreaker_Idle", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Idle/armatureName_idle_%d.png", 15);
-		Engine::CreateNewTexture(L"ShieldBreaker_Walk", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Walk/armatureName_walk_%d.png", 16);
-
-		Engine::CreateNewTexture(L"ShieldBreaker_Pierce", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Pierce.png", 1);
-		Engine::CreateNewTexture(L"ShieldBreaker_Puncture", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Puncture.png", 1);
-		Engine::CreateNewTexture(L"ShieldBreaker_AddersKiss", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/AddersKiss.png", 1);
-		Engine::CreateNewTexture(L"ShieldBreaker_Impale", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Impale.png", 1);
-
-		Engine::CreateNewTexture(L"ShieldBreaker_Defend", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Defend.png", 1);
-		Engine::CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Afflicted.png", 1);
-		Engine::CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue.png", 1);
-	}
-
-	// 스킬 이미지
-	{
-		Engine::CreateNewTexture(L"Pierce_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Pierce_Img.png", 1);
-		Engine::CreateNewTexture(L"Puncture_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Puncture_Img.png", 1);
-		Engine::CreateNewTexture(L"AddersKiss_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/AddersKiss_Img.png", 1);
-		Engine::CreateNewTexture(L"Impale_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Impale_Img.png", 1);
-	}
-
-	// 스킬 이펙트 (본인에게)
-	{
-		Engine::CreateNewTexture(L"AddersKiss_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss/armatureName_adders_kiss_%d.png", 20);
-		Engine::CreateNewTexture(L"Pierce_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/pierce/armatureName_pierce_%d.png", 15);
-		Engine::CreateNewTexture(L"Puncture_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/break_guard/armatureName_break_guard_%d.png", 20);
-		Engine::CreateNewTexture(L"Impale_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing/armatureName_spearing_%d.png", 16);
-		
-	}
-
-	// 스킬 이펙트 (타겟)
-	{
-		Engine::CreateNewTexture(L"AddersKiss_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss_target/armatureName_adders_kiss_target_%d.png", 20);
-		Engine::CreateNewTexture(L"Impale_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing_target/armatureName_spearing_target_%d.png", 20);
-	}
-	
-
 	__super::AddComponent();
 }
 

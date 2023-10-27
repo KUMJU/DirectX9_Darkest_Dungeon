@@ -138,7 +138,6 @@ void CHero::AddComponent()
 	shared_ptr<CComponent> pComponent;
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();
-	NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 

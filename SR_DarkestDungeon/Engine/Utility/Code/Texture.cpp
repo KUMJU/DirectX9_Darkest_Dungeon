@@ -14,7 +14,7 @@ CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev, tstring _strName)
 CTexture::CTexture(const CTexture& rhs)
 	: CComponent(rhs) 
 {
-	_uint	iSize = rhs.m_vecTexture->size();
+	size_t	iSize = rhs.m_vecTexture->size();
 	m_vecTexture->reserve(iSize);
 
 	m_vecTexture = rhs.m_vecTexture;
@@ -29,7 +29,7 @@ void CTexture::SetTexture(const _uint& iIndex)
 	if (m_vecTexture->size() < iIndex)
 		return;
 
-	m_pGraphicDev->SetTexture(0, (*m_vecTexture)[iIndex]);
+	m_pGraphicDev->SetTexture(0, ((*m_vecTexture)[iIndex])->pTexture);
 }
 
 HRESULT CTexture::SetTextureKey(const tstring& _keyName, TEXTUREID _eID)

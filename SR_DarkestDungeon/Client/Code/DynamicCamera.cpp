@@ -23,9 +23,7 @@ HRESULT CDynamicCamera::ReadyGameObject()
 	m_fNear = 0.1f;
 	m_fFar = 1000.f;
 
-	FAILED_CHECK_RETURN(CCamera::ReadyGameObject(), E_FAIL);
-
-
+	CCamera::ReadyGameObject();
 
 	return S_OK;
 }

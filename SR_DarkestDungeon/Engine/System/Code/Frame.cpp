@@ -36,7 +36,7 @@ shared_ptr<CFrame> CFrame::Create(const _float& fCallLimit)
 	{
 		pInstance.reset();
 
-		MSG_BOX("Frame Create Failed");
+		//MSG_BOX("Frame Create Failed");
 		return nullptr;
 	}
 

@@ -5,6 +5,12 @@
 
 namespace Engine
 {
+	struct tagTextureInfo {
+		IDirect3DBaseTexture9* pTexture;
+		_bool bDelete;
+	};
+
+
 	typedef struct tagVertexColor
 	{
 		_vec3		vPosition;		

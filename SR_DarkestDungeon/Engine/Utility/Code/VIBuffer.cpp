@@ -22,22 +22,29 @@ CVIBuffer::~CVIBuffer()
 
 HRESULT CVIBuffer::ReadyBuffer(void)
 {
-	FAILED_CHECK_RETURN(m_pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize, 
-		0, 
-		m_dwFVF,	
-		D3DPOOL_MANAGED,	
-		&m_pVB,		
-		nullptr),
-		E_FAIL);
 
-	FAILED_CHECK_RETURN(m_pGraphicDev->CreateIndexBuffer(m_dwIdxSize * m_dwTriCnt, 
-		0, 
-		m_IdxFmt,	
-		D3DPOOL_MANAGED,	
-		&m_pIB,		
-		nullptr),
-		E_FAIL);
+	if (FAILED(m_pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize,
+		0,
+		m_dwFVF,
+		D3DPOOL_MANAGED,
+		&m_pVB,
+		nullptr))) {
 
+		//MSG_BOX("Create Vertex Buffer Failed");
+		return E_FAIL;
+	}
+
+
+	if (FAILED(m_pGraphicDev->CreateIndexBuffer(m_dwIdxSize * m_dwTriCnt,
+		0,
+		m_IdxFmt,
+		D3DPOOL_MANAGED,
+		&m_pIB,
+		nullptr))) {
+
+		//MSG_BOX("Create Index Buffer Failed");
+		return E_FAIL;
+	}
 
 	return S_OK;
 }

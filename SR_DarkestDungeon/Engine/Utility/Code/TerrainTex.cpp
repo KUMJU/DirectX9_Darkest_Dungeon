@@ -31,7 +31,11 @@ HRESULT CTerrainTex::ReadyBuffer(const _ulong& dwCntX, const _ulong& dwCntZ, con
 
 	m_pPos = new _vec3[m_dwVtxCnt];
 
-	FAILED_CHECK_RETURN(CVIBuffer::ReadyBuffer(), E_FAIL);
+	if (FAILED(CVIBuffer::ReadyBuffer())) {
+		//MSG_BOX("VIBuffer Create Failed!");
+		return E_FAIL;
+	}
+
 
 	m_hFile = CreateFile(_strPath.c_str(), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 

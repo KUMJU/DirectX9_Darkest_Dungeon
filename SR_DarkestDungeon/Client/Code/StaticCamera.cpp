@@ -15,13 +15,13 @@ HRESULT CStaticCamera::ReadyGameObject()
 {
 	m_pPlrTransCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
 
-	FAILED_CHECK_RETURN(CCamera::ReadyGameObject(), E_FAIL);
+	HRESULT result = CCamera::ReadyGameObject();
 
 	m_eCurrentState = ECameraMode::FPS;
 	m_matView = *(m_pPlrTransCom->GetWorld());
 	D3DXMatrixInverse(&m_matView,0, &m_matView);
 
-	return S_OK;
+	return result;
 }
 
 _int CStaticCamera::UpdateGameObject(const _float& fTimeDelta)

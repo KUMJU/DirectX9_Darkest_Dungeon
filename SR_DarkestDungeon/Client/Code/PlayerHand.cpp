@@ -149,7 +149,6 @@ void CPlayerHand::AddComponent()
 	m_mapComponent[ID_STATIC].insert({ L"Com_PlrItemTex",pComponent });
 
 	pComponent = m_pItemTransmCom = make_shared<CTransform>();
-	NULL_CHECK_MSG(pComponent, L"Make Player Item TransformCom Failed");
 	m_pItemTransmCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_PlrItemTrans",pComponent });
 

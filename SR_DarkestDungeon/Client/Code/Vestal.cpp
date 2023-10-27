@@ -134,65 +134,6 @@ void CVestal::RenderGameObject()
 
 void CVestal::AddComponent()
 {
-	// 영웅 애니메이션
-	{
-		Engine::CreateNewTexture(L"Vestal_Combat", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Combat/armatureName_combat_%d.png", 16);
-		Engine::CreateNewTexture(L"Vestal_Idle", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Idle/armatureName_idle_%d.png", 18);
-		Engine::CreateNewTexture(L"Vestal_Walk", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Walk/armatureName_walk_%d.png", 16);
-
-		Engine::CreateNewTexture(L"Vestal_MaceBash", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Attack.png", 1);
-		Engine::CreateNewTexture(L"Vestal_DazzlingLight", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Stun.png", 1);
-		Engine::CreateNewTexture(L"Vestal_DivineGrace", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1);
-		Engine::CreateNewTexture(L"Vestal_DevineComfort", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1);
-
-		Engine::CreateNewTexture(L"Vestal_Defend", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Defend.png", 1);
-		Engine::CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Afflicted.png", 1);
-		Engine::CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue.png", 1);
-	}
-
-	// 스킬 이미지
-	{
-		Engine::CreateNewTexture(L"MaceBash_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/MaceBashImg.png", 1);
-		Engine::CreateNewTexture(L"DazzlingLight_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DazzlingLightImg.png", 1);
-		Engine::CreateNewTexture(L"DivineGrace_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineGraceImg.png", 1);
-		Engine::CreateNewTexture(L"DivineComfort_Img", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineComfortImg.png", 1);
-	}
-
-	// 스킬 이펙트 (본인에게)
-	{
-		Engine::CreateNewTexture(L"DazzlingLight_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light/armatureName_dazzling_light_%d.png", 20);
-		Engine::CreateNewTexture(L"DivineGrace_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/divine_grace/armatureName_divine_grace_%d.png", 20);
-		Engine::CreateNewTexture(L"DivineComfort_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort/armatureName_gods_comfort_%d.png", 20);
-		//Engine::CreateNewTexture(L"Test_Effect", TEX_NORMAL,
-		//	L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_illumination/armatureName_gods_illumination_%d.png", 40);
-	}
-
-	// 스킬 이펙트 (타겟)
-	{
-		Engine::CreateNewTexture(L"DazzlingLight_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light_target/armatureName_dazzling_light_target_%d.png", 20);
-		Engine::CreateNewTexture(L"DivineComfort_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort_target/armatureName_gods_comfort_target_%d.png", 20);
-		//Engine::CreateNewTexture(L"Test_Target_Effect", TEX_NORMAL,
-		//	L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_illumination_target/armatureName_gods_illumination_target_%d.png", 40);
-	}
 
 	__super::AddComponent();
 }
