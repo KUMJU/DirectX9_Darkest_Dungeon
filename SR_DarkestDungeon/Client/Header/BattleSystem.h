@@ -82,5 +82,10 @@ private:
 	_bool	m_bHero = false;				// 공격 주체가 영웅인지?
 	_bool	m_bCounting = false;
 	_bool	m_bDeadCheck = false;
+
+	vector<_vec3> m_vHeroLocation = {};			// hero position
+	vector<_vec3> m_vMonsterLocation = {};		// monster position
+	_int iCurrentHeroIndex = 0;
+	_int iCurrentMonsterIndex = 0;
 };
 

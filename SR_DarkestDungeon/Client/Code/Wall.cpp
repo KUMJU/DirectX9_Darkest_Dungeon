@@ -73,18 +73,22 @@ void CWall::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	if (m_strKeyName != L"")
+	m_pTextureCom->SetTextureKey(m_strKeyName, TEX_NORMAL);
+
+	if (m_strKeyName == L"Com_Village_Back_Texture")
 	{
-		m_pTextureCom->SetTextureKey(m_strKeyName, TEX_NORMAL);
 		m_pTextureCom->SetTexture(m_iNum / 3);
 	}
-
+	else if (m_strKeyName == L"Com_Village_Left_Buildings_Texture" || m_strKeyName == L"Com_Village_Right_Buildings_Texture")
+	{
+		m_pTextureCom->SetTexture();
+	}
+	else if (m_strKeyName == L"Com_Weald_BackWallTexture")
+	{
+		m_pTextureCom->SetTexture(0);
+	}
 	else
 	{
-		m_pTextureCom2->SetTextureKey(L"Com_Weald_BackWallTexture", TEX_NORMAL);
-		m_pTextureCom2->SetTexture(0);
-		m_pBufferCom2->RenderBuffer();
-
 		m_pTextureCom->SetTextureKey(L"Com_Weald_WallTexture", TEX_NORMAL);
 		m_pTextureCom->SetTexture(m_iNum);
 	}
@@ -109,15 +113,15 @@ void CWall::AddComponent()
 	dynamic_pointer_cast<CRcTex>(m_pBufferCom)->ReadyBuffer();
 	m_mapComponent[ID_STATIC].insert({ L"Com_Weald_WallTexture", pComponent });
 
-	pComponent = m_pBufferCom2 = (make_shared<CRcTex>(m_pGraphicDev));
-	dynamic_pointer_cast<CRcTex>(m_pBufferCom2)->ReadyBuffer();
-	m_mapComponent[ID_STATIC].insert({ L"Com_Weald_BackWallTexture", pComponent });
+	//pComponent = m_pBufferCom2 = (make_shared<CRcTex>(m_pGraphicDev));
+	//dynamic_pointer_cast<CRcTex>(m_pBufferCom2)->ReadyBuffer();
+	//m_mapComponent[ID_STATIC].insert({ L"Com_Weald_BackWallTexture", pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
-	pComponent = m_pTextureCom2 = make_shared<CTexture>(m_pGraphicDev);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	//pComponent = m_pTextureCom2 = make_shared<CTexture>(m_pGraphicDev);
+	//m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
 	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
 	//m_pTransformCom->ReadyTransform();

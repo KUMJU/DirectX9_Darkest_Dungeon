@@ -174,6 +174,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"OBJ_Terrain", m_pTerrain);
 
 	shared_ptr<CGameObject> m_pWall;
+	shared_ptr<CGameObject> m_pBackWall;
 
 	// 진입방 벽
 	for (int i = 0; i < 2; i++)
@@ -182,6 +183,12 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
 		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+
+		m_pBackWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_BackWallTexture");
+		m_pBackWall->SetScale(_vec3(WEALD_WALLSIZEX/2.f, WEALD_WALLSIZEUPY * 2.f, 1));
+		m_pBackWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f - 1.f, WEALD_WALLSIZEUPY * 2.f, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
+		m_pBackWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pLayer->CreateGameObject(L"OBJ_Back", m_pBackWall);
 	}
 
 	for (int i = 0; i < 2; i++)
@@ -292,7 +299,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
-
+	
 	// Camera
 	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
