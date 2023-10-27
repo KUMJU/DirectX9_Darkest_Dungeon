@@ -157,22 +157,31 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	if (!_pCreature) return;
 	if (!_pSkill) return;
 
+	// 닷지 계산용
+	int iDodgeNum = rand() % 100;
+
 	_bool* arrAttack = _pSkill->GetArrAttack();
+
 
 	// 단순 공격
 	if (arrAttack[0])
 	{
-		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
-
+		if (iDodgeNum >= _pCreature->GetDodge())
+		{
+			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+		}
 		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
 
 	// 중독
 	if (arrAttack[1])
 	{
-		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
-		_pCreature->BlightAttack(_pSkill->GetDotDamage());
-		_pCreature->SetBlight(true);
+		if (iDodgeNum >= _pCreature->GetDodge())
+		{
+			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			_pCreature->BlightAttack(_pSkill->GetDotDamage());
+			_pCreature->SetBlight(true);
+		}
 
 		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
@@ -180,9 +189,12 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 출혈
 	if (arrAttack[2])
 	{
-		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
-		_pCreature->BleedAttack(_pSkill->GetDotDamage());
-		_pCreature->SetBleed(true);
+		if (iDodgeNum >= _pCreature->GetDodge())
+		{
+			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			_pCreature->BleedAttack(_pSkill->GetDotDamage());
+			_pCreature->SetBleed(true);
+		}
 
 		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
@@ -190,8 +202,11 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 기절
 	if (arrAttack[3])
 	{
-		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
-		_pCreature->SetStun(true);
+		if (iDodgeNum >= _pCreature->GetDodge())
+		{
+			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			_pCreature->SetStun(true);
+		}
 
 		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
@@ -199,8 +214,11 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 이동
 	if (arrAttack[4])
 	{
-		_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
-		_pCreature->SetPosition(_pSkill->GetMoveCnt());
+		if (iDodgeNum >= _pCreature->GetDodge())
+		{
+			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			//_pCreature->SetPosition(_pSkill->GetMoveCnt());
+		}
 	}
 
 	// 힐
@@ -212,12 +230,18 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 스트레스 처리
 	if (dynamic_pointer_cast<CHero>(_pCreature))
 	{
-		dynamic_pointer_cast<CHero>(_pCreature)->IncreaseStress(_pSkill->GetStress());
+		if (iDodgeNum >= _pCreature->GetDodge())
+		{
+			dynamic_pointer_cast<CHero>(_pCreature)->IncreaseStress(_pSkill->GetStress());
+		}
 	}
 
-	// 상대
-	dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(true);
-	dynamic_pointer_cast<CCreature>(_pCreature)->SetEffectOn(true);
+	if (iDodgeNum >= _pCreature->GetDodge())
+	{
+		// 상대
+		dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(true);
+		dynamic_pointer_cast<CCreature>(_pCreature)->SetEffectOn(true);
+	}
 
 	// 나
 	m_bEffectOn = true;

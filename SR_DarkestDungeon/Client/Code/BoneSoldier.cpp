@@ -24,18 +24,18 @@ HRESULT CBoneSoldier::ReadyGameObject()
 
 	// 스탯 설정
 	m_tCommonStat.iHp = 30;
-	m_tCommonStat.iDodge = 10;
+	m_tCommonStat.iDodge = 15;
 	m_tCommonStat.iSpeed = 6;
 	m_tCommonStat.iAttackPower = 10;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
 	int Skill1_Dot[2] = { 3,2 };
-	_bool	m_bArrAttack1[6] = { 0, 0, 1, 0, 0, 0 };
+	_bool	m_bArrAttack1[6] = { 0, 1, 0, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneSoldier_1 = make_shared<CSkill>
 		(L"Attack1", L"Bone Soldier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.8f, 0.f,
-			m_bArrAttack1, 0, 10);
+			m_bArrAttack1, 0, 10, 0, true);
 	pVecSkill.push_back(m_pBoneSoldier_1);
 
 	SetSkill(pVecSkill);
@@ -175,7 +175,7 @@ _int CBoneSoldier::UpdateGameObject(const _float& fTimeDelta)
 		if (m_fAttack1Time < 0.f)
 		{
 			SetAttacking(false, 0);
-			m_fAttack1Time = ATTACK1TIME;
+			m_fAttack1Time = ATTACKTIME;
 		}
 	}
 

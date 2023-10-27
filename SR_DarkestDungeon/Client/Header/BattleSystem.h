@@ -61,17 +61,26 @@ private:
 	vector<shared_ptr<CGameObject>> m_vHeroes;			// 영웅 리스트		0: 제일 앞
 	vector<shared_ptr<CGameObject>> m_vMonsters;		// 몬스터 리스트
 
+	_vec3	m_vApproachingGapR = _vec3{ -2.f, 0.f, -1.f };
+	_vec3	m_vApproachingGapL = _vec3{ 2.f, 0.f, -1.f };
+
 	_int m_iTurn = 1;	// 현재 턴
 	shared_ptr<CGameObject>			m_pCurrentCreature = nullptr;
 
 	_float  m_fBattleTime = BATTLEINTERVEL;		// 매 크리처 턴사이 간격
 	_float	m_fDeathMovingTime = DEATHMOVINGINTERVEL;		// 크리처 죽으면 옮기는 시간
 	_float	m_fSkillMovingTime = SKILLMOVINGINTERVEL;		// 스킬로 인한 움직이는 시간
+	_float	m_fAttackSkillMovingTime = ATTACKSKILLMOVINGINTERVEL;		// 스킬로 인한 움직이는 시간
+	_float	m_fBackMovingTime = MOVINGBACKINTERVEL;		// 스킬 이후 돌아가는 시간
+	_float	m_fWhileAttackingTime = WHILEATTACKINTERVEL;	// 멈춰서 스킬 사용 시간
 	_bool	m_bNext = false;
-	_bool	m_bDeathMoving = false;		// 사망으로 인한 이동
-	_bool	m_bSkillMoving = false;		// 기술로 인한 이동
-	_bool	m_bHero = false;			// 공격 주체가 영웅인지?
+	_bool	m_bDeathMoving = false;			// 사망으로 인한 이동
+	_bool	m_bSkillMoving = false;			// 기술로 인한 이동
+	_bool	m_bAttackSkillMoving = false;	// 공격 스킬 시전중에 다가가는 이동
+	_bool	m_bBackMoving = false;			// 공격 스킬 시전 이후에 제자리로 돌아가는 이동
+	_bool	m_bWhileAttack = false;			// 공격 스킬을 사용하는 중
+	_bool	m_bHero = false;				// 공격 주체가 영웅인지?
 	_bool	m_bCounting = false;
-
+	_bool	m_bDeadCheck = false;
 };
 

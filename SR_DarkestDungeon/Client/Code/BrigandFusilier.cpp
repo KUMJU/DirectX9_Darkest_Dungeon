@@ -24,7 +24,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 
 	// Ω∫≈» º≥¡§
 	m_tCommonStat.iHp = 30;
-	m_tCommonStat.iDodge = 8;
+	m_tCommonStat.iDodge = 10;
 	m_tCommonStat.iSpeed = 5;
 	m_tCommonStat.iAttackPower = 5;
 
@@ -35,7 +35,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBrigandFusilier_1 = make_shared<CSkill>
 		(L"Attack1", L"Brigand Fusilier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.f, 0.f,
-			bArrAttack1, 0, 0, true);
+			bArrAttack1, 0, 0, true, 0);
 	pVecSkill.push_back(m_pBrigandFusilier_1);
 
 	SetSkill(pVecSkill);
@@ -175,7 +175,7 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		if (m_fAttack1Time < 0.f)
 		{
 			SetAttacking(false, 0);
-			m_fAttack1Time = ATTACK1TIME;
+			m_fAttack1Time = ATTACKTIME;
 		}
 	}
 

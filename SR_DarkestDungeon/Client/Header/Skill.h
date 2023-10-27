@@ -11,7 +11,7 @@ public:
 	CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, tstring _strEffectKey,
 		_bool* _arrActivatePos, _bool* _arrTargetPos, _bool* _bArrAttack, _bool* _bArrToEnemy,
 		_int* _iDotDamage = nullptr, _float _fStunRatio = 1.f, _float _fDamageRatio = 1.f,
-		_float _fCriticalRatio = 1.f, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0, _bool _bTargetAll = 0);
+		_float _fCriticalRatio = 1.f, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0, _bool _bTargetAll = 0, _bool _bApproach = 0);
 
 	// 몬스터 스킬 용
 	// (스킬 이름, 스킬 애니메이션(크리처의 애니메이션), 도트뎀[데미지][라운드],
@@ -19,7 +19,7 @@ public:
 	//    공격종류, 영웅을 움직이게 할 칸수, 영웅에게 줄 스트레스)
 	CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos, _int* _iDotDamage,
 		_float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
-		_bool* _bArrAttack, _int _iMoveCnt = 0, _int _iStress = 0, _bool _bTargetAll = 0);
+		_bool* _bArrAttack, _int _iMoveCnt = 0, _int _iStress = 0, _bool _bTargetAll = 0, _bool _bApproach = 0);
 
 	CSkill(const CSkill& rhs);
 	virtual ~CSkill();
@@ -33,12 +33,14 @@ public:
 
 	_bool		IsActivatePos(_int _idx) { return m_arrActivatePos[_idx]; }
 	_bool		IsTargetPos(_int _idx) { return m_arrTargetPos[_idx]; }
-	_bool*		GetTargetPos() { return m_arrTargetPos; }
-	_bool*		GetArrToEnemy() { return m_bArrToEnemy; }
+	_bool* GetTargetPos() { return m_arrTargetPos; }
+	_bool* GetArrToEnemy() { return m_bArrToEnemy; }
 	_bool		IsTargetAll() { return m_bTargetAll; }
 	_bool		CanActivateCnt() { if (0 == m_iActivateCnt) return false; return true; }
 	void		DecreaseActivateCnt() { --m_iActivateCnt; }
-	_bool*		GetArrAttack() { return m_bArrAttack; }
+	_bool* GetArrAttack() { return m_bArrAttack; }
+
+	_bool		IsApproach() { return m_bApproach; }
 
 	_bool		IsEquipped() { return m_bEquipped; }
 	void		SetEquipped(_bool _bEquipped) { m_bEquipped = _bEquipped; }
@@ -51,7 +53,7 @@ public:
 	void		UpgradeLevel() { m_iLevel++; }
 
 	_int		GetMoveCnt() { return m_iMoveCnt; }
-	_int*		GetDotDamage() { return m_iDotDamage; }
+	_int* GetDotDamage() { return m_iDotDamage; }
 	_int		GetHeal() { return m_iHeal; }
 	_float		GetStunRatio() { return m_fStunRatio; }
 	_float		GetDamageRatio() { return m_fDamageRatio; }
@@ -90,6 +92,9 @@ protected:
 
 	// 스킬 레벨
 	_int		m_iLevel = 1;
+
+	// 다가가며 하는 공격인지 아닌지
+	_bool		m_bApproach = false;
 
 	// =========스킬값==========
 	// 이동량

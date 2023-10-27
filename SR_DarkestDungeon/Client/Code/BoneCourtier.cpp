@@ -24,7 +24,7 @@ HRESULT CBoneCourtier::ReadyGameObject()
 
 	// Ω∫≈» º≥¡§
 	m_tCommonStat.iHp = 40;
-	m_tCommonStat.iDodge = 10;
+	m_tCommonStat.iDodge = 20;
 	m_tCommonStat.iSpeed = 7;
 	m_tCommonStat.iAttackPower = 5;
 
@@ -35,7 +35,7 @@ HRESULT CBoneCourtier::ReadyGameObject()
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneCourtier_1 = make_shared<CSkill>
 		(L"Attack1", L"Bone Courtier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.f, 0.f,
-			m_bArrAttack1, 0, 10);
+			m_bArrAttack1, 0, 10, 0, true);
 	pVecSkill.push_back(m_pBoneCourtier_1);
 
 	int Skill2_Dot[2] = { 2,3 };
@@ -186,7 +186,7 @@ _int CBoneCourtier::UpdateGameObject(const _float& fTimeDelta)
 		if (m_fAttack1Time < 0.f)
 		{
 			SetAttacking(false, 0);
-			m_fAttack1Time = ATTACK1TIME;
+			m_fAttack1Time = ATTACKTIME;
 		}
 	}
 
@@ -197,7 +197,7 @@ _int CBoneCourtier::UpdateGameObject(const _float& fTimeDelta)
 		if (m_fAttack2Time < 0.f)
 		{
 			SetAttacking(false, 1);
-			m_fAttack2Time = ATTACK2TIME;
+			m_fAttack2Time = ATTACKTIME;
 		}
 	}
 

@@ -1,9 +1,6 @@
 #pragma once
 #include "Monster.h"
 
-#define	HITTEDTIME	1.f
-#define	ATTACK1TIME	1.f
-
 class CBoneSoldier : public CMonster
 {
 public:
@@ -25,6 +22,6 @@ private:
 
 private:
 	_float		m_fHittedTime = HITTEDTIME;
-	_float		m_fAttack1Time = ATTACK1TIME;
+	_float		m_fAttack1Time = ATTACKTIME;
 };
 
