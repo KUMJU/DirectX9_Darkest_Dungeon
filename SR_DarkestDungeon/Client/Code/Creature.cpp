@@ -134,21 +134,32 @@ void CCreature::StartCalculate()
 		m_bMyTurn = false;
 	}
 
-	// 시체 여부	
-	if (m_tCommonStat.iHp <= 0 && !m_bCorpse && !m_bDeath)
+	if (!m_bIsHero)
 	{
-		BleedCure();
-		BlightCure();
-		m_bCorpse = true;
-		m_tCommonStat.iHp = 10;
-	}
+		// 시체 여부	
+		if (m_tCommonStat.iHp <= 0 && !m_bCorpse && !m_bDeath)
+		{
+			BleedCure();
+			BlightCure();
+			m_bCorpse = true;
+			m_tCommonStat.iHp = 10;
+		}
 
-	// 사망 여부
-	if (m_tCommonStat.iHp <= 0 && m_bCorpse)
+		// 사망 여부
+		if (m_tCommonStat.iHp <= 0 && m_bCorpse)
+		{
+			m_bCorpse = false;
+			m_bDeath = true;
+			m_tCommonStat.iHp = -100;
+		}
+	}
+	else
 	{
-		m_bCorpse = false;
-		m_bDeath = true;
-		m_tCommonStat.iHp = -100;
+		if (m_tCommonStat.iHp <= 0)
+		{
+			m_bDeath = true;
+			m_tCommonStat.iHp = -100;
+		}
 	}
 }
 

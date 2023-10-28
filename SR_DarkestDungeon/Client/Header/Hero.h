@@ -111,7 +111,7 @@ protected:
 	_float				m_fChangeTime = CHANGETIME;
 	_float				m_fDelayTime = DELAYTIME;
 
-	_bool				m_bInDungeon = false;
+	_bool				m_bInDungeon = true;
 
 	_bool				m_bAttacking1 = false;
 	_bool				m_bAttacking2 = false;

@@ -4,10 +4,10 @@
 CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, tstring _strEffectKey,
 	_bool* _arrActivatePos, _bool* _arrTargetPos, _bool* _bArrAttack, _bool* _bArrToEnemy,
 	_int* _iDotDamage, _float _fStunRatio, _float _fDamageRatio,
-	_float _fCriticalRatio, _int _iActivateCnt, _int _iMoveCnt, _int _iHeal, _bool _bTargetAll, _bool _bApproach)
+	_float _fCriticalRatio, _int _iActivateCnt, _int _iMoveCnt, _int _iHeal, _bool _bTargetAll, _bool _bApproach, _int _iSkillMoveCnt)
 	: m_strSkillName(_strSkillName), m_iActivateCnt(_iActivateCnt),
 	m_iMoveCnt(_iMoveCnt), m_iHeal(_iHeal), m_strAnimKey(_strAnimKey), m_strImgKey(_strImgKey),
-	m_fStunRatio(_fStunRatio), m_fDamageRatio(_fDamageRatio), m_fCriticalRatio(_fCriticalRatio), m_bTargetAll(_bTargetAll), m_bApproach(_bApproach)
+	m_fStunRatio(_fStunRatio), m_fDamageRatio(_fDamageRatio), m_fCriticalRatio(_fCriticalRatio), m_bTargetAll(_bTargetAll), m_bApproach(_bApproach), m_iMovingCnt(_iSkillMoveCnt)
 {
 	memcpy(m_arrActivatePos, _arrActivatePos, sizeof(_bool) * 4);
 	memcpy(m_arrTargetPos, _arrTargetPos, sizeof(_bool) * 4);
@@ -18,9 +18,9 @@ CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, t
 
 CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos, _int* _iDotDamage,
 	_float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
-	_bool* _bArrAttack, _int _iMoveCnt, _int _iStress, _bool _bTargetAll, _bool _bApproach)
+	_bool* _bArrAttack, _int _iMoveCnt, _int _iStress, _bool _bTargetAll, _bool _bApproach, _int _iSkillMoveCnt)
 	: m_strSkillName(_strSkillName), m_strAnimKey(_strAnimKey), m_iMoveCnt(_iMoveCnt), m_iStress(_iStress),
-	m_fStunRatio(_fStunRatio), m_fDamageRatio(_fDamageRatio), m_fCriticalRatio(_fCriticalRatio), m_bTargetAll(_bTargetAll), m_bApproach(_bApproach)
+	m_fStunRatio(_fStunRatio), m_fDamageRatio(_fDamageRatio), m_fCriticalRatio(_fCriticalRatio), m_bTargetAll(_bTargetAll), m_bApproach(_bApproach), m_iMovingCnt(_iSkillMoveCnt)
 {
 	memcpy(m_arrTargetPos, _arrTargetPos, sizeof(_bool) * 4);
 	memcpy(m_bArrAttack, _bArrAttack, sizeof(_bool) * 6);

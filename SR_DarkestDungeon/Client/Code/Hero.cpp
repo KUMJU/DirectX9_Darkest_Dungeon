@@ -170,57 +170,57 @@ void CHero::ChangeAnimState()
 		return;
 	}
 
-	// 임시
-	if ((m_bAttacking1 || m_bAttacking2 || m_bAttacking3 || m_bAttacking4) && m_tCommonStat.iHp >= 0)
-	{
-		if (m_bAttacking1)
-			m_eCurAnimState = EAnimState::SKILL1;
-		else if (m_bAttacking2)
-			m_eCurAnimState = EAnimState::SKILL2;
-		else if (m_bAttacking3)
-			m_eCurAnimState = EAnimState::SKILL3;
-		else if (m_bAttacking4)
-			m_eCurAnimState = EAnimState::SKILL4;
-	}
-	else if (m_bHitted == true && m_tCommonStat.iHp > 0)
-	{
-		m_ePrevAnimState = m_eCurAnimState;
-		m_eCurAnimState = EAnimState::BESHOT;
-	}
-	else
-	{
-		m_ePrevAnimState = m_eCurAnimState;
-		m_eCurAnimState = EAnimState::COMBAT;
-	}	
+	//// 임시
+	//if ((m_bAttacking1 || m_bAttacking2 || m_bAttacking3 || m_bAttacking4) && m_tCommonStat.iHp >= 0)
+	//{
+	//	if (m_bAttacking1)
+	//		m_eCurAnimState = EAnimState::SKILL1;
+	//	else if (m_bAttacking2)
+	//		m_eCurAnimState = EAnimState::SKILL2;
+	//	else if (m_bAttacking3)
+	//		m_eCurAnimState = EAnimState::SKILL3;
+	//	else if (m_bAttacking4)
+	//		m_eCurAnimState = EAnimState::SKILL4;
+	//}
+	//else if (m_bHitted == true && m_tCommonStat.iHp > 0)
+	//{
+	//	m_ePrevAnimState = m_eCurAnimState;
+	//	m_eCurAnimState = EAnimState::BESHOT;
+	//}
+	//else
+	//{
+	//	m_ePrevAnimState = m_eCurAnimState;
+	//	m_eCurAnimState = EAnimState::COMBAT;
+	//}	
 }
 
 void CHero::SetAnimDelay(const _float& fTimeDelta)
 {
-	// 피격 시간
-	if (m_bHitted)
-	{
-		m_fHittedTime -= fTimeDelta;
-		if (m_fHittedTime < 0.f)
-		{
-			m_bHitted = false;
-			m_fHittedTime = HITTEDTIME;
-		}
-	}
-
-	// 공격 시간
-	if (m_bAttacking1 || m_bAttacking2 || m_bAttacking3 || m_bAttacking4 )
-	{
-		m_fAttackTime -= fTimeDelta;
-		if (m_fAttackTime < 0.f)
-		{
-			m_bAttacking1 = false;
-			m_bAttacking2 = false;
-			m_bAttacking3 = false;
-			m_bAttacking4 = false;
-
-			m_fAttackTime = ATTACKTIME;
-		}
-	}
+	//// 피격 시간
+	//if (m_bHitted)
+	//{
+	//	m_fHittedTime -= fTimeDelta;
+	//	if (m_fHittedTime < 0.f)
+	//	{
+	//		m_bHitted = false;
+	//		m_fHittedTime = HITTEDTIME;
+	//	}
+	//}
+	//
+	//// 공격 시간
+	//if (m_bAttacking1 || m_bAttacking2 || m_bAttacking3 || m_bAttacking4 )
+	//{
+	//	m_fAttackTime -= fTimeDelta;
+	//	if (m_fAttackTime < 0.f)
+	//	{
+	//		m_bAttacking1 = false;
+	//		m_bAttacking2 = false;
+	//		m_bAttacking3 = false;
+	//		m_bAttacking4 = false;
+	//
+	//		m_fAttackTime = ATTACKTIME;
+	//	}
+	//}
 
 	// 붕괴 or 기상 변경 시간 (UI로 띄우기)
 	if ((m_bVirtue || m_bAffliction) && !m_bStressChanged)

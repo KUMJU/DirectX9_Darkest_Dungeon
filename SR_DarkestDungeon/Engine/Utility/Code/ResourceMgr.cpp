@@ -153,7 +153,9 @@ void CResourceMgr::BaseTextureLoad()
 		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1, bDefault);
 
 	//Hero
-	
+	CreateNewTexture(L"Hero_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
+
 	//방패파괴자
 	{
 		// 영웅 애니메이션

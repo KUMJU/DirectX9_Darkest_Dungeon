@@ -28,6 +28,11 @@
 #include "BoneDefender.h"
 #include "BoneSoldier.h"
 
+#include "Highwayman.h"
+#include "Jester.h"
+#include "Vestal.h"
+#include "ShieldBreaker.h"
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -323,6 +328,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
 
 	// GameObject
+	// monsters
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBoneDefender1 = make_shared<CBoneDefender>(m_pGraphicDev);
@@ -332,25 +338,52 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pBoneCourtier_1 = make_shared<CBoneCourtier>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBoneSoldier_2 = make_shared<CBoneSoldier>(m_pGraphicDev);
 
+	// heroes
+	shared_ptr<CGameObject> m_pSheldBreaker1 = make_shared<CShieldBreaker>(m_pGraphicDev);
+	//shared_ptr<CGameObject> m_pSheldBreaker2 = make_shared<CShieldBreaker>(m_pGraphicDev);
+	//shared_ptr<CGameObject> m_pSheldBreaker3 = make_shared<CShieldBreaker>(m_pGraphicDev);
+	//shared_ptr<CGameObject> m_pSheldBreaker4 = make_shared<CShieldBreaker>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+
 	// 방에 GameObject 넣기
 	// creatures
 	vector<shared_ptr<CGameObject>> Room1_v1;
 	Room1_v1.push_back(m_pBrigandCutthroat_1);
 	Room1_v1.push_back(m_pBrigandBloodletter1);
-	Room1_v1.push_back(m_pBoneDefender1);
 	Room1_v1.push_back(m_pBrigandCutthroat_2);
 	Room1_v1.push_back(m_pBrigandFusilier_1);
-	Room1_v1.push_back(m_pBoneSoldier_1);
-	Room1_v1.push_back(m_pBoneCourtier_1);
-	Room1_v1.push_back(m_pBoneSoldier_2);
+
+	Room1_v1.push_back(m_pSheldBreaker1);
+	//Room1_v1.push_back(m_pSheldBreaker2);
+	//Room1_v1.push_back(m_pSheldBreaker3);
+	//Room1_v1.push_back(m_pSheldBreaker4);
+
+	Room1_v1.push_back(m_pHighwayman);
+	Room1_v1.push_back(m_pJester);
+	Room1_v1.push_back(m_pVestal);
+
+	//Room1_v1.push_back(m_pBoneDefender1);
+	//Room1_v1.push_back(m_pBoneSoldier_1);
+	//Room1_v1.push_back(m_pBoneCourtier_1);
+	//Room1_v1.push_back(m_pBoneSoldier_2);
 	m_pRoom1->PushGameObjectVector(Room1_v1);
 
 	// heroes
 	vector<shared_ptr<CGameObject>> Room1_v2;
-	Room1_v2.push_back(m_pBoneDefender1);
-	Room1_v2.push_back(m_pBoneSoldier_1);
-	Room1_v2.push_back(m_pBoneSoldier_2);
-	Room1_v2.push_back(m_pBoneCourtier_1);
+	Room1_v2.push_back(m_pSheldBreaker1);
+
+	//Room1_v2.push_back(m_pSheldBreaker2);
+	//Room1_v2.push_back(m_pSheldBreaker3);
+	//Room1_v2.push_back(m_pSheldBreaker4);
+	Room1_v2.push_back(m_pHighwayman);
+	Room1_v2.push_back(m_pVestal);
+	Room1_v2.push_back(m_pJester);
+	//Room1_v2.push_back(m_pBoneDefender1);
+	//Room1_v2.push_back(m_pBoneSoldier_1);
+	//Room1_v2.push_back(m_pBoneSoldier_2);
+	//Room1_v2.push_back(m_pBoneCourtier_1);
 	m_pRoom1->PushHeroesVector(Room1_v2);
 
 	// monsters
@@ -378,19 +411,26 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// 던전 object들 위치 잡아놓기
 	// 1번 방
 	pRoom1_Battle->FormBattlePosition(Room1_v2, Room1_v3,
-		-PI / 2.f, _vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 10.f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f));
+		-PI / 2.f, -PI / 2.f, _vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 10.f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f));
 
 	m_pWealdDungeon->CurrentRoom(10);
 
 	// Layer에 GameObject 넣기
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
-	m_pLayer->CreateGameObject(L"Obj_BoneDefender", m_pBoneDefender1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBrigandBloodletter1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_1);
-	m_pLayer->CreateGameObject(L"Obj_BoneCourtier", m_pBoneCourtier_1);
-	m_pLayer->CreateGameObject(L"Obj_BoneSoldier", m_pBoneSoldier_1);
-	m_pLayer->CreateGameObject(L"Obj_BoneSoldier", m_pBoneSoldier_2);
+	//m_pLayer->CreateGameObject(L"Obj_BoneDefender", m_pBoneDefender1);
+	//m_pLayer->CreateGameObject(L"Obj_BoneCourtier", m_pBoneCourtier_1);
+	//m_pLayer->CreateGameObject(L"Obj_BoneSoldier", m_pBoneSoldier_1);
+	//m_pLayer->CreateGameObject(L"Obj_BoneSoldier", m_pBoneSoldier_2);
+	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker1);
+	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker2);
+	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker3);
+	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker4);
+	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+	m_pLayer->CreateGameObject(L"Obj_Jester", m_pJester);
+	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
 
 
 //PlayerObj

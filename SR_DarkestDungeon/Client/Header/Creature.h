@@ -200,6 +200,7 @@ protected:
 	shared_ptr<CAnimator> m_pEffectTextureCom = nullptr;
 
 protected:
+	_bool		m_bIsHero = false;
 	STAT		m_tCommonStat;				// ½ºÅÈ
 
 	_int		m_iPosition;				// À§Ä¡ (0~3)
