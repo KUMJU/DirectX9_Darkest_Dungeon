@@ -23,9 +23,9 @@ HRESULT CMainApp::Ready_MainApp()
 	}
 
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
-	CResourceMgr::GetInstance()->BaseTextureLoad();
+	//CResourceMgr::GetInstance()->BaseTextureLoad();
 
-    shared_ptr<CScene> pMainLogo = make_shared<CWeald_Dungeon>(m_pGraphicDev);
+    shared_ptr<CScene> pMainLogo = make_shared<CVillage>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
 
@@ -36,7 +36,7 @@ _int CMainApp::Update_MainApp(const _float& fTimeDelta)
 {
 	Engine::Update_InputDev();
 	Engine::UpdateScene(fTimeDelta);
-
+	
     return 0;
 }
 

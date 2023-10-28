@@ -15,8 +15,7 @@ END
 class CWall : public CGameObject
 {
 public:
-	CWall(LPDIRECT3DDEVICE9 pGraphicDev);
-	CWall(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName);
+	CWall(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName, _int _iCnt, _bool _bRandom);
 	CWall(const CWall& rhs);
 	virtual ~CWall();
 
@@ -48,6 +47,10 @@ private:
 	shared_ptr<CCollider> m_pColliderCom = nullptr;
 
 	_int		m_iNum = 0;
+
+	_int		m_iCnt = 1;
+
+	_bool		m_bRandom = false;
 
 	_bool		m_bHorizontal = true;
 

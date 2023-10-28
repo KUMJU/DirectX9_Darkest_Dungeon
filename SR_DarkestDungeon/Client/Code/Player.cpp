@@ -19,8 +19,6 @@ HRESULT CPlayer::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
-	m_pTransformCom->SetPosition(4.f, 0.f, 0.f);
-
 	m_eCollideID = ECollideID::PLAYER;
 	m_bColliding = true;
 
@@ -63,6 +61,7 @@ void CPlayer::AddComponent()
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransformCom->SetScale(1.f, 1.f, 1.f);
+	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });

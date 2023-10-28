@@ -1,12 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
-
 class CInside : public CGameObject
 {
 public:
-	explicit CInside(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CInside(const CInside& rhs);
+	CInside(LPDIRECT3DDEVICE9 pGraphicDev);
+	CInside(const CInside& rhs);
 	virtual ~CInside();
 
 public:

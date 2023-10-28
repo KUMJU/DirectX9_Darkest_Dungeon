@@ -21,8 +21,6 @@ HRESULT CDoor::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
-	m_pPlayerTransformCom = dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC));
-
 	return S_OK;
 }
 
@@ -59,7 +57,7 @@ void CDoor::AddComponent()
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(1.5f, 3.5f, 1.f);
+	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	m_pTextureCom->SetTextureKey(L"Village_Door_Close", TEX_NORMAL);
@@ -82,14 +80,14 @@ void CDoor::GetInteractionKey(const _float& fTimeDelta)
 		if (EFacilityType::TERVARN == m_eDoorType)
 		{
 			// 여관 내부로 이동
-			dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(50.f, -100.f, 0.f);
+			dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(50.f, -97.f, 0.f);
 
 		}
 			
-		if (EFacilityType::TERVARN == m_eDoorType)
+		else if (EFacilityType::GUILD == m_eDoorType)
 		{
 			// 훈련소 내부로 이동
-			dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(0.f, -200.f, 100.f);
+			dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(0.f, -197.f, 100.f);
 
 		}
 

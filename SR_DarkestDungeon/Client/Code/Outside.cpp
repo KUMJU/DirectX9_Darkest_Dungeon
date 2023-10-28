@@ -21,21 +21,22 @@ COutside::~COutside()
 }
 
 HRESULT COutside::ReadyGameObject()
-{
-
-	shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::TERVARN);
-
-	if (L"Tervarn_Outside" == m_strKey)
+{	
+	if (m_eFacilityType == EFacilityType::TERVARN)
 	{
-		m_pDoor->SetPos({ m_vPos.x - 8.f, m_vPos.y + 3.3f, m_vPos.z });
+		shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::TERVARN);
+		m_pDoor->SetPos({ m_vPos.x + 4.5f, m_vPos.y + 4.f, m_vPos.z - 0.1f });
+		m_pDoor->SetScale({ 1.7f, 4.f, 1.f });
+		m_vecGameObject.push_back(m_pDoor);
 	}
 
-	else
+	else if (m_eFacilityType == EFacilityType::GUILD)
 	{
-
+		shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::GUILD);
+		m_pDoor->SetPos({ m_vPos.x - 5.5f, m_vPos.y + 5.7f, m_vPos.z - 0.1f });
+		m_pDoor->SetScale({ 3.f, 5.5f, 1.f });
+		m_vecGameObject.push_back(m_pDoor);
 	}
-
-	m_vecGameObject.push_back(m_pDoor);
 
 	for (auto& iter : m_vecGameObject) {
 		iter->AwakeGameObject();
@@ -96,7 +97,7 @@ void COutside::AddComponent()
 	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
-	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y + 25.f, m_vPos.z);
+	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y + m_vScale.y / 2 + m_vScale.y / 3, m_vPos.z);
 	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
@@ -107,6 +108,12 @@ void COutside::AddComponent()
 		break;
 	case EFacilityType::GUILD:
 		m_strKey = L"Guild_Outside";
+		break;
+	case EFacilityType::STAGECOACH:
+		m_strKey = L"StageCoach_Outside";
+		break;
+	case EFacilityType::STORE:
+		m_strKey = L"Store_Outside";
 		break;
 	case EFacilityType::ENUM_END:
 		break;
