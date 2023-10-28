@@ -15,6 +15,8 @@ enum class EFacilityType
 {
 	TERVARN,
 	GUILD,
+	STAGECOACH,
+	STORE,
 
 	ENUM_END
 };

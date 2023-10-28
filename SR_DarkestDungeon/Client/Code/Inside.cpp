@@ -22,9 +22,6 @@ CInside::~CInside()
 
 HRESULT CInside::ReadyGameObject()
 {
-    shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Inside_FloorTexture");
-    m_vecGameObject.push_back(m_pTerrain);
-
     for (auto& iter : m_vecGameObject) {
         iter->AwakeGameObject();
         iter->ReadyGameObject();
@@ -55,7 +52,7 @@ void CInside::LateUpdateGameObject()
 
 void CInside::RenderGameObject()
 {
-    for (auto& iter : m_vecGameObject) {
-        iter->RenderGameObject();
-    }
+	for (auto& iter : m_vecGameObject) {
+		iter->RenderGameObject();
+	}
 }

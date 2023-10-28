@@ -26,9 +26,12 @@ HRESULT CInteractionObj::ReadyGameObject()
 	// 플레이어 받아오기 (거리 계산, 상태 변경)
 	m_pPlayer = CGameMgr::GetInstance()->GetPlayer();
 
-	// (컴퍼넌트 받아오기 : 하위 클래스에서 수행하기)
-	//m_pPlayerTransformCom = m_pPlayer->GetComponent();
-	return E_NOTIMPL;
+	// 컴퍼넌트 받아오기
+	m_pPlayerTransformCom = dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC));
+
+	m_pTransformCom->SetAngle(m_vAngle);
+
+	return S_OK;
 }
 
 _int CInteractionObj::UpdateGameObject(const _float& fTimeDelta)

@@ -69,7 +69,7 @@ void CTerrain::AddComponent()
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VILLAGE_TILESIZE * 10, VILLAGE_TILESIZE * 10, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp", VILLAGE_TILECNT, VILLAGE_TILECNT);
 
 	else if(L"Inside_FloorTexture" == m_strKeyName)
-		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX / 20, VTXCNTZ / 20, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 5, 5);
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VILLAGE_TILESIZE * 3, VILLAGE_TILESIZE * 3, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp", 5, 5);
 
 	else
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
@@ -79,7 +79,7 @@ void CTerrain::AddComponent()
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
-	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
+	pComponent = m_pTransformCom = make_shared<CTransform>(m_vPos, _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
 	//m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 }
