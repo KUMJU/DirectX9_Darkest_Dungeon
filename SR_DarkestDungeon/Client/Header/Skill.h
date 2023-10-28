@@ -11,7 +11,7 @@ public:
 	CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, tstring _strEffectKey,
 		_bool* _arrActivatePos, _bool* _arrTargetPos, _bool* _bArrAttack, _bool* _bArrToEnemy,
 		_int* _iDotDamage = nullptr, _float _fStunRatio = 1.f, _float _fDamageRatio = 1.f,
-		_float _fCriticalRatio = 1.f, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0, _bool _bTargetAll = 0, _bool _bApproach = 0);
+		_float _fCriticalRatio = 1.f, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0, _bool _bTargetAll = 0, _bool _bApproach = 0, _int _iSkillMoveCnt = 0);
 
 	// 몬스터 스킬 용
 	// (스킬 이름, 스킬 애니메이션(크리처의 애니메이션), 도트뎀[데미지][라운드],
@@ -19,7 +19,7 @@ public:
 	//    공격종류, 영웅을 움직이게 할 칸수, 영웅에게 줄 스트레스)
 	CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos, _int* _iDotDamage,
 		_float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
-		_bool* _bArrAttack, _int _iMoveCnt = 0, _int _iStress = 0, _bool _bTargetAll = 0, _bool _bApproach = 0);
+		_bool* _bArrAttack, _int _iMoveCnt = 0, _int _iStress = 0, _bool _bTargetAll = 0, _bool _bApproach = 0, _int _iSkillMoveCnt = 0);
 
 	CSkill(const CSkill& rhs);
 	virtual ~CSkill();
@@ -53,6 +53,7 @@ public:
 	void		UpgradeLevel() { m_iLevel++; }
 
 	_int		GetMoveCnt() { return m_iMoveCnt; }
+	_int		GetMovingCnt() { return m_iMovingCnt; }
 	_int* GetDotDamage() { return m_iDotDamage; }
 	_int		GetHeal() { return m_iHeal; }
 	_float		GetStunRatio() { return m_fStunRatio; }
@@ -97,8 +98,10 @@ protected:
 	_bool		m_bApproach = false;
 
 	// =========스킬값==========
-	// 이동량
+	// 맞은 애의 이동량
 	_int		m_iMoveCnt;
+	// 스킬 사용한 애의 이동량
+	_int		m_iMovingCnt;
 	// 중독or출혈 데미지, 라운드
 	_int		m_iDotDamage[2] = { 0 };
 	// 힐량

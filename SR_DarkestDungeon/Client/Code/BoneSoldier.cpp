@@ -83,7 +83,6 @@ _int CBoneSoldier::UpdateGameObject(const _float& fTimeDelta)
 		}
 	}
 
-	// юс╫ц
 	if ((IsAttacking()) && !m_bCorpse)
 	{
 		for (int i = 0; i < 7; i++)

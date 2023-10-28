@@ -10,6 +10,7 @@ public:
 public:
 	vector<shared_ptr<CGameObject>> GetHeroesVector() { return m_vHeroes; }
 	vector<shared_ptr<CGameObject>> GetMonstersVector() { return m_vMonsters; }
+	void SetAutoBattle(_bool _bAutoBattle) { m_bAutoBattle = _bAutoBattle; }
 	void SetCurrentCreature(shared_ptr<CGameObject> _pCrea) { m_pCurrentCreature = _pCrea; }
 	void PushCreaturesVector(vector<shared_ptr<CGameObject>>& _vVec)
 	{
@@ -50,11 +51,16 @@ public:
 	void	DeadCheck();
 
 	// 전투진형 배치
-	void	FormBattlePosition(vector<shared_ptr<CGameObject>>& _pHeroes, vector<shared_ptr<CGameObject>>& _pMonsters,
-		_float _fAngle, _vec3 _vOrigin);
+	void	FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes, vector<shared_ptr<CGameObject>>& _vMonsters, _float _fAngle1,
+		_float _fAngle2, _vec3 _vOrigin);
 
 protected:
+	// 위치 변경
+	void SwitchPosition(int _iCurrentIndex, int _iMoveCnt, _bool _bHero = true);
 	void CmpBySpeed(vector<shared_ptr<CGameObject>>& _vCreatures);
+	_bool SkillKeyInput();		// 스킬 사용 키
+	void AutoBattleKeyInput();	// 자동 전투 키
+	void Battle(int _iNum);		// 전투 알고리즘
 
 private:
 	vector<shared_ptr<CGameObject>> m_vCreatures;		// 영웅, 몬스터 포함 리스트
@@ -70,18 +76,26 @@ private:
 	_float  m_fBattleTime = BATTLEINTERVEL;		// 매 크리처 턴사이 간격
 	_float	m_fDeathMovingTime = DEATHMOVINGINTERVEL;		// 크리처 죽으면 옮기는 시간
 	_float	m_fSkillMovingTime = SKILLMOVINGINTERVEL;		// 스킬로 인한 움직이는 시간
+	_float	m_fSkillMoveTime = SKILLMOVEINTERVEL;				// 스킬로 스스로 움직이는 시간
 	_float	m_fAttackSkillMovingTime = ATTACKSKILLMOVINGINTERVEL;		// 스킬로 인한 움직이는 시간
 	_float	m_fBackMovingTime = MOVINGBACKINTERVEL;		// 스킬 이후 돌아가는 시간
 	_float	m_fWhileAttackingTime = WHILEATTACKINTERVEL;	// 멈춰서 스킬 사용 시간
+	
 	_bool	m_bNext = false;
 	_bool	m_bDeathMoving = false;			// 사망으로 인한 이동
 	_bool	m_bSkillMoving = false;			// 기술로 인한 이동
+	_bool	m_bSkillMove = false;			// 기술로 인한 스스로의 이동
 	_bool	m_bAttackSkillMoving = false;	// 공격 스킬 시전중에 다가가는 이동
 	_bool	m_bBackMoving = false;			// 공격 스킬 시전 이후에 제자리로 돌아가는 이동
 	_bool	m_bWhileAttack = false;			// 공격 스킬을 사용하는 중
 	_bool	m_bHero = false;				// 공격 주체가 영웅인지?
 	_bool	m_bCounting = false;
 	_bool	m_bDeadCheck = false;
+
+	_bool	m_bAutoBattle = false;
+	_bool	m_bSkillInput = false;
+	_int	m_iSelectSkill = 0;
+	_bool	m_bCalculate = false;
 
 	vector<_vec3> m_vHeroLocation = {};			// hero position
 	vector<_vec3> m_vMonsterLocation = {};		// monster position
