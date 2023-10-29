@@ -181,6 +181,10 @@
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\Tervarn.h" />
     <ClInclude Include="..\Header\WealdDungeonDoor.h" />
+    <ClInclude Include="..\Header\Weald_Curio_Chest.h" />
+    <ClInclude Include="..\Header\Weald_Curio_Luggage.h" />
+    <ClInclude Include="..\Header\Weald_Curio_Spider.h" />
+    <ClInclude Include="..\Header\Weald_Curio_Tent.h" />
     <ClInclude Include="..\Header\Weald_Dungeon.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\pch.h" />
@@ -193,6 +197,8 @@
     <ClInclude Include="..\Header\Vestal.h" />
     <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\Village.h" />
+    <ClInclude Include="..\Header\Weald_Obstacle.h" />
+    <ClInclude Include="..\Header\Weald_Trap.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
@@ -229,6 +235,10 @@
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\Tervarn.cpp" />
     <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />
+    <ClCompile Include="..\Code\Weald_Curio_Chest.cpp" />
+    <ClCompile Include="..\Code\Weald_Curio_Luggage.cpp" />
+    <ClCompile Include="..\Code\Weald_Curio_Spider.cpp" />
+    <ClCompile Include="..\Code\Weald_Curio_Tent.cpp" />
     <ClCompile Include="..\Code\Weald_Dungeon.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
@@ -240,6 +250,8 @@
     <ClCompile Include="..\Code\Vestal.cpp" />
     <ClCompile Include="..\Code\Wall.cpp" />
     <ClCompile Include="..\Code\Village.cpp" />
+    <ClCompile Include="..\Code\Weald_Obstacle.cpp" />
+    <ClCompile Include="..\Code\Weald_Trap.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

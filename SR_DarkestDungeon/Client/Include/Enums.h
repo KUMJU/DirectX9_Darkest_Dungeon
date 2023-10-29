@@ -32,3 +32,10 @@ enum class EWealdDungeonDoorType
 
 	ENUM_END
 };
+
+enum class EState
+{
+	IDLE,
+	ACTIVE,
+	FINISH
+};

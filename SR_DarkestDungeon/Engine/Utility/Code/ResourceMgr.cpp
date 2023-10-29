@@ -418,10 +418,56 @@ void CResourceMgr::WealdDungeonTextureLoad()
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_door.Opened.png", 1, bDefault);
 
 	// 골동품
+	CreateNewTexture(L"Weald_Spiderweb", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/cosmic_spiderweb/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_Spiderweb_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/cosmic_spiderweb/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_heirloom_chest", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/heirloom_chest/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_heirloom_chest_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/heirloom_chest/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_lost_luggage", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/lost_luggage/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_lost_luggage_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/lost_luggage/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_mummified_remains", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/mummified_remains/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_mummified_remains_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/mummified_remains/investigate/armatureName_investigate_0.png", 1, bDefault);
+	
+	CreateNewTexture(L"Weald_travellers_tent_tutorial", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/travellers_tent_tutorial/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_travellers_tent_tutorial_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Weald/travellers_tent_tutorial/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	// 함정
+	CreateNewTexture(L"Weald_Traps_Remains", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Traps/Weald/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_Traps_Sprung", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Traps/Weald/sprung/armatureName_sprung_%d.png", 66, bDefault);
+
+	// 장애물
+	CreateNewTexture(L"Weald_Obstacles_Remains", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Obstacles/Weald/armatureName_clear_00.png", 1, bDefault);
+
+	CreateNewTexture(L"Weald_Obstacles", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Obstacles/Weald/armatureName_clear_%d.png", 60, bDefault);
 
 	// 배경이미지
+	CreateNewTexture(L"Weald_Image_Wagon", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.tutorial.room_wall.effigy_0.png", 1, bDefault);
 
-
+	CreateNewTexture(L"Weald_Image_PoisonRiver", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.room_wall.poisonriver.png", 1, bDefault);
 	
 	// SkyBox
 	CreateNewTexture(L"Com_Weald_SkyBoxTexture", TEX_CUBE,

@@ -17,6 +17,10 @@
 #define MOVINGBACKINTERVEL	0.2f		// 돌아가는 시간
 #define ATTACKSKILLMOVINGINTERVEL 0.3f	// 공격 스킬을 사용하며 움직이는 시간
 
+#define TRAPACTIVETIME 1.f
+#define OBSTACLECLEARTIME 1.2f
+#define CURIOACTIVETIME 1.f
+
 #define	HITTEDTIME	1.5f
 #define	ATTACKTIME	1.5f
 #define CHANGETIME	1.f

@@ -22,6 +22,12 @@
 #include"Village.h"
 
 #include "WealdDungeonDoor.h"
+#include "Weald_Trap.h"
+#include "Weald_Obstacle.h"
+#include "Weald_Curio_Chest.h"
+#include "Weald_Curio_Luggage.h"
+#include "Weald_Curio_Spider.h"
+#include "Weald_Curio_Tent.h"
 
 #include "BrigandCutthroat.h"
 #include "BrigandFusilier.h"
@@ -93,21 +99,19 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		m_pRoom3->BattleUpdate(fTimeDelta);
 	}
 
-	//// 방 1에 들어가면
-	//if (GetAsyncKeyState('8') & 0x8000) {
-	//	m_pWealdDungeon->CurrentRoom(0);
-	//	m_bTestBattle = true;
-	//}
-
+	// 방 1에 들어가면
+	if (GetAsyncKeyState('8') & 0x8000) {
+		m_pWealdDungeon->CurrentRoom(3);
+		m_bTestBattle = true;
+	}
+	if (m_bTestBattle)
+	{
+		m_pRoom3->BattleUpdate(fTimeDelta);
+	}
 	// 방 2에 들어가면
 	if (GetAsyncKeyState('9') & 0x8000) {
-		m_pWealdDungeon->CurrentRoom(1);
+		m_pWealdDungeon->CurrentRoom(10);
 	}
-
-	//if (m_bTestBattle)
-	//{
-	//	m_pRoom3->BattleUpdate(fTimeDelta);
-	//}
 
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
@@ -222,6 +226,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	m_pDoor->SetAngle(_vec3(0.f, 0.f, 0.f));
 	m_pDoor->SetScale(_vec3(WEALD_PATHSIZEX / 2.f + 1.5f, WEALD_PATHSIZEX / 2.f + 1.5f, 1.f));
 	m_pLayer->CreateGameObject(L"OBJ_Door", m_pDoor);
+
+	// 배경(데코)
+	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Weald_Image_Wagon", 1, true);
+	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 4.5f, WEALD_WALLSIZEUPY + 8.f, -100.f));
+	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	m_pWall->SetScale(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX, (WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX) / 192.f * 72.f, 1.f));
+	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 
 	// 진입방 벽
 	for (int i = 0; i < 2; i++)
@@ -640,7 +651,44 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 
 	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
 
-	// GameObject
+	// GameObjects
+	// 함정
+	shared_ptr<CGameObject>m_pTrap1 = make_shared<CWeald_Trap>(m_pGraphicDev);
+	m_pTrap1->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY + 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 3.f));
+	m_pTrap1->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pTrap1->SetScale(_vec3(WEALD_PATHSIZEX / 3.f, WEALD_PATHSIZEX / 3.f, 1.f));
+
+	// 장애물
+	shared_ptr<CGameObject>m_pObstacle1 = make_shared<CWeald_Obstacle>(m_pGraphicDev);
+	m_pObstacle1->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY + 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 6.f));
+	m_pObstacle1->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pObstacle1->SetScale(_vec3(WEALD_PATHSIZEX, WEALD_PATHSIZEX, 1.f));
+
+	// 골동품
+	// 텐트
+	shared_ptr<CGameObject>m_pCurioT1 = make_shared<CWeald_Curio_Tent>(m_pGraphicDev);
+	m_pCurioT1->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY - 2.f, WEALD_WALLSIZEX * 1.f));
+	m_pCurioT1->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pCurioT1->SetScale(_vec3(WEALD_WALLSIZEX/3.f, (WEALD_WALLSIZEX / 3.f) / 480.f * 302.f, 1.f));
+
+	// 거미줄
+	shared_ptr<CGameObject>m_pCurioS1 = make_shared<CWeald_Curio_Spider>(m_pGraphicDev);
+	m_pCurioS1->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY - 2.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 9.f));
+	m_pCurioS1->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pCurioS1->SetScale(_vec3(WEALD_WALLSIZEX / 4.f, (WEALD_WALLSIZEX / 4.f) / 268.f * 340.f, 1.f));
+
+	// 가보상자
+	shared_ptr<CGameObject>m_pCurioC1 = make_shared<CWeald_Curio_Chest>(m_pGraphicDev);
+	m_pCurioC1->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 2.f, WEALD_WALLSIZEUPY - 2.5f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 12.f));
+	m_pCurioC1->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pCurioC1->SetScale(_vec3(WEALD_WALLSIZEX / 5.f, (WEALD_WALLSIZEX / 5.f) / 279.f * 220.f, 1.f));
+
+	// 독성상자
+	shared_ptr<CGameObject>m_pCurioL1 = make_shared<CWeald_Curio_Luggage>(m_pGraphicDev);
+	m_pCurioL1->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY - 2.5f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 17.f));
+	m_pCurioL1->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pCurioL1->SetScale(_vec3(WEALD_WALLSIZEX / 5.f, (WEALD_WALLSIZEX / 5.f) / 276.f * 182.f, 1.f));
+
 	// monsters
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
@@ -661,7 +709,20 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
 
 	// 방에 GameObject 넣기
-	// creatures
+	// Room1
+	vector<shared_ptr<CGameObject>> Room1_v1;
+	Room1_v1.push_back(m_pCurioT1);
+	m_pRoom1->PushGameObjectVector(Room1_v1);
+
+	// Room2
+	vector<shared_ptr<CGameObject>> Room2_v1;
+	Room2_v1.push_back(m_pTrap1);
+	Room2_v1.push_back(m_pObstacle1);
+	Room2_v1.push_back(m_pCurioS1);
+	m_pRoom2->PushGameObjectVector(Room2_v1);
+	
+	// Room3
+	// objects
 	vector<shared_ptr<CGameObject>> Room3_v1;
 	Room3_v1.push_back(m_pBrigandCutthroat_1);
 	Room3_v1.push_back(m_pBrigandBloodletter1);
@@ -676,12 +737,29 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room3_v1.push_back(m_pHighwayman);
 	Room3_v1.push_back(m_pJester);
 	Room3_v1.push_back(m_pVestal);
+	Room3_v1.push_back(m_pCurioC1);
 
 	//Room3_v1.push_back(m_pBoneDefender1);
 	//Room3_v1.push_back(m_pBoneSoldier_1);
 	//Room3_v1.push_back(m_pBoneCourtier_1);
 	//Room3_v1.push_back(m_pBoneSoldier_2);
 	m_pRoom3->PushGameObjectVector(Room3_v1);
+
+	// creatures
+	vector<shared_ptr<CGameObject>> Room3_v4;
+	Room3_v4.push_back(m_pBrigandCutthroat_1);
+	Room3_v4.push_back(m_pBrigandBloodletter1);
+	Room3_v4.push_back(m_pBrigandCutthroat_2);
+	Room3_v4.push_back(m_pBrigandFusilier_1);
+
+	Room3_v4.push_back(m_pSheldBreaker1);
+	//Room3_v1.push_back(m_pSheldBreaker2);
+	//Room3_v1.push_back(m_pSheldBreaker3);
+	//Room3_v1.push_back(m_pSheldBreaker4);
+
+	Room3_v4.push_back(m_pHighwayman);
+	Room3_v4.push_back(m_pJester);
+	Room3_v4.push_back(m_pVestal);
 
 	// heroes
 	vector<shared_ptr<CGameObject>> Room3_v2;
@@ -710,10 +788,15 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// 배틀시스템 넣기
 	shared_ptr<CBattleSystem> pRoom3_Battle = make_shared<CBattleSystem>();
 	//pRoom3_Battle->Ready();
-	pRoom3_Battle->PushCreaturesVector(Room3_v1);
+	pRoom3_Battle->PushCreaturesVector(Room3_v4);
 	pRoom3_Battle->PushHeroesVector(Room3_v2);
 	pRoom3_Battle->PushMonstersVector(Room3_v3);
 	m_pRoom3->SetBattleSystem(pRoom3_Battle);
+
+	// Room4
+	vector<shared_ptr<CGameObject>> Room4_v1;
+	Room4_v1.push_back(m_pCurioL1);
+	m_pRoom4->PushGameObjectVector(Room4_v1);
 
 	// 던전에 방 넣기
 	vector<shared_ptr<CDungeonRoom>> Dungeon1_v;
@@ -728,6 +811,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	pRoom3_Battle->FormBattlePosition(Room3_v2, Room3_v3,
 		-PI / 2.f, -PI / 2.f, _vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 10.f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f));
 
+	// 현재 active 방
 	m_pWealdDungeon->CurrentRoom(1);
 
 	// Layer에 GameObject 넣기
@@ -746,7 +830,12 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
 	m_pLayer->CreateGameObject(L"Obj_Jester", m_pJester);
 	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
-
+	m_pLayer->CreateGameObject(L"OBJ_Trap", m_pTrap1);
+	m_pLayer->CreateGameObject(L"OBJ_Obstacle", m_pObstacle1);
+	m_pLayer->CreateGameObject(L"OBJ_CurioTent", m_pCurioT1);
+	m_pLayer->CreateGameObject(L"OBJ_CurioSpider", m_pCurioS1);
+	m_pLayer->CreateGameObject(L"OBJ_CurioChest", m_pCurioC1);
+	m_pLayer->CreateGameObject(L"OBJ_CurioLuggage", m_pCurioL1);
 
 //PlayerObj
 	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
