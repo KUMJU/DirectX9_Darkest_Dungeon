@@ -12,7 +12,7 @@ class ENGINE_DLL CResourceMgr
 private:
 	explicit CResourceMgr();
 	~CResourceMgr();
-
+		
 public:
 	//초기 세팅
 	void ReadyResource(LPDIRECT3DDEVICE9 _pGraphicDev);

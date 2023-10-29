@@ -645,7 +645,7 @@ void CBattleSystem::AutoBattleKeyInput()
 void CBattleSystem::Battle(int _iNum)
 {
 	int iNum = 0;
-	if(_iNum > 1)
+	if(_iNum >= 1)
 		iNum = _iNum - 1;
 	else
 		iNum = rand() % dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkillNum();

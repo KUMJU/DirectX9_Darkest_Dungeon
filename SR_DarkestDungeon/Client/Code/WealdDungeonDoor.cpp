@@ -75,6 +75,9 @@ void CWealdDungeonDoor::GetInteractionKey(const _float& fTimeDelta)
 	{
 		m_bInteracting = true;
 
+		// 플레이어 행동 막기
+		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
+
 		// 텍스처 또는 애니메이션 변경
 		ChangeTexture();
 

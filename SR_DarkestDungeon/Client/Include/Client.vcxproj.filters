@@ -43,6 +43,12 @@
     <ClCompile Include="..\Code\Gambling.cpp" />
     <ClCompile Include="..\Code\EnvironmentObj.cpp" />
     <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />
+    <ClCompile Include="..\Code\Weald_Trap.cpp" />
+    <ClCompile Include="..\Code\Weald_Obstacle.cpp" />
+    <ClCompile Include="..\Code\Weald_Curio_Spider.cpp" />
+    <ClCompile Include="..\Code\Weald_Curio_Chest.cpp" />
+    <ClCompile Include="..\Code\Weald_Curio_Luggage.cpp" />
+    <ClCompile Include="..\Code\Weald_Curio_Tent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -92,6 +98,12 @@
     <ClInclude Include="..\Header\Gambling.h" />
     <ClInclude Include="..\Header\CEnvironmentObj.h" />
     <ClInclude Include="..\Header\WealdDungeonDoor.h" />
+    <ClInclude Include="..\Header\Weald_Trap.h" />
+    <ClInclude Include="..\Header\Weald_Obstacle.h" />
+    <ClInclude Include="..\Header\Weald_Curio_Spider.h" />
+    <ClInclude Include="..\Header\Weald_Curio_Chest.h" />
+    <ClInclude Include="..\Header\Weald_Curio_Luggage.h" />
+    <ClInclude Include="..\Header\Weald_Curio_Tent.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
