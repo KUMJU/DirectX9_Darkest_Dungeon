@@ -284,7 +284,7 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Stun.png", 1, bDefault);
 		CreateNewTexture(L"Vestal_DivineGrace", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1, bDefault);
-		CreateNewTexture(L"Vestal_DevineComfort", TEX_NORMAL,
+		CreateNewTexture(L"Vestal_DivineComfort", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1, bDefault);
 
 		CreateNewTexture(L"Vestal_Defend", TEX_NORMAL,
@@ -401,6 +401,7 @@ void CResourceMgr::WealdDungeonTextureLoad()
 {
 	_bool bDefault = true;
 
+	// Environment
 	CreateNewTexture(L"Com_Weald_FloorTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/forest_Tiles.png", 1 , bDefault);
 
@@ -409,6 +410,19 @@ void CResourceMgr::WealdDungeonTextureLoad()
 	CreateNewTexture(L"Com_Weald_BackWallTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_mid.png", 1, bDefault);
 
+
+	// 문
+	CreateNewTexture(L"Weald_Door_Closed", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_door.basic.png", 1, bDefault);
+	CreateNewTexture(L"Weald_Door_Opened", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_door.Opened.png", 1, bDefault);
+
+	// 골동품
+
+	// 배경이미지
+
+
+	
 	// SkyBox
 	CreateNewTexture(L"Com_Weald_SkyBoxTexture", TEX_CUBE,
 		L"../Bin/Resource/Image/SkyBox/WealdSkyBox.dds", 1, bDefault);

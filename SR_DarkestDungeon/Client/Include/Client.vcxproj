@@ -180,6 +180,7 @@
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\Tervarn.h" />
+    <ClInclude Include="..\Header\WealdDungeonDoor.h" />
     <ClInclude Include="..\Header\Weald_Dungeon.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\pch.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="..\Code\Outside.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\Tervarn.cpp" />
+    <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />
     <ClCompile Include="..\Code\Weald_Dungeon.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />

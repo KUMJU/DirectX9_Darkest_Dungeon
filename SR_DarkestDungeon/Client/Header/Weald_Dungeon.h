@@ -33,6 +33,8 @@ private:
 	shared_ptr<CDungeonSystem> m_pWealdDungeon = {};	// 带傈1
 	shared_ptr<CDungeonRoom> m_pRoom1 = {};				// 规1
 	shared_ptr<CDungeonRoom> m_pRoom2 = {};				// 规2
+	shared_ptr<CDungeonRoom> m_pRoom3 = {};				// 规3
+	shared_ptr<CDungeonRoom> m_pRoom4 = {};				// 规4
 
 	_bool				m_bTestBattle = false;
 

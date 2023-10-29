@@ -15,7 +15,7 @@ void CDungeonSystem::CurrentRoom(int _iNum)
 	if (size(m_vDungeonRoom) == 0) return;
 	for (int i = 0; i < size(m_vDungeonRoom); i++)
 	{
-		if (i == _iNum)
+		if (i == (_iNum - 1))
 		{
 			(m_vDungeonRoom)[i]->MakeAbleAllObject();
 		}

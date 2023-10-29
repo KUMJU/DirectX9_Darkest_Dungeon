@@ -42,6 +42,7 @@
     <ClCompile Include="..\Code\Decoration.cpp" />
     <ClCompile Include="..\Code\Gambling.cpp" />
     <ClCompile Include="..\Code\EnvironmentObj.cpp" />
+    <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="..\Header\Decoration.h" />
     <ClInclude Include="..\Header\Gambling.h" />
     <ClInclude Include="..\Header\CEnvironmentObj.h" />
+    <ClInclude Include="..\Header\WealdDungeonDoor.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

@@ -1,9 +1,11 @@
 #pragma once
 
 // Weald Dungeon
-#define WEALD_WALLSIZEX 12.f
+#define WEALD_WALLSIZEX 16.f
 #define WEALD_WALLSIZEUPY 5.f
 #define WEALD_PATHSIZEX 18.f
+
+#define	WEALD_BACKWALLSIZEY 
 
 // Time
 #define BATTLEINTERVEL 2.f				// 턴 전투간 시간
