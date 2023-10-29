@@ -284,7 +284,7 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Stun.png", 1, bDefault);
 		CreateNewTexture(L"Vestal_DivineGrace", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1, bDefault);
-		CreateNewTexture(L"Vestal_DevineComfort", TEX_NORMAL,
+		CreateNewTexture(L"Vestal_DivineComfort", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Heal.png", 1, bDefault);
 
 		CreateNewTexture(L"Vestal_Defend", TEX_NORMAL,
@@ -401,6 +401,7 @@ void CResourceMgr::WealdDungeonTextureLoad()
 {
 	_bool bDefault = true;
 
+	// Environment
 	CreateNewTexture(L"Com_Weald_FloorTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/forest_Tiles.png", 1 , bDefault);
 
@@ -409,6 +410,19 @@ void CResourceMgr::WealdDungeonTextureLoad()
 	CreateNewTexture(L"Com_Weald_BackWallTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_mid.png", 1, bDefault);
 
+
+	// 문
+	CreateNewTexture(L"Weald_Door_Closed", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_door.basic.png", 1, bDefault);
+	CreateNewTexture(L"Weald_Door_Opened", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_door.Opened.png", 1, bDefault);
+
+	// 골동품
+
+	// 배경이미지
+
+
+	
 	// SkyBox
 	CreateNewTexture(L"Com_Weald_SkyBoxTexture", TEX_CUBE,
 		L"../Bin/Resource/Image/SkyBox/WealdSkyBox.dds", 1, bDefault);
@@ -506,23 +520,60 @@ void CResourceMgr::VillageTextureLoad()
 	CreateNewTexture(L"Village_Door_Close", TEX_NORMAL,
 		L"../Bin/Resource/Image/Village/Interaction/Door/closed.png", 1, bDefault);
 
-	//바닥
-	CreateNewTexture(L"Village_FloorTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/Floor/WholeTerrain2.jpg", 1, bDefault);
-	
-	//가장자리 벽
-	CreateNewTexture(L"Com_Village_Wall_Texture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/BackGround/forest_skirt_%d.png", 3, bDefault);
+	// 마을
+	{
+		//바닥
+		CreateNewTexture(L"Village_FloorTexture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Floor/WholeTerrain2.jpg", 1, bDefault);
 
-	//외곽 건물 그림자
-	CreateNewTexture(L"Com_Village_Back_Texture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/BackGround/city_back_%d.png", 3, bDefault);
+		//외곽 나무 그림자
+		CreateNewTexture(L"Com_Village_Wall_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/BackGround/forest_skirt_%d.png", 3, bDefault);
 
-	// SkyBox
-	CreateNewTexture(L"Village_SkyBoxTexture", TEX_CUBE,
-		L"../Bin/Resource/Image/SkyBox/VillageSkyBox.dds", 1, bDefault);
+		//외곽 건물 그림자
+		CreateNewTexture(L"Com_Village_Back_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/BackGround/city_back_%d.png", 3, bDefault);
 
-	CreateNewTexture(L"Tervarn_Outside", TEX_NORMAL,
-		L"../Bin/Resource/Image/Village/Facilities/OutSide/Tavern/town_tavern_level03/armatureName_active_000.png", 1, bDefault);
+		//플레이어 양옆 건물
+		CreateNewTexture(L"Com_Village_Left_Buildings_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Wall/BG_Buildings_Left.png", 1, bDefault);
+		CreateNewTexture(L"Com_Village_Right_Buildings_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Wall/BG_Buildings_Right.png", 1, bDefault);
 
+		// SkyBox
+		CreateNewTexture(L"Village_SkyBoxTexture", TEX_CUBE,
+			L"../Bin/Resource/Image/SkyBox/VillageSkyBox.dds", 1, bDefault);
+	}
+
+	// 상호작용 건물 외부
+	{
+		// 여관
+		CreateNewTexture(L"Tervarn_Outside", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Facilities/OutSide/Tavern/town_tavern_level03/armatureName_active_000.png", 1, bDefault);
+
+		// 역마차
+		CreateNewTexture(L"StageCoach_Outside", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Facilities/OutSide/Stagecoach/town_stage_coach_level01/idle.png", 1, bDefault);
+
+		// 훈련소
+		CreateNewTexture(L"Guild_Outside", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Facilities/OutSide/Guild/town_guild_level03/idle.png", 1, bDefault);
+
+		// 상점
+		CreateNewTexture(L"Store_Outside", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Facilities/OutSide/Nomad Wagon/town_nomad_wagon_level03/idle.png", 1, bDefault);
+
+	}
+
+	// 상호작용 건물 내부
+	{
+		CreateNewTexture(L"Inside_FloorTexture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Floor/city_gate_floor_tile.png", 1, bDefault);
+
+		CreateNewTexture(L"Wood_Wall_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Wall/Wood_Wall.png", 1, bDefault);
+
+		CreateNewTexture(L"Gambling_Table_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Facilities/tavern/Gambling.png", 1, bDefault);
+	}
 }

@@ -2,13 +2,8 @@
 #include "Wall.h"
 #include"Export_Utility.h"
 
-CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev)
-{
-}
-
-CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName)
-	: Engine::CGameObject(pGraphicDev), m_strKeyName(_KeyName)
+CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName, _int _iCnt, _bool _bRandom)
+	: Engine::CGameObject(pGraphicDev), m_strKeyName(_KeyName), m_iCnt(_iCnt), m_bRandom(_bRandom)
 {
 }
 
@@ -23,9 +18,6 @@ CWall::~CWall()
 
 HRESULT CWall::ReadyGameObject()
 {
-	if (m_strKeyName == L"")
-		m_vScale = { 6.f, 6.f, 6.f };
-
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
 	
@@ -34,18 +26,21 @@ HRESULT CWall::ReadyGameObject()
 	if (PI / 2.f == m_vAngle.y)
 	{
 		m_bHorizontal = true;
-		m_pColliderCom->SetScale({ 12.f, 12.f, 1.f });
+		m_pColliderCom->SetScale({ m_vScale.x * 2.f, m_vScale.y * 2.f, m_vScale.z * 2.f });
 	}
 	else
 	{
 		m_bHorizontal = false;
-		m_pColliderCom->SetScale({ 1.f, 12.f, 12.f });
+		m_pColliderCom->SetScale({ m_vScale.z * 2.f, m_vScale.x * 2.f, m_vScale.y * 2.f });
 	}
 
-	if (m_strKeyName != L"")
-		m_pColliderCom->SetScale({ m_vScale.x * 2, m_vScale.y * 2, m_vScale.z * 2 });
 	m_pTransformCom->Rotation(ROT_Y, PI /2.f);
-	m_iNum = rand() % 9;
+	
+	if (m_bRandom)
+		m_iNum = rand() % m_iCnt;
+
+	else
+		m_iNum = m_iCnt - 1;
 
 	m_eCollideID = ECollideID::WALL;
 	m_bColliding = true;
@@ -75,23 +70,25 @@ void CWall::RenderGameObject()
 
 	m_pTextureCom->SetTextureKey(m_strKeyName, TEX_NORMAL);
 
-	if (m_strKeyName == L"Com_Village_Back_Texture")
-	{
-		m_pTextureCom->SetTexture(m_iNum / 3);
-	}
-	else if (m_strKeyName == L"Com_Village_Left_Buildings_Texture" || m_strKeyName == L"Com_Village_Right_Buildings_Texture")
-	{
-		m_pTextureCom->SetTexture();
-	}
-	else if (m_strKeyName == L"Com_Weald_BackWallTexture")
-	{
-		m_pTextureCom->SetTexture(0);
-	}
-	else
-	{
-		m_pTextureCom->SetTextureKey(L"Com_Weald_WallTexture", TEX_NORMAL);
-		m_pTextureCom->SetTexture(m_iNum);
-	}
+	//if (m_strKeyName == L"Com_Village_Back_Texture")
+	//{
+	//	m_pTextureCom->SetTexture(m_iNum / 3);
+	//}
+	//else if (m_strKeyName == L"Com_Village_Left_Buildings_Texture" || m_strKeyName == L"Com_Village_Right_Buildings_Texture")
+	//{
+	//	m_pTextureCom->SetTexture();
+	//}
+	//else if (m_strKeyName == L"Com_Weald_BackWallTexture")
+	//{
+	//	m_pTextureCom->SetTexture(0);
+	//}
+	//else
+	//{
+	//	m_pTextureCom->SetTextureKey(L"Com_Weald_WallTexture", TEX_NORMAL);
+	//	m_pTextureCom->SetTexture(m_iNum);
+	//}
+
+	m_pTextureCom->SetTexture(m_iNum);
 
 	m_pBufferCom->RenderBuffer();
 	m_pColliderCom->RenderCollider();

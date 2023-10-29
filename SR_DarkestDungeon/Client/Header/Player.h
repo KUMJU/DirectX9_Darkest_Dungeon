@@ -39,7 +39,13 @@ public:
 	virtual _int UpdateGameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdateGameObject() override;
 	virtual void RenderGameObject() override;
+
+public:
 	void			SetInventory(shared_ptr<CInventory> _pInventory) { m_pInventory = _pInventory; }
+	_bool			GetRoomChange() { return m_bRoomChange; }
+	void			SetRoomChange(_bool _bRoomChange) { m_bRoomChange = _bRoomChange; }
+	_int			GetCurrentRoom() { return m_iCurrentRoom; }
+	void			SetCurrentRoom(_int _iCurrentRoom) { m_iCurrentRoom = _iCurrentRoom; }
 
 private:
 	void			AddComponent();
@@ -72,6 +78,9 @@ private:
 
 	_bool		m_bMoveLock[4] = { false };
 	_bool		m_bMoveSave[4] = { false };
+
+	_bool		m_bRoomChange = false;
+	_int		m_iCurrentRoom = 10;
 
 private:
 	virtual void	Free();

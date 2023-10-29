@@ -160,6 +160,7 @@
     <ClInclude Include="..\Header\CameraMgr.h" />
     <ClInclude Include="..\Header\BrigandFusilier.h" />
     <ClInclude Include="..\Header\CardGame.h" />
+    <ClInclude Include="..\Header\CEnvironmentObj.h" />
     <ClInclude Include="..\Header\Creature.h" />
     <ClInclude Include="..\Header\Decoration.h" />
     <ClInclude Include="..\Header\Define.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="..\Header\DungeonRoom.h" />
     <ClInclude Include="..\Header\DungeonSystem.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\Gambling.h" />
     <ClInclude Include="..\Header\Hero.h" />
     <ClInclude Include="..\Header\Highwayman.h" />
     <ClInclude Include="..\Header\Inside.h" />
@@ -178,6 +180,7 @@
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\Tervarn.h" />
+    <ClInclude Include="..\Header\WealdDungeonDoor.h" />
     <ClInclude Include="..\Header\Weald_Dungeon.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\pch.h" />
@@ -212,6 +215,8 @@
     <ClCompile Include="..\Code\DungeonRoom.cpp" />
     <ClCompile Include="..\Code\DungeonSystem.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\EnvironmentObj.cpp" />
+    <ClCompile Include="..\Code\Gambling.cpp" />
     <ClCompile Include="..\Code\Hero.cpp" />
     <ClCompile Include="..\Code\Highwayman.cpp" />
     <ClCompile Include="..\Code\Inside.cpp" />
@@ -223,6 +228,7 @@
     <ClCompile Include="..\Code\Outside.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\Tervarn.cpp" />
+    <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />
     <ClCompile Include="..\Code\Weald_Dungeon.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
