@@ -4,6 +4,9 @@
 #include"Export_System.h"
 #include"Inventory.h"
 #include "Wall.h"
+#include"UIMgr.h"
+#include"CameraMgr.h"
+#include"PickingMgr.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -53,6 +56,20 @@ void CPlayer::RenderGameObject()
 	m_pColliderCom->RenderCollider();
 }
 
+void CPlayer::SetInventory(shared_ptr<CInventory> _pInventory)
+{
+	m_pInventory = _pInventory;
+	m_pInventory->SetPlayer(dynamic_pointer_cast<CPlayer>(shared_from_this()));
+}
+
+void CPlayer::SetCurrentItem(EHandItem _eItem)
+{
+	if (m_pPlayerHand) {
+		m_pPlayerHand->SetCurrentItem(_eItem);
+		m_eCurrentItem = _eItem;
+	}
+}
+
 void CPlayer::AddComponent()
 {
 	shared_ptr<CComponent> pComponent;
@@ -83,10 +100,17 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		GetCursorPos(&ptMouse);
 		ScreenToClient(g_hWnd, &ptMouse);
 
-		int a = 5; 
+		_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
+
+		if (!result) {
+			CPickingMgr::GetInstance()->RayPicking(ptMouse.x, ptMouse.y);
+		}
 
 	}
 
+	if (GetAsyncKeyState('P') & 0x8000) {
+		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
+	}
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 		if (m_bMoveLock[1])
@@ -131,27 +155,6 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		ShakingHand();
 		m_fDeltaTime = fTimeDelta;
 		m_eLastMove = EPlayerMove::UP;
-	}
-
-	if (GetAsyncKeyState('1') & 0x8000) {
-
-		m_pPlayerHand->SetCurrentItem(EHandItem::SHOVEL);
-		m_eCurrentItem = EHandItem::SHOVEL;
-
-	}
-
-	if (GetAsyncKeyState('2') & 0x8000) {
-
-		m_pPlayerHand->SetCurrentItem(EHandItem::ANTI_VENOM);
-		m_eCurrentItem = EHandItem::ANTI_VENOM;
-
-
-	}
-
-	if (GetAsyncKeyState('3') & 0x8000) {
-
-		m_pPlayerHand->SetCurrentItem(EHandItem::BANDAGE);
-		m_eCurrentItem = EHandItem::BANDAGE;
 	}
 
 }

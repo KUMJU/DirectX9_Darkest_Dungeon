@@ -73,6 +73,9 @@
     <Filter Include="04. Manager\05. CollisionMgr">
       <UniqueIdentifier>{169d7455-8645-44d1-9546-371d12f359ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Manager\06. PickingMgr">
+      <UniqueIdentifier>{4005798a-2002-4e7e-8433-19cf82b6ae2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\SceneMgr.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Collider.cpp">
       <Filter>03. Component\03. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PickingMgr.cpp">
+      <Filter>04. Manager\06. PickingMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +218,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\Collider.h">
       <Filter>03. Component\03. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\PickingMgr.h">
+      <Filter>04. Manager\06. PickingMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

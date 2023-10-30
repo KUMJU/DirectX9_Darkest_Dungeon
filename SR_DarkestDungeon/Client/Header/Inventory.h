@@ -9,6 +9,13 @@ class CTexture;
 
 END
 
+class CPlayer;
+
+
+struct tagInvenInfo {
+	shared_ptr<CItem> pItem;
+	_int			  iCapacity;
+};
 
 class CInventory : public CUIObj
 {
@@ -22,32 +29,27 @@ public:
 	virtual void LateUpdateGameObject() override;
 	virtual void RenderGameObject() override;
 
+	
+	void SetPlayer(shared_ptr<CPlayer> _pPlayer) { m_pPlayer = _pPlayer; }
+
 public:
-	void InsertItem(shared_ptr<CItem> _pItem) {
-		if (m_itemList.size() <= 10) {
-			m_itemList.push_back(_pItem);
-			_pItem->AwakeGameObject();
-			_pItem->SetPos({ -182.f + (m_iTotalItemNum * 20.f) , -320.f ,0.f });
-			_pItem->SetScale({ 20.f, 38.f, 1.f });
-			_pItem->ReadyGameObject();
-			++m_iTotalItemNum;
+	void InsertItem(shared_ptr<CItem> _pItem);
+	void DeleteItem(tstring _strItmeName);
 
-		}
-	}
-
-	void DeleteItem() {
-
-	}
+	virtual void PickingUI(LONG _fX, LONG _fY) override;
 
 protected:
 	void	AddComponent();
 
 private:
 	shared_ptr<CTexture> m_pTextureCom;
-	list<shared_ptr<CGameObject>> m_itemList;
+	list<shared_ptr<tagInvenInfo>> m_itemList;
 
 	_int m_iTotalItemNum = 0;
 	_int m_iCurrentCursor = 0;
+
+
+	weak_ptr<CPlayer> m_pPlayer;
 
 };
 

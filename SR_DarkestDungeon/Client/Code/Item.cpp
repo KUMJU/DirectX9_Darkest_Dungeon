@@ -2,6 +2,8 @@
 #include"Item.h"
 #include"Export_Utility.h"
 #include"CameraMgr.h"
+#include"Export_System.h"
+#include"PickingMgr.h"
 
 CItem::CItem(LPDIRECT3DDEVICE9 _pGraphicDev)
 	:CGameObject(_pGraphicDev)
@@ -20,12 +22,12 @@ HRESULT CItem::ReadyGameObject()
 		m_pTransCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 	}
 
+	CPickingMgr::GetInstance()->AddList(shared_from_this());
 	return S_OK;
 }
 
 _int CItem::UpdateGameObject(const _float& fTimeDelta)
 {
-	KeyInput();
 	m_fTime = fTimeDelta;
 	_vec3 vPos;
 	m_pTransCom->GetInfo(INFO_POS, &vPos);
@@ -33,10 +35,6 @@ _int CItem::UpdateGameObject(const _float& fTimeDelta)
 
 	if (m_bOnField) {
 		AddRenderGroup(RENDERID::RENDER_ALPHA, shared_from_this());
-	}
-	else 
-	{
-		AddRenderGroup(RENDERID::RENDER_UI, shared_from_this());
 	}
 
 	_int iExit(0);
@@ -62,24 +60,13 @@ void CItem::RenderGameObject()
 	if (m_bOnField) {
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	}
-	else {
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-	}
 
 	m_pTextureCom->SetTexture(0);
 	m_pBufCom->RenderBuffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->GetWorld());
-
 	if (m_bOnField) {
+
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	}
-	else {
-		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	}
 	m_pColliderCom->RenderCollider();
 }
@@ -108,57 +95,70 @@ void CItem::GetUITextureKeyName(const tstring& _strOriginName)
 
 	if (L"Player_Item_Antivenom" == _strOriginName) {
 		strKey = L"Item_UI_Antivenom";
+		m_eItemState = EHandItem::ANTI_VENOM;
 	}
 	else if(L"Player_Item_Shovel" == _strOriginName) {
 		strKey = L"Item_UI_Shovel";
+		m_eItemState = EHandItem::SHOVEL;
+
 	}
 	else if (L"Player_Item_Bandage" == _strOriginName) {
 		strKey = L"Item_UI_Bandage";
+		m_eItemState = EHandItem::BANDAGE;
+
 	}
 
 
 	m_strItemKey = strKey;
 }
 
-void CItem::KeyInput()
+void CItem::PickingObj()
 {
-	if (GetAsyncKeyState('O') & 0x8000) {
-		_vec3 vPos;
-		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
-		vPos.z -= 2.f;
-		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, vPos);
-	}
 
-	if (GetAsyncKeyState('P') & 0x8000) {
-		_vec3 vPos;
-		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
-		vPos.z -= 10.f;
-		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, vPos);
-	}
-
-	if (GetAsyncKeyState('L') & 0x8000) {
-		CCameraMgr::GetInstance()->SetFPSMode();
-	}
-
-	if (GetAsyncKeyState('K') & 0x8000) {
-		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
-	}
-
-	if (GetAsyncKeyState('I') & 0x8000) {
-		_vec3 vPos, vDst;
-		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
-		vDst = vPos;
-
-		vDst.x += 20.f;
-
-		CCameraMgr::GetInstance()->CameraOrbit(ECameraMode::ORBIT, vDst, vPos);
-	}
-
-	if (GetAsyncKeyState('U') & 0x8000) {
-		CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.1f);
-	}
+	m_bActive = false;
 
 }
+
+//
+//void CItem::KeyInput()
+//{
+//	if (GetAsyncKeyState('O') & 0x8000) {
+//		_vec3 vPos;
+//		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
+//		vPos.z -= 2.f;
+//		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, vPos);
+//	}
+//
+//	if (GetAsyncKeyState('P') & 0x8000) {
+//		_vec3 vPos;
+//		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
+//		vPos.z -= 10.f;
+//		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, vPos);
+//	}
+//
+//	if (GetAsyncKeyState('L') & 0x8000) {
+//		CCameraMgr::GetInstance()->SetFPSMode();
+//	}
+//
+//	if (GetAsyncKeyState('K') & 0x8000) {
+//		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
+//	}
+//
+//	if (GetAsyncKeyState('I') & 0x8000) {
+//		_vec3 vPos, vDst;
+//		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
+//		vDst = vPos;
+//
+//		vDst.x += 20.f;
+//
+//		CCameraMgr::GetInstance()->CameraOrbit(ECameraMode::ORBIT, vDst, vPos);
+//	}
+//
+//	if (GetAsyncKeyState('U') & 0x8000) {
+//		CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.1f);
+//	}
+//
+//}
 
 void CItem::AddComponent()
 {

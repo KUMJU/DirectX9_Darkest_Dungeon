@@ -160,6 +160,7 @@
     <ClInclude Include="..\..\Header\GameMgr.h" />
     <ClInclude Include="..\..\Header\GameObject.h" />
     <ClInclude Include="..\..\Header\Layer.h" />
+    <ClInclude Include="..\..\Header\PickingMgr.h" />
     <ClInclude Include="..\..\Header\RcTex.h" />
     <ClInclude Include="..\..\Header\Renderer.h" />
     <ClInclude Include="..\..\Header\ResourceMgr.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="..\Code\GameMgr.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
     <ClCompile Include="..\Code\Layer.cpp" />
+    <ClCompile Include="..\Code\PickingMgr.cpp" />
     <ClCompile Include="..\Code\RcTex.cpp" />
     <ClCompile Include="..\Code\Renderer.cpp" />
     <ClCompile Include="..\Code\ResourceMgr.cpp" />

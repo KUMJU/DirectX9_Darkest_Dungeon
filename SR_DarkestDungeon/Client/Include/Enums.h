@@ -10,3 +10,11 @@ enum class EAttackType {
 	STRESS,			// ½ºÆ®·¹½º
 	ENUM_END
 };
+
+enum class EHandItem {
+	SHOVEL,			//»ð
+	ANTI_VENOM,		//ÇØµ¶Á¦
+	KEYS,			//¿­¼è
+	BANDAGE,		//ºØ´ë
+	ENUM_END	
+};

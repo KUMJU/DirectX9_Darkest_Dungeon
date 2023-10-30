@@ -84,7 +84,7 @@ public:
 		m_pVecSkill = _vVec;
 	}
 
-	_int	GetSkillNum() { return size(m_pVecSkill); }
+	_int	GetSkillNum() { return (_int)size(m_pVecSkill); }
 
 	_bool	GetMoving() { return m_bMoving; }
 	void	SetMoving(_bool _bMoving) { m_bMoving = _bMoving; }

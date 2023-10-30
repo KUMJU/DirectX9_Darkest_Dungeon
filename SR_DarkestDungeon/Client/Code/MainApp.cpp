@@ -4,6 +4,8 @@
 #include"Weald_Dungeon.h"
 #include "Village.h"
 #include"CameraMgr.h"
+#include"UIMgr.h"
+#include"PickingMgr.h"
 
 CMainApp::CMainApp()
 {
@@ -22,8 +24,12 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	}
 
+	//I
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
 	CResourceMgr::GetInstance()->BaseTextureLoad();
+	CResourceMgr::GetInstance()->UITextureLoad();
+
+	CPickingMgr::GetInstance()->ReadyPickingMgr(m_pGraphicDev);
 
     shared_ptr<CScene> pMainLogo = make_shared<CWeald_Dungeon>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
@@ -91,6 +97,8 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 void CMainApp::Free()
 {
+	CPickingMgr::DestroyInstance();
+	CUIMgr::DestroyInstance();
 	CCameraMgr::DestroyInstance();
 	Engine::Release_Utility();
 	Engine::Release_System();

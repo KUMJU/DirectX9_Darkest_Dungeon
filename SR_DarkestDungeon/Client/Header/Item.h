@@ -40,9 +40,12 @@ public:
 	//플로팅 아이템 텍스쳐 키값을 통해 UI 텍스쳐 키값을 반환받음
 	void GetUITextureKeyName(const tstring& _strOriginName);
 	tstring GetItemKeyName() { return m_strItemKey; }
+	
+	EHandItem GetItemTypeEnum() { return m_eItemState; }
 
-	//TestCode
-	void KeyInput();
+	virtual void PickingObj() override;
+	
+	//void KeyInput();
 
 protected:
 	void AddComponent();
@@ -54,14 +57,13 @@ private:
 	shared_ptr<CTransform> m_pTransCom = nullptr;
 	shared_ptr<CRcTex> m_pBufCom = nullptr;
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
-	shared_ptr<CCollider> m_pColliderCom = nullptr;
 
 private:
 	//Member variable
 	tstring m_strItemKey = L"";
 	_bool	m_bOnField = true; // 필드에 있는 아이템인지 인벤토리에 있는 아이템인지 식별
 	_vec3	m_vPosition;
-
+	EHandItem m_eItemState = EHandItem::ENUM_END;
 
 	_float m_fTime = 0.f;
 	_float m_CurrentDir = 1.f;
