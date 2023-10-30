@@ -28,6 +28,12 @@ CCollider::~CCollider()
 {
 }
 
+void CCollider::GetMinMax(_vec3& vMin, _vec3& vMax)
+{
+    vMin = { m_vPos->x - m_vScale.x / 2.f ,m_vPos->y - m_vScale.y / 2.f ,m_vPos->z - m_vScale.z / 2.f };
+    vMax = { m_vPos->x + m_vScale.x / 2.f ,m_vPos->y + m_vScale.y / 2.f ,m_vPos->z + m_vScale.z / 2.f };
+}
+
 void CCollider::RenderCollider(void)
 {
     if (m_bVisible)

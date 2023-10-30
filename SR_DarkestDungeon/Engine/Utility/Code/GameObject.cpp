@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include"Component.h"
+#include"Collider.h"
 
 CGameObject::CGameObject() : m_pGraphicDev(nullptr)
 {
@@ -58,6 +59,13 @@ void CGameObject::LateUpdateGameObject()
 
 void CGameObject::AddComponent()
 {
+}
+
+void CGameObject::GetMinMaxPos(_vec3& vMin , _vec3& vMax )
+{
+	if (m_pColliderCom != nullptr)
+		m_pColliderCom->GetMinMax(vMin, vMax);
+
 }
 
 void CGameObject::SetBillBoard(_matrix& _matWorld)

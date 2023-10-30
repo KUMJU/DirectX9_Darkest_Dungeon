@@ -2,14 +2,6 @@
 
 #include"GameObject.h"
 
-enum class EHandItem {
-	SHOVEL,
-	ANTI_VENOM,
-	KEYS,
-	BANDAGE,
-	ENUM_END
-};
-
 BEGIN(Engine)
 
 class CRcTex;

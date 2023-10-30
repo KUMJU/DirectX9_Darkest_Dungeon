@@ -34,6 +34,7 @@ public:
 public:
 	//Create Texture Function
 	void BaseTextureLoad();
+	void UITextureLoad();
 	void WealdDungeonTextureLoad();
 	void VillageTextureLoad();
 

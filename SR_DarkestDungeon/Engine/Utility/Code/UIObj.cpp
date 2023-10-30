@@ -11,6 +11,7 @@ CUIObj::~CUIObj()
 
 HRESULT CUIObj::ReadyGameObject()
 {
+	CalculateUIRect();
 	return S_OK;
 }
 
@@ -45,4 +46,20 @@ void CUIObj::AddComponent()
 
 	m_pTransCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
+}
+
+void CUIObj::CalculateUIRect()
+{ 
+
+	_float fScreenX = 1260.f;
+	_float fScreenY = 680.f;
+
+	_vec3* vPos = m_pTransCom->GetPos();
+	const _vec3* vAngle = m_pTransCom->GetAngles();
+	
+	m_UIRect.left = (LONG)((m_vPos.x+ fScreenX*0.5f) - m_vSize.x);
+	m_UIRect.right = (LONG)(m_UIRect.left + (m_vSize.x * 2.f));
+	m_UIRect.top= (LONG)((fabsf(m_vPos.y) + fScreenY * 0.5f) - m_vSize.y);
+	m_UIRect.bottom = (LONG)(m_UIRect.top + (m_vSize.y * 2.f));
+
 }

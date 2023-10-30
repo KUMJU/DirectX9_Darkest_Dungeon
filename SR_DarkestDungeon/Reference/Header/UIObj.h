@@ -29,6 +29,14 @@ public:
 	void SetVisible(_bool _bValue) { m_bVisible = _bValue; }
 	_bool GetVisible() { return m_bVisible; }
 
+	RECT GetUIRect() { return m_UIRect; }
+
+	virtual void PickingUI(LONG _fX, LONG _fY) {};
+
+protected:
+
+	void CalculateUIRect();
+
 protected:
 
 	shared_ptr<CTransform> m_pTransCom = nullptr;
@@ -38,6 +46,8 @@ protected:
 	//각 UI ReadyObject() 에서 세팅해주기
 	_vec3 m_vSize = { 0.f, 0.f, 0.f};
 	_bool m_bVisible = true;
+
+	RECT m_UIRect;
 
 };
 

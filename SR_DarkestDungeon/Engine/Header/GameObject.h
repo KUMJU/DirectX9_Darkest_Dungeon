@@ -5,6 +5,7 @@
 BEGIN(Engine)
 
 class CComponent;
+class CCollider;
 
 class ENGINE_DLL CGameObject : public enable_shared_from_this<CGameObject>
 {
@@ -33,6 +34,9 @@ public:
 	_vec3 GetScale() { return m_vScale; }
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
+	//Get Collider Position(Picking)
+	void GetMinMaxPos(_vec3& vMin, _vec3& vMax);
+
 	void SetColliding(_bool _bColliding) { m_bColliding = _bColliding; }
 	_bool IsColliding() { return m_bColliding; }
 
@@ -51,6 +55,10 @@ public:
 	_float				Get_ViewZ() { return m_fViewZ; }
 	void				Compute_ViewZ(const _vec3* pPos);
 
+public:
+	//PickingObj
+	virtual void PickingObj() {}
+
 	//Component Manage
 protected:
 	void RemoveComponent();
@@ -60,6 +68,7 @@ protected:
 
 protected:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
+	shared_ptr<CCollider> m_pColliderCom = nullptr;
 
 	_bool m_bActive = true;
 	_bool m_bEnable = true;

@@ -47,6 +47,8 @@
 
 #include"ResourceMgr.h"
 
+#include"UIMgr.h"
+
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -847,6 +849,15 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_TestItem", m_pItem);
 	dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 4.f, 1.f, 6.f }, L"Player_Item_Antivenom");
 
+	shared_ptr<CGameObject> m_pItem2 = make_shared<CItem>(m_pGraphicDev);
+	m_pItem2->SetColliding(true);
+	m_pLayer->CreateGameObject(L"Obj_TestItem2", m_pItem2);
+	dynamic_pointer_cast<CItem>(m_pItem2)->SetDropItemInfo({ 7.f, 1.f, 6.f }, L"Player_Item_Antivenom");
+
+	shared_ptr<CGameObject> m_pItem3 = make_shared<CItem>(m_pGraphicDev);
+	m_pItem3->SetColliding(true);
+	m_pLayer->CreateGameObject(L"Obj_TestItem3", m_pItem3);
+	dynamic_pointer_cast<CItem>(m_pItem3)->SetDropItemInfo({ 10.f, 1.f, 6.f }, L"Player_Item_Shovel");
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
@@ -860,7 +871,9 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 
 	shared_ptr<CGameObject> m_pInventory = make_shared<CInventory>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
-	
+
+	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
+
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

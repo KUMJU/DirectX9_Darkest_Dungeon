@@ -29,6 +29,7 @@ public:
 
 	void SetVisible(_bool _bVisible) { m_bVisible = _bVisible; }
 	_bool GetVisible() { return m_bVisible; }
+	void GetMinMax(_vec3& vMin, _vec3& vMax);
 
 public:
 	virtual	void	RenderCollider(void);

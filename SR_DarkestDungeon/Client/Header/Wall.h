@@ -44,8 +44,6 @@ private:
 
 	shared_ptr<CTransform> m_pTransformCom = nullptr;
 
-	shared_ptr<CCollider> m_pColliderCom = nullptr;
-
 	_int		m_iNum = 0;
 
 	_int		m_iCnt = 1;

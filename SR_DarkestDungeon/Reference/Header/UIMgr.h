@@ -5,18 +5,9 @@
 
 BEGIN(Engine)
 
-class CGameObject;
+class CUIObj;
 
-enum class EUIType {
-	INVENTORY,
-	HERO_STATE,
-	MONSTER_STATE,
-	MINIMAP,
-	ENUM_END
-};
-
-
-class CUIMgr
+class ENGINE_DLL CUIMgr
 {
 	DECLARE_SINGLETON(CUIMgr)
 private:
@@ -25,19 +16,21 @@ private:
 	virtual ~CUIMgr();
 
 public:
-	void AddUIObject(EUIType _eType, shared_ptr<CGameObject>);
+	void AddUIObject(tstring _strKeyName, shared_ptr<CUIObj> _pObj);
 	
 	void AllVisibleOn();
 	void AllVisibleOff();
 	
-	void SelectUIVisibleOn(EUIType _eType);
-	void SelectUIVisibleOn();
+	void SelectUIVisibleOn(tstring _strKeyName);
+	void SelectUIVisibleOff(tstring _strKeyName);
 	
-
+	//현재 Visible이 true인 UI를 검사한 후, 그 UI만 대상으로 픽킹
+	_bool PickingUI(LONG _fX, LONG _fY);
 
 private:
 
-	vector<shared_ptr<CGameObject>> m_UIList[static_cast<unsigned int>(EUIType::ENUM_END)];
+
+	map<tstring, shared_ptr<CUIObj>> m_UIList;
 
 };
 

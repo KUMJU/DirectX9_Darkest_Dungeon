@@ -138,10 +138,6 @@ void CResourceMgr::BaseTextureLoad()
 {
 	_bool bDefault = false;
 
-	//UIResource
-	CreateNewTexture(L"UI_Inventory", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/Dungeon/panel_inventory.png", 1, bDefault);
-
 	//PlayerHandItem
 	CreateNewTexture(L"Player_Item_Shovel", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_shovel.png", 1, bDefault);
@@ -149,8 +145,7 @@ void CResourceMgr::BaseTextureLoad()
 		L"../Bin/Resource/Image/PlayerItem/supply_antivenom.png", 1, bDefault);
 	CreateNewTexture(L"Player_Item_Bandage", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_bandage.png", 1, bDefault);
-	CreateNewTexture(L"Item_UI_Antivenom", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1, bDefault);
+
 
 	//Hero
 	CreateNewTexture(L"Hero_Death", TEX_NORMAL,
@@ -394,6 +389,24 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 20, bDefault);
 
 	}
+
+}
+
+void CResourceMgr::UITextureLoad()
+{
+	_bool bDefault = false;
+
+	//UIResource
+	CreateNewTexture(L"UI_Inventory", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/panel_inventory.png", 1, bDefault);
+
+	//InventoryUI
+	CreateNewTexture(L"Item_UI_Antivenom", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1, bDefault);
+	CreateNewTexture(L"Item_UI_Shovel", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+shovel.png", 1, bDefault);
+	CreateNewTexture(L"Item_UI_Bandage", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+bandage.png", 1, bDefault);
 
 }
 
