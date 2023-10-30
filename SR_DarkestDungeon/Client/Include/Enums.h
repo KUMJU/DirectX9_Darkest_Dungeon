@@ -39,7 +39,6 @@ enum class EState
 	ACTIVE,
 	FINISH
 };
-};
 
 enum class EHandItem {
 	SHOVEL,			//»ð
