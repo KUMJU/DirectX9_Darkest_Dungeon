@@ -50,9 +50,6 @@ void CDoor::AddComponent()
 	dynamic_pointer_cast<CRcTex>(m_pBufferCom)->ReadyBuffer();
 	m_mapComponent[ID_STATIC].insert({ L"Com_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
-
 	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });

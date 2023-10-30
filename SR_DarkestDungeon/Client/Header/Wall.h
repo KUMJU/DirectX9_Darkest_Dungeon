@@ -29,8 +29,6 @@ public:
 	
 	virtual void OnCollide(shared_ptr<CGameObject> _pObj) override;
 
-	_bool	IsHorizontal() { return m_bHorizontal; }
-
 
 private:
 	virtual void			AddComponent();
@@ -49,8 +47,6 @@ private:
 	_int		m_iCnt = 1;
 
 	_bool		m_bRandom = false;
-
-	_bool		m_bHorizontal = true;
 
 	tstring		m_strKeyName = L"";
 };

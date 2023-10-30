@@ -21,6 +21,25 @@ enum class EFacilityType
 	ENUM_END
 };
 
+enum class ETerrainType
+{
+	VILLAGE,
+	VILLAGE_INSIDE,
+	DUNGEON,
+
+	ENUM_END
+};
+
+enum class EHeroType
+{
+	VESTAL,
+	HIGHWAYMAN,
+	SHILEDBREAKER,
+	JESTER,
+
+	ENUM_END
+};
+
 enum class EWealdDungeonDoorType
 {
 	ROOM1,

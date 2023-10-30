@@ -15,7 +15,7 @@ class CTerrain : public CGameObject
 {
 public :
 	CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
-	CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName);
+	CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName, ETerrainType _eType);
 	CTerrain(const CTerrain& rhs);
 	virtual ~CTerrain();
 
@@ -38,4 +38,5 @@ private:
 	_float		m_fSpeed = 10.f;
 
 	tstring		m_strKeyName;
+	ETerrainType m_eTerrainType = ETerrainType::ENUM_END;
 };

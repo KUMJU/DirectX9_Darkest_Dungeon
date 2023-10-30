@@ -34,6 +34,8 @@ public:
 	_vec3 GetScale() { return m_vScale; }
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
+	_bool IsHorizontal() { return m_bHorizontal; }
+
 	//Get Collider Position(Picking)
 	void GetMinMaxPos(_vec3& vMin, _vec3& vMax);
 
@@ -83,6 +85,8 @@ protected:
 
 	_bool m_bColliding = false;
 	ECollideID m_eCollideID = ECollideID::ENUM_END;
+
+	_bool m_bHorizontal = false;
 
 protected:
 	map<tstring, std::shared_ptr<CComponent>> m_mapComponent[ID_END];

@@ -39,9 +39,12 @@
     <ClCompile Include="..\Code\BoneDefender.cpp" />
     <ClCompile Include="..\Code\BoneSoldier.cpp" />
     <ClCompile Include="..\Code\Tervarn.cpp" />
-    <ClCompile Include="..\Code\Decoration.cpp" />
     <ClCompile Include="..\Code\Gambling.cpp" />
     <ClCompile Include="..\Code\EnvironmentObj.cpp" />
+    <ClCompile Include="..\Code\TavernNPC.cpp" />
+    <ClCompile Include="..\Code\StageCoachHero.cpp" />
+    <ClCompile Include="..\Code\Guild.cpp" />
+    <ClCompile Include="..\Code\GuildNPC.cpp" />
     <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />
     <ClCompile Include="..\Code\Weald_Trap.cpp" />
     <ClCompile Include="..\Code\Weald_Obstacle.cpp" />
@@ -94,7 +97,6 @@
     <ClInclude Include="..\Header\CardGame.h" />
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\Tervarn.h" />
-    <ClInclude Include="..\Header\Decoration.h" />
     <ClInclude Include="..\Header\Gambling.h" />
     <ClInclude Include="..\Header\CEnvironmentObj.h" />
     <ClInclude Include="..\Header\WealdDungeonDoor.h" />
@@ -104,6 +106,11 @@
     <ClInclude Include="..\Header\Weald_Curio_Chest.h" />
     <ClInclude Include="..\Header\Weald_Curio_Luggage.h" />
     <ClInclude Include="..\Header\Weald_Curio_Tent.h" />
+    <ClInclude Include="..\Header\EnvironmentObj.h" />
+    <ClInclude Include="..\Header\TavernNPC.h" />
+    <ClInclude Include="..\Header\StageCoachHero.h" />
+    <ClInclude Include="..\Header\Guild.h" />
+    <ClInclude Include="..\Header\GuildNPC.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
