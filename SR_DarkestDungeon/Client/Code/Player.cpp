@@ -191,7 +191,7 @@ void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection _eDir)
 {
 	// WALL Ãæµ¹
-	if (ECollideID::WALL == _pObj->GetColType())
+	if (ECollideID::WALL == _pObj->GetColType() || ECollideID::ENVIRONMENT == _pObj->GetColType())
 	{
 		_vec3		vPlayerPos;
 		_vec3		vPlayerScale;
@@ -205,7 +205,7 @@ void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection 
 		vPlayerPos = *m_pColliderCom->GetPos();
 		vPlayerScale = *m_pColliderCom->GetScale();
 
-		_bool bHorizontal = dynamic_pointer_cast<CWall>(_pObj)->IsHorizontal();
+		_bool bHorizontal = dynamic_pointer_cast<CGameObject>(_pObj)->IsHorizontal();
 
 		if (bHorizontal)
 		{

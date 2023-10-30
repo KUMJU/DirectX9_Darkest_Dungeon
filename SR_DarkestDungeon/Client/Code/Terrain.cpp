@@ -8,8 +8,8 @@ CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName)
-	: Engine::CGameObject(pGraphicDev), m_strKeyName(_KeyName)
+CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName, ETerrainType _eType)
+	: Engine::CGameObject(pGraphicDev), m_strKeyName(_KeyName), m_eTerrainType(_eType)
 {
 }
 
@@ -65,14 +65,25 @@ void CTerrain::AddComponent()
 	shared_ptr<CComponent> pComponent;
 
 	pComponent = m_pBufferCom = make_shared<CTerrainTex>(m_pGraphicDev);
-	if (L"Village_FloorTexture" == m_strKeyName)
+
+	switch (m_eTerrainType)
+	{
+	case ETerrainType::VILLAGE:
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VILLAGE_TILESIZE * 10, VILLAGE_TILESIZE * 10, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp", VILLAGE_TILECNT, VILLAGE_TILECNT);
-
-	else if(L"Inside_FloorTexture" == m_strKeyName)
+		break;
+	case ETerrainType::VILLAGE_INSIDE:
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VILLAGE_TILESIZE * 3, VILLAGE_TILESIZE * 3, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp", 5, 5);
-
-	else
+		break;
+	case ETerrainType::DUNGEON:
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
+		break;
+	case ETerrainType::ENUM_END:
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
+		break;
+	default:
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
+		break;
+	}
 	
 	m_mapComponent[ID_STATIC].insert({ m_strKeyName, pComponent });
 

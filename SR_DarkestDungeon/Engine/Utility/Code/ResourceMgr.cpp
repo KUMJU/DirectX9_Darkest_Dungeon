@@ -138,6 +138,14 @@ void CResourceMgr::BaseTextureLoad()
 {
 	_bool bDefault = false;
 
+	// Debug
+	CreateNewTexture(L"Empty", TEX_NORMAL,
+		L"../Bin/Resource/Image/Debug/Empty.png", 1, bDefault);
+
+	//UIResource
+	CreateNewTexture(L"UI_Inventory", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/panel_inventory.png", 1, bDefault);
+
 	//PlayerHandItem
 	CreateNewTexture(L"Player_Item_Shovel", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_shovel.png", 1, bDefault);
@@ -622,17 +630,81 @@ void CResourceMgr::VillageTextureLoad()
 		CreateNewTexture(L"Store_Outside", TEX_NORMAL,
 			L"../Bin/Resource/Image/Village/Facilities/OutSide/Nomad Wagon/town_nomad_wagon_level03/idle.png", 1, bDefault);
 
+		// 상점 테이블
+		CreateNewTexture(L"Store_Table", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Facilities/OutSide/Nomad Wagon//Table.png", 1, bDefault);
+
+
 	}
 
 	// 상호작용 건물 내부
 	{
-		CreateNewTexture(L"Inside_FloorTexture", TEX_NORMAL,
-			L"../Bin/Resource/Image/Village/Floor/city_gate_floor_tile.png", 1, bDefault);
+		// 여관
+		{
+			CreateNewTexture(L"Inside_FloorTexture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Floor/city_gate_floor_tile.png", 1, bDefault);
 
-		CreateNewTexture(L"Wood_Wall_Texture", TEX_NORMAL,
-			L"../Bin/Resource/Image/Village/Wall/Wood_Wall.png", 1, bDefault);
+			CreateNewTexture(L"Inside_CeilingTexture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Floor/white_ceiling.png", 1, bDefault);
 
-		CreateNewTexture(L"Gambling_Table_Texture", TEX_NORMAL,
-			L"../Bin/Resource/Image/Village/Facilities/tavern/Gambling.png", 1, bDefault);
+			CreateNewTexture(L"Wood_Wall_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Wall/wood_horizontal.jpg", 1, bDefault);
+
+			CreateNewTexture(L"Gambling_Table_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/tavern/Gambling.png", 1, bDefault);
+
+			CreateNewTexture(L"Tavern_NPC_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/tavern/Inside/NPC.png", 1, bDefault);
+
+			CreateNewTexture(L"Tavern_Window_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/tavern/Inside/Window.png", 1, bDefault);
+
+			CreateNewTexture(L"Tavern_Barrel_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/tavern/Inside/Barrel.png", 1, bDefault);
+
+			CreateNewTexture(L"Tavern_Stove_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/tavern/Inside/Stove.png", 1, bDefault);
+
+			CreateNewTexture(L"Tavern_Bar_Table_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/tavern/Inside/Bar_Table.png", 1, bDefault);
+
+			CreateNewTexture(L"Tavern_Bar_Back_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/tavern/Inside/Bar_Back.png", 1, bDefault);
+		}
+
+		// 훈련소
+		{
+			CreateNewTexture(L"Guild_NPC_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/guild/Inside/NPC.png", 1, bDefault);
+
+			CreateNewTexture(L"Guild_SandBack_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/guild/Inside/SandBack.png", 1, bDefault);
+		}
+	}
+
+	// 마을 장식
+	{
+		CreateNewTexture(L"Village_Entrance_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Entrance.png", 1, bDefault);
+		CreateNewTexture(L"Village_Entrance2_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Entrance2.png", 1, bDefault);
+		CreateNewTexture(L"Village_Entrance3_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Entrance3.png", 1, bDefault);
+		CreateNewTexture(L"Village_Entrance4_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Entrance4.png", 1, bDefault);
+
+		CreateNewTexture(L"Village_Wall_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Wall.png", 1, bDefault);
+		CreateNewTexture(L"Village_Wall1_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Wall1.png", 1, bDefault);
+		CreateNewTexture(L"Village_Wall2_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Wall2.png", 1, bDefault);
+		CreateNewTexture(L"Village_Wall3_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Wall3.png", 1, bDefault);
+
+		CreateNewTexture(L"Village_Portal_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Portal.png", 1, bDefault);
+		CreateNewTexture(L"Village_Portal2_Texture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Environment/Portal2.png", 1, bDefault);
 	}
 }

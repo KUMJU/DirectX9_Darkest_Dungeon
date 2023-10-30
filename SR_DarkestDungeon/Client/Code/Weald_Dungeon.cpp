@@ -197,7 +197,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Weald_FloorTexture");
+	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Weald_FloorTexture", ETerrainType::DUNGEON);
 	m_pLayer->CreateGameObject(L"OBJ_Terrain", m_pTerrain);
 
 	shared_ptr<CGameObject> m_pDoor;

@@ -5,6 +5,8 @@
 #include "Export_System.h"
 
 #include "Door.h"
+#include "StageCoachHero.h"
+#include "EnvironmentObj.h"
 
 COutside::COutside(LPDIRECT3DDEVICE9 pGraphicDev, EFacilityType _eFacilityType)
 	: Engine::CGameObject(pGraphicDev), m_eFacilityType(_eFacilityType)
@@ -24,18 +26,39 @@ HRESULT COutside::ReadyGameObject()
 {	
 	if (m_eFacilityType == EFacilityType::TERVARN)
 	{
-		shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::TERVARN);
-		m_pDoor->SetPos({ m_vPos.x + 4.5f, m_vPos.y + 4.f, m_vPos.z - 0.1f });
-		m_pDoor->SetScale({ 1.7f, 4.f, 1.f });
-		m_vecGameObject.push_back(m_pDoor);
+		shared_ptr<CGameObject> pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::TERVARN);
+		pDoor->SetPos({ m_vPos.x + 4.5f, m_vPos.y + 4.f, m_vPos.z - 0.1f });
+		pDoor->SetScale({ 1.7f, 4.f, 1.f });
+		m_vecGameObject.push_back(pDoor);
 	}
 
 	else if (m_eFacilityType == EFacilityType::GUILD)
 	{
-		shared_ptr<CGameObject> m_pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::GUILD);
-		m_pDoor->SetPos({ m_vPos.x - 5.5f, m_vPos.y + 5.7f, m_vPos.z - 0.1f });
-		m_pDoor->SetScale({ 3.f, 5.5f, 1.f });
-		m_vecGameObject.push_back(m_pDoor);
+		shared_ptr<CGameObject> pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::GUILD);
+		pDoor->SetPos({ m_vPos.x - 5.5f, m_vPos.y + 5.7f, m_vPos.z - 0.1f });
+		pDoor->SetScale({ 3.f, 5.5f, 1.f });
+		m_vecGameObject.push_back(pDoor);
+	}
+
+	else if (m_eFacilityType == EFacilityType::STAGECOACH)
+	{
+		shared_ptr<CGameObject> pHero1 = make_shared<CStageCoachHero>(m_pGraphicDev, EHeroType::SHILEDBREAKER);
+		pHero1->SetPos({ m_vPos.x, m_vPos.y + 4.5f, m_vPos.z - 2.f });
+		pHero1->SetScale({ 3.f, 5.f, 1.f });
+		m_vecGameObject.push_back(pHero1);
+			
+		shared_ptr<CGameObject> pHero2 = make_shared<CStageCoachHero>(m_pGraphicDev, EHeroType::JESTER);
+		pHero2->SetPos({ m_vPos.x + 7.f, m_vPos.y + 4.5f, m_vPos.z - 2.f });
+		pHero2->SetScale({ 3.f, 5.f, 1.f });
+		m_vecGameObject.push_back(pHero2);
+	}
+
+	else if (m_eFacilityType == EFacilityType::STORE)
+	{
+		shared_ptr<CGameObject> pTable = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Store_Table", true, true, 1, false);
+		pTable->SetPos({ m_vPos.x + 3.f, m_vPos.y + 1.f, m_vPos.z + 2.f });
+		pTable->SetScale({ 7.f, 3.f, 1.f });
+		m_vecGameObject.push_back(pTable);
 	}
 
 	for (auto& iter : m_vecGameObject) {
@@ -97,8 +120,9 @@ void COutside::AddComponent()
 	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
-	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y + m_vScale.y / 2 + m_vScale.y / 3, m_vPos.z);
+	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y + m_vScale.y / 2 + m_vScale.y / 3 + 0.3f, m_vPos.z);
 	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
+	m_pTransformCom->SetAngle(m_vAngle);
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	switch (m_eFacilityType)
