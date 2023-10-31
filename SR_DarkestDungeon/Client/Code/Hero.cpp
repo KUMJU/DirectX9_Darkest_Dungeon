@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Hero.h"
 #include"Export_Utility.h"
+#include"StatView.h"
 
 CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)

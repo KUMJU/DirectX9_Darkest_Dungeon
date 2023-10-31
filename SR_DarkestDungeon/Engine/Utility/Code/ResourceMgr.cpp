@@ -398,6 +398,32 @@ void CResourceMgr::BaseTextureLoad()
 
 	}
 
+
+	//스탯 표시 
+	
+	CreateNewTexture(L"Stat_StressFull", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/stress_full.png", 1, bDefault);
+	CreateNewTexture(L"Stat_StressEmpty", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/stress_empty.png", 1, bDefault);
+	CreateNewTexture(L"Stat_HealthFull", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_pip_full.png", 1, bDefault);
+	CreateNewTexture(L"Stat_HealthEmpty", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_pip_Empty.png", 1, bDefault);
+
+	//전투 스테이터스
+
+	CreateNewTexture(L"Stat_Attribute_Poison", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_poison.png", 1, bDefault);
+	CreateNewTexture(L"Stat_Attribute_Bleed", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_bleed.png", 1, bDefault);
+	CreateNewTexture(L"Stat_Attribute_Stun", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_stun.png", 1, bDefault);
+	CreateNewTexture(L"Stat_Attribute_Virtue", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_virtue.png", 1, bDefault);
+	CreateNewTexture(L"Stat_Attribute_Stress", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_stress.png", 1, bDefault);
+
+
 }
 
 void CResourceMgr::UITextureLoad()

@@ -3,6 +3,7 @@
 #include "Hero.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include"StatView.h"
 
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -36,8 +37,9 @@ CCreature::~CCreature()
 HRESULT CCreature::ReadyGameObject()
 {
 	__super::ReadyGameObject();
+	SettingStatBar();
 
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 _int CCreature::UpdateGameObject(const _float& fTimeDelta)
@@ -54,6 +56,11 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 	m_pTransformCom->SetWorld(&matWorld);
 
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
+
+	if (m_pStatInfo != nullptr && bStatBarOn) {
+		m_pStatInfo->SettingPos(*(m_pTransformCom->GetPos()));
+		m_pStatInfo->UpdateGameObject(fTimeDelta);
+	}
 
 	return iExit;
 }
@@ -76,6 +83,11 @@ void CCreature::RenderGameObject()
 	TCHAR szBuff3[32] = { };
 	_stprintf_s(szBuff, TEXT("%d"), GetCurrentPoision());
 	lstrcpy(m_szString3, szBuff);
+
+	if (m_pStatInfo != nullptr && bStatBarOn)
+		m_pStatInfo->RenderGameObject();
+
+
 }
 
 _bool CCreature::IsAttacking()
@@ -355,6 +367,16 @@ void CCreature::ClimbingTerrain()
 	//	pTerrainBufferCom->Get_VtxCntZ());
 	//
 	//m_pTransformCom->Set_Pos(vPos.x, fHeight + 0.5f, vPos.z);
+}
+
+void CCreature::SettingStatBar()
+{
+	m_pStatInfo = make_shared<CStatView>(m_pGraphicDev);
+	m_pStatInfo->AwakeGameObject();
+	m_pStatInfo->ReadyGameObject();
+
+	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),100, 100, true);
+
 }
 
 void CCreature::Free()
