@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ShieldBreaker.h"
 #include"Export_Utility.h"
+#include"StatView.h"
 
 CShieldBreaker::CShieldBreaker(LPDIRECT3DDEVICE9 pGraphicDev) : CHero(pGraphicDev)
 {
@@ -38,21 +39,21 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"Pierce", L"ShieldBreaker_Pierce", L"Pierce_Img", L"Pierce_Effect",
-				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 0.9f, 1.05f, -1, 0, 0, 0, 1, 5);
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 0.9f, 1.3f, -1, 0, 0, 0, 1, 1);
 
 		// ±∏∏€ ≥ª±‚
 		_bool arrActivatePos2[4] = { 1, 1, 1, 1 };
-		_bool arrTargetPos2[4] = { 1, 1, 0, 0 };
+		_bool arrTargetPos2[4] = { 1, 1, 1, 1 };
 		_bool arrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
 		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
-
+			
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"Puncture", L"ShieldBreaker_Puncture", L"Puncture_Img", L"Puncture_Effect",
-				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.5f, 1.f, -1, 1,0,0,1, 5);
+				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.5f, 0.8f, -1, -1,0,0, 1, 1);
 
 		// µ∂ªÁ¿« ¿‘∏¬√„
 		_bool arrActivatePos3[4] = { 1, 0, 0, 0 };
-		_bool arrTargetPos3[4] = { 1, 1, 0, 0 };
+		_bool arrTargetPos3[4] = { 1, 1, 1, 1};
 		_bool arrAttack3[6] = { 0, 1, 0, 0, 0, 0 };
 		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 0, 1 };
 
@@ -60,17 +61,19 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"AddersKiss", L"ShieldBreaker_AddersKiss", L"AddersKiss_Img", L"AddersKiss_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDam3, 1.f, 1.f, 1.06f, -1, 0, 0, 0, 1, 5);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDam3, 1.f, 0.5f, 0.8f, -1, 0, 0, 0, 1, -1);
 
 		// ≤Á∂’±‚
 		_bool arrActivatePos4[4] = { 1, 0, 0, 0 };
 		_bool arrTargetPos4[4] = { 1, 1, 1, 1 };
-		_bool arrAttack4[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrAttack4[6] = { 0, 1, 0, 0, 0, 0 };
 		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 0, 1 };
+
+		_int DotDam4[2] = { 1, 3 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"Impale", L"ShieldBreaker_Impale", L"Impale_Img", L"Impale_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.4f, 0.94f, -1, 0, 0, 1, 0, 5);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
@@ -80,10 +83,11 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 	// øµøı Ω∫≈»
 	{
-		m_tCommonStat.iHp = 50;
-		m_tCommonStat.iDodge = 8;
+		m_tCommonStat.iHp = 40;
+		m_tCommonStat.iMaxHp = 40;
+		m_tCommonStat.iDodge = 10;
 		m_tCommonStat.iSpeed = 5;
-		m_tCommonStat.iAttackPower = 8;
+		m_tCommonStat.iAttackPower = 7;
 		m_tCommonStat.iOrder = 0;
 	}
 
@@ -100,6 +104,9 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		m_pTextureCom->SetAnimKey(L"ShieldBreaker_Idle", 0.04f);
 	}
+
+	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
+		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
 
 	return S_OK;
 }
@@ -168,6 +175,8 @@ _int CShieldBreaker::UpdateGameObject(const _float& fTimeDelta)
 	{
 		m_bDeath = true;
 		m_tCommonStat.iHp = -100;
+
+		bStatBarOn = false;
 	}
 
 	// ««∞› Ω√∞£

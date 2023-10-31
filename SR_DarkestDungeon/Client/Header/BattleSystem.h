@@ -59,6 +59,7 @@ protected:
 	void SwitchPosition(int _iCurrentIndex, int _iMoveCnt, _bool _bHero = true);
 	void CmpBySpeed(vector<shared_ptr<CGameObject>>& _vCreatures);
 	_bool SkillKeyInput();		// 스킬 사용 키
+	_bool PositionKeyInput();		// 스킬 사용 키
 	void AutoBattleKeyInput();	// 자동 전투 키
 	void Battle(int _iNum);		// 전투 알고리즘
 
@@ -80,6 +81,8 @@ private:
 	_float	m_fAttackSkillMovingTime = ATTACKSKILLMOVINGINTERVEL;		// 스킬로 인한 움직이는 시간
 	_float	m_fBackMovingTime = MOVINGBACKINTERVEL;		// 스킬 이후 돌아가는 시간
 	_float	m_fWhileAttackingTime = WHILEATTACKINTERVEL;	// 멈춰서 스킬 사용 시간
+	_float	m_fSwitchingTime = SWITCHINGINTERVEL;	// 자리 교체 시간
+	_float	m_fKeyInputIntervel = KEYINPUTINTERVEL;
 	
 	_bool	m_bNext = false;
 	_bool	m_bDeathMoving = false;			// 사망으로 인한 이동
@@ -87,6 +90,7 @@ private:
 	_bool	m_bSkillMove = false;			// 기술로 인한 스스로의 이동
 	_bool	m_bAttackSkillMoving = false;	// 공격 스킬 시전중에 다가가는 이동
 	_bool	m_bBackMoving = false;			// 공격 스킬 시전 이후에 제자리로 돌아가는 이동
+	_bool	m_bSwitching = false;			// 자료 교체 이후에 서로 교체되는 이동
 	_bool	m_bWhileAttack = false;			// 공격 스킬을 사용하는 중
 	_bool	m_bHero = false;				// 공격 주체가 영웅인지?
 	_bool	m_bCounting = false;
@@ -94,12 +98,17 @@ private:
 
 	_bool	m_bAutoBattle = false;
 	_bool	m_bSkillInput = false;
+	_bool	m_bPositionInput = false;
+	_bool	m_bAblePostionInput = false;
 	_int	m_iSelectSkill = 0;
+	_int	m_iSelectPosition = 2;
 	_bool	m_bCalculate = false;
 
 	vector<_vec3> m_vHeroLocation = {};			// hero position
 	vector<_vec3> m_vMonsterLocation = {};		// monster position
 	_int iCurrentHeroIndex = 0;
 	_int iCurrentMonsterIndex = 0;
+	_int iLiveHeroes = 0;
+	_int iLiveMonsters = 0;
 };
 

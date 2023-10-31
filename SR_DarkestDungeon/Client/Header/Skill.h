@@ -107,7 +107,7 @@ protected:
 	// 힐량
 	_int		m_iHeal;
 	// 스트레스
-	_int		m_iStress;
+	_int		m_iStress = 0;
 
 	// =======퍼센트 값=======
 	// 기절 확률

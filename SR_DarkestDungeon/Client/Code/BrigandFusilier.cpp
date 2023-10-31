@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BrigandFusilier.h"
 #include"Export_Utility.h"
+#include"StatView.h"
 
 CBrigandFusilier::CBrigandFusilier(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
@@ -24,6 +25,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 
 	// 스탯 설정
 	m_tCommonStat.iHp = 30;
+	m_tCommonStat.iMaxHp = 30;
 	m_tCommonStat.iDodge = 10;
 	m_tCommonStat.iSpeed = 5;
 	m_tCommonStat.iAttackPower = 5;
@@ -34,7 +36,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	_bool	bArrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBrigandFusilier_1 = make_shared<CSkill>
-		(L"Attack1", L"Brigand Fusilier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.f, 0.f,
+		(L"Attack1", L"Brigand Fusilier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.f, 1.2f,
 			bArrAttack1, 0, 0, true, 0);
 	pVecSkill.push_back(m_pBrigandFusilier_1);
 
@@ -45,6 +47,9 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 
 	m_pTransformCom->SetAngle(m_vAngle);
 	m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
+
+	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
+		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
 
 	return E_NOTIMPL;
 }
@@ -146,7 +151,12 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		BleedCure();
 		BlightCure();
 		m_bCorpse = true;
+
 		m_tCommonStat.iHp = 10;
+		m_tCommonStat.iMaxHp = 10;
+		// 스탯갱신
+		m_pStatInfo->SetMaxHp(m_tCommonStat.iMaxHp);
+		m_pStatInfo->SetHp(m_tCommonStat.iHp);
 	}
 
 	// 사망 여부
@@ -155,6 +165,8 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		m_bCorpse = false;
 		m_bDeath = true;
 		m_tCommonStat.iHp = -100;
+
+		bStatBarOn = false;
 	}
 
 	// 피격 시간

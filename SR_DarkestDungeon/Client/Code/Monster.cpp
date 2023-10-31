@@ -30,6 +30,8 @@ CMonster::~CMonster()
 HRESULT CMonster::ReadyGameObject()
 {
 	__super::ReadyGameObject();
+	m_bIsHero = false;
+	//m_pStatInfo->SetIsHero(false);
 
 	return E_NOTIMPL;
 }

@@ -20,8 +20,9 @@ HRESULT CStatView::ReadyGameObject()
 
 _int CStatView::UpdateGameObject(const _float& fTimeDelta)
 {
-
 	__super::UpdateGameObject(fTimeDelta);
+
+	
 	return 0;
 }
 
@@ -213,6 +214,6 @@ void CStatView::SetHp(int _iHp)
 	if (m_iHp < 0) {
 		m_iHp = 0;
 	}
-	m_fHpBarRange = static_cast<float>(m_iHp / m_iMaxHp);
+	m_fHpBarRange = static_cast<float>(m_iHp) / static_cast<float>(m_iMaxHp);
 }
 

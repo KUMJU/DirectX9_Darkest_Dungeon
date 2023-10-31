@@ -18,7 +18,7 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp()
 {
-
+	srand(time(NULL));
 	if (FAILED(SetUp_DefaultSetting(&m_pGraphicDev))) {
 		//MSG_BOX("SetUpDefaultSetting Failed!");
 		return E_FAIL;
