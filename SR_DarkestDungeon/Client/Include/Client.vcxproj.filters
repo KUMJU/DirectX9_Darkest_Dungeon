@@ -52,6 +52,7 @@
     <ClCompile Include="..\Code\Weald_Curio_Chest.cpp" />
     <ClCompile Include="..\Code\Weald_Curio_Luggage.cpp" />
     <ClCompile Include="..\Code\Weald_Curio_Tent.cpp" />
+    <ClCompile Include="..\Code\StatView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -98,7 +99,6 @@
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\Tervarn.h" />
     <ClInclude Include="..\Header\Gambling.h" />
-    <ClInclude Include="..\Header\CEnvironmentObj.h" />
     <ClInclude Include="..\Header\WealdDungeonDoor.h" />
     <ClInclude Include="..\Header\Weald_Trap.h" />
     <ClInclude Include="..\Header\Weald_Obstacle.h" />
@@ -111,6 +111,7 @@
     <ClInclude Include="..\Header\StageCoachHero.h" />
     <ClInclude Include="..\Header\Guild.h" />
     <ClInclude Include="..\Header\GuildNPC.h" />
+    <ClInclude Include="..\Header\StatView.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

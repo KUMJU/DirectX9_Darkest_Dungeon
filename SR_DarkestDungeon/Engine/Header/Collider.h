@@ -33,6 +33,8 @@ public:
 	_bool GetVisible() { return m_bVisible; }
 	void GetMinMax(_vec3& vMin, _vec3& vMax);
 
+
+	_bool CalcRayIntersect(_vec3 _vRayDir, _vec3 _vRayPos);
 public:
 	virtual	void	RenderCollider(void);
 

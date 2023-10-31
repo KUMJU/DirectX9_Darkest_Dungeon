@@ -181,6 +181,7 @@
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\StageCoachHero.h" />
+    <ClInclude Include="..\Header\StatView.h" />
     <ClInclude Include="..\Header\TavernNPC.h" />
     <ClInclude Include="..\Header\Tervarn.h" />
     <ClInclude Include="..\Header\WealdDungeonDoor.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="..\Code\Outside.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\StageCoachHero.cpp" />
+    <ClCompile Include="..\Code\StatView.cpp" />
     <ClCompile Include="..\Code\TavernNPC.cpp" />
     <ClCompile Include="..\Code\Tervarn.cpp" />
     <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />

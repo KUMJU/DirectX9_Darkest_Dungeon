@@ -12,6 +12,8 @@ class CAnimator;
 
 END
 
+class CStatView;
+
 // Creature 공통 스탯
 typedef struct tagCreatureCommonStat
 {
@@ -186,6 +188,8 @@ protected:
 	virtual void			AddComponent();
 	virtual void			ClimbingTerrain();
 
+	//스탯 인포 설정
+	void SettingStatBar();
 
 protected:
 	// Creature Common Component
@@ -245,6 +249,12 @@ protected:
 	_vec3		m_vTargetPos = { 0, 0, 0 };		// 목적지 1
 	_vec3		m_vTargetPos2 = { 0, 0, 0 };	// 목적지 2
 	_float		m_fMovingSpeed = 0.f;
+
+	//스탯 표시창
+	shared_ptr<CStatView> m_pStatInfo = nullptr;
+	//스탯Info ON/Off
+	_bool		bStatBarOn = true;
+
 
 protected:
 	virtual void	Free();
