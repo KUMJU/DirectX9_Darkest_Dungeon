@@ -18,6 +18,7 @@ class CStatView;
 typedef struct tagCreatureCommonStat
 {
 	_int		iHp;			// 체력
+	_int		iMaxHp;			// 최대체력
 	_int		iDodge;			// 회피율
 	_int		iSpeed;			// 속도
 	_int		iAttackPower;	// 순수공격력(실제 데미지는 스킬에 따른 공격력 계수의 곱)
@@ -38,7 +39,7 @@ enum class EAnimState
 	// 몬스터용
 	CORPSE,			// 시체
 
-	// 스킬
+	// 스킬	
 	SKILL1,
 	SKILL2,
 	SKILL3,
@@ -128,7 +129,11 @@ public:
 
 	_int	GetHp() { return m_tCommonStat.iHp; }
 	void	SetHp(_int _iValue) { m_tCommonStat.iHp = _iValue; }
-	void	IncreaseHP(_int _iValue) { m_tCommonStat.iHp += _iValue; }
+	void	IncreaseHP(_int _iValue) {
+		m_tCommonStat.iHp += _iValue;
+		if (m_tCommonStat.iHp >= m_tCommonStat.iMaxHp)
+			m_tCommonStat.iHp = m_tCommonStat.iMaxHp;
+	}
 	void	DecreaseHP(_int _iValue) { m_tCommonStat.iHp -= _iValue; }
 
 	_int	GetCurrentBleed() { return m_bBleedDot[0]; }
@@ -211,7 +216,7 @@ protected:
 
 	_bool		m_bDeath = false;			// 사망 여부(몬스터는 시체까지 소멸할때, 영웅은 사망할때)
 	_bool		m_bCorpse = false;			// 몬스터의 시체여부
-	_bool		m_bState[4] = { false };	// 순서대로 중독, 출혈, 기절, 시체 여부
+	_bool		m_bState[4] = { 0 };	// 순서대로 중독, 출혈, 기절, 시체 여부
 
 	_int		m_bBlightDot[4] = { 0 };	// 턴마다 중독 도트뎀
 	_int		m_bBleedDot[4] = { 0 };		// 턴마다 출혈 도트뎀

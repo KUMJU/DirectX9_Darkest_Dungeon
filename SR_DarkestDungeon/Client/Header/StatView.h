@@ -32,6 +32,9 @@ public:
 	//실제 Creature에서 사용해야하는 수치 조정 함수 -------------------------------------------------------
 	void SetStress(int _iStress);
 	void SetHp(int _iHp);
+	void SetMaxHp(int _iHp) { m_iMaxHp = _iHp; };
+
+	void SetIsHero(_bool _bIsHero) { m_bHero = _bIsHero; }
 
 	// 0 : 중독 , 1: 출혈 , 2: 기절 , 3: 기상, 4: 붕괴
 	void SetAttribute(_int _iTypeNum) { m_bAttributeArr[_iTypeNum] = true;  }

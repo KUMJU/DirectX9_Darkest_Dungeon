@@ -52,4 +52,3 @@ private:
 	weak_ptr<CPlayer> m_pPlayer;
 
 };
-

@@ -118,7 +118,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
 
-	if (GetAsyncKeyState('5') & 0x8000) {
+	if (GetAsyncKeyState('6') & 0x8000) {
 		shared_ptr<CVillage> pScene = make_shared<CVillage>(m_pGraphicDev);
 		CSceneMgr::GetInstance()->ChangeScene(pScene);
 		pScene->ReadyScene();
@@ -139,37 +139,28 @@ void CWeald_Dungeon::RenderScene()
 	_vec2 vDungeonName = _vec2(0.f, 0.f);
 	Engine::Render_Font(L"Font_Default", m_szString,
 		&vDungeonName, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	_vec2 vFontPos;
 
-	_vec2 vFontPos = _vec2(400.f, 100.f);
-	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[0])->Get_String(),
-		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-
-	vFontPos = _vec2(400.f, 200.f);
-	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[0])->Get_String2(),
-		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-
-	vFontPos = _vec2(400.f, 300.f);
-	Engine::Render_Font(L"Font_Default",
-		dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[0])->Get_String3(),
-		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-
-	for (int i = 0; i < 3; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
-		vFontPos = _vec2(300.f - i*100.f, 100.f);
+		vFontPos = _vec2(400.f - i*100.f, 100.f);
 		Engine::Render_Font(L"Font_Default",
-			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[i + 1])->Get_String(),
+			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[i])->Get_String(),
 			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-		vFontPos = _vec2(300.f - i * 100.f, 200.f);
+		vFontPos = _vec2(400.f - i * 100.f, 200.f);
 		Engine::Render_Font(L"Font_Default",
-			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[i + 1])->Get_String2(),
+			dynamic_pointer_cast<CHero>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[i])->Get_String4(),
 			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-		vFontPos = _vec2(300.f - i * 100.f, 300.f);
+		vFontPos = _vec2(400.f - i * 100.f, 300.f);
 		Engine::Render_Font(L"Font_Default",
-			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[i + 1])->Get_String3(),
+			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[i])->Get_String2(),
+			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+		vFontPos = _vec2(400.f - i * 100.f, 400.f);
+		Engine::Render_Font(L"Font_Default",
+			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetHeroesVector())[i])->Get_String3(),
 			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	}
 
@@ -180,16 +171,16 @@ void CWeald_Dungeon::RenderScene()
 			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetMonstersVector())[i])->Get_String(),
 			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-		vFontPos = _vec2(600.f + i * 100.f, 200.f);
+		vFontPos = _vec2(600.f + i * 100.f, 300.f);
 		Engine::Render_Font(L"Font_Default",
 			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetMonstersVector())[i])->Get_String2(),
 			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-		vFontPos = _vec2(600.f + i * 100.f, 300.f);
+		vFontPos = _vec2(600.f + i * 100.f, 400.f);
 		Engine::Render_Font(L"Font_Default",
 			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetMonstersVector())[i])->Get_String3(),
 			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	}
+	}*/
 }
 
 HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
@@ -631,7 +622,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 	
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
@@ -873,7 +864,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
 
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
-
+	
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
