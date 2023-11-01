@@ -7,6 +7,14 @@
 #include "Door.h"
 #include "StageCoachHero.h"
 #include "EnvironmentObj.h"
+#include "Item.h"
+#include "PickingMgr.h"
+
+#include "Jester.h"
+#include "ShieldBreaker.h"
+#include "Vestal.h"
+#include "Highwayman.h"
+
 
 COutside::COutside(LPDIRECT3DDEVICE9 pGraphicDev, EFacilityType _eFacilityType)
 	: Engine::CGameObject(pGraphicDev), m_eFacilityType(_eFacilityType)
@@ -42,23 +50,82 @@ HRESULT COutside::ReadyGameObject()
 
 	else if (m_eFacilityType == EFacilityType::STAGECOACH)
 	{
-		shared_ptr<CGameObject> pHero1 = make_shared<CStageCoachHero>(m_pGraphicDev, EHeroType::SHILEDBREAKER);
-		pHero1->SetPos({ m_vPos.x, m_vPos.y + 4.5f, m_vPos.z - 2.f });
-		pHero1->SetScale({ 3.f, 5.f, 1.f });
+		shared_ptr<CGameObject> pHero1 = make_shared<CShieldBreaker>(m_pGraphicDev);
+		pHero1->SetColliding(true);
+		pHero1->SetScale({ 3.f, 5.f, 3.f });
+		pHero1->SetPos({ m_vPos.x, pHero1->GetScale().y / 2.f + pHero1->GetScale().y / 10.f, m_vPos.z - 2.f});
+		pHero1->SetAngle({ 0.f, - PI / 2.f, 0.f });
+		CPickingMgr::GetInstance()->AddList(pHero1);
 		m_vecGameObject.push_back(pHero1);
 			
-		shared_ptr<CGameObject> pHero2 = make_shared<CStageCoachHero>(m_pGraphicDev, EHeroType::JESTER);
-		pHero2->SetPos({ m_vPos.x + 7.f, m_vPos.y + 4.5f, m_vPos.z - 2.f });
-		pHero2->SetScale({ 3.f, 5.f, 1.f });
+		shared_ptr<CGameObject> pHero2 = make_shared<CJester>(m_pGraphicDev);
+		//shared_ptr<CGameObject> pHero2 = make_shared<CStageCoachHero>(m_pGraphicDev, EHeroType::JESTER);
+		pHero2->SetColliding(true);
+		pHero2->SetScale({ 3.f, 5.f, 3.f });
+		pHero2->SetPos({ m_vPos.x + 7.f, pHero2->GetScale().y / 2.f + pHero2->GetScale().y / 10.f, m_vPos.z - 2.f });
+		pHero2->SetAngle({ 0.f, -PI / 2.f, 0.f });
+		CPickingMgr::GetInstance()->AddList(pHero2);
 		m_vecGameObject.push_back(pHero2);
 	}
 
 	else if (m_eFacilityType == EFacilityType::STORE)
 	{
-		shared_ptr<CGameObject> pTable = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Store_Table", true, true, 1, false);
+		shared_ptr<CGameObject> pTable = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Store_Table", true, false, 1, false);
 		pTable->SetPos({ m_vPos.x + 3.f, m_vPos.y + 1.f, m_vPos.z + 2.f });
 		pTable->SetScale({ 7.f, 3.f, 1.f });
+		pTable->SetHorizontal(true);
 		m_vecGameObject.push_back(pTable);
+
+		// »óÁ¡ ¾ÆÀÌÅÛ
+		{
+			// ÇØµ¶Á¦
+			shared_ptr<CGameObject> m_pItem = make_shared<CItem>(m_pGraphicDev);
+			m_pItem->SetColliding(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x + 3.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Player_Item_Antivenom");
+			m_vecGameObject.push_back(m_pItem);
+
+			// »ð
+			m_pItem = make_shared<CItem>(m_pGraphicDev);
+			m_pItem->SetColliding(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x + 1.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Player_Item_Shovel");
+			m_vecGameObject.push_back(m_pItem);
+
+			// ºØ´ë
+			m_pItem = make_shared<CItem>(m_pGraphicDev);
+			m_pItem->SetColliding(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x - 1.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Player_Item_Bandage");
+			m_vecGameObject.push_back(m_pItem);
+
+			// È¶ºÒ
+			m_pItem = make_shared<CItem>(m_pGraphicDev);
+			m_pItem->SetColliding(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x + 5.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Item_Torch");
+			m_vecGameObject.push_back(m_pItem);
+
+			// À½½Ä
+			/*m_pItem = make_shared<CItem>(m_pGraphicDev);
+			m_pItem->SetColliding(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x + 5.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Item_Food");
+			m_vecGameObject.push_back(m_pItem);*/
+
+			// ¿­¼è
+			m_pItem = make_shared<CItem>(m_pGraphicDev);
+			m_pItem->SetColliding(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnField(false);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
+			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x + 7.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Item_Key");
+			m_vecGameObject.push_back(m_pItem);
+
+		}
 	}
 
 	for (auto& iter : m_vecGameObject) {
@@ -85,6 +152,14 @@ _int COutside::UpdateGameObject(const _float& fTimeDelta)
 void COutside::LateUpdateGameObject()
 {
 	for (auto& iter : m_vecGameObject) {
+
+		// Collision Check
+		if (iter->IsColliding())
+		{
+			if (ECollideID::PLAYER != iter->GetColType())
+				CCollisionMgr::GetInstance()->CheckCollision(iter);
+		}
+
 		iter->LateUpdateGameObject();
 	}
 }

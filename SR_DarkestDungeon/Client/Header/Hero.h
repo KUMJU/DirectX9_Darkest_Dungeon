@@ -2,6 +2,8 @@
 #include "Creature.h"
 #include "Skill.h"
 
+class CHeroStat;
+
 // ∫ÿ±´ (75%)
 enum class EAffliction
 {
@@ -54,6 +56,7 @@ public:
 	virtual void RenderGameObject() override;
 
 public:
+	vector<shared_ptr<CSkill>>* GetSkillVector() { return &m_pVecSkill; }
 	shared_ptr<CSkill>		SelectSkill(_int _iSkillID);
 	virtual	void			StressUp();
 
@@ -70,6 +73,8 @@ protected:
 
 	// øµøı ≈œ Ω√¿€Ω√ø° »£√‚«ÿº≠ µø¿€«ÿ¡÷±‚
 	virtual void		StressEvent();
+
+	virtual void		PickingObj();
 
 public:
 	_int		GetStress() { return m_iStress; }
@@ -89,6 +94,8 @@ public:
 
 	_bool		IsVirtue() { return m_bVirtue; }
 	void		SetVirtue(_bool _bVirtue) { m_bVirtue = _bVirtue; }
+
+	EHeroType	GetHeroType() { return m_eHeroType; }
 
 protected:
 
@@ -119,6 +126,13 @@ protected:
 	_bool				m_bAttacking4 = false;
 
 	_bool				m_bStressChanged = false;
+
+	EHeroType			m_eHeroType = EHeroType::ENUM_END;
+
+	shared_ptr<CHeroStat> m_pStatUI = nullptr;
+
+	// Ω∫≈» Info ON/Off
+	_bool		m_bShowStatUI = false;
 
 	//shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
 

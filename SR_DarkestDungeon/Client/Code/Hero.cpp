@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Hero.h"
-#include"Export_Utility.h"
-#include"StatView.h"
+#include "Export_Utility.h"
+#include "StatView.h"
+#include "HeroStat.h"
 
 CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
@@ -66,6 +67,10 @@ _int CHero::UpdateGameObject(const _float& fTimeDelta)
 		}
 	}
 
+	if (m_pStatUI) {
+		m_pStatUI->UpdateGameObject(fTimeDelta);
+	}
+
 	return iExit;
 }
 
@@ -77,6 +82,13 @@ void CHero::LateUpdateGameObject()
 void CHero::RenderGameObject()
 {
 	__super::RenderGameObject();
+	m_pColliderCom->RenderCollider();
+}
+
+void CHero::PickingObj()
+{
+	m_pStatUI->SetVisible(true);
+	CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 }
 
 shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)
@@ -153,6 +165,11 @@ void CHero::AddComponent()
 	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
 	m_pTextureCom->SetAnimKey(m_strAnimKey, 0.05f);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator", pComponent });
+
+	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
+	m_pColliderCom->SetScale(*m_pTransformCom->GetScale());
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 }
 
 void CHero::SwapSkill(_int _iIdx1, _int _iIdx2)

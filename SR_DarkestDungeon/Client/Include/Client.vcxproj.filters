@@ -52,6 +52,7 @@
     <ClCompile Include="..\Code\Weald_Curio_Chest.cpp" />
     <ClCompile Include="..\Code\Weald_Curio_Luggage.cpp" />
     <ClCompile Include="..\Code\Weald_Curio_Tent.cpp" />
+    <ClCompile Include="..\Code\HeroStat.cpp" />
     <ClCompile Include="..\Code\StatView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +113,7 @@
     <ClInclude Include="..\Header\Guild.h" />
     <ClInclude Include="..\Header\GuildNPC.h" />
     <ClInclude Include="..\Header\StatView.h" />
+    <ClInclude Include="..\Header\HeroStat.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

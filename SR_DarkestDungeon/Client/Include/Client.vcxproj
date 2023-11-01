@@ -171,6 +171,7 @@
     <ClInclude Include="..\Header\Guild.h" />
     <ClInclude Include="..\Header\GuildNPC.h" />
     <ClInclude Include="..\Header\Hero.h" />
+    <ClInclude Include="..\Header\HeroStat.h" />
     <ClInclude Include="..\Header\Highwayman.h" />
     <ClInclude Include="..\Header\Inside.h" />
     <ClInclude Include="..\Header\InteractionObj.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="..\Code\Guild.cpp" />
     <ClCompile Include="..\Code\GuildNPC.cpp" />
     <ClCompile Include="..\Code\Hero.cpp" />
+    <ClCompile Include="..\Code\HeroStat.cpp" />
     <ClCompile Include="..\Code\Highwayman.cpp" />
     <ClCompile Include="..\Code\Inside.cpp" />
     <ClCompile Include="..\Code\InteractionObj.cpp" />

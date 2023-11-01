@@ -17,6 +17,9 @@
 #include "StaticCamera.h"
 #include "InteractionObj.h"
 #include "EnvironmentObj.h"
+#include "Item.h"
+#include "Inventory.h"
+#include "UIMgr.h"
 
 #include "Vestal.h"
 #include "Jester.h"
@@ -42,6 +45,7 @@ HRESULT CVillage::ReadyScene()
 	Ready_Layer_Environment(L"Layer_3_Environment");
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
 	Ready_Layer_GameObject(L"Layer_4_GameObj");
+	Ready_Layer_UI(L"Layer_2_UI");
 
 	for (auto& iter : m_mapLayer) {
 		//GameComponenet Setting
@@ -225,21 +229,21 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
 	// 영웅 테스트
-	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
-	m_pVestal->SetPos({ 10.f, 3.f, 20.f });
+	//shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+	//m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+	//m_pVestal->SetPos({ 10.f, 3.f, 20.f });
 
-	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
-	m_pJester->SetPos({ 15.f, 3.f, 20.f });
+	//shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
+	//m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
+	//m_pJester->SetPos({ 15.f, 3.f, 20.f });
 
-	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
-	m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
+	//shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
+	//m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+	//m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
 
-	shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
-	m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
+	//shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
+	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
+	//m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
 
 	// 여관
 	{
@@ -293,5 +297,16 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 {
+	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
+	m_mapLayer.insert({ pLayerTag, m_pLayer });
+
+	shared_ptr<CGameObject> m_pInventory = make_shared<CInventory>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
+
+	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
+
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
+	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
+
 	return S_OK;
 }

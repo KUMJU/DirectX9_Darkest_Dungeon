@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Highwayman.h"
+
+#include "HeroStat.h"
 #include"Export_Utility.h"
 
 CHighwayman::CHighwayman(LPDIRECT3DDEVICE9 pGraphicDev) : CHero(pGraphicDev)
@@ -19,6 +21,8 @@ HRESULT CHighwayman::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bIsHero = true;
+
+	m_eHeroType = EHeroType::HIGHWAYMAN;
 
 	// 스킬 세팅
 	{
@@ -74,6 +78,10 @@ HRESULT CHighwayman::ReadyGameObject()
 		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
+
+		// 수정 예정
+		m_pVecSkill.push_back(pSkill4);
+		m_pVecSkill.push_back(pSkill4);
 	}
 
 	// 영웅 스탯
@@ -98,6 +106,12 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		m_pTextureCom->SetAnimKey(L"Highwayman_Idle", 0.04f);
 	}
+
+	// 영웅 스탯 출력창
+	m_pStatUI = make_shared<CHeroStat>(m_pGraphicDev);
+	m_pStatUI->SetHero(dynamic_pointer_cast<CHighwayman>(shared_from_this()));
+	m_pStatUI->AwakeGameObject();
+	m_pStatUI->ReadyGameObject();
 
 	return S_OK;
 }

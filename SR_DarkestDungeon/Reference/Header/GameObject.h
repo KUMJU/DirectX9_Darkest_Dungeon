@@ -34,6 +34,7 @@ public:
 	_vec3 GetScale() { return m_vScale; }
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
+	void	SetHorizontal(_bool _bHorizontal) { m_bHorizontal = _bHorizontal; }
 	_bool IsHorizontal() { return m_bHorizontal; }
 
 	//Get Collider Position(Picking)

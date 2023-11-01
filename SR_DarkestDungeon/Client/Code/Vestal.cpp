@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Vestal.h"
+
+#include "HeroStat.h"
 #include"Export_Utility.h"
 
 CVestal::CVestal(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -21,6 +23,8 @@ HRESULT CVestal::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bIsHero = true;
+
+	m_eHeroType = EHeroType::VESTAL;
 
 	// 스킬 세팅
 	{
@@ -70,6 +74,10 @@ HRESULT CVestal::ReadyGameObject()
 		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
+
+		// 수정 예정
+		m_pVecSkill.push_back(pSkill4);
+		m_pVecSkill.push_back(pSkill4);
 	}
 
 	// 영웅 스탯
@@ -94,6 +102,12 @@ HRESULT CVestal::ReadyGameObject()
 
 		m_pTextureCom->SetAnimKey(L"Vestal_Idle", 0.04f);
 	}
+
+	// 영웅 스탯 출력창
+	m_pStatUI = make_shared<CHeroStat>(m_pGraphicDev);
+	m_pStatUI->SetHero(dynamic_pointer_cast<CVestal>(shared_from_this()));
+	m_pStatUI->AwakeGameObject();
+	m_pStatUI->ReadyGameObject();
 
 	return S_OK;
 }

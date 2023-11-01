@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "CollisionMgr.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 _pGraphicDev) : m_pGraphicDev(_pGraphicDev)
 {
@@ -22,7 +23,6 @@ _int CScene::UpdateScene(const _float& _fTimeDelta)
 	for (auto& iter : m_mapLayer)
 	{
 		iResult = iter.second->UpdateLayer(_fTimeDelta);
-		iter.second->SetColliderVisible(m_bColliderVisible);
 
 		if (iResult & 0x80000000)
 			return iResult;
@@ -65,10 +65,10 @@ HRESULT CScene::AddNewObject(const tstring& _strLayerName, const tstring& _strOb
 void CScene::KeyInput()
 {
 	if (GetAsyncKeyState(VK_F1) & 0x8000)
-		m_bColliderVisible = true;
+		CCollisionMgr::GetInstance()->SetVisible(true);
 
 	else if (GetAsyncKeyState(VK_F2) & 0x8000)
-		m_bColliderVisible = false;
+		CCollisionMgr::GetInstance()->SetVisible(false);
 }
 
 shared_ptr<CComponent> CScene::GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID)

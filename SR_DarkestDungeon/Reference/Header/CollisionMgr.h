@@ -23,8 +23,11 @@ public:
 	void AddCollisionGroup(ECollideID _eType, shared_ptr<CGameObject> pGameObject);
 	void ClearCollisionGroup();
 
+	void	SetVisible(_bool _bVisible) { m_bVisible = _bVisible; }
+	_bool	GetVisible() { return m_bVisible; }
+
 private:
-	_bool	m_bVisible;
+	_bool	m_bVisible = false;
 };
 
 END

@@ -33,6 +33,12 @@ public:
 	}
 	_bool GetOnFieldState() { return m_bOnField; }
 
+	void SetOnStore(_bool _bValue)
+	{
+		m_bOnStore = _bValue;
+	}
+	_bool	GetOnStore() { return m_bOnStore; }
+
 	//몬스터가 죽고 아이템이 드랍될 때 포지션, 텍스쳐 값을 지정해줄 수 있음(필수로 해줄 것)
 	void SetDropItemInfo(_vec3 _vPos, const tstring& _strName);
 	void SetScale(_vec3 _vScale);
@@ -62,6 +68,7 @@ private:
 	//Member variable
 	tstring m_strItemKey = L"";
 	_bool	m_bOnField = true; // 필드에 있는 아이템인지 인벤토리에 있는 아이템인지 식별
+	_bool	m_bOnStore = false; // 상점에서 판매중인 아이템인지 식별
 	_vec3	m_vPosition;
 	EHandItem m_eItemState = EHandItem::ENUM_END;
 

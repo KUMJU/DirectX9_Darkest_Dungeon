@@ -26,12 +26,12 @@ HRESULT CMainApp::Ready_MainApp()
 
 	//I
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
-	CResourceMgr::GetInstance()->BaseTextureLoad();
+	CResourceMgr::GetInstance()->BaseTextureLoad();	
 	CResourceMgr::GetInstance()->UITextureLoad();
 
 	CPickingMgr::GetInstance()->ReadyPickingMgr(m_pGraphicDev);
 
-    shared_ptr<CScene> pMainLogo = make_shared<CVillage>(m_pGraphicDev);
+    shared_ptr<CScene> pMainLogo = make_shared<CWeald_Dungeon>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
 

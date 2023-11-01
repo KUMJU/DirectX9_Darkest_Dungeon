@@ -154,6 +154,16 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Player_Item_Bandage", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_bandage.png", 1, bDefault);
 
+	// Item
+	CreateNewTexture(L"Item_Torch", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/supply_torch.png", 1, bDefault);
+	CreateNewTexture(L"Item_Key", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/supply_key.png", 1, bDefault);
+	CreateNewTexture(L"Item_Food", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/supply_food.png", 1, bDefault);
+	CreateNewTexture(L"Item_Shovel", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/item_food.png", 1, bDefault);
+
 
 	//Hero
 	CreateNewTexture(L"Hero_Death", TEX_NORMAL,
@@ -398,6 +408,54 @@ void CResourceMgr::BaseTextureLoad()
 
 	}
 
+	// 영웅 스탯 UI
+	{
+		// 틀
+		CreateNewTexture(L"UI_HeroStat_Base", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/HeroStat.png", 1, bDefault);
+		// 성녀 틀
+		CreateNewTexture(L"UI_HeroStat_Vestal_Base", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/VestalStat.png", 1, bDefault);
+		// 방패파괴자 틀
+		CreateNewTexture(L"UI_HeroStat_Shieldbreaker_Base", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/ShieldbreakerStat.png", 1, bDefault);
+		// 광대 틀
+		CreateNewTexture(L"UI_HeroStat_Jester_Base", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/JesterStat.png", 1, bDefault);
+		// 노상강도 틀
+		CreateNewTexture(L"UI_HeroStat_Highwayman_Base", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/HighwaymanStat.png", 1, bDefault);
+
+		// 추천 위치, 목표
+		CreateNewTexture(L"UI_HeroStat_Recommend_Position_1", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_hero_1_1.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Recommend_Position_2", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_hero_2_1.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Recommend_Position_3", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_hero_3_1.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Recommend_Position_4", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_hero_4_1.png", 1, bDefault);
+
+		CreateNewTexture(L"UI_HeroStat_Recommend_Target_1", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_target_1_1.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Recommend_Target_2", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_target_2_1.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Recommend_Target_3", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_target_3_1.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Recommend_Target_4", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_target_4_1.png", 1, bDefault);
+
+		// 스킬 활성화 상태
+		CreateNewTexture(L"UI_HeroStat_Selected_Skill", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/selected_ability.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Positive_Skill", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/hero_slot.positive_frame.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Negative_Skill", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/hero_slot.negative_frame.png", 1, bDefault);
+		CreateNewTexture(L"UI_HeroStat_Locked_Skill", TEX_NORMAL,
+			L"../Bin/Resource/Image/UI/Hero/lockedskill.png", 1, bDefault);
+	}
+
 
 	//스탯 표시 
 	
@@ -441,6 +499,13 @@ void CResourceMgr::UITextureLoad()
 		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+shovel.png", 1, bDefault);
 	CreateNewTexture(L"Item_UI_Bandage", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+bandage.png", 1, bDefault);
+
+	CreateNewTexture(L"Item_UI_Key", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+door_key.png", 1, bDefault);
+	CreateNewTexture(L"Item_UI_Torch", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+torch.png", 1, bDefault);
+	CreateNewTexture(L"Item_UI_Food", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/supply/inv_provision+_1.png", 1, bDefault);
 
 }
 

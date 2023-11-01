@@ -47,7 +47,7 @@ _int CItem::UpdateGameObject(const _float& fTimeDelta)
 void CItem::LateUpdateGameObject()
 {
 
-	if(m_bOnField)
+	if (m_bOnField)
 		FloatingOnField();
 
 	__super::LateUpdateGameObject();
@@ -57,17 +57,11 @@ void CItem::RenderGameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->GetWorld());
 
-	if (m_bOnField) {
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	}
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pTextureCom->SetTexture(0);
 	m_pBufCom->RenderBuffer();
 
-	if (m_bOnField) {
-
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	}
 	m_pColliderCom->RenderCollider();
 }
 
@@ -77,7 +71,7 @@ void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
 
 }
 
-void CItem::SetDropItemInfo(_vec3 _vPos, const tstring& _strName )
+void CItem::SetDropItemInfo(_vec3 _vPos, const tstring& _strName)
 {
 	m_vPos = _vPos;
 	m_strItemKey = _strName;
@@ -97,7 +91,7 @@ void CItem::GetUITextureKeyName(const tstring& _strOriginName)
 		strKey = L"Item_UI_Antivenom";
 		m_eItemState = EHandItem::ANTI_VENOM;
 	}
-	else if(L"Player_Item_Shovel" == _strOriginName) {
+	else if (L"Player_Item_Shovel" == _strOriginName || L"Item_Shovel" == _strOriginName) {
 		strKey = L"Item_UI_Shovel";
 		m_eItemState = EHandItem::SHOVEL;
 
@@ -105,18 +99,37 @@ void CItem::GetUITextureKeyName(const tstring& _strOriginName)
 	else if (L"Player_Item_Bandage" == _strOriginName) {
 		strKey = L"Item_UI_Bandage";
 		m_eItemState = EHandItem::BANDAGE;
-
 	}
 
+	else if (L"Item_Food" == _strOriginName) {
+		strKey = L"Item_UI_Food";
+		m_eItemState = EHandItem::BANDAGE;
+	}
+
+	else if (L"Item_Torch" == _strOriginName) {
+		strKey = L"Item_UI_Torch";
+		m_eItemState = EHandItem::BANDAGE;
+	}
+
+	else if (L"Item_Key" == _strOriginName) {
+		strKey = L"Item_UI_Key";
+		m_eItemState = EHandItem::BANDAGE;
+	}
 
 	m_strItemKey = strKey;
 }
 
 void CItem::PickingObj()
 {
+	if (m_bOnStore)
+	{
+		CGameMgr::GetInstance()->GetPlayer()->OnCollide(shared_from_this());
+	}
 
-	m_bActive = false;
-
+	else
+	{
+		m_bActive = false;
+	}
 }
 
 //

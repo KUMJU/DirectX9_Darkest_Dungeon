@@ -91,7 +91,6 @@ void CLayer::LateUpdateLayer()
 			// Collision Check
 			if ((*it)->IsColliding())
 			{
-				dynamic_pointer_cast<CCollider>((*it)->GetComponent(L"Com_Collider", ID_DYNAMIC))->SetVisible(m_bColliderVisible);
 				if (ECollideID::PLAYER != (*it)->GetColType())
 					CCollisionMgr::GetInstance()->CheckCollision(*it);
 			}

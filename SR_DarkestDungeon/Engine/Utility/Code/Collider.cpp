@@ -1,4 +1,5 @@
 #include "Collider.h"
+#include "CollisionMgr.h"
 
 CCollider::CCollider()
 {
@@ -36,7 +37,7 @@ void CCollider::GetMinMax(_vec3& vMin, _vec3& vMax)
 
 void CCollider::RenderCollider(void)
 {
-    if (m_bVisible)
+    if (CCollisionMgr::GetInstance()->GetVisible())
     {
         // Z -
         m_vPoint[0][0] = { m_vPos->x - m_vScale.x / 2.f, m_vPos->y + m_vScale.y / 2.f, m_vPos->z - m_vScale.z / 2.f };

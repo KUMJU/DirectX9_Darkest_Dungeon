@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Jester.h"
+
+#include "HeroStat.h"
 #include"Export_Utility.h"
 
 CJester::CJester(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -21,6 +23,8 @@ HRESULT CJester::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bIsHero = true;
+
+	m_eHeroType = EHeroType::JESTER;
 
 	// 스킬 세팅
 	{
@@ -85,6 +89,9 @@ HRESULT CJester::ReadyGameObject()
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
 		m_pVecSkill.push_back(pSkill5);
+
+		// 수정 예정
+		m_pVecSkill.push_back(pSkill5);
 	}
 
 	// 영웅 스탯
@@ -109,6 +116,12 @@ HRESULT CJester::ReadyGameObject()
 
 		m_pTextureCom->SetAnimKey(L"Jester_Idle", 0.04f);
 	}
+
+	// 영웅 스탯 출력창
+	m_pStatUI = make_shared<CHeroStat>(m_pGraphicDev);
+	m_pStatUI->SetHero(dynamic_pointer_cast<CJester>(shared_from_this()));
+	m_pStatUI->AwakeGameObject();
+	m_pStatUI->ReadyGameObject();
 
 	return S_OK;
 }

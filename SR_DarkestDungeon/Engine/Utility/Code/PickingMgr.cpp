@@ -74,8 +74,8 @@ _bool CPickingMgr::IntersectingRay(_vec3 _vRayPos, _vec3 _vRayNormal, _vec3 _vMi
 		return false;
 
 
-	if (fMinX > fMaxY || fMinY > fMaxX)
-		return false;
+	/*if (fMinX > fMaxY || fMinY > fMaxX)
+		return false;*/
 
 	if (tmin > tmax)
 		return false;
