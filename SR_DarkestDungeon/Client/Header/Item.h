@@ -43,6 +43,9 @@ public:
 	void SetDropItemInfo(_vec3 _vPos, const tstring& _strName);
 	void SetScale(_vec3 _vScale);
 
+	void SetAmount(_int _iAmount) { m_iAmount = _iAmount; }
+	_int GetAmount() { return m_iAmount; }
+
 	//플로팅 아이템 텍스쳐 키값을 통해 UI 텍스쳐 키값을 반환받음
 	void GetUITextureKeyName(const tstring& _strOriginName);
 	tstring GetItemKeyName() { return m_strItemKey; }
@@ -71,6 +74,8 @@ private:
 	_bool	m_bOnStore = false; // 상점에서 판매중인 아이템인지 식별
 	_vec3	m_vPosition;
 	EHandItem m_eItemState = EHandItem::ENUM_END;
+
+	_int m_iAmount = 1;
 
 	_float m_fTime = 0.f;
 	_float m_CurrentDir = 1.f;

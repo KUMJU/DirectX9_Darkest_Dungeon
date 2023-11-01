@@ -500,6 +500,16 @@ void CResourceMgr::UITextureLoad()
 	CreateNewTexture(L"Item_UI_Bandage", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+bandage.png", 1, bDefault);
 
+	//BattleUI
+	CreateNewTexture(L"UI_Battle_HeroPanel", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Background/skill_panel.png", 1, bDefault);
+
+	CreateNewTexture(L"UI_ability_move", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/select/ability_move.png", 1, bDefault);
+
+	CreateNewTexture(L"UI_ability_pass", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/select/ability_pass.png", 1, bDefault);
+
 	CreateNewTexture(L"Item_UI_Key", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+door_key.png", 1, bDefault);
 	CreateNewTexture(L"Item_UI_Torch", TEX_NORMAL,

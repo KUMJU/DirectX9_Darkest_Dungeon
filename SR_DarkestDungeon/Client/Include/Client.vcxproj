@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\BattleHeroUI.h" />
     <ClInclude Include="..\Header\BattleSystem.h" />
     <ClInclude Include="..\Header\BoneCourtier.h" />
     <ClInclude Include="..\Header\BoneDefender.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\BattleHeroUI.cpp" />
     <ClCompile Include="..\Code\BattleSystem.cpp" />
     <ClCompile Include="..\Code\BoneCourtier.cpp" />
     <ClCompile Include="..\Code\BoneDefender.cpp" />

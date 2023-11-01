@@ -11,6 +11,23 @@ CFontMgr::~CFontMgr()
 	Free();
 }
 
+HRESULT CFontMgr::ReadyResourceFont(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontTag, const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
+{
+	std::shared_ptr<CMyFont> pFont = nullptr;
+
+	pFont = Find_Font(pFontTag);
+
+	if (nullptr != pFont)
+		return E_FAIL;
+
+	pFont = make_shared<CMyFont>(pGraphicDev);
+	pFont->ReadyResourceFont(pFontTag, pFontType, iWidth, iHeight, iWeight);
+	m_mapFont.insert({ pFontType, pFont });
+
+	return S_OK;
+
+}
+
 HRESULT CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontTag, const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
 {
 	std::shared_ptr<CMyFont> pFont = nullptr;
@@ -21,13 +38,6 @@ HRESULT CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontT
 		return E_FAIL;
 
 	pFont = CMyFont::Create(pGraphicDev, pFontType, iWidth, iHeight, iWeight);
-	
-	
-	
-	
-	
-	(pFont, E_FAIL);
-
 	m_mapFont.insert({ pFontTag, pFont });
 
 	return S_OK;

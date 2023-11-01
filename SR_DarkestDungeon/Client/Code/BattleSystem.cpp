@@ -3,6 +3,8 @@
 #include "Creature.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include"BattleHeroUI.h"
+#include"Hero.h"
 
 CBattleSystem::CBattleSystem()
 {
@@ -373,6 +375,9 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 	// 종료 조건
 	if (HeroesAllDead() || MonstersAllDead())
 		EndBattle();
+
+	//UI Update
+	m_pHeroUI->UpdateGameObject(fTimeDelta);
 }
 
 void CBattleSystem::StartTurn()
@@ -396,6 +401,32 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 			{
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTurn(true);
 				m_bHero = true;
+
+				shared_ptr<CHero> pHero = dynamic_pointer_cast<CHero>(m_vHeroes[j]);
+				tstring HeroName;
+
+				//UI Setting
+				switch (pHero->GetHeroType())
+				{
+				case EHeroType::VESTAL:
+					HeroName = L"VESTAL";
+					break;
+				case EHeroType::HIGHWAYMAN:
+					HeroName = L"HIGHWAYMAN";
+					break;
+				case EHeroType::SHILEDBREAKER:
+					HeroName = L"SHILEDBREAKER";
+					break;
+				case EHeroType::JESTER:
+					HeroName = L"JESTER";
+					break;
+				default:
+					break;
+				}
+
+				if(m_pHeroUI)
+					m_pHeroUI->SettingHeroInfo(pHero->GetHp(), pHero->GetHp(), pHero->GetStress(), HeroName, pHero->GetSkillVector());
+
 				iCurrentHeroIndex = j;
 				return m_vHeroes[j];
 			}

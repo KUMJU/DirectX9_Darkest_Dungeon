@@ -1,6 +1,9 @@
 #pragma once
 #include"GameObject.h"
 
+class CBattleHeroUI;
+
+
 class CBattleSystem
 {
 public:
@@ -53,6 +56,8 @@ public:
 	// 전투진형 배치
 	void	FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes, vector<shared_ptr<CGameObject>>& _vMonsters, _float _fAngle1,
 		_float _fAngle2, _vec3 _vOrigin);
+
+	void GetHeroPanelUI(shared_ptr<CBattleHeroUI> _pHeroUI) { m_pHeroUI = _pHeroUI; }
 
 protected:
 	// 위치 변경
@@ -108,6 +113,14 @@ private:
 	vector<_vec3> m_vMonsterLocation = {};		// monster position
 	_int iCurrentHeroIndex = 0;
 	_int iCurrentMonsterIndex = 0;
+
+
+//UI Test
+private:
+	shared_ptr<CBattleHeroUI> m_pHeroUI = nullptr;
+	
+
+
 	_int iLiveHeroes = 0;
 	_int iLiveMonsters = 0;
 };

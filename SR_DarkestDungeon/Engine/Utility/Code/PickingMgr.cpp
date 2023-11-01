@@ -42,16 +42,28 @@ void CPickingMgr::RayPicking(LONG _lX, LONG _lY)
 	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
 	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
 
+	D3DXVec3Normalize(&vRayDir, &vRayDir);
+
 	_vec3 vMin, vMax;
 
-	for (auto& iter : m_PickingList) {
+	for (auto iter = m_PickingList.begin(); iter != m_PickingList.end(); ++iter) {
+		(*iter)->GetMinMaxPos(vMin, vMax);
+		if (IntersectingRay(vRayPos, vRayDir, vMin, vMax)) {
+			(*iter)->PickingObj();
+			m_PickingList.erase(iter);
+			break;
+		}
+
+
+	}
+	/*for (auto& iter : m_PickingList) {
 
 		iter->GetMinMaxPos(vMin, vMax);
 		if (IntersectingRay(vRayPos, vRayDir, vMin, vMax)) {
 			iter->PickingObj();
 			break;
 		}
-	}
+	}*/
 }
 
 _bool CPickingMgr::IntersectingRay(_vec3 _vRayPos, _vec3 _vRayNormal, _vec3 _vMin, _vec3 _vMax)
@@ -60,13 +72,28 @@ _bool CPickingMgr::IntersectingRay(_vec3 _vRayPos, _vec3 _vRayNormal, _vec3 _vMi
 	_float fMinX = (_vMin.x - _vRayPos.x) / _vRayNormal.x;
 	_float fMaxX = (_vMax.x - _vRayPos.x) / _vRayNormal.x;
 
+	if (fMinX > fMaxX)
+		swap(fMinX, fMaxX);
+
 	_float fMinY = (_vMin.y - _vRayPos.y) / _vRayNormal.y;
 	_float fMaxY = (_vMax.y - _vRayPos.y) / _vRayNormal.y;
+
+	if (fMinY > fMaxY)
+		swap(fMinY, fMaxY);
+
+	if (fMinX > fMaxY || fMaxY> fMaxX)
+		return false;
 
 	_float fMinZ = (_vMin.z	- _vRayPos.z) / _vRayNormal.z;
 	_float fMaxZ = (_vMax.z - _vRayPos.z) / _vRayNormal.z;
 
-	float tmin = (fMinX > fMinY) ? fMinX : fMinY;
+	if (fMinZ > fMaxZ)
+		swap(fMinZ, fMaxZ);
+
+	//if (fMinX > fMaxZ || fMinZ > fMaxX)
+	//	return false;
+
+	/*float tmin = (fMinX > fMinY) ? fMinX : fMinY;
 	float tmax = (fMaxX < fMaxY) ? fMinX : fMinY;
 
 
@@ -76,10 +103,7 @@ _bool CPickingMgr::IntersectingRay(_vec3 _vRayPos, _vec3 _vRayNormal, _vec3 _vMi
 
 	/*if (fMinX > fMaxY || fMinY > fMaxX)
 		return false;*/
-
-	if (tmin > tmax)
-		return false;
-
+	
 	return true;
 }
 

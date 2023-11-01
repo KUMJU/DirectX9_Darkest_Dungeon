@@ -54,6 +54,7 @@
     <ClCompile Include="..\Code\Weald_Curio_Tent.cpp" />
     <ClCompile Include="..\Code\HeroStat.cpp" />
     <ClCompile Include="..\Code\StatView.cpp" />
+    <ClCompile Include="..\Code\BattleHeroUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="..\Header\Guild.h" />
     <ClInclude Include="..\Header\GuildNPC.h" />
     <ClInclude Include="..\Header\StatView.h" />
+    <ClInclude Include="..\Header\BattleHeroUI.h" />
     <ClInclude Include="..\Header\HeroStat.h" />
   </ItemGroup>
   <ItemGroup>

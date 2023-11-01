@@ -111,6 +111,10 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
 	}
 
+	if (GetAsyncKeyState('O') & 0x8000) {
+		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, -180.f);
+	}
+
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 		if (m_bMoveLock[1])
 			return;
