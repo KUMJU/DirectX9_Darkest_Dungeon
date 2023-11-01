@@ -69,7 +69,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DivineComfort", L"Vestal_DivineComfort", L"DivineComfort_Img", L"DivineComfort_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
 			(L"HandOfLight", L"Vestal_HandOfLight", L"HandOfLight_Img", L"HandOfLight_Effect",
