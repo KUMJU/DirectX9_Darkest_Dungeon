@@ -63,9 +63,12 @@ void CStatView::RenderGameObject()
 	}
 
 	// CorpseHPBar Render
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[20]->GetWorld());
-	m_pTextureCom[12]->SetTexture(0);
-	m_pRCTexCom[20]->RenderBuffer();
+	if (m_bCorpse)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[20]->GetWorld());
+		m_pTextureCom[12]->SetTexture(0);
+		m_pRCTexCom[20]->RenderBuffer();
+	}
 
 	// CursorUI Render
 	if (m_bTurn && m_bHero)
@@ -213,14 +216,11 @@ void CStatView::SettingPos(_vec3 _vPos)
 			m_pTransformCom[i]->SetScale(1.f * m_fHpBarRange, 0.1f, 1.f);
 		}
 	}
-	else
-	{
-		//Full CorpseHpBar
-		for (int i = 20; i < 21; ++i) {
-			m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - 0.01f);
-			m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
-			m_pTransformCom[i]->SetScale(1.f * m_fHpBarRange, 0.1f, 1.f);
-		}
+	//Full CorpseHpBar
+	for (int i = 20; i < 21; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - 0.01f);
+		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+		m_pTransformCom[i]->SetScale(1.f * m_fHpBarRange, 0.1f, 1.f);
 	}
 
 	// Target Cursor
