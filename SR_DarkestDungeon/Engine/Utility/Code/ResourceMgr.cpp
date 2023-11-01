@@ -207,7 +207,23 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/AddersKiss_Img.png", 1, bDefault);
 		CreateNewTexture(L"Impale_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Impale_Img.png", 1, bDefault);
-
+		CreateNewTexture(L"Captivate_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Captivate_Img.png", 1, bDefault);
+		CreateNewTexture(L"Expose_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Expose_Img.png", 1, bDefault);
+		
+		CreateNewTexture(L"Pierce_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Pierce_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"Puncture_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Puncture_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"AddersKiss_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/AddersKiss_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"Impale_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Impale_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"Captivate_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Captivate_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"Expose_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Expose_Img_BW.png", 1, bDefault);
 
 	// 스킬 이펙트 (본인에게)
 
@@ -266,7 +282,24 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/PointBlankShot_Img.png", 1, bDefault);
 		CreateNewTexture(L"DuelistsAdvance_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/DuelistsAdvance_Img.png", 1, bDefault);
-	
+		CreateNewTexture(L"GrapeshotBlast_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/GrapeshotBlast_Img.png", 1, bDefault);
+		CreateNewTexture(L"TrackingShot_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/TrackingShot_Img.png", 1, bDefault);
+		
+		CreateNewTexture(L"WickedSlice_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/WickedSlice_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"PistolShot_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/PistolShot_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"PointBlankShot_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/PointBlankShot_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"DuelistsAdvance_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/DuelistsAdvance_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"GrapeshotBlast_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/GrapeshotBlast_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"TrackingShot_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/TrackingShot_Img_BW.png", 1, bDefault);
+
 
 	// 스킬 이펙트 (본인에게)
 	
@@ -317,7 +350,24 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineGraceImg.png", 1, bDefault);
 		CreateNewTexture(L"DivineComfort_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineComfortImg.png", 1, bDefault);
-	
+		CreateNewTexture(L"HandOfLight_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/HandOfLight_Img.png", 1, bDefault);
+		CreateNewTexture(L"Illumination_Img", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/Illumination_Img.png", 1, bDefault);
+		
+		CreateNewTexture(L"MaceBash_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/MaceBashImg_BW.png", 1, bDefault);
+		CreateNewTexture(L"DazzlingLight_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DazzlingLightImg_BW.png", 1, bDefault);
+		CreateNewTexture(L"DivineGrace_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineGraceImg_BW.png", 1, bDefault);
+		CreateNewTexture(L"DivineComfort_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/DivineComfortImg_BW.png", 1, bDefault);
+		CreateNewTexture(L"HandOfLight_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/HandOfLight_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"Illumination_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/Illumination_Img_BW.png", 1, bDefault);
+
 
 	// 스킬 이펙트 (본인에게)
 	
@@ -386,6 +436,19 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"Solo_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Skill/Solo_Img.png", 1, bDefault);
 
+		CreateNewTexture(L"BattleBallad_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Skill/BattleBallad_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"DirkStab_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Skill/DirkStab_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"Finale_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Skill/Finale_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"Harvest_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Skill/Harvest_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"SliceOff_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Skill/SliceOff_Img_BW.png", 1, bDefault);
+		CreateNewTexture(L"Solo_Img_BW", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Skill/Solo_Img_BW.png", 1, bDefault);
+
 
 		// 스킬 이펙트 (본인에게)
 
@@ -412,19 +475,35 @@ void CResourceMgr::BaseTextureLoad()
 	{
 		// 틀
 		CreateNewTexture(L"UI_HeroStat_Base", TEX_NORMAL,
-			L"../Bin/Resource/Image/UI/Hero/HeroStat.png", 1, bDefault);
+			L"../Bin/Resource/Image/UI/Hero/Stat/HeroStat.png", 1, bDefault);
 		// 성녀 틀
 		CreateNewTexture(L"UI_HeroStat_Vestal_Base", TEX_NORMAL,
-			L"../Bin/Resource/Image/UI/Hero/VestalStat.png", 1, bDefault);
+			L"../Bin/Resource/Image/UI/Hero/Stat/VestalBaseStat.png", 1, bDefault);
 		// 방패파괴자 틀
 		CreateNewTexture(L"UI_HeroStat_Shieldbreaker_Base", TEX_NORMAL,
-			L"../Bin/Resource/Image/UI/Hero/ShieldbreakerStat.png", 1, bDefault);
+			L"../Bin/Resource/Image/UI/Hero/Stat/ShieldbreakerBaseStat.png", 1, bDefault);
 		// 광대 틀
 		CreateNewTexture(L"UI_HeroStat_Jester_Base", TEX_NORMAL,
-			L"../Bin/Resource/Image/UI/Hero/JesterStat.png", 1, bDefault);
+			L"../Bin/Resource/Image/UI/Hero/Stat/JesterBaseStat.png", 1, bDefault);
 		// 노상강도 틀
 		CreateNewTexture(L"UI_HeroStat_Highwayman_Base", TEX_NORMAL,
-			L"../Bin/Resource/Image/UI/Hero/HighwaymanStat.png", 1, bDefault);
+			L"../Bin/Resource/Image/UI/Hero/Stat/HighwaymanBaseStat.png", 1, bDefault);
+
+		// 역마차
+		{
+			// 성녀 틀
+			CreateNewTexture(L"UI_HeroStat_Vestal_Base_Hire", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Stat/VestalBaseStatHire.png", 1, bDefault);
+			// 방패파괴자 틀
+			CreateNewTexture(L"UI_HeroStat_Shieldbreaker_Base_Hire", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Stat/ShieldbreakerBaseStatHire.png", 1, bDefault);
+			// 광대 틀
+			CreateNewTexture(L"UI_HeroStat_Jester_Base_Hire", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Stat/JesterBaseStatHire.png", 1, bDefault);
+			// 노상강도 틀
+			CreateNewTexture(L"UI_HeroStat_Highwayman_Base_Hire", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Stat/HighwaymanBaseStatHire.png", 1, bDefault);
+		}
 
 		// 추천 위치, 목표
 		CreateNewTexture(L"UI_HeroStat_Recommend_Position_1", TEX_NORMAL,
@@ -770,6 +849,9 @@ void CResourceMgr::VillageTextureLoad()
 
 			CreateNewTexture(L"Guild_SandBack_Texture", TEX_NORMAL,
 				L"../Bin/Resource/Image/Village/Facilities/guild/Inside/SandBack.png", 1, bDefault);
+
+			CreateNewTexture(L"Guild_WallSword_Texture", TEX_NORMAL,
+				L"../Bin/Resource/Image/Village/Facilities/guild/Inside/WallSword.png", 1, bDefault);
 		}
 	}
 

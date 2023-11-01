@@ -3,6 +3,8 @@
 #include "GameMgr.h"
 #include "CameraMgr.h"
 
+#include "PickingGame.h"
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -22,6 +24,8 @@ CGuildNPC::~CGuildNPC()
 
 HRESULT CGuildNPC::ReadyGameObject()
 {
+	m_pPickingGame = make_shared<CPickingGame>(m_pGraphicDev);
+
 	__super::ReadyGameObject();
 
 	return S_OK;
@@ -59,7 +63,7 @@ void CGuildNPC::AddComponent()
 	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
-	m_pTextureCom->SetTextureKey(L"Guild_NPC_Texture", TEX_NORMAL);
+	m_pTextureCom->SetTextureKey(L"Guild_SandBack_Texture", TEX_NORMAL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Texture",pComponent });
 }
 

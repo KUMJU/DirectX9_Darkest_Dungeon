@@ -75,14 +75,28 @@ HRESULT CHighwayman::ReadyGameObject()
 			(L"DuelistsAdvance", L"Highwayman_DuelistsAdvance", L"DuelistsAdvance_Img", L"DuelistsAdvance_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
 
+		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
+			(L"GrapeshotBlast", L"Highwayman_GrapeshotBlast", L"GrapeshotBlast_Img", L"GrapeshotBlast_Effect",
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
+
+		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
+			(L"TrackingShot", L"Highwayman_TrackingShot", L"TrackingShot_Img", L"TrackingShot_Effect",
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
+
+		pSkill5->SetEquipped(false);
+		pSkill5->SetUnlocked(false);
+		pSkill6->SetEquipped(false);
+		pSkill6->SetUnlocked(false);
+
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill3);
+
+		m_pVecSkill.push_back(pSkill5);
+		m_pVecSkill.push_back(pSkill6);
+
 		m_pVecSkill.push_back(pSkill4);
 
-		// ¼öÁ¤ ¿¹Á¤
-		m_pVecSkill.push_back(pSkill4);
-		m_pVecSkill.push_back(pSkill4);
 	}
 
 	// ¿µ¿õ ½ºÅÈ

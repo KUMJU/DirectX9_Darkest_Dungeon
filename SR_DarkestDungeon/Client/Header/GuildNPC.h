@@ -1,5 +1,7 @@
 #pragma once
 #include "InteractionObj.h"
+#include "PickingGame.h"
+
 class CGuildNPC : public CInteractionObj
 {
 public:
@@ -29,5 +31,8 @@ protected:
 	virtual void	FinishInteraction();
 
 	virtual void	ChangeTexture();
+
+private:
+	shared_ptr<CPickingGame> m_pPickingGame = nullptr;
 };
 

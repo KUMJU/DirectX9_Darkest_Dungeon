@@ -103,6 +103,9 @@ public:
 
 	EHeroType	GetHeroType() { return m_eHeroType; }
 
+	void		SetHired(_bool _bHired) { m_bHired = _bHired; }
+	_bool		IsHired() { return m_bHired; }
+
 protected:
 
 	_int				m_iStress = 0;		// 스트레스
@@ -139,6 +142,7 @@ protected:
 
 	// 스탯 Info ON/Off
 	_bool		m_bShowStatUI = false;
+	_bool		m_bHired = false;
 
 	//shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
 

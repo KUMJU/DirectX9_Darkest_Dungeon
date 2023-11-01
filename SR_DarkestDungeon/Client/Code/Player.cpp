@@ -6,7 +6,8 @@
 #include "Wall.h"
 #include"UIMgr.h"
 #include"CameraMgr.h"
-#include"PickingMgr.h"
+#include "PickingMgr.h"
+#include "Hero.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -46,6 +47,8 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 
 void CPlayer::LateUpdateGameObject()
 {
+	m_bPrevMouse = m_bCurMouse;
+
 	CGameObject::LateUpdateGameObject();
 }
 
@@ -95,6 +98,11 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	//마우스 픽킹
 	if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
 
+		m_bCurMouse = true;
+
+		if (m_bCurMouse == m_bPrevMouse)
+			return;
+
 		POINT	ptMouse{};
 		GetCursorPos(&ptMouse);
 		ScreenToClient(g_hWnd, &ptMouse);
@@ -104,8 +112,10 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		if (!result) {
 			CPickingMgr::GetInstance()->RayPicking(ptMouse.x, ptMouse.y);
 		}
-
 	}
+
+	else
+		m_bCurMouse = false;
 
 	if (GetAsyncKeyState('P') & 0x8000) {
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);

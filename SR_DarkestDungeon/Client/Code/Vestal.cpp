@@ -71,14 +71,27 @@ HRESULT CVestal::ReadyGameObject()
 			(L"DevineComfort", L"Vestal_DevineComfort", L"DevineComfort_Img", L"DevineComfort_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
 
+		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
+			(L"HandOfLight", L"Vestal_HandOfLight", L"HandOfLight_Img", L"HandOfLight_Effect",
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+
+		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
+			(L"Illumination", L"Vestal_Illumination", L"Illumination_Img", L"Illumination_Effect",
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
 
-		// ¼öÁ¤ ¿¹Á¤
-		m_pVecSkill.push_back(pSkill4);
-		m_pVecSkill.push_back(pSkill4);
+		pSkill5->SetEquipped(false);
+		pSkill5->SetUnlocked(false);
+
+		pSkill6->SetEquipped(false);
+		pSkill6->SetUnlocked(false);
+
+		m_pVecSkill.push_back(pSkill5);
+		m_pVecSkill.push_back(pSkill6);
 	}
 
 	// ¿µ¿õ ½ºÅÈ

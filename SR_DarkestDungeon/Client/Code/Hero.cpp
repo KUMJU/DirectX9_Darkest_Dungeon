@@ -35,6 +35,7 @@ HRESULT CHero::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 	m_bIsHero = true;
+	m_eCollideID = ECollideID::HERO;
 	//m_pStatInfo->SetIsHero(true);
 
 	return S_OK;
@@ -97,6 +98,11 @@ void CHero::RenderGameObject()
 
 void CHero::PickingObj()
 {
+	if (m_bHired)
+		m_pStatUI->SetForHire(false);
+	else
+		m_pStatUI->SetForHire(true);
+
 	m_pStatUI->SetVisible(true);
 	CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 }

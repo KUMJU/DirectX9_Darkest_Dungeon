@@ -47,6 +47,12 @@ public:
 	void			SetCurrentRoom(_int _iCurrentRoom) { m_iCurrentRoom = _iCurrentRoom; }
 	void			SetInventory(shared_ptr<CInventory> _pInventory);
 
+	// ¿µ¿õ º¤ÅÍ °Ù, ¼Â / ¿µ¿õ Ãß°¡ / ¿µ¿õ ½º¿Ò
+	vector<shared_ptr<CGameObject>>* GetHeroVec() { return &m_pVecHero; }
+	void			SetHeroVec(vector<shared_ptr<CGameObject>>* _pVecHero) { m_pVecHero = *_pVecHero; }
+	void			AddHero(shared_ptr<CGameObject> _pHero) { m_pVecHero.push_back(_pHero); }
+	void			SwapHero(_int iIdx1, _int iIdx2) { m_pVecHero[iIdx1].swap(m_pVecHero[iIdx2]); }
+
 	//ÀåÂø ¾ÆÀÌÅÛ Setting
 	void			SetCurrentItem(EHandItem _eItem);
 
@@ -77,8 +83,10 @@ private:
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
 
+	vector <shared_ptr<CGameObject>> m_pVecHero;			// ¿µ¿õ º¤ÅÍ
+
 	_float		m_fDeltaTime = 0.f;
-	EPlayerMove m_eLastMove = EPlayerMove::ENUM_END;
+	EPlayerMove m_eLastMove = EPlayerMove::ENUM_END;	
 
 	_bool		m_bMoveLock[4] = { false };
 	_bool		m_bMoveSave[4] = { false };
@@ -90,6 +98,10 @@ private:
 
 	_bool		m_bRoomChange = false;
 	_int		m_iCurrentRoom = 10;
+
+// ¸¶¿ì½º Áßº¹ ¹æÁö
+	_bool		m_bPrevMouse = true;
+	_bool		m_bCurMouse = false;
 
 private:
 	virtual void	Free();
