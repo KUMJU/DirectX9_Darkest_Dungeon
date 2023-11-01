@@ -79,14 +79,27 @@ HRESULT CShieldBreaker::ReadyGameObject()
 			(L"Impale", L"ShieldBreaker_Impale", L"Impale_Img", L"Impale_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
+		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
+			(L"Captivate", L"ShieldBreaker_Captivate", L"Captivate_Img", L"Captivate_Effect",
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
+
+		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
+			(L"Expose", L"ShieldBreaker_Expose", L"Expose_Img", L"Expose_Effect",
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
+
+		pSkill5->SetEquipped(false);
+		pSkill5->SetUnlocked(false);
+
+		pSkill6->SetEquipped(false);
+		pSkill6->SetUnlocked(false);
+
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
 
-		// ¼öÁ¤ ¿¹Á¤
-		m_pVecSkill.push_back(pSkill4);
-		m_pVecSkill.push_back(pSkill4);
+		m_pVecSkill.push_back(pSkill6);
+		m_pVecSkill.push_back(pSkill5);
 	}
 
 	// ¿µ¿õ ½ºÅÈ

@@ -33,6 +33,7 @@ public:
 
 	_bool		IsActivatePos(_int _idx) { return m_arrActivatePos[_idx]; }
 	_bool		IsTargetPos(_int _idx) { return m_arrTargetPos[_idx]; }
+	_bool* GetActivatePos() { return m_arrActivatePos; }
 	_bool* GetTargetPos() { return m_arrTargetPos; }
 	_bool* GetArrToEnemy() { return m_bArrToEnemy; }
 	_bool		IsTargetAll() { return m_bTargetAll; }

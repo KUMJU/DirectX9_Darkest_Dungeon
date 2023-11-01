@@ -151,16 +151,25 @@ _int COutside::UpdateGameObject(const _float& fTimeDelta)
 
 void COutside::LateUpdateGameObject()
 {
-	for (auto& iter : m_vecGameObject) {
-
-		// Collision Check
-		if (iter->IsColliding())
+	for (auto iter = m_vecGameObject.begin(); iter != m_vecGameObject.end(); iter++)
+	{
+		if (ECollideID::HERO == (*iter)->GetColType())
 		{
-			if (ECollideID::PLAYER != iter->GetColType())
-				CCollisionMgr::GetInstance()->CheckCollision(iter);
+			if (dynamic_pointer_cast<CHero>(*iter)->IsHired())
+				iter = m_vecGameObject.erase(iter);
 		}
 
-		iter->LateUpdateGameObject();
+		if (iter == m_vecGameObject.end())
+			return;
+
+		// Collision Check
+		if ((*iter)->IsColliding())
+		{
+			if (ECollideID::PLAYER != (*iter)->GetColType())
+				CCollisionMgr::GetInstance()->CheckCollision(*iter);
+		}
+
+		(*iter)->LateUpdateGameObject();
 	}
 }
 

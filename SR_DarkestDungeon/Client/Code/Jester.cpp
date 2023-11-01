@@ -85,14 +85,25 @@ HRESULT CJester::ReadyGameObject()
 			(L"SliceOff", L"Jester_SliceOff", L"SliceOff_Img", L"SliceOff_Effect",
 				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
 
+		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
+			(L"BattleBallad", L"Jester_BattleBallad", L"BattleBallad_Img", L"BattleBallad_Effect",
+				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
+
+		pSkill3->SetEquipped(false);
+		pSkill3->SetUnlocked(false);
+
+		pSkill6->SetEquipped(false);
+		pSkill6->SetUnlocked(false);
+
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
+
+		m_pVecSkill.push_back(pSkill6);
+
 		m_pVecSkill.push_back(pSkill5);
 
-		// ¼öÁ¤ ¿¹Á¤
-		m_pVecSkill.push_back(pSkill5);
 	}
 
 	// ¿µ¿õ ½ºÅÈ

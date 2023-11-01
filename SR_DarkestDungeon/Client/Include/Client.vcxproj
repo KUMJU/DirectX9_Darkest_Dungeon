@@ -181,6 +181,7 @@
     <ClInclude Include="..\Header\Jester.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\Outside.h" />
+    <ClInclude Include="..\Header\PickingGame.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\StageCoachHero.h" />
     <ClInclude Include="..\Header\StatView.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="..\Code\Jester.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\Outside.cpp" />
+    <ClCompile Include="..\Code\PickingGame.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\StageCoachHero.cpp" />
     <ClCompile Include="..\Code\StatView.cpp" />

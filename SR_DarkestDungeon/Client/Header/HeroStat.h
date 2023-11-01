@@ -27,6 +27,7 @@ public:
 	
 public:
 	void	SetHero(shared_ptr<CHero> _pHero) { m_pHero = _pHero; }
+	void	SetForHire(_bool _bForHire);
 
 protected:
 	void	AddComponent();
@@ -40,9 +41,9 @@ private:
 
 	vector<shared_ptr<CSkill>>* m_pVecSkill;
 
-	// 0~3 : 추천 위치 / 4~7 : 추천 목표 / 8~13 : 스킬 이미지 / 14 ~ 17 : 활성 스킬 표시
-	shared_ptr<CRcTex> m_pRCTexCom[20];
-	shared_ptr<CTransform> m_pTransformCom[20];
+	// 1~4 : 추천 위치 / 5~8 : 추천 목표 / 9~14 : 스킬 이미지 / 15 ~ 20 : 활성 스킬 표시 / 21 ~ 26 : 스킬 잠금 표시
+	shared_ptr<CRcTex> m_pRCTexCom[27];
+	shared_ptr<CTransform> m_pTransformCom[27];
 
 	// 0: 틀
 	// 1~4 : 추천 위치1~4
@@ -52,6 +53,9 @@ private:
 	// 16 : 스킬 잠금 표시
 	shared_ptr<CTexture> m_pTextureCom[17];
 
-	//_int	m_iRecommend
+	_int	m_iRecommendPos[4] = { 0 };
+	_int	m_iTargetPos[4] = { 0 };
+
+	_bool	m_bForHire = false;
 };
 
