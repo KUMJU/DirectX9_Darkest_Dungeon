@@ -68,8 +68,8 @@ HRESULT CVestal::ReadyGameObject()
 		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 1, 0 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
-			(L"DevineComfort", L"Vestal_DevineComfort", L"DevineComfort_Img", L"DevineComfort_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+			(L"DivineComfort", L"Vestal_DivineComfort", L"DivineComfort_Img", L"DivineComfort_Effect",
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.f, -1, 0, 0, 0, 1, 0);
 
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);

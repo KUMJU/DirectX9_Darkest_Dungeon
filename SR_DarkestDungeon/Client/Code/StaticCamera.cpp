@@ -187,12 +187,21 @@ void CStaticCamera::ChangeCamEyePos()
 
 	if (m_fActTime + m_deltaTime >= m_fTotalTime) {
 		fCalAngle = D3DXToRadian(m_fTotalAngle) - m_fCurrentAngle;
-		return;
 	}
 
 	if (m_fActTime >= m_fTotalTime) {
-		m_eCurrentState = ECameraMode::IDLE;
-		return;
+		
+		if (m_bIsLookBack == false) {
+			m_bIsLookBack = true;
+			m_eCurrentState = ECameraMode::IDLE;
+			return;
+		}
+		else {
+			m_bIsLookBack = false;
+			m_eCurrentState = ECameraMode::FPS;
+			return;
+		}
+		
 	}
 
 	D3DXQuaternionRotationAxis(&q, &vUpvec, fCalAngle);
@@ -209,7 +218,17 @@ void CStaticCamera::ChangeCamEyePos()
 	m_fCurrentAngle += D3DXToRadian(m_fAngle) * m_deltaTime;
 
 	if (m_fActTime >= m_fTotalTime) {
-		m_eCurrentState = ECameraMode::IDLE;
+
+		if (m_bIsLookBack == false) {
+			m_bIsLookBack = true;
+			m_eCurrentState = ECameraMode::IDLE;
+
+		}
+		else {
+			m_bIsLookBack = false;
+			m_eCurrentState = ECameraMode::FPS;
+		}
+
 		return;
 	}
 

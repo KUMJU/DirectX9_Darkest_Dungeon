@@ -78,7 +78,7 @@ void CInventory::RenderGameObject()
 
             _vec2 vPos = { (WINCX * 0.5f) - 182.f + (iCount * 40.f) , 690.f };
 
-            Engine::Render_Font(L"Font_Default", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            Engine::Render_Font(L"Font_Default_Small", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
         ++iCount;
     }
@@ -98,7 +98,7 @@ void CInventory::InsertItem(shared_ptr<CItem> _pItem)
     for (auto& iter : m_itemList) {
 
         if (iter->pItem->GetItemKeyName() == _pItem->GetItemKeyName()) {
-            iter->iCapacity++;
+            iter->iCapacity += iter->pItem->GetAmount();
             bDuplicated = true;
             break;
         }

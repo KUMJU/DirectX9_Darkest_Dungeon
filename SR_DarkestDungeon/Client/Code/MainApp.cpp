@@ -77,11 +77,41 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);		// Z버퍼에 깊이 값을 무조건 기록은 하지만 자동 정렬을 할지 말지 결정
 	(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);  // Z버퍼에 깊이 값을 기록할 지 결정
 
-	// Font
-	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕", 15, 20, FW_HEAVY))) {
+
+	//Font Setting------------------------------------------------
+
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"이순신 돋움체 M", 15, 25, FW_HEAVY))) {
 		//MSG_BOX("Ready InputDev Failed!");
 		return E_FAIL;
-	}	
+	}
+
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Default_Small", L"이순신 돋움체 L", 5, 15, FW_HEAVY))) {
+		//MSG_BOX("Ready InputDev Failed!");
+		return E_FAIL;
+	}
+
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Default_Bold", L"이순신 돋움체 B", 15, 25, FW_HEAVY))) {
+		//MSG_BOX("Ready InputDev Failed!");
+		return E_FAIL;
+	}
+
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Default_Light", L"이순신 돋움체 L", 15, 25, FW_HEAVY))) {
+		//MSG_BOX("Ready InputDev Failed!");
+		return E_FAIL;
+	}
+
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Point", L"이순신 Regular", 15, 25, FW_HEAVY))) {
+		//MSG_BOX("Ready InputDev Failed!");
+		return E_FAIL;
+	}
+
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Point_Small", L"이순신 Regular", 10, 20, FW_HEAVY))) {
+		//MSG_BOX("Ready InputDev Failed!");
+		return E_FAIL;
+	}
+
+	//Font Setting Fin--------------------------------------------------------
+
 
 	// Dinput
 	if (FAILED(Engine::Ready_InputDev(g_hInst, g_hWnd))) {

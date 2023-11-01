@@ -48,6 +48,7 @@
 #include"ResourceMgr.h"
 
 #include"UIMgr.h"
+#include"BattleHeroUI.h"
 
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -622,7 +623,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 	
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
@@ -785,6 +786,12 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	pRoom3_Battle->PushHeroesVector(Room3_v2);
 	pRoom3_Battle->PushMonstersVector(Room3_v3);
 	m_pRoom3->SetBattleSystem(pRoom3_Battle);
+	
+	//BattleUI Test
+	shared_ptr<CBattleHeroUI> m_pHeroUI = make_shared<CBattleHeroUI>(m_pGraphicDev);
+	m_pHeroUI->AwakeGameObject();
+	m_pHeroUI->ReadyGameObject();
+	pRoom3_Battle->GetHeroPanelUI(m_pHeroUI);
 
 	// Room4
 	vector<shared_ptr<CGameObject>> Room4_v1;

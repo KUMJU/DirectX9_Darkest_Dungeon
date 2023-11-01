@@ -104,6 +104,7 @@ private:
 	_float m_fLerp = 0.f;
 	_float m_fDir = 1.f;
 
+	_bool m_bIsLookBack = false;
 private:
 	queue<unique_ptr<tagEffectInfo>> m_qEffectQueue;
 

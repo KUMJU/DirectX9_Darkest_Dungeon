@@ -12,6 +12,31 @@ CMyFont::~CMyFont()
 	//m_pGraphicDev->Release();
 }
 
+HRESULT CMyFont::ReadyResourceFont(const _tchar* pFontPath, const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
+{
+	if (FAILED(AddFontResourceEx(pFontPath, FR_PRIVATE, 0))) {
+		MSG_BOX("Resource Font Create Failed");
+		return E_FAIL;
+	}
+
+	D3DXFONT_DESC			Font_Desc;
+
+	Font_Desc.CharSet = DEFAULT_CHARSET;
+	lstrcpy(Font_Desc.FaceName, pFontType);
+
+	Font_Desc.Width = iWidth;
+	Font_Desc.Height = iHeight;
+	Font_Desc.Weight = iWeight;
+
+	if (FAILED(D3DXCreateFontIndirect(m_pGraphicDev, &Font_Desc, &m_pFont)))
+		return E_FAIL;
+
+	if (FAILED(D3DXCreateSprite(m_pGraphicDev, &m_pSprite)))
+		return E_FAIL;
+
+	return E_NOTIMPL;
+}
+
 HRESULT CMyFont::Ready_Font(const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
 {
 	D3DXFONT_DESC			Font_Desc;
@@ -62,6 +87,7 @@ shared_ptr<CMyFont> CMyFont::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar*
 
 void CMyFont::Free()
 {
+	//RemoveFontResourceEx()
 	m_pFont->Release();
 	m_pSprite->Release();
 }

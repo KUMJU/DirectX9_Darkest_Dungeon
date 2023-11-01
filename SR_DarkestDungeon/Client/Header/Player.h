@@ -91,6 +91,8 @@ private:
 	_bool		m_bRoomChange = false;
 	_int		m_iCurrentRoom = 10;
 
+	_bool		m_bLookBack = false;
+
 private:
 	virtual void	Free();
 
