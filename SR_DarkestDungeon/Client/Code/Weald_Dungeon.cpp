@@ -223,7 +223,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 
 	// 硅版(单内)
 	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Weald_Image_Wagon", 1, true);
-	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 4.5f, WEALD_WALLSIZEUPY + 8.f, -100.f));
+	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 4.5f, WEALD_WALLSIZEUPY + 8.f, 0.f));
 	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 	m_pWall->SetScale(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX, (WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX) / 192.f * 72.f, 1.f));
 	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
@@ -623,7 +623,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 	
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
@@ -640,7 +640,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 
 	//Player
 	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
-	m_pPlayer->SetPos({ 4.f, 0.f, 0.f });
+	m_pPlayer->SetPos({ 60.f, 0.f, 10.f });
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
 	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
@@ -695,12 +695,16 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 
 	// heroes
 	shared_ptr<CGameObject> m_pSheldBreaker1 = make_shared<CShieldBreaker>(m_pGraphicDev);
-	//shared_ptr<CGameObject> m_pSheldBreaker2 = make_shared<CShieldBreaker>(m_pGraphicDev);
-	//shared_ptr<CGameObject> m_pSheldBreaker3 = make_shared<CShieldBreaker>(m_pGraphicDev);
-	//shared_ptr<CGameObject> m_pSheldBreaker4 = make_shared<CShieldBreaker>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+
+	vector<shared_ptr<CGameObject>> Heroes_v;
+	Heroes_v.push_back(m_pSheldBreaker1);
+	Heroes_v.push_back(m_pHighwayman);
+	Heroes_v.push_back(m_pJester);
+	Heroes_v.push_back(m_pVestal);
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroesVector(Heroes_v);
 
 	// 规俊 GameObject 持扁
 	// Room1
@@ -724,19 +728,12 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room3_v1.push_back(m_pBrigandFusilier_1);
 
 	Room3_v1.push_back(m_pSheldBreaker1);
-	//Room3_v1.push_back(m_pSheldBreaker2);
-	//Room3_v1.push_back(m_pSheldBreaker3);
-	//Room3_v1.push_back(m_pSheldBreaker4);
-
 	Room3_v1.push_back(m_pHighwayman);
 	Room3_v1.push_back(m_pJester);
 	Room3_v1.push_back(m_pVestal);
+
 	Room3_v1.push_back(m_pCurioC1);
 
-	//Room3_v1.push_back(m_pBoneDefender1);
-	//Room3_v1.push_back(m_pBoneSoldier_1);
-	//Room3_v1.push_back(m_pBoneCourtier_1);
-	//Room3_v1.push_back(m_pBoneSoldier_2);
 	m_pRoom3->PushGameObjectVector(Room3_v1);
 
 	// creatures
@@ -747,10 +744,6 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room3_v4.push_back(m_pBrigandFusilier_1);
 
 	Room3_v4.push_back(m_pSheldBreaker1);
-	//Room3_v1.push_back(m_pSheldBreaker2);
-	//Room3_v1.push_back(m_pSheldBreaker3);
-	//Room3_v1.push_back(m_pSheldBreaker4);
-
 	Room3_v4.push_back(m_pHighwayman);
 	Room3_v4.push_back(m_pJester);
 	Room3_v4.push_back(m_pVestal);
@@ -758,17 +751,9 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// heroes
 	vector<shared_ptr<CGameObject>> Room3_v2;
 	Room3_v2.push_back(m_pSheldBreaker1);
-
-	//Room3_v2.push_back(m_pSheldBreaker2);
-	//Room3_v2.push_back(m_pSheldBreaker3);
-	//Room3_v2.push_back(m_pSheldBreaker4);
 	Room3_v2.push_back(m_pHighwayman);
 	Room3_v2.push_back(m_pVestal);
 	Room3_v2.push_back(m_pJester);
-	//Room3_v2.push_back(m_pBoneDefender1);
-	//Room3_v2.push_back(m_pBoneSoldier_1);
-	//Room3_v2.push_back(m_pBoneSoldier_2);
-	//Room3_v2.push_back(m_pBoneCourtier_1);
 	m_pRoom3->PushHeroesVector(Room3_v2);
 
 	// monsters
@@ -819,14 +804,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
 	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBrigandBloodletter1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_1);
-	//m_pLayer->CreateGameObject(L"Obj_BoneDefender", m_pBoneDefender1);
-	//m_pLayer->CreateGameObject(L"Obj_BoneCourtier", m_pBoneCourtier_1);
-	//m_pLayer->CreateGameObject(L"Obj_BoneSoldier", m_pBoneSoldier_1);
-	//m_pLayer->CreateGameObject(L"Obj_BoneSoldier", m_pBoneSoldier_2);
 	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker1);
-	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker2);
-	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker3);
-	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker4);
 	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
 	m_pLayer->CreateGameObject(L"Obj_Jester", m_pJester);
 	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);

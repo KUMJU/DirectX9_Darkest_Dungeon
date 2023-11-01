@@ -284,15 +284,60 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 		m_fBattleTime -= fTimeDelta;
 		if (m_fBattleTime < 0.f)
 		{
+			// 배틀 ui 끄기, 턴 ui 끄기
+			dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->OffTurnCursor();
+			if (m_bHero)
+			{
+				if (m_pHeroUI)
+					m_pHeroUI->SetVisible(false);
+			}
+
+			m_pCurrentCreature = NextCreature();
 			m_bNext = true;
 			m_bCounting = false;
 		}
 	}
 
 	// 크리처의 턴일때
-	if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn()
-		&& m_bNext && !m_bDeathMoving && !m_bAttackSkillMoving && !m_bWhileAttack)
+	if (m_bNext && dynamic_pointer_cast<CCreature>(m_pCurrentCreature) &&
+		dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn()
+		&& !m_bDeathMoving && !m_bAttackSkillMoving && !m_bWhileAttack)
 	{
+		// 턴 커서 키기
+		dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->OnTurnCursor();
+
+		// 배틀 ui 키기
+		if (m_bHero)
+		{
+			shared_ptr<CHero> pHero = dynamic_pointer_cast<CHero>(m_pCurrentCreature);
+			tstring HeroName;
+
+			//UI Setting
+			switch (pHero->GetHeroType())
+			{
+			case EHeroType::VESTAL:
+				HeroName = L"VESTAL";
+				break;
+			case EHeroType::HIGHWAYMAN:
+				HeroName = L"HIGHWAYMAN";
+				break;
+			case EHeroType::SHILEDBREAKER:
+				HeroName = L"SHILEDBREAKER";
+				break;
+			case EHeroType::JESTER:
+				HeroName = L"JESTER";
+				break;
+			default:
+				break;
+			}
+
+			if (m_pHeroUI)
+			{
+				m_pHeroUI->SetVisible(true);
+				m_pHeroUI->SettingHeroInfo(pHero->GetHp(), pHero->GetHp(), pHero->GetStress(), HeroName, pHero->GetSkillVector());
+			}
+		}
+
 		// 영웅 차례이면서 자동전투가 아니면
 		if (m_bHero && !m_bAutoBattle)
 		{
@@ -383,6 +428,10 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 void CBattleSystem::StartTurn()
 {
 	// 턴 시작시 나오는 UI등 그런 것들
+	if (m_pHeroUI)
+	{
+		m_pHeroUI->SetVisible(false);
+	}
 	m_pCurrentCreature = NextCreature();
 }
 
@@ -401,31 +450,6 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 			{
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTurn(true);
 				m_bHero = true;
-
-				shared_ptr<CHero> pHero = dynamic_pointer_cast<CHero>(m_vHeroes[j]);
-				tstring HeroName;
-
-				//UI Setting
-				switch (pHero->GetHeroType())
-				{
-				case EHeroType::VESTAL:
-					HeroName = L"VESTAL";
-					break;
-				case EHeroType::HIGHWAYMAN:
-					HeroName = L"HIGHWAYMAN";
-					break;
-				case EHeroType::SHILEDBREAKER:
-					HeroName = L"SHILEDBREAKER";
-					break;
-				case EHeroType::JESTER:
-					HeroName = L"JESTER";
-					break;
-				default:
-					break;
-				}
-
-				if(m_pHeroUI)
-					m_pHeroUI->SettingHeroInfo(pHero->GetHp(), pHero->GetHp(), pHero->GetStress(), HeroName, pHero->GetSkillVector());
 
 				iCurrentHeroIndex = j;
 				return m_vHeroes[j];
@@ -454,7 +478,7 @@ void CBattleSystem::CreatureTurnEnd()
 {
 	dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTurn(false);
 	dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetDone(true);
-	m_pCurrentCreature = NextCreature();
+	//m_pCurrentCreature = NextCreature();
 	// 죽은애 체크
 	m_bDeadCheck = true;
 }
@@ -474,7 +498,7 @@ void CBattleSystem::NextTurn()
 	{
 		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
 	}
-	m_pCurrentCreature = nullptr;
+	//m_pCurrentCreature = nullptr;
 
 	m_iTurn++;
 }

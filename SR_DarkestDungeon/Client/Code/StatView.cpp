@@ -62,12 +62,35 @@ void CStatView::RenderGameObject()
 		++iTexNum;
 	}
 
+	// CorpseHPBar Render
+	if (m_bCorpse)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[20]->GetWorld());
+		m_pTextureCom[12]->SetTexture(0);
+		m_pRCTexCom[20]->RenderBuffer();
+	}
+
+	// CursorUI Render
+	if (m_bTurn && m_bHero)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[21]->GetWorld());
+		m_pTextureCom[13]->SetTexture(0);
+		m_pRCTexCom[21]->RenderBuffer();
+	}
+
+	if (m_bTurn && !m_bHero)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[22]->GetWorld());
+		m_pTextureCom[14]->SetTexture(0);
+		m_pRCTexCom[22]->RenderBuffer();
+	}
+
 	//Battle Attribute Render
 
 	iTexNum = 4;
 	_int iArrNum = 12;
 
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 8; ++i) {
 
 		if (true == m_bAttributeArr[i]) {
 			m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[iArrNum]->GetWorld());
@@ -88,7 +111,7 @@ void CStatView::RenderGameObject()
 
 void CStatView::AddComponent()
 {
-	for (int i = 0; i < 17; ++i) {
+	for (int i = 0; i < 23; ++i) {
 
 		shared_ptr<CComponent> pComponent;
 
@@ -112,7 +135,7 @@ void CStatView::AddComponent()
 	}
 
 
-	for (int i = 0; i < 9; ++i) {
+	for (int i = 0; i < 15; ++i) {
 
 		tstring strCurNum = to_wstring(i);
 		tstring strComName = L"Com_Texture" + strCurNum;
@@ -134,8 +157,14 @@ void CStatView::AddComponent()
 		m_pTextureCom[6]->SetTextureKey(L"Stat_Attribute_Stun", TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[7]->SetTextureKey(L"Stat_Attribute_Virtue", TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[8]->SetTextureKey(L"Stat_Attribute_Stress", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[9]->SetTextureKey(L"Stat_Attribute_Buff", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[10]->SetTextureKey(L"Stat_Attribute_Debuff", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[11]->SetTextureKey(L"Stat_Attribute_Death", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[12]->SetTextureKey(L"Stat_CorpseFull", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[13]->SetTextureKey(L"Target_TurnCreature", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[14]->SetTextureKey(L"Target_AttackCreature", TEXTUREID::TEX_NORMAL);
 
-	}
+	}	
 }
 
 
@@ -179,16 +208,32 @@ void CStatView::SettingPos(_vec3 _vPos)
 	}
 
 	//Full HpBar
-	for (int i = 11; i < 12; ++i) {
-		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f+ m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z -0.01f);
+	if (!m_bCorpse)
+	{
+		for (int i = 11; i < 12; ++i) {
+			m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - 0.01f);
+			m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+			m_pTransformCom[i]->SetScale(1.f * m_fHpBarRange, 0.1f, 1.f);
+		}
+	}
+	//Full CorpseHpBar
+	for (int i = 20; i < 21; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - 0.01f);
 		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 		m_pTransformCom[i]->SetScale(1.f * m_fHpBarRange, 0.1f, 1.f);
+	}
+
+	// Target Cursor
+	for (int i = 21; i < 23; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 0.1f, m_vCenterPos.y + 0.4f, m_vCenterPos.z);
+		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+		m_pTransformCom[i]->SetScale(1.5f, 1.f, 1.f);
 	}
 	
 	iInitPos = -0.8f;
 
 	//Battle Attribute
-	for (int i = 12; i < 17; ++i) {
+	for (int i = 12; i < 20; ++i) {
 		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + iInitPos, m_vCenterPos.y + 0.6f, m_vCenterPos.z);
 		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 		m_pTransformCom[i]->SetScale(0.2f, 0.2f, 1.f);

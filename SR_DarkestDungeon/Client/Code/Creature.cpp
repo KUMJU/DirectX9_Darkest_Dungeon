@@ -66,6 +66,11 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 		else
 			m_pStatInfo->SetAttributeOff(i);
 	}
+	// 죽음의 일격 표시
+	if (m_bBeforeDeath)	m_pStatInfo->SetAttribute(7);
+	else
+		m_pStatInfo->SetAttributeOff(7);
+
 	if (m_pStatInfo != nullptr && bStatBarOn) {
 		m_pStatInfo->SettingPos(*(m_pTransformCom->GetPos()));
 		m_pStatInfo->UpdateGameObject(fTimeDelta);
@@ -168,6 +173,7 @@ void CCreature::StartCalculate()
 			// 스탯갱신
 			m_pStatInfo->SetMaxHp(m_tCommonStat.iMaxHp);
 			m_pStatInfo->SetHp(m_tCommonStat.iHp);
+			m_pStatInfo->SetCorpse(true);
 		}
 
 		// 사망 여부
@@ -176,18 +182,28 @@ void CCreature::StartCalculate()
 			m_bCorpse = false;
 			m_bDeath = true;
 			m_tCommonStat.iHp = -100;
-
+			
 			bStatBarOn = false;
 		}
 	}
 	else
 	{
-		if (m_tCommonStat.iHp <= 0)
+		// 죽음의 일격 상태
+		if (m_tCommonStat.iHp <= 0 && m_bBeforeDeath)
 		{
-			m_bDeath = true;
-			m_tCommonStat.iHp = -100;
+			int iNum = rand() % 100;
+			// 사망
+			if (iNum < DEATHRATE)
+			{
+				m_bDeath = true;
+				m_tCommonStat.iHp = -100;
 
-			bStatBarOn = false;
+				bStatBarOn = false;
+			}
+		}
+		else if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath)
+		{
+			m_bBeforeDeath = true;
 		}
 	}
 }
@@ -319,6 +335,9 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 		}
 		else
 			_pCreature->IncreaseHP(_pSkill->GetHeal()* _pSkill->GetDamageRatio());
+
+		// 죽음의 저항 삭제
+		if (_pCreature->GetIsBeforeDeath()) _pCreature->SetBeforeDeath(false);
 	}
 
 	// 스트레스
@@ -330,17 +349,46 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 		}
 	}
 
-	// 힐일때는 피격 애니메이션 x
-	if ((iDodgeNum >= _pCreature->GetDodge()) && !arrAttack[5])
+	// 힐일때만 피격 애니메이션 x
+	if (/*(iDodgeNum >= _pCreature->GetDodge()) && */!arrAttack[5])
 	{
 		// 상대
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(true);
 	}
 
+	// 맞았으면
 	if (iDodgeNum >= _pCreature->GetDodge())
 	{
 		// 상대
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetEffectOn(true);
+
+		// 맞은 애가 영웅이면
+		if (dynamic_pointer_cast<CCreature>(_pCreature)->m_bIsHero)
+		{
+			// 죽음의 일격 상태
+			if (dynamic_pointer_cast<CCreature>(_pCreature)->GetHp() <= 0
+				&& dynamic_pointer_cast<CCreature>(_pCreature)->GetIsBeforeDeath())
+			{
+				int iNum = rand() % 100;
+				// 사망
+				if (iNum < DEATHRATE)
+				{
+					dynamic_pointer_cast<CCreature>(_pCreature)->SetDeath(true);
+					dynamic_pointer_cast<CCreature>(_pCreature)->SetHp(-100);
+					dynamic_pointer_cast<CCreature>(_pCreature)->SetStartBarOn(false);
+				}
+			}
+			else if (dynamic_pointer_cast<CCreature>(_pCreature)->GetHp() <= 0
+				&& !dynamic_pointer_cast<CCreature>(_pCreature)->GetIsBeforeDeath())
+			{
+				dynamic_pointer_cast<CCreature>(_pCreature)->SetBeforeDeath(true);
+			}
+		}
+	}
+	// 회피했으면
+	else
+	{
+
 	}
 
 	// 나
@@ -372,6 +420,16 @@ _float CCreature::MovingSpeed(_vec3 _vPos, _float _fMovingTime)
 		m_fSpeed = (_vPos - m_vPos).z / vDir.z / _fMovingTime;
 
 	return m_fSpeed;
+}
+
+void CCreature::OffTurnCursor()
+{
+	m_pStatInfo->SetIsTurn(false);
+}
+
+void CCreature::OnTurnCursor()
+{
+	m_pStatInfo->SetIsTurn(true);
 }
 
 void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)
