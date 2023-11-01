@@ -195,13 +195,13 @@ _int CHighwayman::UpdateGameObject(const _float& fTimeDelta)
 	}
 
 	// 사망 여부
-	if (m_tCommonStat.iHp <= 0)
-	{
-		m_bDeath = true;
-		m_tCommonStat.iHp = -100;
+	//if (m_tCommonStat.iHp <= 0)
+	//{
+	//	m_bDeath = true;
+	//	m_tCommonStat.iHp = -100;
 
-		bStatBarOn = false;
-	}
+	//	bStatBarOn = false;
+	//}
 
 	// 피격 시간
 	if (m_bHitted)

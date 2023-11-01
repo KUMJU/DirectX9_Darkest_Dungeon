@@ -36,3 +36,4 @@
 
 // ÀüÅõ
 #define CRIRATE	30
+#define DEATHRATE	20

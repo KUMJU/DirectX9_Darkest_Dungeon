@@ -123,9 +123,13 @@ public:
 	_bool	GetIsStun() { return m_bState[2]; }
 	_bool	GetIsCorpse() { return m_bCorpse; }
 	_bool	GetIsDeath() { return m_bDeath; }
+	_bool	GetIsBeforeDeath() { return m_bBeforeDeath; }
+	void	SetDeath(_bool _bDeath) { m_bDeath = _bDeath; }
+	void	SetBeforeDeath(_bool _bBeforeDeath) { m_bBeforeDeath = _bBeforeDeath; }
 	void	SetBlight(_bool _bBlight) { m_bState[0] = true; }
 	void	SetBleed(_bool _bBleed) { m_bState[1] = true; }
 	void	SetStun(_bool _bStun) { m_bState[2] = true; }
+	void	SetStartBarOn(_bool _bStatBarOn) { bStatBarOn = _bStatBarOn; }
 
 	_int	GetHp() { return m_tCommonStat.iHp; }
 	void	SetHp(_int _iValue) { m_tCommonStat.iHp = _iValue; }
@@ -134,7 +138,14 @@ public:
 		if (m_tCommonStat.iHp >= m_tCommonStat.iMaxHp)
 			m_tCommonStat.iHp = m_tCommonStat.iMaxHp;
 	}
-	void	DecreaseHP(_int _iValue) { m_tCommonStat.iHp -= _iValue; }
+	void	DecreaseHP(_int _iValue)
+	{ 
+		m_tCommonStat.iHp -= _iValue; 
+		if (m_tCommonStat.iHp < 0)
+		{
+			m_tCommonStat.iHp = 0;
+		}
+	}
 
 	_int	GetCurrentBleed() { return m_bBleedDot[0]; }
 	_int	GetCurrentPoision() { return m_bBlightDot[0]; }
@@ -169,6 +180,8 @@ public:
 	virtual void	AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill);
 	void	MovePos(_vec3 _vPos, const _float& fTimeDelta, _float _fSpeed);
 	_float	MovingSpeed(_vec3 _vPos, _float _fMovingTime);
+	void	OffTurnCursor();	// 자기차례임을 나타내는 cursor 종료
+	void	OnTurnCursor();	// 자기차례임을 나타내는 cursor 키기
 
 protected:
 
@@ -216,6 +229,7 @@ protected:
 
 	_bool		m_bDeath = false;			// 사망 여부(몬스터는 시체까지 소멸할때, 영웅은 사망할때)
 	_bool		m_bCorpse = false;			// 몬스터의 시체여부
+	_bool		m_bBeforeDeath = false;		// 영웅의 죽음의 일격 여부
 	_bool		m_bState[4] = { 0 };	// 순서대로 중독, 출혈, 기절, 시체 여부
 
 	_int		m_bBlightDot[4] = { 0 };	// 턴마다 중독 도트뎀

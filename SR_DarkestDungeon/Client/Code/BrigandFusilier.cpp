@@ -157,6 +157,7 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		// ½ºÅÈ°»½Å
 		m_pStatInfo->SetMaxHp(m_tCommonStat.iMaxHp);
 		m_pStatInfo->SetHp(m_tCommonStat.iHp);
+		m_pStatInfo->SetCorpse(true);
 	}
 
 	// »ç¸Á ¿©ºÎ

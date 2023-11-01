@@ -198,13 +198,10 @@ _int CShieldBreaker::UpdateGameObject(const _float& fTimeDelta)
 	}
 
 	// 사망 여부
-	if (m_tCommonStat.iHp <= 0)
-	{
-		m_bDeath = true;
-		m_tCommonStat.iHp = -100;
-
-		bStatBarOn = false;
-	}
+	//if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath)
+	//{
+	//	m_bBeforeDeath = true;
+	//}
 
 	// 피격 시간
 	if (m_bHitted)

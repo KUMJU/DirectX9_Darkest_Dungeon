@@ -41,6 +41,11 @@ public:
 	virtual void RenderGameObject() override;
 
 public:
+	vector<shared_ptr<CGameObject>> GetHeroesVector() { return m_vHeroes; }
+	void SetHeroesVector(vector<shared_ptr<CGameObject>>& _vVec)
+	{
+		m_vHeroes = _vVec;
+	}
 	_bool			GetRoomChange() { return m_bRoomChange; }
 	void			SetRoomChange(_bool _bRoomChange) { m_bRoomChange = _bRoomChange; }
 	_int			GetCurrentRoom() { return m_iCurrentRoom; }
@@ -91,13 +96,14 @@ private:
 	_bool		m_bMoveLock[4] = { false };
 	_bool		m_bMoveSave[4] = { false };
 
-//재화
+	vector<shared_ptr<CGameObject>> m_vHeroes = {};		// 영웅 명단
 
+	// 재화
 	_int		m_iGold = 0; //골드(재화)
 	_int		m_iHeirlooms = 0; //가보(업그레이드 재화)
 
 	_bool		m_bRoomChange = false;
-	_int		m_iCurrentRoom = 10;
+	_int		m_iCurrentRoom = 10;		// 현재 방
 
 // 마우스 중복 방지
 	_bool		m_bPrevMouse = true;

@@ -238,7 +238,7 @@ void CResourceMgr::BaseTextureLoad()
 	
 	
 	
-		// Ω∫≈≥ ¿Ã∆Â∆Æ (≈∏∞Ÿ)
+	// Ω∫≈≥ ¿Ã∆Â∆Æ (≈∏∞Ÿ)
 	
 		CreateNewTexture(L"AddersKiss_Target_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss_target/armatureName_adders_kiss_target_%d.png", 20, bDefault);
@@ -546,7 +546,9 @@ void CResourceMgr::BaseTextureLoad()
 		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_pip_full.png", 1, bDefault);
 	CreateNewTexture(L"Stat_HealthEmpty", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_pip_Empty.png", 1, bDefault);
-
+	CreateNewTexture(L"Stat_CorpseFull", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_corpse_full.png", 1, bDefault);
+	
 	//¿¸≈ı Ω∫≈◊¿Ã≈ÕΩ∫
 
 	CreateNewTexture(L"Stat_Attribute_Poison", TEX_NORMAL,
@@ -559,7 +561,24 @@ void CResourceMgr::BaseTextureLoad()
 		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_virtue.png", 1, bDefault);
 	CreateNewTexture(L"Stat_Attribute_Stress", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_stress.png", 1, bDefault);
+	CreateNewTexture(L"Stat_Attribute_Buff", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_buff.png", 1, bDefault);
+	CreateNewTexture(L"Stat_Attribute_Debuff", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/skill_attributes/skill_attribute_debuff.png", 1, bDefault);
+	CreateNewTexture(L"Stat_Attribute_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/poptext/poptext_death_avoided.png", 1, bDefault);
 
+	// ≈∏∞Ÿ
+	CreateNewTexture(L"Target_TurnCreature", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/selected_1.png", 1, bDefault);
+	CreateNewTexture(L"Target_AttackCreature", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/target_1.png", 1, bDefault);
+	CreateNewTexture(L"Target_AttackCreatures", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/target_4.png", 1, bDefault);
+	CreateNewTexture(L"Target_TeamCreature", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/target_h_1.png", 1, bDefault);
+	CreateNewTexture(L"Target_TeamCreatures", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/target_h_4.png", 1, bDefault);
 
 }
 
