@@ -3,6 +3,7 @@
 
 #include "HeroStat.h"
 #include"Export_Utility.h"
+#include"StatView.h"
 
 CVestal::CVestal(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CHero(pGraphicDev)
@@ -38,7 +39,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"MaceBash", L"Vestal_MaceBash", L"MaceBash_Img", L"MaceBash_Effect",
-				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.15f, 1.f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.f, 1.25f, -1, 0, 0, 0, 1, 0);
 
 		// ´«ºÎ½Å ±¤Ã¤
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
@@ -48,27 +49,27 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"DazzlingLight", L"Vestal_DazzlingLight", L"DazzlingLight_Img", L"DazzlingLight_Effect",
-				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.25f, 1.f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.25f, 0.5f, -1, 0, 0, 0, 0, 0);
 
 		// ½Å¼ºÇÑ ÀºÃÑ
 		_bool arrActivatePos3[4] = { 0, 0, 1, 1 };
 		_bool arrTargetPos3[4] = { 1, 1, 1, 1 };
-		_bool arrAttack3[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrAttack3[6] = { 0, 0, 0, 0, 0, 1 };
 		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 1, 0 };
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"DivineGrace", L"Vestal_DivineGrace", L"DivineGrace_Img", L"DivineGrace_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.f, 1.f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.f, 1.2f, -1, 0, 7, 0, 0, 0);
 
 		// ½Å¼ºÇÑ À§¹«
 		_bool arrActivatePos4[4] = { 0, 1, 1, 1 };
-		_bool arrTargetPos4[4] = { 1, 1, 1, 1 };
-		_bool arrAttack4[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrTargetPos4[4] = { 1, 1, 1, 1 };	
+		_bool arrAttack4[6] = { 0, 0, 0, 0, 0, 1 };
 		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 1, 0 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DevineComfort", L"Vestal_DevineComfort", L"DevineComfort_Img", L"DevineComfort_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
 
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
@@ -82,10 +83,11 @@ HRESULT CVestal::ReadyGameObject()
 
 	// ¿µ¿õ ½ºÅÈ
 	{
-		m_tCommonStat.iHp = 40;
-		m_tCommonStat.iDodge = 0;
+		m_tCommonStat.iHp = 45;
+		m_tCommonStat.iMaxHp = 45;
+		m_tCommonStat.iDodge = 10;
 		m_tCommonStat.iSpeed = 4;
-		m_tCommonStat.iAttackPower = 6;
+		m_tCommonStat.iAttackPower = 5;
 		m_tCommonStat.iOrder = 0;
 	}
 
@@ -108,6 +110,9 @@ HRESULT CVestal::ReadyGameObject()
 	m_pStatUI->SetHero(dynamic_pointer_cast<CVestal>(shared_from_this()));
 	m_pStatUI->AwakeGameObject();
 	m_pStatUI->ReadyGameObject();
+
+	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
+		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
 
 	return S_OK;
 }
@@ -176,6 +181,8 @@ _int CVestal::UpdateGameObject(const _float& fTimeDelta)
 	{
 		m_bDeath = true;
 		m_tCommonStat.iHp = -100;
+
+		bStatBarOn = false;
 	}
 
 	// ÇÇ°Ý ½Ã°£

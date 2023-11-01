@@ -21,7 +21,7 @@ protected:
 protected:
 
 	// 상호작용 동작
-	virtual void	Interaction();	
+	virtual void	Interaction();
 
 	// 상호작용 종료 체크 함수
 	virtual _bool	IsFinish();
@@ -33,7 +33,9 @@ protected:
 
 private:
 	_float		m_fActiveTime = TRAPACTIVETIME;
-	_bool		m_bActive = false;
+	_bool		m_bActive = false;		// 활성화 했는지
+	_bool		m_bSuccess = false;		// 해제 성공했는지
+	_bool		m_bFinish = false;		// 끝났는지
 
 	EState m_eAnimState = EState::IDLE;	// 애니메이션 변경을 위한 상태값
 	EState m_eCurAnimState = EState::IDLE;	// 애니메이션 변경을 위한 상태값
@@ -42,4 +44,3 @@ private:
 	tstring		m_strEffectKey = L"";				// 이펙트 키
 
 };
-

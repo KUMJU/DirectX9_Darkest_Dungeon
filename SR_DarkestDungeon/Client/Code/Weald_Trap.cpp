@@ -36,6 +36,8 @@ _int CWeald_Trap::UpdateGameObject(const _float& fTimeDelta)
 		{
 			m_fActiveTime = TRAPACTIVETIME;
 			m_bActive = false;
+			m_bFinish = true;
+
 			m_ePrevAnimState = m_eCurAnimState;
 			m_eCurAnimState = EState::FINISH;
 		}
@@ -55,10 +57,26 @@ _int CWeald_Trap::UpdateGameObject(const _float& fTimeDelta)
 			//m_pTransformCom->SetScale(WEALD_PATHSIZEX / 3.f, WEALD_PATHSIZEX / 3.f, 1.f);
 			break;
 		case EState::FINISH:
-			m_pAnimatorCom->SetAnimKey(L"Weald_Traps_Remains", 0.02f);
+			m_pAnimatorCom->SetAnimKey(L"Hero_Death", 0.02f);
 			//m_pTransformCom->SetScale(WEALD_PATHSIZEX / 3.f, WEALD_PATHSIZEX / 3.f, 1.f);
 			break;
 		}
+	}
+
+	if (!m_bFinish && !m_bSuccess && m_bActive)
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EState::ACTIVE;
+	}
+	else if (m_bFinish)
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EState::FINISH;
+	}
+	else
+	{
+		m_ePrevAnimState = m_eCurAnimState;
+		m_eCurAnimState = EState::IDLE;
 	}
 
 	//빌보드 시작
@@ -127,16 +145,24 @@ void CWeald_Trap::GetInteractionKey(const _float& fTimeDelta)
 	// 키 입력받기
 	if (GetAsyncKeyState('C') & 0x8000)
 	{
-		//m_bInteracting = true;
-		m_bActive = true;
+		// 아직 활성화 되지 않았고, 끝나지 않았다면
+		if (!m_bActive && !m_bFinish)
+		{
+			m_bActive = true;
 
-		// 플레이어 행동 막기
-		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
+			int iNum = 0;
+			iNum = rand() % 2;
+			if (iNum == 0)
+			{
+				m_bSuccess = false;
+			}
+			else
+			{
+				m_bSuccess = true;
+			}
+		}
 
-		// 텍스처 또는 애니메이션 변경
-		ChangeTexture();
 
-		
 
 		Interaction();
 	}
@@ -155,8 +181,6 @@ void CWeald_Trap::FinishInteraction()
 
 void CWeald_Trap::ChangeTexture()
 {
-	m_ePrevAnimState = m_eCurAnimState;
-	m_eCurAnimState = EState::ACTIVE;
 }
 
 _bool CWeald_Trap::IsFinish()

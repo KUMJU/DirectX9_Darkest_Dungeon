@@ -3,6 +3,7 @@
 
 #include "HeroStat.h"
 #include"Export_Utility.h"
+#include"StatView.h"
 
 CHighwayman::CHighwayman(LPDIRECT3DDEVICE9 pGraphicDev) : CHero(pGraphicDev)
 {
@@ -42,17 +43,17 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"WickedSlice", L"Highwayman_WickedSlice", L"WickedSlice_Img", L"WickedSlice_Effect",
-				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.15f, 1.05f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.15f, 1.5f, -1, 0, 0, 0, 1, 0);
 
 		// 권총 사격
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
-		_bool arrTargetPos2[4] = { 0, 1, 1, 1 };
+		_bool arrTargetPos2[4] = { 1, 1, 1, 1 };
 		_bool arrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
 		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"PistolShot", L"Highwayman_PistolShot", L"PistolShot_Img", L"PistolShot_Effect",
-				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.75f, 1.075f, -1, 0, 0, 0, 0, 0);
+				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.85f, 1.2f, -1, 0, 0, 0, 0, 0);
 
 		// 영거리 사격
 		_bool arrActivatePos3[4] = { 1, 0, 0, 0 };
@@ -62,7 +63,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"PointBlankShot", L"Highwayman_PointBlankShot", L"PointBlankShot_Img", L"PointBlankShot_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.5f, 1.05f, -1, 1, 0, 0, 1, 0);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 0, -1);
 
 		// 결투가의 진격
 		_bool arrActivatePos4[4] = { 0, 1, 1, 1 };
@@ -72,7 +73,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DuelistsAdvance", L"Highwayman_DuelistsAdvance", L"DuelistsAdvance_Img", L"DuelistsAdvance_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.05f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
 
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
@@ -86,9 +87,10 @@ HRESULT CHighwayman::ReadyGameObject()
 
 	// 영웅 스탯
 	{
-		m_tCommonStat.iHp = 30;
-		m_tCommonStat.iDodge = 30;
-		m_tCommonStat.iSpeed = 5;
+		m_tCommonStat.iHp = 35;
+		m_tCommonStat.iMaxHp = 35;
+		m_tCommonStat.iDodge = 20;
+		m_tCommonStat.iSpeed = 6;
 		m_tCommonStat.iAttackPower = 8;
 		m_tCommonStat.iOrder = 0;
 	}
@@ -112,6 +114,9 @@ HRESULT CHighwayman::ReadyGameObject()
 	m_pStatUI->SetHero(dynamic_pointer_cast<CHighwayman>(shared_from_this()));
 	m_pStatUI->AwakeGameObject();
 	m_pStatUI->ReadyGameObject();
+
+	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
+		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
 
 	return S_OK;
 }
@@ -180,6 +185,8 @@ _int CHighwayman::UpdateGameObject(const _float& fTimeDelta)
 	{
 		m_bDeath = true;
 		m_tCommonStat.iHp = -100;
+
+		bStatBarOn = false;
 	}
 
 	// 피격 시간

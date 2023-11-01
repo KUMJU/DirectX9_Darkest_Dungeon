@@ -57,6 +57,15 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
+	// 스탯갱신
+	m_pStatInfo->SetHp(m_tCommonStat.iHp);
+	for (int i = 0; i < 3; i++)
+	{
+		if(m_bState[i])
+			m_pStatInfo->SetAttribute(i);
+		else
+			m_pStatInfo->SetAttributeOff(i);
+	}
 	if (m_pStatInfo != nullptr && bStatBarOn) {
 		m_pStatInfo->SettingPos(*(m_pTransformCom->GetPos()));
 		m_pStatInfo->UpdateGameObject(fTimeDelta);
@@ -155,6 +164,10 @@ void CCreature::StartCalculate()
 			BlightCure();
 			m_bCorpse = true;
 			m_tCommonStat.iHp = 10;
+			m_tCommonStat.iMaxHp = 10;
+			// 스탯갱신
+			m_pStatInfo->SetMaxHp(m_tCommonStat.iMaxHp);
+			m_pStatInfo->SetHp(m_tCommonStat.iHp);
 		}
 
 		// 사망 여부
@@ -163,6 +176,8 @@ void CCreature::StartCalculate()
 			m_bCorpse = false;
 			m_bDeath = true;
 			m_tCommonStat.iHp = -100;
+
+			bStatBarOn = false;
 		}
 	}
 	else
@@ -171,6 +186,8 @@ void CCreature::StartCalculate()
 		{
 			m_bDeath = true;
 			m_tCommonStat.iHp = -100;
+
+			bStatBarOn = false;
 		}
 	}
 }
@@ -183,6 +200,9 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 닷지 계산용
 	int iDodgeNum = rand() % 100;
 
+	// 치명타 계산용
+	int iCritical = rand() % 100;
+
 	_bool* arrAttack = _pSkill->GetArrAttack();
 
 
@@ -191,7 +211,16 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	{
 		if (iDodgeNum >= _pCreature->GetDodge())
 		{
-			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			if (iCritical < CRIRATE)
+			{
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
+				if (dynamic_cast<CHero*>(this))
+				{
+					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+				}
+			}
+			else
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 		}
 		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
@@ -201,7 +230,16 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	{
 		if (iDodgeNum >= _pCreature->GetDodge())
 		{
-			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			if (iCritical < CRIRATE)
+			{
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
+				if (dynamic_cast<CHero*>(this))
+				{
+					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+				}
+			}
+			else
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 			_pCreature->BlightAttack(_pSkill->GetDotDamage());
 			_pCreature->SetBlight(true);
 		}
@@ -214,7 +252,16 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	{
 		if (iDodgeNum >= _pCreature->GetDodge())
 		{
-			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			if (iCritical < CRIRATE)
+			{
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
+				if (dynamic_cast<CHero*>(this))
+				{
+					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+				}
+			}
+			else
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 			_pCreature->BleedAttack(_pSkill->GetDotDamage());
 			_pCreature->SetBleed(true);
 		}
@@ -227,7 +274,16 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	{
 		if (iDodgeNum >= _pCreature->GetDodge())
 		{
-			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			if (iCritical < CRIRATE)
+			{
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
+				if (dynamic_cast<CHero*>(this))
+				{
+					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+				}
+			}
+			else
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 			_pCreature->SetStun(true);
 		}
 
@@ -239,7 +295,16 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	{
 		if (iDodgeNum >= _pCreature->GetDodge())
 		{
-			_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			if (iCritical < CRIRATE)
+			{
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
+				if (dynamic_cast<CHero*>(this))
+				{
+					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+				}
+			}
+			else
+				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 			//_pCreature->SetPosition(_pSkill->GetMoveCnt());
 		}
 	}
@@ -247,10 +312,16 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 힐
 	if (arrAttack[5])
 	{
-		_pCreature->IncreaseHP(_pSkill->GetHeal());
+		if (iCritical < CRIRATE)
+		{
+			_pCreature->IncreaseHP(_pSkill->GetHeal() * _pSkill->GetCriticalRatio());
+			dynamic_pointer_cast<CHero>(_pCreature)->DecreaseStress(5);
+		}
+		else
+			_pCreature->IncreaseHP(_pSkill->GetHeal()* _pSkill->GetDamageRatio());
 	}
 
-	// 스트레스 처리
+	// 스트레스
 	if (dynamic_pointer_cast<CHero>(_pCreature))
 	{
 		if (iDodgeNum >= _pCreature->GetDodge())
@@ -259,10 +330,16 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 		}
 	}
 
-	if (iDodgeNum >= _pCreature->GetDodge())
+	// 힐일때는 피격 애니메이션 x
+	if ((iDodgeNum >= _pCreature->GetDodge()) && !arrAttack[5])
 	{
 		// 상대
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(true);
+	}
+
+	if (iDodgeNum >= _pCreature->GetDodge())
+	{
+		// 상대
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetEffectOn(true);
 	}
 
@@ -375,7 +452,7 @@ void CCreature::SettingStatBar()
 	m_pStatInfo->AwakeGameObject();
 	m_pStatInfo->ReadyGameObject();
 
-	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),100, 100, true);
+	//m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),100, 100, true);
 
 }
 

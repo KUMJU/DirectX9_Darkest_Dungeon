@@ -77,10 +77,16 @@ protected:
 	virtual void		PickingObj();
 
 public:
+	const _tchar* Get_String4() const { return m_szString4; }
+
 	_int		GetStress() { return m_iStress; }
 	void		SetStress(_int _iValue) { m_iStress = _iValue; }
 	void		IncreaseStress(_int _iValue) { m_iStress += _iValue; }
-	void		DecreaseStress(_int _iValue) { m_iStress -= _iValue; }
+	void		DecreaseStress(_int _iValue)
+	{
+		m_iStress -= _iValue;
+		if (m_iStress < 0) m_iStress = 0;
+	}
 
 	_float		GetCritical() { return m_fCritical; }
 	void		SetCritical(_float _fValue) { m_fCritical = _fValue; }
@@ -135,6 +141,8 @@ protected:
 	_bool		m_bShowStatUI = false;
 
 	//shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
+
+	_tchar		m_szString4[128];
 
 private:
 	virtual void	Free();

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BoneDefender.h"
 #include"Export_Utility.h"
+#include"StatView.h"
 
 CBoneDefender::CBoneDefender(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
@@ -24,6 +25,7 @@ HRESULT CBoneDefender::ReadyGameObject()
 
 	// Ω∫≈» º≥¡§
 	m_tCommonStat.iHp = 50;
+	m_tCommonStat.iMaxHp = 50;
 	m_tCommonStat.iDodge = 5;
 	m_tCommonStat.iSpeed = 1;
 	m_tCommonStat.iAttackPower = 10;
@@ -34,7 +36,7 @@ HRESULT CBoneDefender::ReadyGameObject()
 	_bool	m_bArrAttack1[6] = { 0, 0, 0, 1, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneDefender_1 = make_shared<CSkill>
-		(L"Attack1", L"Bone Defender_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.2f, 0.f,
+		(L"Attack1", L"Bone Defender_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.2f, 1.5f,
 			m_bArrAttack1, 1, 10, 0, true);
 	pVecSkill.push_back(m_pBoneDefender_1);
 
@@ -42,7 +44,7 @@ HRESULT CBoneDefender::ReadyGameObject()
 	_bool	bArrAttack2[6] = { 0, 0, 0, 1, 0, 0 };
 	_bool	bTargetPos2[4] = { 1,1,1,0 };
 	shared_ptr<CSkill> m_pBoneDefender_2 = make_shared<CSkill>
-		(L"Attack2", L"Bone Defender_Attack2", bTargetPos2, Skill2_Dot, 0.f, 0.8f, 0.f,
+		(L"Attack2", L"Bone Defender_Attack2", bTargetPos2, Skill2_Dot, 0.f, 0.8f, 1.f,
 			bArrAttack2, 1, 0, 0, true);
 	pVecSkill.push_back(m_pBoneDefender_2);
 	SetSkill(pVecSkill);
@@ -52,6 +54,9 @@ HRESULT CBoneDefender::ReadyGameObject()
 
 	m_pTransformCom->SetAngle(m_vAngle);
 	m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
+
+	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
+		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
 
 	return E_NOTIMPL;
 }
@@ -158,6 +163,10 @@ _int CBoneDefender::UpdateGameObject(const _float& fTimeDelta)
 		BlightCure();
 		m_bCorpse = true;
 		m_tCommonStat.iHp = 10;
+		m_tCommonStat.iMaxHp = 10;
+		// Ω∫≈»∞ªΩ≈
+		m_pStatInfo->SetMaxHp(m_tCommonStat.iMaxHp);
+		m_pStatInfo->SetHp(m_tCommonStat.iHp);
 	}
 
 	// ªÁ∏¡ ø©∫Œ
@@ -166,6 +175,8 @@ _int CBoneDefender::UpdateGameObject(const _float& fTimeDelta)
 		m_bCorpse = false;
 		m_bDeath = true;
 		m_tCommonStat.iHp = -100;
+
+		bStatBarOn = false;
 	}
 
 	// ««∞› Ω√∞£

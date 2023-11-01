@@ -7,6 +7,7 @@
 CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
 {
+	ZeroMemory(m_szString4, sizeof(m_szString4));
 }
 
 CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev, STAT _tCommonStat, _int _iPosition,
@@ -33,6 +34,8 @@ CHero::~CHero()
 HRESULT CHero::ReadyGameObject()
 {
 	__super::ReadyGameObject();
+	m_bIsHero = true;
+	//m_pStatInfo->SetIsHero(true);
 
 	return S_OK;
 }
@@ -40,6 +43,9 @@ HRESULT CHero::ReadyGameObject()
 _int CHero::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
+
+	// ½ºÅÈ°»½Å
+	m_pStatInfo->SetStress(m_iStress);
 
 	ChangeAnimState();
 	SetAnimDelay(fTimeDelta);
@@ -82,6 +88,10 @@ void CHero::LateUpdateGameObject()
 void CHero::RenderGameObject()
 {
 	__super::RenderGameObject();
+
+	TCHAR szBuff[32] = { };
+	_stprintf_s(szBuff, TEXT("%d"), GetStress());
+	lstrcpy(m_szString4, szBuff);
 	m_pColliderCom->RenderCollider();
 }
 
