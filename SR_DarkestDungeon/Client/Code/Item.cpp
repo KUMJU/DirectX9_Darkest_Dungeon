@@ -113,7 +113,7 @@ void CItem::GetUITextureKeyName(const tstring& _strOriginName)
 
 	else if (L"Item_Key" == _strOriginName) {
 		strKey = L"Item_UI_Key";
-		m_eItemState = EHandItem::BANDAGE;
+		m_eItemState = EHandItem::KEYS;
 	}
 
 	m_strItemKey = strKey;

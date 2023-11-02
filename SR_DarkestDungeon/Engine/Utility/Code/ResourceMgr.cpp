@@ -164,6 +164,15 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Item_Shovel", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/item_food.png", 1, bDefault);
 
+	// Gold
+	CreateNewTexture(L"Item_Gold1", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/inv_gold+_0.png", 1, bDefault);
+	CreateNewTexture(L"Item_Gold2", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/inv_gold+_1.png", 1, bDefault);
+	CreateNewTexture(L"Item_Gold3", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/inv_gold+_2.png", 1, bDefault);
+	CreateNewTexture(L"Item_Gold4", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/inv_gold+_3.png", 1, bDefault);
 
 	//Hero
 	CreateNewTexture(L"Hero_Death", TEX_NORMAL,

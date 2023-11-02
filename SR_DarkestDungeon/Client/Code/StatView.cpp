@@ -225,7 +225,7 @@ void CStatView::SettingPos(_vec3 _vPos)
 
 	// Target Cursor
 	for (int i = 21; i < 23; ++i) {
-		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 0.1f, m_vCenterPos.y + 0.4f, m_vCenterPos.z);
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 0.1f, m_vCenterPos.y + 1.4f, m_vCenterPos.z);
 		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 		m_pTransformCom[i]->SetScale(1.5f, 1.f, 1.f);
 	}

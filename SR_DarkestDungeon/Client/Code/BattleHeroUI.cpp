@@ -161,7 +161,7 @@ void CBattleHeroUI::PickingUI(LONG _fX, LONG _fY)
 
     if (m_vPos.x + WINCX * 0.5f- 80.f < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f >= _fX) {
         //Skill1 버튼 클릭 트리거
-
+        
     }else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 2 >= _fX) {
         //Skill2 버튼 클릭 트리거
 
