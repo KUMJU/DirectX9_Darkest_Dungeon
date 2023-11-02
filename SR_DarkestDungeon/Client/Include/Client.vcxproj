@@ -236,6 +236,7 @@
     <ClCompile Include="..\Code\Guild.cpp" />
     <ClCompile Include="..\Code\GuildNPC.cpp" />
     <ClCompile Include="..\Code\Hero.cpp" />
+    <ClCompile Include="..\Code\HeroSkillUI.cpp" />
     <ClCompile Include="..\Code\HeroStat.cpp" />
     <ClCompile Include="..\Code\Highwayman.cpp" />
     <ClCompile Include="..\Code\Inside.cpp" />
@@ -269,7 +270,6 @@
     <ClCompile Include="..\Code\Village.cpp" />
     <ClCompile Include="..\Code\Weald_Obstacle.cpp" />
     <ClCompile Include="..\Code\Weald_Trap.cpp" />
-    <ClCompile Include="HeroSkillUI.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

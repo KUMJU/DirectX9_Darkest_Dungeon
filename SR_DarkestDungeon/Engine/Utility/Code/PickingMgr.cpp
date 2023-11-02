@@ -13,7 +13,7 @@ CPickingMgr::~CPickingMgr()
 
 void CPickingMgr::RayPicking(LONG _lX, LONG _lY)
 {
-	if (m_PickingList.empty())
+ 	if (m_PickingList.empty())
 		return;
 
 	_matrix mat;

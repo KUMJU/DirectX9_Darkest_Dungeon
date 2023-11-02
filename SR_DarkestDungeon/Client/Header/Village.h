@@ -20,6 +20,7 @@ private:
 	HRESULT				Ready_Layer_SkyBox(tstring pLayerTag);
 	HRESULT				Ready_Layer_GameObject(tstring pLayerTag);
 	HRESULT				Ready_Layer_UI(tstring pLayerTag);
+	HRESULT				Ready_Layer_Camera(tstring pLayerTag);
 
 };
 

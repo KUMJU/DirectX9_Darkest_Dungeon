@@ -37,7 +37,7 @@ public:
 	{
 		m_bOnStore = _bValue;
 	}
-	_bool	GetOnStore() { return m_bOnStore; }
+	_bool	IsOnStore() { return m_bOnStore; }
 
 	//몬스터가 죽고 아이템이 드랍될 때 포지션, 텍스쳐 값을 지정해줄 수 있음(필수로 해줄 것)
 	void SetDropItemInfo(_vec3 _vPos, const tstring& _strName , _int _iAmount = 1);
@@ -45,6 +45,9 @@ public:
 
 	void SetAmount(_int _iAmount) { m_iAmount = _iAmount; }
 	_int GetAmount() { return m_iAmount; }
+
+	void SetMoney(_int _iMoney) { m_iMoney = _iMoney; }
+	_int GetMoney() { return m_iMoney; }
 
 	//플로팅 아이템 텍스쳐 키값을 통해 UI 텍스쳐 키값을 반환받음
 	void GetUITextureKeyName(const tstring& _strOriginName);
@@ -76,6 +79,7 @@ private:
 	EHandItem m_eItemState = EHandItem::ENUM_END;
 
 	_int m_iAmount= 1;
+	_int m_iMoney = 10000;
 
 	_float m_fTime = 0.f;
 	_float m_CurrentDir = 1.f;
