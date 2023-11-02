@@ -60,9 +60,11 @@ enum class EState
 };
 
 enum class EHandItem {
-	SHOVEL,			//»ð
-	ANTI_VENOM,		//ÇØµ¶Á¦
-	KEYS,			//¿­¼è
-	BANDAGE,		//ºØ´ë
+	SHOVEL,			// »ð
+	ANTI_VENOM,		// ÇØµ¶Á¦
+	KEYS,			// ¿­¼è
+	BANDAGE,		// ºØ´ë
+	GOLD,			// °ñµå
+	HEIRLOOM,		// °¡º¸
 	ENUM_END	
 };

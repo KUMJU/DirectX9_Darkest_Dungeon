@@ -776,6 +776,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CBattleHeroUI> m_pHeroUI = make_shared<CBattleHeroUI>(m_pGraphicDev);
 	m_pHeroUI->AwakeGameObject();
 	m_pHeroUI->ReadyGameObject();
+	CUIMgr::GetInstance()->AddUIObject( L"Battle_Hero_UI",dynamic_pointer_cast<CUIObj>(m_pHeroUI));
 	pRoom3_Battle->GetHeroPanelUI(m_pHeroUI);
 
 	// Room4
