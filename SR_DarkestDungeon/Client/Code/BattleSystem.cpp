@@ -14,7 +14,7 @@ CBattleSystem::~CBattleSystem()
 {
 }
 
-void CBattleSystem::Update(const _float& fTimeDelta)
+_bool CBattleSystem::Update(const _float& fTimeDelta)
 {
 	// 자동전투 여부
 	AutoBattleKeyInput();
@@ -350,7 +350,10 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 
 			// 종료 조건
 			if (HeroesAllDead() || MonstersAllDead())
-				EndBattle();
+			{
+				if (EndBattle())
+					return true;
+			}
 
 			if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse() ||
 				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsDeath() ||
@@ -403,7 +406,10 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 
 			// 종료 조건
 			if (HeroesAllDead() || MonstersAllDead())
-				EndBattle();
+			{
+				if (EndBattle())
+					return true;
+			}
 
 			if (!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse() &&
 				!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsDeath() &&
@@ -419,10 +425,15 @@ void CBattleSystem::Update(const _float& fTimeDelta)
 
 	// 종료 조건
 	if (HeroesAllDead() || MonstersAllDead())
-		EndBattle();
+	{
+		if (EndBattle())
+			return true;
+	}
 
 	//UI Update
 	m_pHeroUI->UpdateGameObject(fTimeDelta);
+
+	return false;
 }
 
 void CBattleSystem::StartTurn()
@@ -503,8 +514,9 @@ void CBattleSystem::NextTurn()
 	m_iTurn++;
 }
 
-void CBattleSystem::EndBattle()
+_bool CBattleSystem::EndBattle()
 {
+	dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->OffTurnCursor();
 	// 죽은 진영 시체 전부 없애기
 	if (HeroesAllDead())
 	{
@@ -512,6 +524,7 @@ void CBattleSystem::EndBattle()
 		{
 			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100.f);
 		}
+		return true;
 	}
 	else
 	{
@@ -519,9 +532,24 @@ void CBattleSystem::EndBattle()
 		{
 			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100.f);
 		}
+		return true;
 	}
 
-	int a = 3;
+	for (auto& iter : m_vCreatures)
+	{
+		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
+	}
+	for (auto& iter : m_vHeroes)
+	{
+		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
+	}
+	for (auto& iter : m_vMonsters)
+	{
+		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
+	}
+	m_pCurrentCreature = nullptr;
+
+	return false;
 }
 
 _bool CBattleSystem::HeroesAllDead()
@@ -656,6 +684,7 @@ void CBattleSystem::FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes
 			pTransform->SetPosition(_vOrigin.x + 8.f, _vOrigin.y, _vOrigin.z - 2.f);
 			pTransform->SetAngle(_vec3(0.f, _fAngle2, 0.f));
 			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 8.f, _vOrigin.y, _vOrigin.z - 2.f));
+			break;
 		case 2:
 			pTransform = dynamic_pointer_cast<CTransform>(
 				_vMonsters[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));

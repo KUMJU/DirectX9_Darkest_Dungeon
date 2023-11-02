@@ -8,7 +8,7 @@
 #define	WEALD_BACKWALLSIZEY 
 
 // Time
-#define BATTLEINTERVEL 2.f				// 턴 전투간 시간
+#define BATTLEINTERVEL 2.5f				// 턴 전투간 시간
 #define CORPSEINTERVEL 0.f				// 시체 턴 시간
 #define DEATHMOVINGINTERVEL 0.5f		// 죽어서 시체 움직이는 시간
 #define SKILLMOVINGINTERVEL 0.5f		// 상대 스킬 맞아서 움직이는 시간

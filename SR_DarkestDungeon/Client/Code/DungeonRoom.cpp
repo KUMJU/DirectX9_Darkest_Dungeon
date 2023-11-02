@@ -27,11 +27,14 @@ void CDungeonRoom::MakeAbleAllObject()
 	}
 }
 
-void CDungeonRoom::BattleUpdate(const _float& fTimeDelta)
+_bool CDungeonRoom::BattleUpdate(const _float& fTimeDelta)
 {
 	//FormBattlePosition(m_vHeroes, m_vMonsters, -PI / 2.f, _vec3(WALLSIZEX + PATHSIZEX, WALLSIZEX * 14.f, 0.f));
 
-	m_pBattleSystem->Update(fTimeDelta);
+	if (m_pBattleSystem->Update(fTimeDelta))
+		return true;
+
+	return false;
 }
 
 void CDungeonRoom::BattleReady()

@@ -21,12 +21,6 @@ void CDungeonSystem::CurrentRoom(int _iNum)
 	{
 		if (i == (_iNum - 1))
 		{
-			// 전투 준비
-			if ((m_vDungeonRoom)[i]->GetBattleSystem())
-			{
-				(m_vDungeonRoom)[i]->BattleReady();
-				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(true);
-			}
 			// Object들 Update 활성화
 			(m_vDungeonRoom)[i]->MakeAbleAllObject();
 		}
