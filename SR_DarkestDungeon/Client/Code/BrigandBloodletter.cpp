@@ -75,22 +75,31 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 		case EAnimState::COMBAT:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Combat", 0.05f);
 			m_pTransformCom->SetScale(3.f, 3.f, 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 3.f, m_vPos.z);
+
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Hitted", 0.02f);
 			m_pTransformCom->SetScale(3.f * 330.f / 303.f, 3.f * 345.f / 382.f, 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 345.f / 382.f, m_vPos.z);
+
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack1", 0.02f);
 			m_pTransformCom->SetScale(3.f * 482.f / 303.f, 3.f * 383.f / 382.f, 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 383.f / 382.f, m_vPos.z);
+
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack2", 0.02f);
 			m_pTransformCom->SetScale(3.f * 474.f / 303.f, 3.f * 379.f / 382.f, 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 379.f / 382.f, m_vPos.z);
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Dead", 0.02f);
 			m_pTransformCom->SetScale(3.f * 375.f / 303.f, 3.f * 167.f / 382.f, 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 167.f / 382.f, m_vPos.z);
+
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Death", 0.02f);

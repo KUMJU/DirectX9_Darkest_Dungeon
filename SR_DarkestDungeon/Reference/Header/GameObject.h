@@ -90,6 +90,7 @@ protected:
 
 	_bool m_bHorizontal = false;
 
+	_vec2 m_vOriginSize = {0.f, 0.f};
 protected:
 	map<tstring, std::shared_ptr<CComponent>> m_mapComponent[ID_END];
 

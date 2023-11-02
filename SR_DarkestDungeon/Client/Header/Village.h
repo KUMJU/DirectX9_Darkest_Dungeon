@@ -14,6 +14,9 @@ public:
 	virtual void LateUpdateScene() override;
 	virtual void RenderScene() override;
 
+public:
+	void KeyInput();
+
 private:
 
 	HRESULT				Ready_Layer_Environment(tstring pLayerTag);

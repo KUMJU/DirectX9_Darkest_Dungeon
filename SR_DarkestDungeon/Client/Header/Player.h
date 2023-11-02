@@ -47,7 +47,17 @@ public:
 	void			SetCurrentRoom(_int _iCurrentRoom) { m_iCurrentRoom = _iCurrentRoom; }
 	void			SetInventory(shared_ptr<CInventory> _pInventory);
 
-	void			SetInBattle(_bool _bInBattle) { m_bInBattle = _bInBattle; }
+	void			SetInBattle(_bool _bInBattle) { 
+		m_bInBattle = _bInBattle;
+		
+		if (_bInBattle) {
+			m_eCurrentItem = EHandItem::ENUM_END;
+			m_pPlayerHand->SetEnable(false);
+		}
+		else {
+			m_pPlayerHand->SetEnable(true);
+		}
+	}
 
 	// ¿µ¿õ º¤ÅÍ °Ù, ¼Â / ¿µ¿õ Ãß°¡ / ¿µ¿õ ½º¿Ò
 	vector<shared_ptr<CGameObject>>* GetHeroVec() { return &m_pVecHero; }
@@ -97,7 +107,7 @@ public:
 	void ShowHeroesBack();	// µÚÀÇ ¿µ¿õµé º¸¿©ÁÖ±â
 
 private:
-	_float		m_fSpeed = 30.f;
+	_float		m_fSpeed = 15.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
 

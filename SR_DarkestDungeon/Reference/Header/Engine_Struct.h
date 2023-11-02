@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 #ifndef Engine_Struct_h__
 #define Engine_Struct_h__
 
@@ -15,6 +9,7 @@ namespace Engine
 	struct tagTextureInfo {
 		IDirect3DBaseTexture9* pTexture;
 		_bool bDelete;
+		_vec2 vImgSize;
 	};
 
 
