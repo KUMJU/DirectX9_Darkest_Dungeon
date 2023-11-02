@@ -726,6 +726,9 @@ void CResourceMgr::WealdDungeonTextureLoad()
 	CreateNewTexture(L"Weald_Image_Wagon", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.tutorial.room_wall.effigy_0.png", 1, bDefault);
 
+	CreateNewTexture(L"Weald_Image_Village", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.tutorial.room_wall.effigy_1.png", 1, bDefault);
+
 	CreateNewTexture(L"Weald_Image_PoisonRiver", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.room_wall.poisonriver.png", 1, bDefault);
 	

@@ -29,7 +29,7 @@ public:
 	}
 
 public:
-	void Update(const _float& fTimeDelta); // 턴 진행중
+	_bool Update(const _float& fTimeDelta); // 턴 진행중
 
 public:
 	// 턴 시작시 호출
@@ -45,7 +45,7 @@ public:
 	void NextTurn();	// 다음 턴
 
 	// 배틀 끝
-	void EndBattle();	// 전투 종료
+	_bool EndBattle();	// 전투 종료
 
 	_bool HeroesAllDead();
 	_bool MonstersAllDead();

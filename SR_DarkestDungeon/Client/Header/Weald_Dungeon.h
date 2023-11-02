@@ -35,6 +35,7 @@ private:
 	shared_ptr<CDungeonRoom> m_pRoom2 = {};				// 号2
 	shared_ptr<CDungeonRoom> m_pRoom3 = {};				// 号3
 	shared_ptr<CDungeonRoom> m_pRoom4 = {};				// 号4
+	shared_ptr<CDungeonRoom> m_pRoom5 = {};				// 号5
 
 	_bool				m_bTestBattle = false;
 

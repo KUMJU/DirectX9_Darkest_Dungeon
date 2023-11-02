@@ -38,6 +38,8 @@ _int CWeald_Curio_Luggage::UpdateGameObject(const _float& fTimeDelta)
 			m_bActive = false;
 			m_ePrevAnimState = m_eCurAnimState;
 			m_eCurAnimState = EState::FINISH;
+
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(true);
 		}
 	}
 

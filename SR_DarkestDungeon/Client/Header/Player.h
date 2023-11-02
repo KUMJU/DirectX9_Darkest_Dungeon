@@ -62,6 +62,16 @@ public:
 	void SetGold(_int _iNum, _bool _bIsEarn);
 	void SetHeirloom(_int _iNum, _bool _bIsEarn);
 
+	// 트리거
+	_bool	GetBattleTrigger() { return m_bBattleTrigger; }
+	void	SetBattleTrigger(_bool _bBattleTrigger) { m_bBattleTrigger = _bBattleTrigger; }
+	_bool	GetEventTrigger() { return m_bEventTrigger; }
+	void	SetEventTrigger(_bool _bEventTrigger) { m_bEventTrigger = _bEventTrigger; }
+	_bool	GetEvent2Trigger() { return m_bEvent2Trigger; }
+	void	SetEvent2Trigger(_bool _bEventTrigger) { m_bEvent2Trigger = _bEventTrigger; }
+	_bool	GetEvent3Trigger() { return m_bEvent3Trigger; }
+	void	SetEvent3Trigger(_bool _bEventTrigger) { m_bEvent3Trigger = _bEventTrigger; }
+
 private:
 	void			AddComponent();
 	void			KeyInput(const _float& fTimeDelta);
@@ -87,7 +97,7 @@ public:
 	void ShowHeroesBack();	// 뒤의 영웅들 보여주기
 
 private:
-	_float		m_fSpeed = 10.f;
+	_float		m_fSpeed = 30.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
 
@@ -117,6 +127,12 @@ private:
 
 	// 전투 돌입 여부
 	_bool		m_bInBattle = false;
+
+	// 트리거
+	_bool		m_bBattleTrigger = false;
+	_bool		m_bEventTrigger = false;
+	_bool		m_bEvent2Trigger = false;
+	_bool		m_bEvent3Trigger = false;
 
 private:
 	virtual void	Free();
