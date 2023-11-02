@@ -31,7 +31,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 	CPickingMgr::GetInstance()->ReadyPickingMgr(m_pGraphicDev);
 
-    shared_ptr<CScene> pMainLogo = make_shared<CWeald_Dungeon>(m_pGraphicDev);
+    shared_ptr<CScene> pMainLogo = make_shared<CVillage>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
 

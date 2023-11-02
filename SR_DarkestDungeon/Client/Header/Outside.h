@@ -37,5 +37,7 @@ protected:
 	vector<shared_ptr<CGameObject>>		m_vecGameObject = {};
 	EFacilityType						m_eFacilityType;
 	tstring								m_strKey;
+
+	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};
 };
 

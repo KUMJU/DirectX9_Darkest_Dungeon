@@ -55,6 +55,7 @@ HRESULT COutside::ReadyGameObject()
 		pHero1->SetScale({ 3.f, 5.f, 3.f });
 		pHero1->SetPos({ m_vPos.x, pHero1->GetScale().y / 2.f + pHero1->GetScale().y / 10.f, m_vPos.z - 2.f});
 		pHero1->SetAngle({ 0.f, - PI / 2.f, 0.f });
+		m_vecPickingObject.push_back(pHero1);
 		CPickingMgr::GetInstance()->AddList(pHero1);
 		m_vecGameObject.push_back(pHero1);
 			
@@ -64,6 +65,7 @@ HRESULT COutside::ReadyGameObject()
 		pHero2->SetScale({ 3.f, 5.f, 3.f });
 		pHero2->SetPos({ m_vPos.x + 7.f, pHero2->GetScale().y / 2.f + pHero2->GetScale().y / 10.f, m_vPos.z - 2.f });
 		pHero2->SetAngle({ 0.f, -PI / 2.f, 0.f });
+		m_vecPickingObject.push_back(pHero2);
 		CPickingMgr::GetInstance()->AddList(pHero2);
 		m_vecGameObject.push_back(pHero2);
 	}
@@ -85,6 +87,7 @@ HRESULT COutside::ReadyGameObject()
 			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
 			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x + 3.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Player_Item_Antivenom");
 			m_vecGameObject.push_back(m_pItem);
+			m_vecPickingObject.push_back(m_pItem);
 
 			// »ð
 			m_pItem = make_shared<CItem>(m_pGraphicDev);
@@ -93,6 +96,7 @@ HRESULT COutside::ReadyGameObject()
 			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
 			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x + 1.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Player_Item_Shovel");
 			m_vecGameObject.push_back(m_pItem);
+			m_vecPickingObject.push_back(m_pItem);
 
 			// ºØ´ë
 			m_pItem = make_shared<CItem>(m_pGraphicDev);
@@ -101,6 +105,7 @@ HRESULT COutside::ReadyGameObject()
 			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
 			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x - 1.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Player_Item_Bandage");
 			m_vecGameObject.push_back(m_pItem);
+			m_vecPickingObject.push_back(m_pItem);
 
 			// È¶ºÒ
 			m_pItem = make_shared<CItem>(m_pGraphicDev);
@@ -109,6 +114,7 @@ HRESULT COutside::ReadyGameObject()
 			dynamic_pointer_cast<CItem>(m_pItem)->SetOnStore(true);
 			dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ m_vPos.x + 5.f, m_vPos.y + 3.f, m_vPos.z + 2.1f }, L"Item_Torch");
 			m_vecGameObject.push_back(m_pItem);
+			m_vecPickingObject.push_back(m_pItem);
 
 			// À½½Ä
 			/*m_pItem = make_shared<CItem>(m_pGraphicDev);
@@ -141,7 +147,14 @@ _int COutside::UpdateGameObject(const _float& fTimeDelta)
     Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
 	for (auto& iter : m_vecGameObject) {
-		iter->UpdateGameObject(fTimeDelta);
+		if (iter->GetIsActive() && iter->GetIsEnable())
+			iter->UpdateGameObject(fTimeDelta);
+	}
+
+	for (auto& iter : m_vecPickingObject)
+	{
+		if (iter->GetIsActive() && iter->GetIsEnable())
+			CPickingMgr::GetInstance()->AddList(iter);
 	}
 
 	_int iExit = __super::UpdateGameObject(fTimeDelta);
