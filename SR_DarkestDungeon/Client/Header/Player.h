@@ -72,6 +72,12 @@ public:
 	void SetGold(_int _iNum, _bool _bIsEarn);
 	void SetHeirloom(_int _iNum, _bool _bIsEarn);
 
+	void InitGold(_int _iNum) { m_iGold = _iNum; }
+	void InitHeirloom(_int _iNum) { m_iHeirlooms = _iNum; }
+
+	void SetInDungeon(_bool _bInDungeon) { m_bInDungeon = _bInDungeon; }
+	_bool IsInDungeon() { return m_bInDungeon; }
+
 	// 트리거
 	_bool	GetBattleTrigger() { return m_bBattleTrigger; }
 	void	SetBattleTrigger(_bool _bBattleTrigger) { m_bBattleTrigger = _bBattleTrigger; }
@@ -105,6 +111,8 @@ protected:
 public:
 	void SetPlayerHand(shared_ptr<CPlayerHand> _pHand) { m_pPlayerHand = _pHand; }
 	void ShowHeroesBack();	// 뒤의 영웅들 보여주기
+	void ShowHeroesBackVillage(); // 마을에서 뒤의 영웅들 보여주기
+	void HideHeroesBackVillage(); // 마을에서 뒤의 영웅들 숨기기
 
 private:
 	_float		m_fSpeed = 15.f;
@@ -138,11 +146,17 @@ private:
 	// 전투 돌입 여부
 	_bool		m_bInBattle = false;
 
+	// 마을 or 던전
+	_bool		m_bInDungeon = true;
+
 	// 트리거
 	_bool		m_bBattleTrigger = false;
 	_bool		m_bEventTrigger = false;
 	_bool		m_bEvent2Trigger = false;
 	_bool		m_bEvent3Trigger = false;
+
+	// 피킹 오브젝트 벡터 (뒤 돌아볼 때 생성되는 영웅용)
+	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};
 
 private:
 	virtual void	Free();

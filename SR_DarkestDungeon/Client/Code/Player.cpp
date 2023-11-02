@@ -27,6 +27,9 @@ HRESULT CPlayer::ReadyGameObject()
 	m_eCollideID = ECollideID::PLAYER;
 	m_bColliding = true;
 
+	SetGold(2000, true);
+	SetHeirloom(3, true);
+
 	return S_OK;
 }
 
@@ -44,13 +47,13 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 	}
 
 	// 뒤 돌아봤을때 영웅 보이게 하기
-	if (m_bSeeBack && !m_bInBattle)
+	if (m_bInDungeon && m_bSeeBack && !m_bInBattle)
 	{
 		ShowHeroesBack();
 	}
 
 	// 전투 중이 아니고 뒤 돌아본 상태가 아니일때 영웅들 안보이게
-	if (!m_bSeeBack && !m_bInBattle)
+	if (m_bInDungeon && !m_bSeeBack && !m_bInBattle)
 	{
 		for (int i = 0; i < size(m_pVecHero); i++)
 		{
@@ -59,6 +62,12 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 				m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(m_pTransformCom->GetPos()->x - 3.f, m_pTransformCom->GetPos()->y - 400.f, m_pTransformCom->GetPos()->z - 9.f - 5.f * i);
 		}
+	}
+
+
+	for (auto& iter : m_vecPickingObject)
+	{
+		CPickingMgr::GetInstance()->AddList(iter);
 	}
 
 	return iExit;
@@ -146,7 +155,7 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 	_vec3		vDir;
 
-	if (GetAsyncKeyState('P') & 0x8000) {
+	if (GetAsyncKeyState('P') & 0x8000 && m_bInDungeon) {
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
 
 		m_bSeeBack = true;
@@ -247,16 +256,30 @@ void CPlayer::InsertItem(shared_ptr<CItem> _pItem)
 
 void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 {
+	shared_ptr<CItem> pItem = dynamic_pointer_cast<CItem>(_pObj);
+
 	// ITEM 충돌
 	if (ECollideID::ITEM == _pObj->GetColType())
 	{
 		shared_ptr<CItem> pNewItem = make_shared<CItem>(m_pGraphicDev);
- 		pNewItem->GetUITextureKeyName(dynamic_pointer_cast<CItem>(_pObj)->GetItemKeyName());
-		pNewItem->SetAmount(dynamic_pointer_cast<CItem>(_pObj)->GetAmount());
+		pNewItem->GetUITextureKeyName(pItem->GetItemKeyName());
+
+		if (pItem->IsOnStore())
+		{
+			if (m_iGold < pNewItem->GetMoney())
+				return;
+
+			SetGold(pNewItem->GetMoney(), false);
+		}
+
+		pNewItem->SetAmount(pItem->GetAmount());
 		pNewItem->SetOnField(false);
 		InsertItem(pNewItem);
 
-		_pObj->SetActive(false);
+		if (!pItem->IsOnStore())
+		{
+			_pObj->SetActive(false);
+		}
 	}
 }
 
@@ -325,6 +348,36 @@ void CPlayer::ShowHeroesBack()
 		pTransform->SetPosition(m_pTransformCom->GetPos()->x - 5.f, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 4.f * i);
 		pTransform->SetAngle(_vec3(0.f,0.f,0.f));
 	}
+}
+
+void CPlayer::ShowHeroesBackVillage()
+{
+	for (int i = 0; i < size(m_pVecHero); i++)
+	{
+		dynamic_pointer_cast<CCreature>(m_pVecHero[i])->SetFront(false);
+		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
+			m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+		pTransform->SetPosition(m_pTransformCom->GetPos()->x + 5.f - 3.f * i, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 2.f * i);
+		pTransform->SetAngle(_vec3(0.f, 0.f, 0.f));
+
+		dynamic_pointer_cast<CHero>(m_pVecHero[i])->SetHired(true);
+
+		m_vecPickingObject.push_back(m_pVecHero[i]);
+	}
+
+}
+
+void CPlayer::HideHeroesBackVillage()
+{
+	for (int i = 0; i < size(m_pVecHero); i++)
+	{
+		dynamic_pointer_cast<CCreature>(m_pVecHero[i])->SetFront(true);
+		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
+			m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+		pTransform->SetPosition(m_pTransformCom->GetPos()->x - 3.f, m_pTransformCom->GetPos()->y - 400.f, m_pTransformCom->GetPos()->z - 9.f - 5.f * i);
+	}
+
+	m_vecPickingObject.clear();
 }
 
 void CPlayer::Free()

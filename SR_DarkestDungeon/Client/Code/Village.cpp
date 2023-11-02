@@ -48,6 +48,7 @@ HRESULT CVillage::ReadyScene()
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
 	Ready_Layer_GameObject(L"Layer_4_GameObj");
 	Ready_Layer_UI(L"Layer_2_UI");
+	Ready_Layer_Camera(L"Layer_5_Camera");
 
 	for (auto& iter : m_mapLayer) {
 		//GameComponenet Setting
@@ -88,11 +89,6 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
-
-	//Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
-	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
-	m_pLayer->CreateGameObject(L"Obj_Camera", m_pCamera);
 
 	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Village_FloorTexture", ETerrainType::VILLAGE);
 	m_pLayer->CreateGameObject(L"Obj_Terrain", m_pTerrain);
@@ -225,20 +221,60 @@ HRESULT CVillage::Ready_Layer_SkyBox(tstring pLayerTag)
 	return S_OK;
 }
 
+HRESULT CVillage::Ready_Layer_Camera(tstring pLayerTag)
+{
+	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
+	m_mapLayer.insert({ pLayerTag, m_pLayer });
+
+	// Camera
+	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
+
+	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
+
+	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
+
+	return S_OK;
+}
+
 HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	//플레이어
-	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
-	m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
+	shared_ptr<CGameObject> m_pPlayer;
+
+	//if (m_pPlayer = CGameMgr::GetInstance()->GetPlayer())
+	//{
+	//	// 던전에서 시작해서 넘어온 경우
+	//	m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
+	//	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(m_pPlayer->GetPos().x, m_pPlayer->GetPos().y, m_pPlayer->GetPos().z);
+
+	//}
+	//
+	//else
+	//{
+		// 마을에서부터 시작한 경우
+		m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
+		CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
+		m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
+
+
+		// 테스트 (돈, 가보 초기 세팅)
+		{
+			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitGold(2000);
+			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
+		}
+	//}
+
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
-	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
 	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
+
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(false);
 
 	// 영웅 테스트
 	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
@@ -314,6 +350,7 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 	return S_OK;
 }
+
 
 HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 {

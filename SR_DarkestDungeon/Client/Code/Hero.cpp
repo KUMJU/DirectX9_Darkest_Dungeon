@@ -98,9 +98,7 @@ void CHero::RenderGameObject()
 
 void CHero::PickingObj()
 {
-	if (m_bHired)
-		m_pStatUI->SetForHire(false);
-	else
+	if (!m_bHired)
 		m_pStatUI->SetForHire(true);
 
 	m_pStatUI->SetVisible(true);

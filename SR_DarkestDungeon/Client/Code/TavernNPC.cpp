@@ -2,6 +2,7 @@
 #include "TavernNPC.h"
 #include "GameMgr.h"
 #include "CameraMgr.h"
+#include "Player.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -77,6 +78,8 @@ void CTavernNPC::GetInteractionKey(const _float& fTimeDelta)
 		CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 
 		// 카메라 이동
+		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->ShowHeroesBackVillage();
 
 		Interaction();
 	}
@@ -97,14 +100,16 @@ void CTavernNPC::Interaction()
 _bool CTavernNPC::IsFinish()
 {
 	// 키 입력받기
-	if (GetAsyncKeyState('X') & 0x8000)
+	if (GetAsyncKeyState('Z') & 0x8000)
 	{
 		m_bInteracting = false;
 
 		// 카메라 원상복귀
+		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
 
 		// 플레이어 행동 풀기
 		CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->HideHeroesBackVillage();
 
 		return true;
 	}
