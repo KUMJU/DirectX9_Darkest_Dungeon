@@ -41,16 +41,13 @@ public:
 	virtual void RenderGameObject() override;
 
 public:
-	vector<shared_ptr<CGameObject>> GetHeroesVector() { return m_vHeroes; }
-	void SetHeroesVector(vector<shared_ptr<CGameObject>>& _vVec)
-	{
-		m_vHeroes = _vVec;
-	}
 	_bool			GetRoomChange() { return m_bRoomChange; }
 	void			SetRoomChange(_bool _bRoomChange) { m_bRoomChange = _bRoomChange; }
 	_int			GetCurrentRoom() { return m_iCurrentRoom; }
 	void			SetCurrentRoom(_int _iCurrentRoom) { m_iCurrentRoom = _iCurrentRoom; }
 	void			SetInventory(shared_ptr<CInventory> _pInventory);
+
+	void			SetInBattle(_bool _bInBattle) { m_bInBattle = _bInBattle; }
 
 	// 영웅 벡터 겟, 셋 / 영웅 추가 / 영웅 스왑
 	vector<shared_ptr<CGameObject>>* GetHeroVec() { return &m_pVecHero; }
@@ -87,6 +84,7 @@ protected:
 
 public:
 	void SetPlayerHand(shared_ptr<CPlayerHand> _pHand) { m_pPlayerHand = _pHand; }
+	void ShowHeroesBack();	// 뒤의 영웅들 보여주기
 
 private:
 	_float		m_fSpeed = 10.f;
@@ -101,8 +99,6 @@ private:
 	_bool		m_bMoveLock[4] = { false };
 	_bool		m_bMoveSave[4] = { false };
 
-	vector<shared_ptr<CGameObject>> m_vHeroes = {};		// 영웅 명단
-
 	// 재화
 	_int		m_iGold = 0; //골드(재화)
 	_int		m_iHeirlooms = 0; //가보(업그레이드 재화)
@@ -115,6 +111,12 @@ private:
 	_bool		m_bCurMouse = false;
 
 	_bool		m_bLookBack = false;
+
+	// 뒤 돌아본 상태
+	_bool		m_bSeeBack = false;
+
+	// 전투 돌입 여부
+	_bool		m_bInBattle = false;
 
 private:
 	virtual void	Free();

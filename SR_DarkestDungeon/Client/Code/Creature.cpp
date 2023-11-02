@@ -72,7 +72,7 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 		m_pStatInfo->SetAttributeOff(7);
 
 	if (m_pStatInfo != nullptr && bStatBarOn) {
-		m_pStatInfo->SettingPos(*(m_pTransformCom->GetPos()));
+		m_pStatInfo->SettingPos(*(m_pTransformCom->GetPos()), m_bFront);
 		m_pStatInfo->UpdateGameObject(fTimeDelta);
 	}
 

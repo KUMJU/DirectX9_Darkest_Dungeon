@@ -131,6 +131,8 @@ public:
 	void	SetStun(_bool _bStun) { m_bState[2] = true; }
 	void	SetStartBarOn(_bool _bStatBarOn) { bStatBarOn = _bStatBarOn; }
 
+	void	SetFront(_bool _bFront) { m_bFront = _bFront; }
+
 	_int	GetHp() { return m_tCommonStat.iHp; }
 	void	SetHp(_int _iValue) { m_tCommonStat.iHp = _iValue; }
 	void	IncreaseHP(_int _iValue) {
@@ -273,6 +275,9 @@ protected:
 	shared_ptr<CStatView> m_pStatInfo = nullptr;
 	//스탯Info ON/Off
 	_bool		bStatBarOn = true;
+
+	// 플레이어 앞인지 뒤인지
+	_bool		m_bFront = true;
 
 
 protected:

@@ -24,7 +24,7 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	}
 
-	//I
+	//UI
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
 	CResourceMgr::GetInstance()->BaseTextureLoad();	
 	CResourceMgr::GetInstance()->UITextureLoad();

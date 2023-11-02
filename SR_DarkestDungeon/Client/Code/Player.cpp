@@ -43,6 +43,24 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 		m_bMoveLock[i] = false;
 	}
 
+	// 뒤 돌아봤을때 영웅 보이게 하기
+	if (m_bSeeBack && !m_bInBattle)
+	{
+		ShowHeroesBack();
+	}
+
+	// 전투 중이 아니고 뒤 돌아본 상태가 아니일때 영웅들 안보이게
+	if (!m_bSeeBack && !m_bInBattle)
+	{
+		for (int i = 0; i < size(m_pVecHero); i++)
+		{
+			dynamic_pointer_cast<CCreature>(m_pVecHero[i])->SetFront(true);
+			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
+				m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(m_pTransformCom->GetPos()->x - 3.f, m_pTransformCom->GetPos()->y - 400.f, m_pTransformCom->GetPos()->z - 9.f - 5.f * i);
+		}
+	}
+
 	return iExit;
 }
 
@@ -130,10 +148,13 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('P') & 0x8000) {
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
+
+		m_bSeeBack = true;
 	}
 
 	if (GetAsyncKeyState('O') & 0x8000) {
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, -180.f);
+		m_bSeeBack = false;
 	}
 	
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
@@ -291,6 +312,18 @@ void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection 
 				break;
 			}
 		}
+	}
+}
+
+void CPlayer::ShowHeroesBack()
+{
+	for (int i = 0; i < size(m_pVecHero); i++)
+	{
+		dynamic_pointer_cast<CCreature>(m_pVecHero[i])->SetFront(false);
+		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
+			m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+		pTransform->SetPosition(m_pTransformCom->GetPos()->x - 5.f, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 4.f * i);
+		pTransform->SetAngle(_vec3(0.f,0.f,0.f));
 	}
 }
 

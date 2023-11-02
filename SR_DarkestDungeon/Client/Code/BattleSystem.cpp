@@ -603,28 +603,37 @@ void CBattleSystem::DeadCheck()
 void CBattleSystem::FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes, vector<shared_ptr<CGameObject>>& _vMonsters, _float _fAngle1,
 	_float _fAngle2, _vec3 _vOrigin)
 {
+	shared_ptr<CTransform> pTransform;
 	for (int i = 0; i < size(_vHeroes); i++)
 	{
 		switch (i)
 		{
 		case 0:
-			dynamic_pointer_cast<CCreature>(_vHeroes[0])->SetPos(_vec3(_vOrigin.x - 6.f, _vOrigin.y, _vOrigin.z));
-			dynamic_pointer_cast<CCreature>(_vHeroes[0])->SetAngle(_vec3(0.f, _fAngle1, 0.f));
+			pTransform = dynamic_pointer_cast<CTransform>(
+				_vHeroes[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(_vOrigin.x - 6.f, _vOrigin.y, _vOrigin.z);
+			pTransform->SetAngle(_vec3(0.f, _fAngle1, 0.f));
 			m_vHeroLocation.push_back(_vec3(_vOrigin.x - 6.f, _vOrigin.y, _vOrigin.z));
 			break;
 		case 1:
-			dynamic_pointer_cast<CCreature>(_vHeroes[1])->SetPos(_vec3(_vOrigin.x - 8.f, _vOrigin.y, _vOrigin.z - 2.f));
-			dynamic_pointer_cast<CCreature>(_vHeroes[1])->SetAngle(_vec3(0.f, _fAngle1, 0.f));
+			pTransform = dynamic_pointer_cast<CTransform>(
+				_vHeroes[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(_vOrigin.x - 8.f, _vOrigin.y, _vOrigin.z - 2.f);
+			pTransform->SetAngle(_vec3(0.f, _fAngle1, 0.f));
 			m_vHeroLocation.push_back(_vec3(_vOrigin.x - 8.f, _vOrigin.y, _vOrigin.z - 2.f));
 			break;
 		case 2:
-			dynamic_pointer_cast<CCreature>(_vHeroes[2])->SetPos(_vec3(_vOrigin.x - 14.f, _vOrigin.y, _vOrigin.z + 4.f));
-			dynamic_pointer_cast<CCreature>(_vHeroes[2])->SetAngle(_vec3(0.f, _fAngle1, 0.f));
+			pTransform = dynamic_pointer_cast<CTransform>(
+				_vHeroes[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(_vOrigin.x - 14.f, _vOrigin.y, _vOrigin.z + 4.f);
+			pTransform->SetAngle(_vec3(0.f, _fAngle1, 0.f));
 			m_vHeroLocation.push_back(_vec3(_vOrigin.x - 14.f, _vOrigin.y, _vOrigin.z + 4.f));
 			break;
 		case 3:
-			dynamic_pointer_cast<CCreature>(_vHeroes[3])->SetPos(_vec3(_vOrigin.x - 16.f, _vOrigin.y, _vOrigin.z + 2.f));
-			dynamic_pointer_cast<CCreature>(_vHeroes[3])->SetAngle(_vec3(0.f, _fAngle1, 0.f));
+			pTransform = dynamic_pointer_cast<CTransform>(
+				_vHeroes[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(_vOrigin.x - 16.f, _vOrigin.y, _vOrigin.z + 2.f);
+			pTransform->SetAngle(_vec3(0.f, _fAngle1, 0.f));
 			m_vHeroLocation.push_back(_vec3(_vOrigin.x - 16.f, _vOrigin.y, _vOrigin.z + 2.f));
 			break;
 		}
@@ -635,22 +644,30 @@ void CBattleSystem::FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes
 		switch (i)
 		{
 		case 0:
-			dynamic_pointer_cast<CCreature>(_vMonsters[0])->SetPos(_vec3(_vOrigin.x + 6.f, _vOrigin.y, _vOrigin.z));
-			dynamic_pointer_cast<CCreature>(_vMonsters[0])->SetAngle(_vec3(0.f, _fAngle2 + PI, 0.f));
+			pTransform = dynamic_pointer_cast<CTransform>(
+				_vMonsters[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(_vOrigin.x + 6.f, _vOrigin.y, _vOrigin.z );
+			pTransform->SetAngle(_vec3(0.f, _fAngle2, 0.f));
 			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 6.f, _vOrigin.y, _vOrigin.z));
 			break;
 		case 1:
-			dynamic_pointer_cast<CCreature>(_vMonsters[1])->SetPos(_vec3(_vOrigin.x + 8.f, _vOrigin.y, _vOrigin.z - 2.f));
-			dynamic_pointer_cast<CCreature>(_vMonsters[1])->SetAngle(_vec3(0.f, _fAngle2 + PI, 0.f));
+			pTransform = dynamic_pointer_cast<CTransform>(
+				_vMonsters[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(_vOrigin.x + 8.f, _vOrigin.y, _vOrigin.z - 2.f);
+			pTransform->SetAngle(_vec3(0.f, _fAngle2, 0.f));
 			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 8.f, _vOrigin.y, _vOrigin.z - 2.f));
 		case 2:
-			dynamic_pointer_cast<CCreature>(_vMonsters[2])->SetPos(_vec3(_vOrigin.x + 14.f, _vOrigin.y, _vOrigin.z + 4.f));
-			dynamic_pointer_cast<CCreature>(_vMonsters[2])->SetAngle(_vec3(0.f, _fAngle2 + PI, 0.f));
+			pTransform = dynamic_pointer_cast<CTransform>(
+				_vMonsters[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(_vOrigin.x + 14.f, _vOrigin.y, _vOrigin.z + 4.f);
+			pTransform->SetAngle(_vec3(0.f, _fAngle2, 0.f));
 			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 14.f, _vOrigin.y, _vOrigin.z + 4.f));
 			break;
 		case 3:
-			dynamic_pointer_cast<CCreature>(_vMonsters[3])->SetPos(_vec3(_vOrigin.x + 16.f, _vOrigin.y, _vOrigin.z + 2.f));
-			dynamic_pointer_cast<CCreature>(_vMonsters[3])->SetAngle(_vec3(0.f, _fAngle2 + PI, 0.f));
+			pTransform = dynamic_pointer_cast<CTransform>(
+				_vMonsters[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(_vOrigin.x + 16.f, _vOrigin.y, _vOrigin.z + 2.f);
+			pTransform->SetAngle(_vec3(0.f, _fAngle2, 0.f));
 			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 16.f, _vOrigin.y, _vOrigin.z + 2.f));
 			break;
 		}

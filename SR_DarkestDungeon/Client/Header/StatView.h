@@ -26,7 +26,7 @@ public:
 public:
 	//초기화
 	void	SettingInit(_vec3 _vCreaturePos, _int _iHp, _int _iMaxHp, _bool _isHero);
-	void	SettingPos(_vec3 _vPos);
+	void	SettingPos(_vec3 _vPos, _bool _bFront);
 
 public:
 	//실제 Creature에서 사용해야하는 수치 조정 함수 -------------------------------------------------------

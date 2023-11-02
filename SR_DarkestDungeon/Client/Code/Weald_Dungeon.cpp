@@ -102,8 +102,10 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		m_pRoom3->BattleUpdate(fTimeDelta);
 	}
 
-	// 방 1에 들어가면
+	// 전투 시작
 	if (GetAsyncKeyState('8') & 0x8000) {
+		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>((CGameMgr::GetInstance()->GetPlayer())->GetComponent(L"Com_Transform", ID_DYNAMIC));
+		pTransform->SetPosition(50.f, 0.f, 200.f);
 		m_pWealdDungeon->CurrentRoom(3);
 		m_bTestBattle = true;
 	}
@@ -704,7 +706,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Heroes_v.push_back(m_pHighwayman);
 	Heroes_v.push_back(m_pJester);
 	Heroes_v.push_back(m_pVestal);
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroesVector(Heroes_v);
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroVec(&Heroes_v);
 
 	// 방에 GameObject 넣기
 	// Room1
@@ -726,11 +728,6 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room3_v1.push_back(m_pBrigandBloodletter1);
 	Room3_v1.push_back(m_pBrigandCutthroat_2);
 	Room3_v1.push_back(m_pBrigandFusilier_1);
-
-	Room3_v1.push_back(m_pSheldBreaker1);
-	Room3_v1.push_back(m_pHighwayman);
-	Room3_v1.push_back(m_pJester);
-	Room3_v1.push_back(m_pVestal);
 
 	Room3_v1.push_back(m_pCurioC1);
 
@@ -771,6 +768,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	pRoom3_Battle->PushHeroesVector(Room3_v2);
 	pRoom3_Battle->PushMonstersVector(Room3_v3);
 	m_pRoom3->SetBattleSystem(pRoom3_Battle);
+	m_pRoom3->SetBattleCameraPos(_vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 10.f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f));
 	
 	//BattleUI Test
 	shared_ptr<CBattleHeroUI> m_pHeroUI = make_shared<CBattleHeroUI>(m_pGraphicDev);
@@ -791,11 +789,6 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Dungeon1_v.push_back(m_pRoom3);
 	Dungeon1_v.push_back(m_pRoom4);
 	m_pWealdDungeon->PushDungeonRoomVector(Dungeon1_v);
-
-	// 던전 object들 위치 잡아놓기
-	// 3번 방
-	pRoom3_Battle->FormBattlePosition(Room3_v2, Room3_v3,
-		-PI / 2.f, -PI / 2.f, _vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 10.f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f));
 
 	// 현재 active 방
 	m_pWealdDungeon->CurrentRoom(1);
