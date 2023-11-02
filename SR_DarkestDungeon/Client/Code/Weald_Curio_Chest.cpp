@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "Creature.h"
+#include "Hero.h"
 
 CWeald_Curio_Chest::CWeald_Curio_Chest(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
@@ -34,12 +36,24 @@ _int CWeald_Curio_Chest::UpdateGameObject(const _float& fTimeDelta)
 		m_fActiveTime -= fTimeDelta;
 		if (m_fActiveTime < 0)
 		{
+			// 제대로된 상호작용(키)
+			if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentItem()
+				== EHandItem::KEYS)
+			{
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentItem(EHandItem::ENUM_END);
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->DeleteItem(L"Item_UI_Key");
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(true);
+			}
+			// 키없는 상호작용
+			else
+			{
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent2Trigger(true);
+			}
+
 			m_fActiveTime = CURIOACTIVETIME;
 			m_bActive = false;
 			m_ePrevAnimState = m_eCurAnimState;
 			m_eCurAnimState = EState::FINISH;
-
-			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(true);
 		}
 	}
 
