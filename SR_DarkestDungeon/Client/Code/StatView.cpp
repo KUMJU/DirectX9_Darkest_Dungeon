@@ -176,16 +176,24 @@ void CStatView::SettingInit(_vec3 _vCreaturePos, _int _iHp, _int _iMaxHp , _bool
 	m_iMaxHp = _iMaxHp;
 	m_fHpBarRange = static_cast<float>(m_iHp / m_iMaxHp);
 
-	SettingPos(_vCreaturePos);
+	SettingPos(_vCreaturePos, true);
 
 }
 
-void CStatView::SettingPos(_vec3 _vPos)
+void CStatView::SettingPos(_vec3 _vPos, _bool _bFront)
 {
 
 	_vec3 CurPos = { 0.f, 4.f , 0.f };
 	m_vCenterPos = _vPos + CurPos;
 	_float iInitPos = -0.8f;
+
+	_float fFrontGap = 0.01f;
+	if (_bFront)
+	{
+		fFrontGap = 0.01f;
+	}
+	else
+		fFrontGap = -0.01f;
 
 	if (m_bHero) {
 		//Setting Stress Info
@@ -211,14 +219,14 @@ void CStatView::SettingPos(_vec3 _vPos)
 	if (!m_bCorpse)
 	{
 		for (int i = 11; i < 12; ++i) {
-			m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - 0.01f);
+			m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - fFrontGap);
 			m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 			m_pTransformCom[i]->SetScale(1.f * m_fHpBarRange, 0.1f, 1.f);
 		}
 	}
 	//Full CorpseHpBar
 	for (int i = 20; i < 21; ++i) {
-		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - 0.01f);
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - fFrontGap);
 		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 		m_pTransformCom[i]->SetScale(1.f * m_fHpBarRange, 0.1f, 1.f);
 	}

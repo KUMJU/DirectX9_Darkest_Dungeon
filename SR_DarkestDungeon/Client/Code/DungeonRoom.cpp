@@ -33,3 +33,8 @@ void CDungeonRoom::BattleUpdate(const _float& fTimeDelta)
 
 	m_pBattleSystem->Update(fTimeDelta);
 }
+
+void CDungeonRoom::BattleReady()
+{
+	m_pBattleSystem->FormBattlePosition(m_vHeroes, m_vMonsters, 0.f, PI, m_vBattleCameraPos);
+}
