@@ -43,7 +43,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	SetSkill(pVecSkill);
 
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+	m_pTransformCom->SetScale(2.5f, 2.5f, 1.f);
 
 	m_pTransformCom->SetAngle(m_vAngle);
 	m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
@@ -67,31 +67,23 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		{
 		case EAnimState::COMBAT:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Combat", 0.05f);
-			m_pTransformCom->SetScale(2.f, 2.f, 1.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 2.f, m_vPos.z);
-
+			m_pTransformCom->SetScale(2.5f, 2.5f, 1.f);
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Hitted", 0.02f);
-			m_pTransformCom->SetScale(2.f * 207.f / 230.f, 2.f * 291.f / 291.f, 1.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 2.f * 291.f / 291.f, m_vPos.z);
-
+			m_pTransformCom->SetScale(2.5f * 207.f / 230.f, 2.5f * 291.f / 291.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Attack1", 0.02f);
-			m_pTransformCom->SetScale(2.f * 207.f / 230.f, 2.f * 291.f / 291.f, 1.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 2.f * 291.f / 291.f, m_vPos.z);
-
+			m_pTransformCom->SetScale(2.5f * 207.f / 230.f, 2.5f * 291.f / 291.f, 1.f);
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Dead", 0.02f);
-			m_pTransformCom->SetScale(2.f * 215 / 230.f, 2.f * 137 / 291.f, 1.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 2.f * 137 / 291.f, m_vPos.z);
+			m_pTransformCom->SetScale(2.5f * 215 / 230.f, 2.5f * 137 / 291.f, 1.f);
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Death", 0.02f);
-			m_pTransformCom->SetScale(2.f * 232.f / 230.f, 2.f * 311.f / 291.f, 1.f);
-
+			m_pTransformCom->SetScale(2.5f * 232.f / 230.f, 2.5f * 311.f / 291.f, 1.f);
 			break;
 		}
 	}

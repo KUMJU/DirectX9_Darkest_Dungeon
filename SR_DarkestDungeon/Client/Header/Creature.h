@@ -186,7 +186,7 @@ public:
 	void	OffTurnCursor();	// 자기차례임을 나타내는 cursor 종료
 	void	OnTurnCursor();	// 자기차례임을 나타내는 cursor 키기
 
-protected:
+public:
 
 	// 다른 크리처 공격시
 
