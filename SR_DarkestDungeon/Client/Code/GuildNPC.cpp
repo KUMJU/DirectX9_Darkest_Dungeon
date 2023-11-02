@@ -2,8 +2,12 @@
 #include "GuildNPC.h"
 #include "GameMgr.h"
 #include "CameraMgr.h"
+#include "UIMgr.h"
 
 #include "PickingGame.h"
+#include "Player.h"
+#include "Hero.h"
+#include "HeroSkillUI.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -25,6 +29,7 @@ CGuildNPC::~CGuildNPC()
 HRESULT CGuildNPC::ReadyGameObject()
 {
 	m_pPickingGame = make_shared<CPickingGame>(m_pGraphicDev);
+	//m_vecGameObject.push_back(m_pPickingGame);
 
 	__super::ReadyGameObject();
 
@@ -35,16 +40,60 @@ _int CGuildNPC::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
+	if (!m_pHeroVec)
+	{
+		shared_ptr<CUIObj> pHeroSkillUI;
+		_int	iIdx = 0;
+
+		m_pHeroVec = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
+
+		// 영웅 스킬 UI 생성
+		for (auto& iter :
+			*dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec()
+			)
+		{
+			pHeroSkillUI = make_shared<CHeroSkillUI>(m_pGraphicDev, dynamic_pointer_cast<CHero>(iter), iIdx);
+			pHeroSkillUI->SetVisible(false);
+
+			CUIMgr::GetInstance()->AddUIObject(L"UI_HeroSkill", pHeroSkillUI);
+
+			m_pUIVec.push_back(pHeroSkillUI);
+			m_vecGameObject.push_back(pHeroSkillUI);
+
+			iIdx++;
+		}
+
+		for (auto& iter : m_vecGameObject)
+		{
+			iter->AwakeGameObject();
+			iter->ReadyGameObject();
+		}
+	}
+
+	for (auto& iter : m_vecGameObject)
+	{
+		iter->UpdateGameObject(fTimeDelta);
+	}
+
 	return iExit;
 }
 
 void CGuildNPC::LateUpdateGameObject()
 {
+	for (auto& iter : m_vecGameObject)
+	{
+		iter->LateUpdateGameObject();
+	}
+
 	__super::LateUpdateGameObject();
 }
 
 void CGuildNPC::RenderGameObject()
 {
+	for (auto& iter : m_vecGameObject)
+	{
+		iter->RenderGameObject();
+	}
 	__super::RenderGameObject();
 }
 
@@ -81,16 +130,16 @@ void CGuildNPC::GetInteractionKey(const _float& fTimeDelta)
 		CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 
 		// 카메라 이동
-
 		Interaction();
 	}
 }
 
 void CGuildNPC::Interaction()
 {
-	// 영웅 선택
+	// 영웅 UI 출력
 	{
-		// 영웅 텍스처 생성
+		for (auto& iter : m_pUIVec)
+			iter->SetVisible(true);
 
 		// 피킹 받기
 
@@ -104,6 +153,9 @@ _bool CGuildNPC::IsFinish()
 	if (GetAsyncKeyState('X') & 0x8000)
 	{
 		m_bInteracting = false;
+
+		for (auto& iter : m_pUIVec)
+			iter->SetVisible(false);
 
 		// 카메라 원상복귀
 

@@ -131,6 +131,7 @@ public:
 	void	SetStun(_bool _bStun) { m_bState[2] = true; }
 	void	SetStartBarOn(_bool _bStatBarOn) { bStatBarOn = _bStatBarOn; }
 
+	_int	GetMaxHp() { return m_tCommonStat.iMaxHp; }
 	_int	GetHp() { return m_tCommonStat.iHp; }
 	void	SetHp(_int _iValue) { m_tCommonStat.iHp = _iValue; }
 	void	IncreaseHP(_int _iValue) {

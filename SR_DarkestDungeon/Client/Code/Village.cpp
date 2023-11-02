@@ -26,6 +26,7 @@
 #include "Highwayman.h"
 #include "ShieldBreaker.h"
 #include"ResourceMgr.h"
+#include"CameraMgr.h"
 
 #include"Export_Utility.h"
 
@@ -79,7 +80,8 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	//Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
 	m_pLayer->CreateGameObject(L"Obj_Camera", m_pCamera);
 
 	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Village_FloorTexture", ETerrainType::VILLAGE);
@@ -229,21 +231,29 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
 	// 영웅 테스트
-	//shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
-	//m_pVestal->SetPos({ 10.f, 3.f, 20.f });
+	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+	m_pVestal->SetPos({ 10.f, 3.f, 20.f });
 
-	//shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
-	//m_pJester->SetPos({ 15.f, 3.f, 20.f });
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pVestal);
 
-	//shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
-	//m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
+	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+	m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
 
-	//shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
-	//m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pHighwayman);
+
+
+	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
+	m_pJester->SetPos({ 15.f, 3.f, 20.f });
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pJester);
+
+
+	shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
+	m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pShieldBreaker);
 
 	// 여관
 	{
