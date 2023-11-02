@@ -5,6 +5,8 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+#include"Player.h"
+
 CGambling::CGambling(LPDIRECT3DDEVICE9 pGraphicDev)
     : CInteractionObj(pGraphicDev)
 {
@@ -100,7 +102,7 @@ _bool CGambling::IsFinish()
 		m_bInteracting = false;
 
 		// m_pCardGame->End();
-		
+		GetReward();
 		// 플레이어 행동 풀기
 		CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 
@@ -116,4 +118,12 @@ void CGambling::FinishInteraction()
 
 void CGambling::ChangeTexture()
 {
+}
+
+void CGambling::GetReward()
+{
+	//500 대신 reward 값 넣어주기 
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetGold(500, true);
+
+
 }

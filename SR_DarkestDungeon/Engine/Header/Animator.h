@@ -30,8 +30,21 @@ public:
 	void		SetAnimTexture();
 
 public:
+
+
+
+public:
 	//애니메이션을 loop로 돌리지 않고 한번만 돌릴때 
 	_bool CheckFinish() { return m_bFinishCount; }
+
+	_vec2 GetTextureSize() { 
+		if (m_vecTexture)
+			return m_vecTexture->front()->vImgSize;
+		
+		_vec2 vpos = _vec2(0.f, 0.f);
+		return vpos;
+	};
+
 
 private:
 	vector<shared_ptr<tagTextureInfo>>* m_vecTexture;

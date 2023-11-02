@@ -124,6 +124,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
 
 		m_pTextureCom->SetAnimKey(L"ShieldBreaker_Idle", 0.04f);
+		m_vOriginSize = m_pTextureCom->GetTextureSize();
 	}
 
 	// ¿µ¿õ ½ºÅÈ Ãâ·ÂÃ¢
@@ -268,6 +269,7 @@ void CShieldBreaker::LateUpdateGameObject()
 
 void CShieldBreaker::RenderGameObject()
 {
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
@@ -292,6 +294,7 @@ void CShieldBreaker::AddComponent()
 
 void CShieldBreaker::ChangeAnim()
 {
+	_float fXpos, fYpos;
 	// Animation
 	if (m_eCurAnimState != m_ePrevAnimState)
 	{
@@ -299,48 +302,51 @@ void CShieldBreaker::ChangeAnim()
 		{
 		case EAnimState::IDLE:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Idle", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::WALK:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Walk", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::COMBAT:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Combat", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Defend", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Pierce", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Puncture", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL3:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_AddersKiss", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL4:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Impale", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Affliction", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::VIRTUE:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Virtue", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Hero_Death", 0.02f);
-			m_pTransformCom->SetScale(3.f, 3.f, 1.f);
 			break;
 		}
 	}
+
+	_vec2 vcurPos = m_pTextureCom->GetTextureSize();
+
+	if (m_eCurAnimState == EAnimState::IDLE || m_eCurAnimState == EAnimState::WALK || m_eCurAnimState == EAnimState::COMBAT) {
+		fXpos = (vcurPos.x / m_vOriginSize.x);
+		fYpos = (vcurPos.y / m_vOriginSize.y);
+	}
+	else {
+		fXpos = (vcurPos.x / m_vOriginSize.x) / 1.9f;
+		fYpos = (vcurPos.y / m_vOriginSize.y) / 1.9f;
+	}
+
+	m_pTransformCom->SetScale(2.f * fXpos, 3.f * fYpos, 1.f);
+
 }

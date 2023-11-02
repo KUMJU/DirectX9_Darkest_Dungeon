@@ -32,6 +32,9 @@ protected:
 
 	virtual void	ChangeTexture();
 
+	//게임 종료시 돈을 지급받는 함수 
+	void			GetReward();
+
 private:
 	shared_ptr<CCardGame> m_pCardGame = nullptr;
 

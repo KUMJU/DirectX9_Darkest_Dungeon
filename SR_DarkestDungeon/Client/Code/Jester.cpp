@@ -128,6 +128,7 @@ HRESULT CJester::ReadyGameObject()
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
 
 		m_pTextureCom->SetAnimKey(L"Jester_Idle", 0.04f);
+		m_vOriginSize =  m_pTextureCom->GetTextureSize();
 	}
 
 	// ¿µ¿õ ½ºÅÈ Ãâ·ÂÃ¢
@@ -299,6 +300,7 @@ void CJester::AddComponent()
 
 void CJester::ChangeAnim()
 {
+	_float fXpos, fYpos;
 	// Animation
 	if (m_eCurAnimState != m_ePrevAnimState)
 	{
@@ -306,48 +308,51 @@ void CJester::ChangeAnim()
 		{
 		case EAnimState::IDLE:
 			m_pTextureCom->SetAnimKey(L"Jester_Idle", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::WALK:
 			m_pTextureCom->SetAnimKey(L"Jester_Walk", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::COMBAT:
 			m_pTextureCom->SetAnimKey(L"Jester_Combat", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Jester_Defend", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Jester_DirkStab", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Jester_Harvest", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL3:
 			m_pTextureCom->SetAnimKey(L"Jester_Finale", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL4:
 			m_pTextureCom->SetAnimKey(L"Jester_Solo", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"Jester_Affliction", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::VIRTUE:
 			m_pTextureCom->SetAnimKey(L"Jester_Virtue", 0.04f);
-			m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Hero_Death", 0.02f);
-			m_pTransformCom->SetScale(3.f, 3.f, 1.f);
 			break;
 		}
 	}
+
+	_vec2 vcurPos = m_pTextureCom->GetTextureSize();
+
+	if (m_eCurAnimState == EAnimState::IDLE || m_eCurAnimState == EAnimState::WALK || m_eCurAnimState == EAnimState::COMBAT) {
+		fXpos = (vcurPos.x / m_vOriginSize.x)* 1.4f;
+		fYpos = (vcurPos.y / m_vOriginSize.y);
+	}
+	else {
+		fXpos = (vcurPos.x / m_vOriginSize.x) / 1.6f;
+		fYpos = (vcurPos.y / m_vOriginSize.y) / 1.8f;
+	}
+
+	m_pTransformCom->SetScale(2.f * fXpos, 3.f * fYpos, 1.f);
+
 }

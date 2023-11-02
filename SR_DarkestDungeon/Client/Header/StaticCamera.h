@@ -51,7 +51,7 @@ public:
 	void SetState(ECameraMode _eCamType) { m_eCurrentState = _eCamType; }
 	ECameraMode GetState() { return m_eCurrentState; }
 	//각도 계산으로 카메라 돌리기 : 자전
-	void ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegree, _float _fTime = 1.5f);
+	void ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegree, _float _fTime = 1.f);
 	//기준점(_vCenter)을 잡고 호선(호선 크기: _fXSpeed, _fZSpeed)을 그리며 카메라 포지션(_vDst) 옮기기 : 공전
 	void ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _vec3 _vCenter, _float _fTime = 1.5f);
 	//최종 포지션을 잡고 직선을 그리며 카메라 포지션 옮기기 : 줌인, 줌아웃, 카메라 무빙
@@ -75,6 +75,9 @@ private:
 	void CameraEffectProcess();
 	void ShakingCamera();
 
+	void CameraMove();
+	void Mouse_Fix();
+
 private:
 	shared_ptr<CTransform> m_pPlrTransCom = nullptr;
 	ECameraMode m_eCurrentState = ECameraMode::IDLE;
@@ -90,6 +93,8 @@ private:
 
 	_matrix m_matOrigin;
 
+	D3DXQUATERNION m_qPrev;
+	_vec3 m_vLook;
 //Time 
 
 	//Delta Time 보관용
@@ -103,6 +108,7 @@ private:
 
 	_float m_fLerp = 0.f;
 	_float m_fDir = 1.f;
+
 
 	_bool m_bIsLookBack = false;
 private:
