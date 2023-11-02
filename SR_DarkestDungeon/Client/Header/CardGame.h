@@ -1,5 +1,7 @@
 #pragma once
-class CCardGame
+#include "GameObject.h"
+
+class CCardGame :public CGameObject
 {
 public:
 	explicit CCardGame(LPDIRECT3DDEVICE9 pGraphicDev);

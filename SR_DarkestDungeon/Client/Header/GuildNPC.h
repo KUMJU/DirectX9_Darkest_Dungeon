@@ -1,6 +1,8 @@
 #pragma once
 #include "InteractionObj.h"
 #include "PickingGame.h"
+#include "Hero.h"
+#include "UIObj.h"
 
 class CGuildNPC : public CInteractionObj
 {
@@ -34,5 +36,9 @@ protected:
 
 private:
 	shared_ptr<CPickingGame> m_pPickingGame = nullptr;
+	vector<shared_ptr<CGameObject>>* m_pHeroVec = nullptr;
+
+	vector<shared_ptr<CUIObj>> m_pUIVec;
+	vector<shared_ptr<CGameObject>> m_vecGameObject;
 };
 

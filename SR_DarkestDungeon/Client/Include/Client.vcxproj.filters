@@ -56,6 +56,7 @@
     <ClCompile Include="..\Code\StatView.cpp" />
     <ClCompile Include="..\Code\PickingGame.cpp" />
     <ClCompile Include="..\Code\BattleHeroUI.cpp" />
+    <ClCompile Include="HeroSkillUI.cpp" />
     <ClCompile Include="..\Code\GoodsUI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +120,7 @@
     <ClInclude Include="..\Header\BattleHeroUI.h" />
     <ClInclude Include="..\Header\HeroStat.h" />
     <ClInclude Include="..\Header\PickingGame.h" />
+    <ClInclude Include="..\Header\HeroSkillUI.h" />
     <ClInclude Include="..\Header\GoodsUI.h" />
   </ItemGroup>
   <ItemGroup>

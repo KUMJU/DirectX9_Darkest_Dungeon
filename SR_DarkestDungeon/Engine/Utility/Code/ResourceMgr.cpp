@@ -4,7 +4,7 @@ IMPLEMENT_SINGLETON(CResourceMgr)
 
 CResourceMgr::CResourceMgr()
 {
-	
+
 }
 
 CResourceMgr::~CResourceMgr()
@@ -21,12 +21,12 @@ HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType
 {
 	if (_eType >= TEXTUREID::TEX_END)
 		return E_FAIL;
-	
+
 	IDirect3DBaseTexture9* pTexture = nullptr;
 
 	vector<shared_ptr<tagTextureInfo>> vTempVec;
 	vTempVec.reserve(_iCnt);
-	
+
 	for (_uint i = 0; i < _iCnt; ++i)
 	{
 		shared_ptr<tagTextureInfo> pInfo = make_shared<tagTextureInfo>();
@@ -223,7 +223,7 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Captivate_Img.png", 1, bDefault);
 		CreateNewTexture(L"Expose_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Expose_Img.png", 1, bDefault);
-		
+
 		CreateNewTexture(L"Pierce_Img_BW", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Pierce_Img_BW.png", 1, bDefault);
 		CreateNewTexture(L"Puncture_Img_BW", TEX_NORMAL,
@@ -237,7 +237,7 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"Expose_Img_BW", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Expose_Img_BW.png", 1, bDefault);
 
-	// 스킬 이펙트 (본인에게)
+		// 스킬 이펙트 (본인에게)
 
 		CreateNewTexture(L"AddersKiss_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss/armatureName_adders_kiss_%d.png", 20, bDefault);
@@ -247,11 +247,11 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/break_guard/armatureName_break_guard_%d.png", 20, bDefault);
 		CreateNewTexture(L"Impale_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing/armatureName_spearing_%d.png", 16, bDefault);
-	
-	
-	
-	// 스킬 이펙트 (타겟)
-	
+
+
+
+		// 스킬 이펙트 (타겟)
+
 		CreateNewTexture(L"AddersKiss_Target_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/adders_kiss_target/armatureName_adders_kiss_target_%d.png", 20, bDefault);
 		CreateNewTexture(L"Impale_Target_Effect", TEX_NORMAL,
@@ -282,10 +282,10 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Afflicted.png", 1, bDefault);
 		CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue.png", 1, bDefault);
-	
 
-	// 스킬 이미지
-	
+
+		// 스킬 이미지
+
 		CreateNewTexture(L"WickedSlice_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/WickedSlice_Img.png", 1, bDefault);
 		CreateNewTexture(L"PistolShot_Img", TEX_NORMAL,
@@ -298,7 +298,7 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/GrapeshotBlast_Img.png", 1, bDefault);
 		CreateNewTexture(L"TrackingShot_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/TrackingShot_Img.png", 1, bDefault);
-		
+
 		CreateNewTexture(L"WickedSlice_Img_BW", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/WickedSlice_Img_BW.png", 1, bDefault);
 		CreateNewTexture(L"PistolShot_Img_BW", TEX_NORMAL,
@@ -313,14 +313,14 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Skill/TrackingShot_Img_BW.png", 1, bDefault);
 
 
-	// 스킬 이펙트 (본인에게)
-	
+		// 스킬 이펙트 (본인에게)
+
 		CreateNewTexture(L"PointBlankShot_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot/armatureName_point_blank_shot_%d.png", 19, bDefault);
-	
 
-	// 스킬 이펙트 (타겟)
-	
+
+		// 스킬 이펙트 (타겟)
+
 		CreateNewTexture(L"PistolShot_Target_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/pistol_shot_target/armatureName_pistol_shot_target_%d.png", 15, bDefault);
 		CreateNewTexture(L"PointBlankShot_Target_Effect", TEX_NORMAL,
@@ -352,8 +352,8 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue.png", 1, bDefault);
 
-	// 스킬 이미지
-	
+		// 스킬 이미지
+
 		CreateNewTexture(L"MaceBash_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/MaceBashImg.png", 1, bDefault);
 		CreateNewTexture(L"DazzlingLight_Img", TEX_NORMAL,
@@ -366,7 +366,7 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/HandOfLight_Img.png", 1, bDefault);
 		CreateNewTexture(L"Illumination_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/Illumination_Img.png", 1, bDefault);
-		
+
 		CreateNewTexture(L"MaceBash_Img_BW", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/MaceBashImg_BW.png", 1, bDefault);
 		CreateNewTexture(L"DazzlingLight_Img_BW", TEX_NORMAL,
@@ -381,8 +381,8 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Skill/Illumination_Img_BW.png", 1, bDefault);
 
 
-	// 스킬 이펙트 (본인에게)
-	
+		// 스킬 이펙트 (본인에게)
+
 		CreateNewTexture(L"DazzlingLight_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light/armatureName_dazzling_light_%d.png", 20, bDefault);
 		CreateNewTexture(L"DivineGrace_Effect", TEX_NORMAL,
@@ -391,10 +391,10 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort/armatureName_gods_comfort_%d.png", 20, bDefault);
 		//CreateNewTexture(L"Test_Effect", TEX_NORMAL,
 		//	L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_illumination/armatureName_gods_illumination_%d.png", 40);
-	
+
 
 	// 스킬 이펙트 (타겟)
-	
+
 		CreateNewTexture(L"DazzlingLight_Target_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light_target/armatureName_dazzling_light_target_%d.png", 20, bDefault);
 		CreateNewTexture(L"DivineComfort_Target_Effect", TEX_NORMAL,
@@ -549,7 +549,7 @@ void CResourceMgr::BaseTextureLoad()
 
 
 	//스탯 표시 
-	
+
 	CreateNewTexture(L"Stat_StressFull", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/stress_full.png", 1, bDefault);
 	CreateNewTexture(L"Stat_StressEmpty", TEX_NORMAL,
@@ -560,7 +560,7 @@ void CResourceMgr::BaseTextureLoad()
 		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_pip_Empty.png", 1, bDefault);
 	CreateNewTexture(L"Stat_CorpseFull", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_corpse_full.png", 1, bDefault);
-	
+
 	//전투 스테이터스
 
 	CreateNewTexture(L"Stat_Attribute_Poison", TEX_NORMAL,
@@ -663,7 +663,7 @@ void CResourceMgr::WealdDungeonTextureLoad()
 
 	// Environment
 	CreateNewTexture(L"Com_Weald_FloorTexture", TEX_NORMAL,
-		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/forest_Tiles.png", 1 , bDefault);
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/forest_Tiles.png", 1, bDefault);
 
 	CreateNewTexture(L"Com_Weald_WallTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_wall.%d.png", 9, bDefault);
@@ -701,7 +701,7 @@ void CResourceMgr::WealdDungeonTextureLoad()
 
 	CreateNewTexture(L"Weald_mummified_remains_Finish", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/Curios/Weald/mummified_remains/investigate/armatureName_investigate_0.png", 1, bDefault);
-	
+
 	CreateNewTexture(L"Weald_travellers_tent_tutorial", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/Curios/Weald/travellers_tent_tutorial/idle/armatureName_idle_0.png", 1, bDefault);
 
@@ -731,7 +731,7 @@ void CResourceMgr::WealdDungeonTextureLoad()
 
 	CreateNewTexture(L"Weald_Image_PoisonRiver", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.room_wall.poisonriver.png", 1, bDefault);
-	
+
 	// SkyBox
 	CreateNewTexture(L"Com_Weald_SkyBoxTexture", TEX_CUBE,
 		L"../Bin/Resource/Image/SkyBox/WealdSkyBox.dds", 1, bDefault);
@@ -951,5 +951,28 @@ void CResourceMgr::VillageTextureLoad()
 			L"../Bin/Resource/Image/Village/Environment/Portal.png", 1, bDefault);
 		CreateNewTexture(L"Village_Portal2_Texture", TEX_NORMAL,
 			L"../Bin/Resource/Image/Village/Environment/Portal2.png", 1, bDefault);
+	}
+
+	// UI
+	{
+		// 훈련소
+		{
+			// 기본 스킬 UI
+			CreateNewTexture(L"UI_HeroSkill_Base", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Guild/base_guild.png", 1, bDefault);
+			// 성녀 스킬 UI
+			CreateNewTexture(L"UI_HeroSkill_Vestal", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Guild/vestal_guild.png", 1, bDefault);
+			// 방패파괴자 스킬 UI
+			CreateNewTexture(L"UI_HeroSkill_Shieldbreaker", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Guild/shieldbreaker_guild.png", 1, bDefault);
+			// 광대 스킬 UI
+			CreateNewTexture(L"UI_HeroSkill_Jester", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Guild/jester_guild.png", 1, bDefault);
+			// 노상강도 스킬 UI
+			CreateNewTexture(L"UI_HeroSkill_Highwayman", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Guild/highwayman_guild.png", 1, bDefault);
+
+		}
 	}
 }

@@ -1,5 +1,7 @@
 #pragma once
-class CPickingGame
+#include "GameObject.h"
+
+class CPickingGame : public CGameObject
 {
 public:
 	explicit CPickingGame(LPDIRECT3DDEVICE9 pGraphicDev);

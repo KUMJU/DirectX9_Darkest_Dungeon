@@ -86,7 +86,7 @@ HRESULT CGuild::ReadyGameObject()
 		{
 			shared_ptr<CGameObject> m_pNPC = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Guild_NPC_Texture", true, false, 1, false);
 			m_pNPC->SetScale({ 5.f, 5.f, 1.f });
-			m_pNPC->SetPos({ m_vPos.x + 2 * VILLAGE_TILESIZE / 2.f + 6.f, m_vPos.y + m_pNPC->GetScale().y + 3.f, m_vPos.z + VILLAGE_TILESIZE * 2.f + 6.f });
+			m_pNPC->SetPos({ m_vPos.x + 2 * VILLAGE_TILESIZE / 2.f - 3.f, m_vPos.y + m_pNPC->GetScale().y + 3.f, m_vPos.z + VILLAGE_TILESIZE * 2.f + 6.f });
 
 			m_vecGameObject.push_back(m_pNPC);
 		}
@@ -96,7 +96,7 @@ HRESULT CGuild::ReadyGameObject()
 			shared_ptr<CGameObject> m_pTable = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Tavern_Bar_Table_Texture", true, false, 1, false);
 
 			m_pTable->SetScale({ 10.f, 7.f, 1.f });
-			m_pTable->SetPos({ m_vPos.x + 2 * VILLAGE_TILESIZE / 2.f + 6.f, m_vPos.y + m_pTable->GetScale().y / 2.f + m_pTable->GetScale().y / 3.f, m_vPos.z + VILLAGE_TILESIZE * 2.f + 5.f });
+			m_pTable->SetPos({ m_vPos.x + 2 * VILLAGE_TILESIZE / 2.f - 3.f, m_vPos.y + m_pTable->GetScale().y / 2.f + m_pTable->GetScale().y / 3.f, m_vPos.z + VILLAGE_TILESIZE * 2.f + 5.f });
 
 			m_vecGameObject.push_back(m_pTable);
 		}
@@ -105,7 +105,7 @@ HRESULT CGuild::ReadyGameObject()
 		{
 			shared_ptr<CGameObject> m_pSandBack = make_shared<CGuildNPC>(m_pGraphicDev);
 			m_pSandBack->SetScale({ 8.f, 7.f, 1.f });
-			m_pSandBack->SetPos({ m_vPos.x + 2 * VILLAGE_TILESIZE / 2.f + 5.f, m_vPos.y + m_pSandBack->GetScale().y / 2.f + m_pSandBack->GetScale().y / 3.f, m_vPos.z + VILLAGE_TILESIZE + 5.f });
+			m_pSandBack->SetPos({ m_vPos.x + 2 * VILLAGE_TILESIZE / 2.f + 5.f, m_vPos.y + m_pSandBack->GetScale().y / 2.f + m_pSandBack->GetScale().y / 3.f, m_vPos.z + VILLAGE_TILESIZE + 3.f });
 
 			m_vecGameObject.push_back(m_pSandBack);
 		}
@@ -123,8 +123,8 @@ HRESULT CGuild::ReadyGameObject()
 		// º® Àå½Ä
 		{
 			shared_ptr<CGameObject> m_pWallDeco = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Guild_WallSword_Texture", false, false, 1, false);
-			m_pWallDeco->SetScale({ 3.f, 3.f, 1.f });
-			m_pWallDeco->SetPos({ m_vPos.x + VILLAGE_TILESIZE - 4.f, m_vPos.y + m_pWallDeco->GetScale().y + 7.f, m_vPos.z + VILLAGE_TILESIZE * 3.f - 1.1f });
+			m_pWallDeco->SetScale({ 3.5f, 3.3f, 1.f });
+			m_pWallDeco->SetPos({ m_vPos.x + VILLAGE_TILESIZE * 2.f + 4.5f, m_vPos.y + m_pWallDeco->GetScale().y + 5.f, m_vPos.z + VILLAGE_TILESIZE * 3.f - 1.1f });
 			m_pWallDeco->SetAngle({ 0.f, 0.f, 0.f });
 
 			m_vecGameObject.push_back(m_pWallDeco);
