@@ -20,6 +20,7 @@
 #include "Item.h"
 #include "Inventory.h"
 #include "UIMgr.h"
+#include"GoodsUI.h"
 
 #include "Vestal.h"
 #include "Jester.h"
@@ -304,6 +305,12 @@ HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
 
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
+
+	shared_ptr<CGameObject> pGoods = make_shared<CGoodsUI>(m_pGraphicDev);
+	CUIMgr::GetInstance()->AddUIObject(L"Obj_GoodsUI", dynamic_pointer_cast<CUIObj>(pGoods));
+
+	m_pLayer->CreateGameObject(L"Obj_GoodsUI", pGoods);
+
 
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

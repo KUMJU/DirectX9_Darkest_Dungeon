@@ -29,7 +29,7 @@ public:
 public:
 	//true일 경우 필드 위에 배치된 아이템이고, false일 시 인벤토리에 들어간 아이템
 	void SetOnField(_bool _bValue) { 
-		m_bOnField = _bValue; 
+ 		m_bOnField = _bValue; 
 	}
 	_bool GetOnFieldState() { return m_bOnField; }
 
@@ -40,7 +40,7 @@ public:
 	_bool	GetOnStore() { return m_bOnStore; }
 
 	//몬스터가 죽고 아이템이 드랍될 때 포지션, 텍스쳐 값을 지정해줄 수 있음(필수로 해줄 것)
-	void SetDropItemInfo(_vec3 _vPos, const tstring& _strName);
+	void SetDropItemInfo(_vec3 _vPos, const tstring& _strName , _int _iAmount = 1);
 	void SetScale(_vec3 _vScale);
 
 	void SetAmount(_int _iAmount) { m_iAmount = _iAmount; }
@@ -75,7 +75,7 @@ private:
 	_vec3	m_vPosition;
 	EHandItem m_eItemState = EHandItem::ENUM_END;
 
-	_int m_iAmount = 1;
+	_int m_iAmount= 1;
 
 	_float m_fTime = 0.f;
 	_float m_CurrentDir = 1.f;

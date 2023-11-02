@@ -119,7 +119,9 @@ void CPlayerHand::SetCurrentItem(EHandItem _handItem)
 		m_bEnable = true;
 		break;
 	case EHandItem::KEYS:
-		m_pTextureCom->SetTextureKey(L"Player_Item_Shovel", TEX_NORMAL);
+		m_pTextureCom->SetTextureKey(L"Item_Key", TEX_NORMAL);
+		m_pItemTransmCom->SetScale(1.5f, 1.5f, 1.f);
+		m_pItemTransmCom->SetAngle({ 0.f ,0.f, D3DXToRadian(-10.f) });
 		m_bEnable = true;
 		break;
 	case EHandItem::BANDAGE:

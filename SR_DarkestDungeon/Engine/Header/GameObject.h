@@ -39,6 +39,7 @@ public:
 
 	//Get Collider Position(Picking)
 	void GetMinMaxPos(_vec3& vMin, _vec3& vMax);
+	void GetSphere(_vec3& _vCenter, _float& _fRadius);
 
 	void SetColliding(_bool _bColliding) { m_bColliding = _bColliding; }
 	_bool IsColliding() { return m_bColliding; }

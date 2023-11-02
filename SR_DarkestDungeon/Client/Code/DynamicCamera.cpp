@@ -14,14 +14,14 @@ CDynamicCamera::~CDynamicCamera()
 
 HRESULT CDynamicCamera::ReadyGameObject()
 {
-	m_vEye = _vec3(0.f, 10.f, -10.f);
+	m_vEye = _vec3(3.f, 0.f, -5.f);
 	m_vAt = _vec3(0.f, 0.f, 1.f);
 	m_vUp = _vec3(0.f, 1.f, 0.f);
 
-	m_fFov = D3DXToRadian(60.f);
-	m_fAspect = (_float)WINCX / WINCY;
-	m_fNear = 0.1f;
-	m_fFar = 1000.f;
+	//m_fFov = D3DXToRadian(60.f);
+	//m_fAspect = (_float)WINCX / WINCY;
+	//m_fNear = 0.1f;
+	//m_fFar = 1000.f;
 
 	CCamera::ReadyGameObject();
 

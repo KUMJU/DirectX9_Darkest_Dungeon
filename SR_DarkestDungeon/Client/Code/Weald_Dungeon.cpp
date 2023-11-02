@@ -623,7 +623,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 	
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
@@ -824,17 +824,17 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pItem = make_shared<CItem>(m_pGraphicDev);
 	m_pItem->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem", m_pItem);
-	dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 4.f, 1.f, 6.f }, L"Player_Item_Antivenom");
+	dynamic_pointer_cast<CItem>(m_pItem)->SetDropItemInfo({ 56.f, 1.f, 14.f }, L"Item_Gold2", 500);
 
 	shared_ptr<CGameObject> m_pItem2 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem2", m_pItem2);
-	dynamic_pointer_cast<CItem>(m_pItem2)->SetDropItemInfo({ 7.f, 1.f, 6.f }, L"Player_Item_Antivenom");
+	dynamic_pointer_cast<CItem>(m_pItem2)->SetDropItemInfo({ 60.f, 1.f, 14.f }, L"Item_Heirlooms");
 
 	shared_ptr<CGameObject> m_pItem3 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem3", m_pItem3);
-	dynamic_pointer_cast<CItem>(m_pItem3)->SetDropItemInfo({ 10.f, 1.f, 6.f }, L"Player_Item_Shovel");
+	dynamic_pointer_cast<CItem>(m_pItem3)->SetDropItemInfo({ 64.f, 1.f, 14.f }, L"Item_Key");
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

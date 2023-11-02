@@ -61,9 +61,14 @@ public:
 	//장착 아이템 Setting
 	void			SetCurrentItem(EHandItem _eItem);
 
+	//재화
+	void SetGold(_int _iNum, _bool _bIsEarn);
+	void SetHeirloom(_int _iNum, _bool _bIsEarn);
+
 private:
 	void			AddComponent();
 	void			KeyInput(const _float& fTimeDelta);
+	void			MouseInput();
 	void			ClimbingTerrain();
 
 	void			ShakingHand();

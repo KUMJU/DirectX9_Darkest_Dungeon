@@ -8,6 +8,7 @@
 #include"CameraMgr.h"
 #include "PickingMgr.h"
 #include "Hero.h"
+#include"GoodsUI.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -47,6 +48,7 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 
 void CPlayer::LateUpdateGameObject()
 {
+	MouseInput();
 	m_bPrevMouse = m_bCurMouse;
 
 	CGameObject::LateUpdateGameObject();
@@ -68,6 +70,37 @@ void CPlayer::SetCurrentItem(EHandItem _eItem)
 	if (m_pPlayerHand) {
 		m_pPlayerHand->SetCurrentItem(_eItem);
 		m_eCurrentItem = _eItem;
+	}
+}
+
+void CPlayer::SetGold(_int _iNum, _bool _bIsEarn)
+{
+	if (!_bIsEarn) {
+		_iNum *= -1;
+	}
+
+	m_iGold += _iNum;
+
+	shared_ptr<CUIObj> pGoodsUI = CUIMgr::GetInstance()->FindUI(L"Obj_GoodsUI");
+	//재화 UI 세팅
+	if (nullptr != pGoodsUI) {
+		dynamic_pointer_cast<CGoodsUI>(pGoodsUI)->SetGoldNum(m_iGold);
+	}
+
+}
+
+void CPlayer::SetHeirloom(_int _iNum, _bool _bIsEarn)
+{
+	if (!_bIsEarn) {
+		_iNum *= -1;
+	}
+
+	m_iHeirlooms += _iNum;
+
+	shared_ptr<CUIObj> pGoodsUI = CUIMgr::GetInstance()->FindUI(L"Obj_GoodsUI");
+	//재화 UI 세팅
+	if (nullptr != pGoodsUI) {
+		dynamic_pointer_cast<CGoodsUI>(pGoodsUI)->SetHeirloomNum(m_iHeirlooms);
 	}
 }
 
@@ -95,28 +128,6 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 	_vec3		vDir;
 
-	//마우스 픽킹
-	if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
-
-		m_bCurMouse = true;
-
-		if (m_bCurMouse == m_bPrevMouse)
-			return;
-
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
-
-		if (!result) {
-			CPickingMgr::GetInstance()->RayPicking(ptMouse.x, ptMouse.y);
-		}
-	}
-
-	else
-		m_bCurMouse = false;
-
 	if (GetAsyncKeyState('P') & 0x8000) {
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
 	}
@@ -124,7 +135,7 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	if (GetAsyncKeyState('O') & 0x8000) {
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, -180.f);
 	}
-
+	
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 		if (m_bMoveLock[1])
 			return;
@@ -172,6 +183,31 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 }
 
+void CPlayer::MouseInput()
+{
+	//마우스 픽킹
+	if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
+
+		m_bCurMouse = true;
+
+		if (m_bCurMouse == m_bPrevMouse)
+			return;
+
+		POINT	ptMouse{};
+		GetCursorPos(&ptMouse);
+		ScreenToClient(g_hWnd, &ptMouse);
+
+		_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
+
+		if (!result) {
+			CPickingMgr::GetInstance()->RayPicking(ptMouse.x, ptMouse.y);
+		}
+	}
+
+	else
+		m_bCurMouse = false;
+}
+
 void CPlayer::ClimbingTerrain()
 {
 }
@@ -194,7 +230,8 @@ void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 	if (ECollideID::ITEM == _pObj->GetColType())
 	{
 		shared_ptr<CItem> pNewItem = make_shared<CItem>(m_pGraphicDev);
-		pNewItem->GetUITextureKeyName(dynamic_pointer_cast<CItem>(_pObj)->GetItemKeyName());
+ 		pNewItem->GetUITextureKeyName(dynamic_pointer_cast<CItem>(_pObj)->GetItemKeyName());
+		pNewItem->SetAmount(dynamic_pointer_cast<CItem>(_pObj)->GetAmount());
 		pNewItem->SetOnField(false);
 		InsertItem(pNewItem);
 

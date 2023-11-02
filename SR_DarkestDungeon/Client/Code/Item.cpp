@@ -22,7 +22,6 @@ HRESULT CItem::ReadyGameObject()
 		m_pTransCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 	}
 
-	CPickingMgr::GetInstance()->AddList(shared_from_this());
 	return S_OK;
 }
 
@@ -35,6 +34,7 @@ _int CItem::UpdateGameObject(const _float& fTimeDelta)
 
 	if (m_bOnField) {
 		AddRenderGroup(RENDERID::RENDER_ALPHA, shared_from_this());
+		CPickingMgr::GetInstance()->AddList(shared_from_this());
 	}
 
 	_int iExit(0);
@@ -71,10 +71,11 @@ void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
 
 }
 
-void CItem::SetDropItemInfo(_vec3 _vPos, const tstring& _strName)
+void CItem::SetDropItemInfo(_vec3 _vPos, const tstring& _strName, _int _iAmount)
 {
 	m_vPos = _vPos;
 	m_strItemKey = _strName;
+	m_iAmount = _iAmount;
 }
 
 void CItem::SetScale(_vec3 _vScale)
@@ -116,7 +117,20 @@ void CItem::GetUITextureKeyName(const tstring& _strOriginName)
 		m_eItemState = EHandItem::KEYS;
 	}
 
-	m_strItemKey = strKey;
+	else if (L"Item_Heirlooms" == _strOriginName) {
+		strKey = L"Item_UI_Heirloom";
+		m_eItemState = EHandItem::HEIRLOOM;
+	}
+	else if (L"Item_Gold1" == _strOriginName) {
+		strKey = L"Item_UI_Gold0";
+		m_eItemState = EHandItem::GOLD;
+	}
+	else if (L"Item_Gold2" == _strOriginName) {
+		strKey = L"Item_UI_Gold0";
+		m_eItemState = EHandItem::GOLD;
+	}
+
+ 	m_strItemKey = strKey;
 }
 
 void CItem::PickingObj()
@@ -131,47 +145,6 @@ void CItem::PickingObj()
 		m_bActive = false;
 	}
 }
-
-//
-//void CItem::KeyInput()
-//{
-//	if (GetAsyncKeyState('O') & 0x8000) {
-//		_vec3 vPos;
-//		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
-//		vPos.z -= 2.f;
-//		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, vPos);
-//	}
-//
-//	if (GetAsyncKeyState('P') & 0x8000) {
-//		_vec3 vPos;
-//		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
-//		vPos.z -= 10.f;
-//		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, vPos);
-//	}
-//
-//	if (GetAsyncKeyState('L') & 0x8000) {
-//		CCameraMgr::GetInstance()->SetFPSMode();
-//	}
-//
-//	if (GetAsyncKeyState('K') & 0x8000) {
-//		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
-//	}
-//
-//	if (GetAsyncKeyState('I') & 0x8000) {
-//		_vec3 vPos, vDst;
-//		m_pTransCom->GetInfo(INFO::INFO_POS, &vPos);
-//		vDst = vPos;
-//
-//		vDst.x += 20.f;
-//
-//		CCameraMgr::GetInstance()->CameraOrbit(ECameraMode::ORBIT, vDst, vPos);
-//	}
-//
-//	if (GetAsyncKeyState('U') & 0x8000) {
-//		CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.1f);
-//	}
-//
-//}
 
 void CItem::AddComponent()
 {
