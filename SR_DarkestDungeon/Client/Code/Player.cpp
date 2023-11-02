@@ -218,7 +218,7 @@ void CPlayer::MouseInput()
 		GetCursorPos(&ptMouse);
 		ScreenToClient(g_hWnd, &ptMouse);
 
-		_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
+ 		_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
 
 		if (!result) {
 			CPickingMgr::GetInstance()->RayPicking(ptMouse.x, ptMouse.y);

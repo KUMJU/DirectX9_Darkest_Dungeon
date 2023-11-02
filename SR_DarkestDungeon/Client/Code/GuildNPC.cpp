@@ -54,8 +54,7 @@ _int CGuildNPC::UpdateGameObject(const _float& fTimeDelta)
 		{
 			pHeroSkillUI = make_shared<CHeroSkillUI>(m_pGraphicDev, dynamic_pointer_cast<CHero>(iter), iIdx);
 			pHeroSkillUI->SetVisible(false);
-
-			CUIMgr::GetInstance()->AddUIObject(L"UI_HeroSkill", pHeroSkillUI);
+			CUIMgr::GetInstance()->AddUIObject(L"UI_HeroSkill" + to_wstring(iIdx), pHeroSkillUI);
 
 			m_pUIVec.push_back(pHeroSkillUI);
 			m_vecGameObject.push_back(pHeroSkillUI);

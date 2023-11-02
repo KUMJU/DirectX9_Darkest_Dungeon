@@ -18,13 +18,13 @@ HRESULT CHeroSkillUI::ReadyGameObject()
 {
     m_vSize = { 250.f, 60.f , 0.f };
     m_vAngle = { 0.f, 0.f, 0.f };
-    m_vPos = { WINCX / 2.f - m_vSize.x, 200.f, 0.f };
+    m_vPos = { WINCX / 2.f - m_vSize.x, 200.f -m_iIdx * 130.f, 0.f };
 
     m_bEnable = true;
     m_bActive = true;
 
     m_pTransCom->SetScale(m_vSize.x, m_vSize.y, m_vSize.z);
-    m_pTransCom->SetPosition(m_vPos.x, m_vPos.y - m_iIdx * 130.f, m_vPos.z);
+    m_pTransCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
     m_pTransCom->SetAngle(m_vAngle);
 
     CUIObj::ReadyGameObject();
@@ -77,7 +77,7 @@ void CHeroSkillUI::RenderGameObject()
     _int _iHp = m_pHero->GetHp();
     _int _iMaxHp = m_pHero->GetMaxHp();
 
-    _vec2 vPos = { m_vPos.x + WINCX * 0.5f - 205.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f + m_iIdx * 130.f };
+    _vec2 vPos = { m_vPos.x + WINCX * 0.5f - 205.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f };
 
     if (_iHp < 10) {
         _stprintf_s(buf, TEXT("    %d"), _iHp);
@@ -89,11 +89,11 @@ void CHeroSkillUI::RenderGameObject()
 
     Engine::Render_Font(L"Font_Default_Small", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-    vPos = { m_vPos.x + WINCX * 0.5f - 185.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f + m_iIdx * 130.f };
+    vPos = { m_vPos.x + WINCX * 0.5f - 185.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f };
     _stprintf_s(buf, TEXT(" /"));
     Engine::Render_Font(L"Font_Default_Small", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-    vPos = { m_vPos.x + WINCX * 0.5f - 175.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f + m_iIdx * 130.f };
+    vPos = { m_vPos.x + WINCX * 0.5f - 175.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f };
     _stprintf_s(buf, TEXT("%d"), _iMaxHp);
     Engine::Render_Font(L"Font_Default_Small", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
@@ -135,7 +135,6 @@ void CHeroSkillUI::RenderGameObject()
 
 void CHeroSkillUI::PickingUI(LONG _fX, LONG _fY)
 {
-
     //YÃà°Ë»ç
     if (_fY > (m_vPos.y * -1.f) + WINCY * 0.5f - 5.f || _fY < (m_vPos.y * -1.f) + WINCY * 0.5f - 60.f)
         return;
@@ -263,7 +262,7 @@ void CHeroSkillUI::AddComponent()
 void CHeroSkillUI::SetIconPos()
 {
     for (int i = 0; i < 6; ++i) {
-        m_arrSkillTransform[i]->SetPosition(m_vPos.x - 115.f + 65.f * i, m_vPos.y - 19.f - m_iIdx * 130.f, m_vPos.z);
+        m_arrSkillTransform[i]->SetPosition(m_vPos.x - 115.f + 65.f * i, m_vPos.y - 19.f, m_vPos.z);
     }
 
 }
