@@ -68,6 +68,12 @@ void CGameObject::GetMinMaxPos(_vec3& vMin , _vec3& vMax )
 
 }
 
+void CGameObject::GetSphere(_vec3& _vCenter, _float& _fRadius)
+{
+	if (m_pColliderCom != nullptr)
+		m_pColliderCom->GetSphere(_vCenter, _fRadius);
+}
+
 void CGameObject::SetBillBoard(_matrix& _matWorld)
 {
 	_matrix matBill, matView;

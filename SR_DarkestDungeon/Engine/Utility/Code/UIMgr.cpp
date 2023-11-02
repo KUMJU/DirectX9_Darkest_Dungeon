@@ -12,9 +12,9 @@ CUIMgr::~CUIMgr()
 }
 
 void CUIMgr::AddUIObject(tstring _strKeyName, shared_ptr<CUIObj> _pObj)
-{ 
+{
 
-	if(m_UIList.end() == m_UIList.find(_strKeyName))
+	if (m_UIList.end() == m_UIList.find(_strKeyName))
 		m_UIList.insert({ _strKeyName ,_pObj });
 
 }
@@ -48,6 +48,17 @@ void CUIMgr::SelectUIVisibleOff(tstring _strKeyName)
 
 	if (iter != m_UIList.end())
 		(*iter).second->SetVisible(false);
+
+}
+
+shared_ptr<CUIObj> CUIMgr::FindUI(tstring _strKeyName)
+{
+	auto iter = m_UIList.find(_strKeyName);
+	if (m_UIList.end() != iter){
+		return iter->second;
+	}
+
+	return nullptr;
 
 }
 

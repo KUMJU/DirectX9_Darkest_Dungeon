@@ -35,6 +35,12 @@ void CCollider::GetMinMax(_vec3& vMin, _vec3& vMax)
     vMax = { m_vPos->x + m_vScale.x / 2.f  ,m_vPos->y + m_vScale.y / 2.f ,m_vPos->z + m_vScale.z / 2.f };
 }
 
+void CCollider::GetSphere(_vec3& _vCenter, _float& _fRadius)
+{
+    _vCenter = *m_vPos;
+    _fRadius = m_vScale.x / 2.f;
+}
+
 void CCollider::RenderCollider(void)
 {
     if (CCollisionMgr::GetInstance()->GetVisible())

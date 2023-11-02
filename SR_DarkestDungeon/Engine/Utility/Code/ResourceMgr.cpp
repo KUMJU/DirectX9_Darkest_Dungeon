@@ -164,6 +164,9 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Item_Shovel", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/item_food.png", 1, bDefault);
 
+	CreateNewTexture(L"Item_Heirlooms", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/item_Heirlooms.png", 1, bDefault);
+	 
 	// Gold
 	CreateNewTexture(L"Item_Gold1", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/inv_gold+_0.png", 1, bDefault);
@@ -600,12 +603,36 @@ void CResourceMgr::UITextureLoad()
 		L"../Bin/Resource/Image/UI/Dungeon/panel_inventory.png", 1, bDefault);
 
 	//InventoryUI
-	CreateNewTexture(L"Item_UI_Antivenom", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1, bDefault);
-	CreateNewTexture(L"Item_UI_Shovel", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+shovel.png", 1, bDefault);
+	CreateNewTexture(L"Item_UI_Antivenom", TEX_NORMAL, 
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1, bDefault); // ÇØµ¶Á¦
+	CreateNewTexture(L"Item_UI_Shovel", TEX_NORMAL, 
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+shovel.png", 1, bDefault); //»ð
+	CreateNewTexture(L"Item_UI_Bandage", TEX_NORMAL, 
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+bandage.png", 1, bDefault); //ºØ´ë
+
+	CreateNewTexture(L"Item_UI_Heirloom", TEX_NORMAL, 
+		L"../Bin/Resource/Image/UI/Item/heirloom/inv_heirloom+crest.png", 1, bDefault); //°¡º¸
+
+	//ÀçÈ­ ----------------------------------------------------------------------
+	CreateNewTexture(L"Item_UI_Gold0", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/gold/inv_gold+_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Item_UI_Gold1", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/gold/inv_gold+_1.png", 1, bDefault);
+
+	CreateNewTexture(L"Item_UI_Gold2", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/gold/inv_gold+_2.png", 1, bDefault);
+
+	CreateNewTexture(L"Item_UI_Gold3", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/gold/inv_gold+_3.png", 1, bDefault);
+	//------------------------------------------------------------------------------
+
 	CreateNewTexture(L"Item_UI_Bandage", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+bandage.png", 1, bDefault);
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+door_key.png", 1, bDefault); // ¿­¼è
+
+	CreateNewTexture(L"Item_UI_Torch", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+torch.png", 1, bDefault); // È¶ºÒ
+	
 
 	//BattleUI
 	CreateNewTexture(L"UI_Battle_HeroPanel", TEX_NORMAL,
@@ -623,6 +650,10 @@ void CResourceMgr::UITextureLoad()
 		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+torch.png", 1, bDefault);
 	CreateNewTexture(L"Item_UI_Food", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Item/supply/inv_provision+_1.png", 1, bDefault);
+
+	//ÀçÈ­ INFO
+	CreateNewTexture(L"UI_Goods", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Village/UI_Goods.png", 1, bDefault);
 
 }
 

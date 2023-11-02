@@ -31,10 +31,10 @@ public:
 
 	void SetVisible(_bool _bVisible) { m_bVisible = _bVisible; }
 	_bool GetVisible() { return m_bVisible; }
+	
 	void GetMinMax(_vec3& vMin, _vec3& vMax);
+	void GetSphere(_vec3& _vCenter, _float& _fRadius);
 
-
-	_bool CalcRayIntersect(_vec3 _vRayDir, _vec3 _vRayPos);
 public:
 	virtual	void	RenderCollider(void);
 

@@ -76,7 +76,7 @@ void CInventory::RenderGameObject()
             TCHAR buf[64];
             _stprintf_s(buf, TEXT("%d"), iter->iCapacity);
 
-            _vec2 vPos = { (WINCX * 0.5f) - 182.f + (iCount * 40.f) , 690.f };
+            _vec2 vPos = { (WINCX * 0.5f) - 188.f + (iCount * 40.f) , 690.f };
 
             Engine::Render_Font(L"Font_Default_Small", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
@@ -108,7 +108,7 @@ void CInventory::InsertItem(shared_ptr<CItem> _pItem)
 
         shared_ptr<tagInvenInfo> m_pInvenInfo = make_shared<tagInvenInfo>();
         m_pInvenInfo->pItem = _pItem;
-        ++m_pInvenInfo->iCapacity;
+        m_pInvenInfo->iCapacity = _pItem->GetAmount();
 
         if (m_itemList.size() <= 10) {
             m_itemList.push_back(m_pInvenInfo);

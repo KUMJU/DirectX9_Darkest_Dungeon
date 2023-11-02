@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "CollisionMgr.h"
+#include"PickingMgr.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 _pGraphicDev) : m_pGraphicDev(_pGraphicDev)
 {
@@ -36,6 +37,7 @@ void CScene::LateUpdateScene()
 	for (auto& iter : m_mapLayer)
 		iter.second->LateUpdateLayer();
 
+	CPickingMgr::GetInstance()->RemoveList();
 
 }
 
