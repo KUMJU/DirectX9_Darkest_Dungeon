@@ -769,6 +769,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 
 	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
 
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
+
 	// GameObjects
 	// วิมค
 	shared_ptr<CGameObject>m_pTrap1 = make_shared<CWeald_Trap>(m_pGraphicDev);

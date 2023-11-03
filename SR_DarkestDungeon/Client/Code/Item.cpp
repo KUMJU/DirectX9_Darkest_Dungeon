@@ -34,8 +34,11 @@ _int CItem::UpdateGameObject(const _float& fTimeDelta)
 
 	if (m_bOnField) {
 		AddRenderGroup(RENDERID::RENDER_ALPHA, shared_from_this());
-		CPickingMgr::GetInstance()->AddList(shared_from_this());
 	}
+
+	if(m_bOnStore)
+		CPickingMgr::GetInstance()->AddList(shared_from_this());
+
 
 	_int iExit(0);
 
@@ -91,30 +94,36 @@ void CItem::GetUITextureKeyName(const tstring& _strOriginName)
 	if (L"Player_Item_Antivenom" == _strOriginName) {
 		strKey = L"Item_UI_Antivenom";
 		m_eItemState = EHandItem::ANTI_VENOM;
+		m_iMoney = 150;
 	}
 	else if (L"Player_Item_Shovel" == _strOriginName || L"Item_Shovel" == _strOriginName) {
 		strKey = L"Item_UI_Shovel";
 		m_eItemState = EHandItem::SHOVEL;
+		m_iMoney = 250;
 
 	}
 	else if (L"Player_Item_Bandage" == _strOriginName) {
 		strKey = L"Item_UI_Bandage";
 		m_eItemState = EHandItem::BANDAGE;
+		m_iMoney = 150;
 	}
 
 	else if (L"Item_Food" == _strOriginName) {
 		strKey = L"Item_UI_Food";
-		m_eItemState = EHandItem::BANDAGE;
+		m_eItemState = EHandItem::FOOD;
+		m_iMoney = 75;
 	}
 
 	else if (L"Item_Torch" == _strOriginName) {
 		strKey = L"Item_UI_Torch";
-		m_eItemState = EHandItem::BANDAGE;
+		m_eItemState = EHandItem::TORCH;
+		m_iMoney = 75;
 	}
 
 	else if (L"Item_Key" == _strOriginName) {
 		strKey = L"Item_UI_Key";
 		m_eItemState = EHandItem::KEYS;
+		m_iMoney = 200;
 	}
 
 	else if (L"Item_Heirlooms" == _strOriginName) {

@@ -66,6 +66,8 @@ enum class EHandItem {
 	BANDAGE,		// ºØ´ë
 	GOLD,			// °ñµå
 	HEIRLOOM,		// °¡º¸
+	FOOD,			// À½½Ä
+	TORCH,			// È¶ºÒ
 	ENUM_END	
 };
 

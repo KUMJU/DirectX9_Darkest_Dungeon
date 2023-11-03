@@ -110,6 +110,9 @@ _int CHeroStat::UpdateGameObject(const _float& fTimeDelta)
 
 		else if (GetAsyncKeyState('C') & 0x8000)
 		{
+			if (!m_bForHire)
+				return iExit;
+
 			CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 
 			// 영웅 추가 코드
@@ -149,6 +152,7 @@ void CHeroStat::RenderGameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
+		m_pTextureCom[0]->SetTextureKey(m_strBackKey, TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[0]->SetTexture(0);
 		m_pRCTexCom[0]->RenderBuffer();
 
@@ -235,6 +239,8 @@ void CHeroStat::PickingUI(LONG _fX, LONG _fY)
 void CHeroStat::SetForHire(_bool _bForHire)
 {
 	m_bForHire = _bForHire;
+
+	if (!m_bForHire) return;
 
 	switch (m_pHero.lock()->GetHeroType())
 	{
