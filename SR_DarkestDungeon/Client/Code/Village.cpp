@@ -226,7 +226,7 @@ HRESULT CVillage::Ready_Layer_Camera(tstring pLayerTag)
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;
-}
+} 
 
 HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 {
@@ -236,7 +236,7 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	//플레이어
 	shared_ptr<CGameObject> m_pPlayer;
 
-	//if (m_pPlayer = CGameMgr::GetInstance()->GetPlayer())
+	//if (m_pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer()))
 	//{
 	//	// 던전에서 시작해서 넘어온 경우
 	//	m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
@@ -252,11 +252,11 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 		m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
 
 
-		// 테스트 (돈, 가보 초기 세팅)
-		{
-			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitGold(2000);
-			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
-		}
+		//// 테스트 (돈, 가보 초기 세팅)
+		//{
+		//	dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitGold(2000);
+		//	dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
+		//}
 	//}
 
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
@@ -266,6 +266,10 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(false);
+
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+	}
 
 	// 영웅 테스트
 	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);

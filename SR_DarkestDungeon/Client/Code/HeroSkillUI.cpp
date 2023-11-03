@@ -77,7 +77,7 @@ void CHeroSkillUI::RenderGameObject()
     _int _iHp = m_pHero->GetHp();
     _int _iMaxHp = m_pHero->GetMaxHp();
 
-    _vec2 vPos = { m_vPos.x + WINCX * 0.5f - 205.f, (m_vPos.y) + WINCY * 0.5f + 31.f };
+    _vec2 vPos = { m_vPos.x + WINCX * 0.5f - 205.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f };
 
     if (_iHp < 10) {
         _stprintf_s(buf, TEXT("    %d"), _iHp);

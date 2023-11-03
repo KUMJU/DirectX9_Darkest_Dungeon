@@ -65,6 +65,9 @@ public:
 	void InitGold(_int _iNum) { m_iGold = _iNum; }
 	void InitHeirloom(_int _iNum) { m_iHeirlooms = _iNum; }
 
+	_int GetGold() { return m_iGold; }
+	_int GetHeirloom() { return m_iHeirlooms; }
+
 	void SetInDungeon(_bool _bInDungeon) { m_bInDungeon = _bInDungeon; }
 	_bool IsInDungeon() { return m_bInDungeon; }
 

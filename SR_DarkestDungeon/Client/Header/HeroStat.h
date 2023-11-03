@@ -28,6 +28,7 @@ public:
 public:
 	void	SetHero(shared_ptr<CHero> _pHero) { m_pHero = _pHero; }
 	void	SetForHire(_bool _bForHire);
+	void	SetForSelect(_bool _bForSelect);
 
 protected:
 	void	AddComponent();
@@ -57,5 +58,7 @@ private:
 	_int	m_iTargetPos[4] = { 0 };
 
 	_bool	m_bForHire = false;
+	_bool	m_bForSelect = false;
+	_bool	m_bSelectedAlready = false;
 };
 

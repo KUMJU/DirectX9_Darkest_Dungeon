@@ -106,6 +106,9 @@ public:
 	void		SetHired(_bool _bHired) { m_bHired = _bHired; }
 	_bool		IsHired() { return m_bHired; }
 
+	void		SetForSelect(_bool _bForSelect) { m_bForSelect = _bForSelect; }
+	_bool		IsForSelect() { return m_bForSelect; }
+
 protected:
 
 	_int				m_iStress = 0;		// 스트레스
@@ -143,6 +146,7 @@ protected:
 	// 스탯 Info ON/Off
 	_bool		m_bShowStatUI = false;
 	_bool		m_bHired = false;
+	_bool		m_bForSelect = false;
 
 	//shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
 

@@ -27,8 +27,8 @@ HRESULT CPlayer::ReadyGameObject()
 	m_eCollideID = ECollideID::PLAYER;
 	m_bColliding = true;
 
-	SetGold(2000, true);
-	SetHeirloom(3, true);
+	SetGold(1000, true);
+	SetHeirloom(1, true);
 
 	return S_OK;
 }
@@ -136,6 +136,8 @@ void CPlayer::AddComponent()
 	shared_ptr<CComponent> pComponent;
 
 	_vec3 vPosTemp = { 0.f,0.f,0.f };
+
+	if (m_pTransformCom) return;
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();
 	m_pTransformCom->ReadyTransform();
