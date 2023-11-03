@@ -167,6 +167,10 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, -180.f);
 		m_bSeeBack = false;
 	}
+
+	if (GetAsyncKeyState('E') & 0x8000) {
+		SetCurrentItem(EHandItem::ENUM_END);
+	}
 	
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 		if (m_bMoveLock[1])
@@ -254,6 +258,11 @@ void CPlayer::ShakingHand()
 void CPlayer::InsertItem(shared_ptr<CItem> _pItem)
 {
 	m_pInventory->InsertItem(_pItem);
+}
+
+void CPlayer::DeleteItem(tstring _strItmeName)
+{
+	m_pInventory->DeleteItem(_strItmeName);
 }
 
 void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)

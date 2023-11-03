@@ -52,10 +52,7 @@ public:
 		
 		if (_bInBattle) {
 			m_eCurrentItem = EHandItem::ENUM_END;
-			m_pPlayerHand->SetEnable(false);
-		}
-		else {
-			m_pPlayerHand->SetEnable(true);
+			m_pPlayerHand->SetCurrentItem(EHandItem::ENUM_END);
 		}
 	}
 
@@ -67,6 +64,11 @@ public:
 
 	//장착 아이템 Setting
 	void			SetCurrentItem(EHandItem _eItem);
+	EHandItem		GetCurrentItem() { return m_eCurrentItem; }
+
+	// 인벤토리 아이템
+	void			InsertItem(shared_ptr<CItem> _pItem);
+	void			DeleteItem(tstring _strItmeName);
 
 	//재화
 	void SetGold(_int _iNum, _bool _bIsEarn);
@@ -98,7 +100,6 @@ private:
 	void			ClimbingTerrain();
 
 	void			ShakingHand();
-	void			InsertItem (shared_ptr<CItem> _pItem);
 
 private:
 	virtual void	OnCollide(shared_ptr<CGameObject> _pObj);

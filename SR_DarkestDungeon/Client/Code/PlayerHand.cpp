@@ -32,7 +32,6 @@ _int CPlayerHand::UpdateGameObject(const _float& fTimeDelta)
 	_vec3 vPos;
 
 	m_pItemTransmCom->GetInfo(INFO_POS, &vPos);
-	Compute_ViewZ(&vPos);
 
 	AddRenderGroup(RENDER_FRONT, shared_from_this());
 	m_fTime = fTimeDelta;

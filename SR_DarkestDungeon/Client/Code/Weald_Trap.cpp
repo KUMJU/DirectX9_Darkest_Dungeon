@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "Creature.h"
+#include "Hero.h"
 
 CWeald_Trap::CWeald_Trap(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
@@ -34,6 +36,28 @@ _int CWeald_Trap::UpdateGameObject(const _float& fTimeDelta)
 		m_fActiveTime -= fTimeDelta;
 		if (m_fActiveTime < 0)
 		{
+			// 해제 성공
+			if (m_bSuccess)
+			{
+				vector<shared_ptr<CGameObject>>* pHeroVec =
+					dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
+				for (int i = 0; i < size(*pHeroVec); i++)
+				{
+					dynamic_pointer_cast<CHero>((*pHeroVec)[i])->DecreaseStress(10);
+				}
+			}
+			// 해제 실패
+			else
+			{
+				vector<shared_ptr<CGameObject>>* pHeroVec =
+					dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
+				for (int i = 0; i < size(*pHeroVec); i++)
+				{
+					dynamic_pointer_cast<CCreature>((*pHeroVec)[i])->DecreaseHP(5);
+					dynamic_pointer_cast<CHero>((*pHeroVec)[i])->IncreaseStress(20);
+				}
+			}
+
 			m_fActiveTime = TRAPACTIVETIME;
 			m_bActive = false;
 			m_bFinish = true;

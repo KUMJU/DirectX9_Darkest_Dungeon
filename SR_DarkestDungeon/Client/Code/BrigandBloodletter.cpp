@@ -50,7 +50,7 @@ HRESULT CBrigandBloodletter::ReadyGameObject()
 	SetSkill(pVecSkill);
 
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+	m_pTransformCom->SetScale(3.f, 3.f, 1.f);
 
 	m_pTransformCom->SetAngle(m_vAngle);
 	m_pTransformCom->Rotation(ROT_Y, PI / 2.f);

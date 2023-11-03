@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "Creature.h"
+#include "Hero.h"
 
 CWeald_Curio_Luggage::CWeald_Curio_Luggage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
@@ -34,12 +36,31 @@ _int CWeald_Curio_Luggage::UpdateGameObject(const _float& fTimeDelta)
 		m_fActiveTime -= fTimeDelta;
 		if (m_fActiveTime < 0)
 		{
+			// 제대로된 상호작용(해독제)
+			if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentItem()
+				== EHandItem::ANTI_VENOM)
+			{
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentItem(EHandItem::ENUM_END);
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->DeleteItem(L"Item_UI_Antivenom");
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(true);
+			}
+			// 해독제없는 상호작용
+			else
+			{
+				vector<shared_ptr<CGameObject>>* pHeroVec =
+					dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
+				for (int i = 0; i < size(*pHeroVec); i++)
+				{
+					_int  DotDam[2] = { 1, 2 };
+					dynamic_pointer_cast<CCreature>((*pHeroVec)[i])->BlightAttack(DotDam);
+					dynamic_pointer_cast<CCreature>((*pHeroVec)[i])->SetBlight(true);
+				}
+			}
+
 			m_fActiveTime = CURIOACTIVETIME;
 			m_bActive = false;
 			m_ePrevAnimState = m_eCurAnimState;
 			m_eCurAnimState = EState::FINISH;
-
-			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(true);
 		}
 	}
 

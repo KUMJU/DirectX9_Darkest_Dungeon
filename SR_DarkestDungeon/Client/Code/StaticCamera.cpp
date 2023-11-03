@@ -100,7 +100,7 @@ void CStaticCamera::ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegre
 		D3DXQUATERNION q;
 		_matrix matYpos, matView;
 		_vec3 vUpvec = { 0.f, 1.f , 0.f };
-		m_fLerp = 0.f;
+		m_fLerp = 0.1f;
 		D3DXQuaternionRotationAxis(&q, &vUpvec, D3DXToRadian(_fDegree));
 
 		m_qPrev = q;
@@ -308,10 +308,10 @@ void CStaticCamera::MovingDirect()
 	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
 	vCurPos2 = vCurrentPos;
 
-	m_fLerp += (_float)0.3 * m_deltaTime;
+	m_fLerp += (_float)0.5 * m_deltaTime;
 
-	if (m_fLerp > 0.8f) 
-		m_fLerp = 0.8f;
+	if (m_fLerp > 0.9f) 
+		m_fLerp = 0.9f;
 
 	D3DXVec3Lerp(&vCurrentPos, &vCurrentPos, &m_vDstVec, m_fLerp);
 
@@ -332,6 +332,27 @@ void CStaticCamera::CamReset()
 	m_fTotalTime = 0.f;
 	m_fActTime = 0.f;
 	m_fDir = 1.f;
+}
+
+void CStaticCamera::MovingRightVec(_int _iDir)
+{
+	_matrix matView;
+	_vec3 vRight, vPos;
+	
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	D3DXMatrixInverse(&matView, 0, &matView);
+
+	memcpy(&vRight, &matView.m[0][0], sizeof(_vec3));
+	memcpy(&vPos, &matView.m[3][0], sizeof(_vec3));
+
+	vPos += vRight * m_deltaTime *0.5f;
+
+	memcpy(&matView.m[3][0], &vPos, sizeof(_vec3));
+	D3DXMatrixInverse(&matView, 0, &matView);
+
+	m_matView = matView;
+
 }
 
 void CStaticCamera::AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude)

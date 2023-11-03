@@ -111,6 +111,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
 			pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 210.f);
 			m_pRoom3->SetBattleStart(true);
+			m_pRoom3->SetBattleCameraOriginPos({ vPos->x , vPos->y + 5.f , 210.f });
 		}
 	}
 
@@ -157,7 +158,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				if (dynamic_pointer_cast<CItem>(m_pRoom1->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom1->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
-					pTransform->SetPosition(56.f + fNum - 0.5f, 1.f, 16.f - 0.01f*i);
+					pTransform->SetPosition(56.f + fNum - 0.5f, 1.f, 16.f - 0.01f - 0.01f*i);
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
@@ -167,6 +168,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 	// 2번방
 	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 2)
 	{
+		// 붕대로 열었을때
 		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEventTrigger())
 		{
 			for (int i = 0; i < size(m_pRoom2->GetGameObjectVector()); i++)
@@ -175,16 +177,33 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				if (dynamic_pointer_cast<CItem>(m_pRoom2->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom2->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
-					pTransform->SetPosition(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f + fNum - 0.5f, 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 9.f - 0.01f * i);
+					pTransform->SetPosition(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f + fNum - 0.5f, 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 9.f - 0.01f - 0.01f * i);
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
+		}
+
+		// 걍 열었을때
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEvent2Trigger())
+		{
+			for (int i = 0; i < size(m_pRoom2->GetGameObjectVector()); i++)
+			{
+				if (i == 1) break;
+				float fNum = 1.f / (float)(rand() % 10) * 5.f;
+				if (dynamic_pointer_cast<CItem>(m_pRoom2->GetGameObjectVector()[i]))
+				{
+					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom2->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+					pTransform->SetPosition(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f + fNum - 0.5f, 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 9.f - 0.01f - 0.01f * i);
+				}
+			}
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent2Trigger(false);
 		}
 	}
 
 	// 3번방
 	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 3)
 	{
+		// 키로 열었을때
 		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEventTrigger())
 		{
 			for (int i = 0; i < size(m_pRoom3->GetGameObjectVector()); i++)
@@ -193,10 +212,26 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				if (dynamic_pointer_cast<CItem>(m_pRoom3->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom3->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
-					pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 22.f + fNum - 0.5f, 1.f, 230.f - 0.01f * i);
+					pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 22.f + fNum - 0.5f, 1.f, 230.f - 0.01f - 0.01f * i);
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
+		}
+
+		// 걍 열었을때
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEvent2Trigger())
+		{
+			for (int i = 0; i < size(m_pRoom3->GetGameObjectVector()); i++)
+			{
+				if (i == 1) break;
+				float fNum = 1.f / (float)(rand() % 10) * 5.f;
+				if (dynamic_pointer_cast<CItem>(m_pRoom3->GetGameObjectVector()[i]))
+				{
+					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom3->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+					pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 22.f + fNum - 0.5f, 1.f, 230.f - 0.01f - 0.01f * i);
+				}
+			}
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent2Trigger(false);
 		}
 	}
 
@@ -211,7 +246,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				if (dynamic_pointer_cast<CItem>(m_pRoom4->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom4->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
-					pTransform->SetPosition(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f + fNum - 0.5f, 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 17.f - 0.01f * i);
+					pTransform->SetPosition(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f + fNum - 0.5f, 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 17.f - 0.01f - 0.01f * i);
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
@@ -221,17 +256,19 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 	// 전투 방 순간이동
 	if (GetAsyncKeyState('8') & 0x8000) {
 		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>((CGameMgr::GetInstance()->GetPlayer())->GetComponent(L"Com_Transform", ID_DYNAMIC));
-		pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 205.f);
+		pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 195.f);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(3);
 		m_pWealdDungeon->CurrentRoom(3);
 	}
 	// 전투 강제종료
 	if (GetAsyncKeyState('9') & 0x8000) {
+		m_pRoom3->GetBattleSystem()->EndBattle();
+		CCameraMgr::GetInstance()->SetFPSMode();
+		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 		m_pRoom3->SetBattleTrigger(false);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
-		m_pRoom3->GetBattleSystem()->EndBattle();
 	}
-
+	
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
 
@@ -728,7 +765,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 
 	//Player
 	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
-	m_pPlayer->SetPos({ 60.f, 0.f, 10.f });
+	m_pPlayer->SetPos({ 55.f, 0.f, 2.f });
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
 	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
@@ -784,7 +821,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pItem1 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem", m_pItem1);
-	dynamic_pointer_cast<CItem>(m_pItem1)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Gold2", 500);
+	dynamic_pointer_cast<CItem>(m_pItem1)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Gold2", 1000);
 
 	shared_ptr<CGameObject> m_pItem2 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2->SetColliding(true);
@@ -794,18 +831,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pItem3 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem3", m_pItem3);
-	dynamic_pointer_cast<CItem>(m_pItem3)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Bandage");
-
-	shared_ptr<CGameObject> m_pItem4 = make_shared<CItem>(m_pGraphicDev);
-	m_pItem4->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem4", m_pItem4);
-	dynamic_pointer_cast<CItem>(m_pItem4)->SetDropItemInfo({ 68.f, -50.f, 14.f }, L"Player_Item_Shovel");
+	dynamic_pointer_cast<CItem>(m_pItem3)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Bandage",1);
 
 	// 2번방
 	shared_ptr<CGameObject> m_pItem1_2 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1_2->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem5", m_pItem1_2);
-	dynamic_pointer_cast<CItem>(m_pItem1_2)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Gold1", 300);
+	dynamic_pointer_cast<CItem>(m_pItem1_2)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Gold2", 1000);
 
 	shared_ptr<CGameObject> m_pItem2_2 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2_2->SetColliding(true);
@@ -815,13 +847,18 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pItem3_2 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3_2->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem7", m_pItem3_2);
-	dynamic_pointer_cast<CItem>(m_pItem3_2)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Item_Key");
+	dynamic_pointer_cast<CItem>(m_pItem3_2)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Item_Key",1);
+
+	shared_ptr<CGameObject> m_pItem4_2 = make_shared<CItem>(m_pGraphicDev);
+	m_pItem4_2->SetColliding(true);
+	m_pLayer->CreateGameObject(L"Obj_TestItem4", m_pItem4_2);
+	dynamic_pointer_cast<CItem>(m_pItem4_2)->SetDropItemInfo({ 68.f, -50.f, 14.f }, L"Player_Item_Shovel", 1);
 
 	// 3번방
 	shared_ptr<CGameObject> m_pItem1_3 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1_3->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem8", m_pItem1_3);
-	dynamic_pointer_cast<CItem>(m_pItem1_3)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Heirlooms");
+	dynamic_pointer_cast<CItem>(m_pItem1_3)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Heirlooms", 5);
 
 	shared_ptr<CGameObject> m_pItem2_3 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2_3->SetColliding(true);
@@ -837,17 +874,17 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pItem1_4 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1_4->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem11", m_pItem1_4);
-	dynamic_pointer_cast<CItem>(m_pItem1_4)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Heirlooms");
+	dynamic_pointer_cast<CItem>(m_pItem1_4)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Heirlooms", 5);
 
 	shared_ptr<CGameObject> m_pItem2_4 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2_4->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem12", m_pItem2_4);
-	dynamic_pointer_cast<CItem>(m_pItem2_4)->SetDropItemInfo({ 60.f, -50.f, 14.f }, L"Item_Gold2", 500);
+	dynamic_pointer_cast<CItem>(m_pItem2_4)->SetDropItemInfo({ 60.f, -50.f, 14.f }, L"Item_Gold2", 1000);
 
 	shared_ptr<CGameObject> m_pItem3_4 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3_4->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem3_4);
-	dynamic_pointer_cast<CItem>(m_pItem3_4)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Item_Gold1", 300);
+	dynamic_pointer_cast<CItem>(m_pItem3_4)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Item_Gold2", 1000);
 	
 	// monsters
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
@@ -879,29 +916,29 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room1_v1.push_back(m_pItem1);
 	Room1_v1.push_back(m_pItem2);
 	Room1_v1.push_back(m_pItem3);
-	Room1_v1.push_back(m_pItem4);
 	m_pRoom1->PushGameObjectVector(Room1_v1);
 
 	// Room2
 	vector<shared_ptr<CGameObject>> Room2_v1;
-	Room2_v1.push_back(m_pTrap1);
-	Room2_v1.push_back(m_pObstacle1);
-	Room2_v1.push_back(m_pCurioS1);
 	Room2_v1.push_back(m_pItem1_2);
 	Room2_v1.push_back(m_pItem2_2);
 	Room2_v1.push_back(m_pItem3_2);
+	Room2_v1.push_back(m_pItem4_2);
+	Room2_v1.push_back(m_pTrap1);
+	Room2_v1.push_back(m_pObstacle1);
+	Room2_v1.push_back(m_pCurioS1);
 	m_pRoom2->PushGameObjectVector(Room2_v1);
 	
 	// Room3
 	// objects
 	vector<shared_ptr<CGameObject>> Room3_v1;
+	Room3_v1.push_back(m_pItem1_3);
+	Room3_v1.push_back(m_pItem2_3);
+	Room3_v1.push_back(m_pItem3_3);
 	Room3_v1.push_back(m_pBrigandCutthroat_1);
 	Room3_v1.push_back(m_pBrigandBloodletter1);
 	Room3_v1.push_back(m_pBrigandCutthroat_2);
 	Room3_v1.push_back(m_pBrigandFusilier_1);
-	Room3_v1.push_back(m_pItem1_3);
-	Room3_v1.push_back(m_pItem2_3);
-	Room3_v1.push_back(m_pItem3_3);
 
 	Room3_v1.push_back(m_pCurioC1);
 
@@ -942,7 +979,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	pRoom3_Battle->PushHeroesVector(Room3_v2);
 	pRoom3_Battle->PushMonstersVector(Room3_v3);
 	m_pRoom3->SetBattleSystem(pRoom3_Battle);
-	m_pRoom3->SetBattleCameraPos(_vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f));
+	m_pRoom3->SetBattleCameraPos(_vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f ));
 	
 	//BattleUI Test
 	shared_ptr<CBattleHeroUI> m_pHeroUI = make_shared<CBattleHeroUI>(m_pGraphicDev);

@@ -43,7 +43,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	SetSkill(pVecSkill);
 
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(2.f, 2.f, 1.f);
+	m_pTransformCom->SetScale(2.5f, 2.5f, 1.f);
 
 	m_pTransformCom->SetAngle(m_vAngle);
 	m_pTransformCom->Rotation(ROT_Y, PI / 2.f);

@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "Creature.h"
+#include "Hero.h"
 
 CWeald_Obstacle::CWeald_Obstacle(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
@@ -21,7 +23,7 @@ CWeald_Obstacle::~CWeald_Obstacle()
 HRESULT CWeald_Obstacle::ReadyGameObject()
 {
 	__super::ReadyGameObject();
-
+	
 	return S_OK;
 }
 
@@ -34,6 +36,25 @@ _int CWeald_Obstacle::UpdateGameObject(const _float& fTimeDelta)
 		m_fActiveTime -= fTimeDelta;
 		if (m_fActiveTime < 0)
 		{
+			// 제대로된 상호작용(삽)
+			if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentItem()
+				== EHandItem::SHOVEL)
+			{
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentItem(EHandItem::ENUM_END);
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->DeleteItem(L"Item_UI_Shovel");
+			}
+			// 삽없는 상호작용
+			else
+			{
+				vector<shared_ptr<CGameObject>> *pHeroVec =
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
+				for (int i = 0; i < size(*pHeroVec); i++)
+				{
+					dynamic_pointer_cast<CCreature>((*pHeroVec)[i])->DecreaseHP(10);
+					dynamic_pointer_cast<CHero>((*pHeroVec)[i])->IncreaseStress(30);
+				}
+			}
+
 			m_fActiveTime = OBSTACLECLEARTIME;
 			m_bActive = false;
 			m_ePrevAnimState = m_eCurAnimState;
