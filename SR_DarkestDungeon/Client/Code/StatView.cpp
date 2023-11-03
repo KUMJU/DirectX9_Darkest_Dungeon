@@ -257,7 +257,7 @@ void CStatView::SetStress(int _iStress)
 	if (m_iStress < 0) {
 		m_iStress = 0;
 	}
-	m_iStressNum =  fabsf(m_iStress / 10.f);
+	m_iStressNum =  (int)(m_iStress / 10);
 }
 
 void CStatView::SetHp(int _iHp)

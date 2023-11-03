@@ -59,6 +59,9 @@ void CInventory::LateUpdateGameObject()
 void CInventory::RenderGameObject()
 {
 
+    if (!m_bVisible)
+        return;
+
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->GetWorld());
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -92,6 +95,7 @@ void CInventory::RenderGameObject()
 
 void CInventory::InsertItem(shared_ptr<CItem> _pItem)
 {
+
     _bool bDuplicated = false;
     //Áßº¹°Ë»ç ¹× °¹¼ö ´Ã¸®±â 
 

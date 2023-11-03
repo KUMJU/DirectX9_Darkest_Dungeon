@@ -96,6 +96,23 @@ void CStaticCamera::ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegre
 		m_fAngle = _fDegree / _fTime;
 		m_fTotalTime = _fTime;
 		m_fTotalAngle = _fDegree;
+
+		D3DXQUATERNION q;
+		_matrix matYpos, matView;
+		_vec3 vUpvec = { 0.f, 1.f , 0.f };
+		m_fLerp = 0.f;
+		D3DXQuaternionRotationAxis(&q, &vUpvec, D3DXToRadian(_fDegree));
+
+		m_qPrev = q;
+		//쿼터니언을 행렬로 변환
+		D3DXMatrixRotationQuaternion(&matYpos, &q);
+
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		D3DXMatrixInverse(&matView, 0, &matView);
+
+		m_matOrigin = matYpos * matView;
+		D3DXMatrixInverse(&m_matOrigin, 0, &m_matOrigin);
+
 	}
 }
 
@@ -141,8 +158,6 @@ void CStaticCamera::ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _v
 	_float fDegree = D3DXToDegree(m_fAngle);
 	m_vOrigin = vCurrentPos;
 
-	m_matOrigin = matView;
-
 	m_fAngle = m_fAngle / _fTime;
 
 }
@@ -181,18 +196,14 @@ void CStaticCamera::ChangeCamEyePos()
 	_matrix matYpos, matView;
 	_vec3 vUpvec = { 0.f, 1.f , 0.f };
 
-	m_fActTime += m_deltaTime;
-
 	_float fCalAngle = D3DXToRadian(m_fAngle) * m_deltaTime;
 
-	if (m_fActTime + m_deltaTime >= m_fTotalTime) {
-		fCalAngle = D3DXToRadian(m_fTotalAngle) - m_fCurrentAngle;
-	}
 
 	if (m_fActTime >= m_fTotalTime) {
 		
 		if (m_bIsLookBack == false) {
 			m_bIsLookBack = true;
+			m_matView = m_matOrigin;
 			m_eCurrentState = ECameraMode::IDLE;
 			return;
 		}
@@ -204,7 +215,13 @@ void CStaticCamera::ChangeCamEyePos()
 		
 	}
 
+	//m_fLerp += 0.003f * m_deltaTime;
+
+	//if (m_fLerp > 0.4f)
+	//	m_fLerp = 0.4f;
+
 	D3DXQuaternionRotationAxis(&q, &vUpvec, fCalAngle);
+	//D3DXQuaternionSlerp(&q, &q, &m_qPrev, m_fLerp);
 
 	//쿼터니언을 행렬로 변환
 	D3DXMatrixRotationQuaternion(&matYpos, &q);
@@ -216,11 +233,13 @@ void CStaticCamera::ChangeCamEyePos()
 	D3DXMatrixInverse(&m_matView, 0, &m_matView);
 
 	m_fCurrentAngle += D3DXToRadian(m_fAngle) * m_deltaTime;
+	m_fActTime += m_deltaTime;
 
 	if (m_fActTime >= m_fTotalTime) {
 
 		if (m_bIsLookBack == false) {
 			m_bIsLookBack = true;
+			m_matView = m_matOrigin;
 			m_eCurrentState = ECameraMode::IDLE;
 
 		}

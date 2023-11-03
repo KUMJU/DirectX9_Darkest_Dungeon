@@ -63,6 +63,8 @@ _int CVillage::UpdateScene(const _float& fTimeDelta)
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
 
+	KeyInput();
+
 	return iExit;
 }
 
@@ -74,6 +76,13 @@ void CVillage::LateUpdateScene()
 
 void CVillage::RenderScene()
 {
+}
+
+void CVillage::KeyInput()
+{
+	if (GetAsyncKeyState('V') & 0x8000) {
+		dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f);
+	}
 }
 
 HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)

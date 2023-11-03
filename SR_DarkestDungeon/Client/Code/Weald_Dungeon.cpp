@@ -103,8 +103,11 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 	{
 		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>((CGameMgr::GetInstance()->GetPlayer())->GetComponent(L"Com_Transform", ID_DYNAMIC));
 
-		if (pTransform->GetPos()->z > 210.f)
+		if (pTransform->GetPos()->z > 200.f)
 		{
+			_vec3* vPos = pTransform->GetPos();
+			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vPos->x , vPos->y+5.f , 210.f });
+			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_Inventory");
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
 			pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 210.f);
 			m_pRoom3->SetBattleStart(true);
@@ -133,6 +136,9 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			// 전투가 끝나면
 			if (m_pRoom3->BattleUpdate(fTimeDelta))
 			{
+				CCameraMgr::GetInstance()->SetFPSMode();
+				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
+
 				m_pRoom3->SetBattleTrigger(false);
 				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
 			}

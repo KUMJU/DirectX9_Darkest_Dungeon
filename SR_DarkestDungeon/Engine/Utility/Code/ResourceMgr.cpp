@@ -58,6 +58,11 @@ HRESULT CResourceMgr::CreateNewTexture(const tstring& _KeyName, TEXTUREID _eType
 		}
 
 		pInfo->pTexture = pTexture;
+		
+		//GetImgSize
+		D3DXIMAGE_INFO pImgInfo;
+		D3DXGetImageInfoFromFile(szFileName, &pImgInfo);
+		pInfo->vImgSize = { (float)pImgInfo.Width, (float)pImgInfo.Height };
 
 		vTempVec.push_back(pInfo);
 	}
