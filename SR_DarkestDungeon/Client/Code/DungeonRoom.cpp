@@ -40,4 +40,5 @@ _bool CDungeonRoom::BattleUpdate(const _float& fTimeDelta)
 void CDungeonRoom::BattleReady()
 {
 	m_pBattleSystem->FormBattlePosition(m_vHeroes, m_vMonsters, 0.f, PI, m_vBattleCameraPos);
+	m_pBattleSystem->SetCenterPos(m_vBattleCameraOriginPos);
 }

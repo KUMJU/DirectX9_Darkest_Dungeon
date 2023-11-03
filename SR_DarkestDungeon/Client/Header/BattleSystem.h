@@ -59,6 +59,9 @@ public:
 
 	void GetHeroPanelUI(shared_ptr<CBattleHeroUI> _pHeroUI) { m_pHeroUI = _pHeroUI; }
 
+public:
+	void SetCenterPos(_vec3 _vPos) { m_vCenterPos = _vPos; }
+
 protected:
 	// 위치 변경
 	void SwitchPosition(int _iCurrentIndex, int _iMoveCnt, _bool _bHero = true);
@@ -108,11 +111,14 @@ private:
 	_int	m_iSelectSkill = 0;
 	_int	m_iSelectPosition = 2;
 	_bool	m_bCalculate = false;
+	_bool	m_bUISetDone = false;
 
 	vector<_vec3> m_vHeroLocation = {};			// hero position
 	vector<_vec3> m_vMonsterLocation = {};		// monster position
 	_int iCurrentHeroIndex = 0;
 	_int iCurrentMonsterIndex = 0;
+
+	_vec3		  m_vCenterPos = { 0.f, 0.f, 0.f };
 
 
 //UI Test

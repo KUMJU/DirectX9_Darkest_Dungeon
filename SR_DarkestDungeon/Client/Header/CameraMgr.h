@@ -25,6 +25,8 @@ public: //Camera Moving
 	//자전
 	void CameraRotation(ECameraMode _eType, _float _fDegree);
 
+	void MovingRightVec(_int _iDir);
+
 public: //Camera Effect : 아직 작업 안함
 
 	void AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.1f);

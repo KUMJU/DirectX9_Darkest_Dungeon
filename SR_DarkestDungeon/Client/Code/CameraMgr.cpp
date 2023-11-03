@@ -33,6 +33,11 @@ void CCameraMgr::CameraRotation(ECameraMode _eType, _float _fDegree)
 
 }
 
+void CCameraMgr::MovingRightVec(_int _iDir)
+{
+	m_pMainCam->MovingRightVec(_iDir);
+}
+
 void CCameraMgr::AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude)
 {
 	m_pMainCam->AddCameraEffect(_eEffect, _fTime, _fAmplitude);

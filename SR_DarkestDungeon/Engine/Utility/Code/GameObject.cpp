@@ -81,12 +81,14 @@ void CGameObject::SetBillBoard(_matrix& _matWorld)
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
 
-	matBill._11 = matView._11;
+	matBill._11 =  matView._11;
 	matBill._13 = matView._13;
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
-	D3DXMatrixInverse(&matBill, 0, &matBill);
 
+
+
+	D3DXMatrixInverse(&matBill, 0, &matBill);
 
 	_matWorld = (matBill * _matWorld);
 }

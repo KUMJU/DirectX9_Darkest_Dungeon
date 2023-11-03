@@ -52,10 +52,7 @@ public:
 		
 		if (_bInBattle) {
 			m_eCurrentItem = EHandItem::ENUM_END;
-			m_pPlayerHand->SetEnable(false);
-		}
-		else {
-			m_pPlayerHand->SetEnable(true);
+			m_pPlayerHand->SetCurrentItem(EHandItem::ENUM_END);
 		}
 	}
 

@@ -36,6 +36,9 @@ public:
 	_vec3	GetBattleCameraPos() { return m_vBattleCameraPos; }
 	void	SetBattleCameraPos(_vec3 _vBattleCameraPos) { m_vBattleCameraPos = _vBattleCameraPos; }
 
+	_vec3	GetBattleCameraOriginPos() { return m_vBattleCameraOriginPos; }
+	void	SetBattleCameraOriginPos(_vec3 _vBattleCameraPos) { m_vBattleCameraOriginPos = _vBattleCameraPos; }
+
 	_bool	GetBattleStart() { return m_bBattleStart; }
 	void	SetBattleStart(_bool _bBattleStart) { m_bBattleStart = _bBattleStart; }
 	_bool	GetBattleDone() { return m_bBattleDone; }
@@ -54,6 +57,7 @@ private:
 	shared_ptr<CBattleSystem>			m_pBattleSystem = nullptr;
 
 	_vec3	m_vBattleCameraPos;		// 던전 방 싸움 위치
+	_vec3	m_vBattleCameraOriginPos; //전투 중 카메라의 원위치(Eye 위치)
 	_bool	m_bBattleDone = false;	// 던전 방 내 싸움이 끝났는지
 	_bool	m_bBattleStart = false;	// 던전 방 내 싸움이 시작됐는지
 	_bool	m_bBattleTrigger = false;

@@ -55,9 +55,11 @@ public:
 	//기준점(_vCenter)을 잡고 호선(호선 크기: _fXSpeed, _fZSpeed)을 그리며 카메라 포지션(_vDst) 옮기기 : 공전
 	void ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _vec3 _vCenter, _float _fTime = 1.5f);
 	//최종 포지션을 잡고 직선을 그리며 카메라 포지션 옮기기 : 줌인, 줌아웃, 카메라 무빙
-	void MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float _fTime = 1.5f);
+	void MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float _fTime = 1.f);
 	//카메라 이펙트 세팅
 	void AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.5f);
+	//오른쪽 왼쪽으로만 이동하는 함수
+	void MovingRightVec(_int _iDir);
 private:
 //Moving Function
 
