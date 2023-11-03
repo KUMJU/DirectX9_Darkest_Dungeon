@@ -6,6 +6,8 @@
 #include"BattleHeroUI.h"
 #include"Hero.h"
 
+#include"CameraMgr.h"
+
 CBattleSystem::CBattleSystem()
 {
 }
@@ -51,8 +53,9 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		{
 			if (dynamic_pointer_cast<CCreature>(iter)->GetAttackMoving())
 			{
-				dynamic_pointer_cast<CCreature>(iter)->MovePos(dynamic_pointer_cast<CCreature>(iter)->GetTargetPos(),
-					fTimeDelta, dynamic_pointer_cast<CCreature>(iter)->GetMovingSpeed());
+				_vec3 vTargetPos = dynamic_pointer_cast<CCreature>(iter)->GetTargetPos();
+				CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vTargetPos.x , vTargetPos.y , vTargetPos.z - 8.f });
+				dynamic_pointer_cast<CCreature>(iter)->MovePos(vTargetPos,fTimeDelta, dynamic_pointer_cast<CCreature>(iter)->GetMovingSpeed());
 			}
 		}
 		for (auto& iter : m_vMonsters)
@@ -98,11 +101,22 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	if (m_bWhileAttack)
 	{
 		m_fWhileAttackingTime -= fTimeDelta;
+
+		//카메라 무빙
+		//if (m_fWhileAttackingTime < 1.f) {
+		//	if (m_bHero)
+		//		CCameraMgr::GetInstance()->MovingRightVec(-1);
+		//	else
+		//		CCameraMgr::GetInstance()->MovingRightVec(1);
+		//}
+
+
 		if (m_fWhileAttackingTime < 0.f)
 		{
 			m_bWhileAttack = false;
 			m_bBackMoving = true;
 			m_fWhileAttackingTime = WHILEATTACKINTERVEL;
+			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
 		}
 	}
 
@@ -307,7 +321,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->OnTurnCursor();
 
 		// 배틀 ui 키기
-		if (m_bHero)
+		if (m_bHero && !m_bUISetDone)
 		{
 			shared_ptr<CHero> pHero = dynamic_pointer_cast<CHero>(m_pCurrentCreature);
 			tstring HeroName;
@@ -331,10 +345,11 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 				break;
 			}
 
-			if (m_pHeroUI)
+			if (m_pHeroUI && !m_bUISetDone)
 			{
 				m_pHeroUI->SetVisible(true);
 				m_pHeroUI->SettingHeroInfo(pHero->GetHp(), pHero->GetHp(), pHero->GetStress(), HeroName, pHero->GetSkillVector());
+				m_bUISetDone = true;
 			}
 		}
 
@@ -492,6 +507,7 @@ void CBattleSystem::CreatureTurnEnd()
 	//m_pCurrentCreature = NextCreature();
 	// 죽은애 체크
 	m_bDeadCheck = true;
+	m_bUISetDone = false;
 }
 
 void CBattleSystem::NextTurn()

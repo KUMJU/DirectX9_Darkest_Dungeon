@@ -111,6 +111,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
 			pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 210.f);
 			m_pRoom3->SetBattleStart(true);
+			m_pRoom3->SetBattleCameraOriginPos({ vPos->x , vPos->y + 5.f , 210.f });
 		}
 	}
 
@@ -260,13 +261,13 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		m_pWealdDungeon->CurrentRoom(3);
 	}
 	// 전투 강제종료
-	//if (GetAsyncKeyState('9') & 0x8000) {
-	//	m_pRoom3->GetBattleSystem()->EndBattle();
-	//	//CCameraMgr::GetInstance()->SetFPSMode();
-	//	//CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
-	//	m_pRoom3->SetBattleTrigger(false);
-	//	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
-	//}
+	if (GetAsyncKeyState('9') & 0x8000) {
+		m_pRoom3->GetBattleSystem()->EndBattle();
+		CCameraMgr::GetInstance()->SetFPSMode();
+		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
+		m_pRoom3->SetBattleTrigger(false);
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
+	}
 	
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
@@ -978,7 +979,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	pRoom3_Battle->PushHeroesVector(Room3_v2);
 	pRoom3_Battle->PushMonstersVector(Room3_v3);
 	m_pRoom3->SetBattleSystem(pRoom3_Battle);
-	m_pRoom3->SetBattleCameraPos(_vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f));
+	m_pRoom3->SetBattleCameraPos(_vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 3.f, WEALD_WALLSIZEX * 14.f + 4.f ));
 	
 	//BattleUI Test
 	shared_ptr<CBattleHeroUI> m_pHeroUI = make_shared<CBattleHeroUI>(m_pGraphicDev);

@@ -31,6 +31,10 @@ protected:
 	void			SetIconPos();
 
 private:
+
+	void IconClickEvent();
+
+private:
 	shared_ptr<CTexture> m_pTextureCom;
 
 private:
@@ -45,9 +49,18 @@ private:
 
 	vector<shared_ptr<CSkill>>* m_pSkillVec= nullptr;
 	
-	shared_ptr<CRcTex> m_arrSkillRcTex[6];
-	shared_ptr<CTransform> m_arrSkillTransform[6];
-	shared_ptr<CTexture> m_arrSkillTexture[6];
+	//스킬 틀 , 1~5: 7: Cursor
+	shared_ptr<CRcTex> m_arrSkillRcTex[7];
+	shared_ptr<CTransform> m_arrSkillTransform[7];
+	shared_ptr<CTexture> m_arrSkillTexture[7];
+
+	//0~4 : 각 스킬슬롯 Index , 99 = NONE
+	_int m_iCursorPos = 99;
+
+	//아이콘 클릭 이벤트 관련 변수
+	_bool m_bIconClick = false;
+	_float m_fActTime = 0.f;
+	_float m_fDeltaTime = 0.f;
 
 };
 
