@@ -116,6 +116,7 @@ HRESULT CJester::ReadyGameObject()
 		m_tCommonStat.iOrder = 0;
 	}
 
+
 	// 테스트용
 	{
 		m_eAnimState = EAnimState::IDLE;

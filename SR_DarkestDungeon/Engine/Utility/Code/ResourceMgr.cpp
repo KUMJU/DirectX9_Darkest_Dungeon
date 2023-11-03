@@ -506,7 +506,7 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"UI_HeroStat_Highwayman_Base", TEX_NORMAL,
 			L"../Bin/Resource/Image/UI/Hero/Stat/HighwaymanBaseStat.png", 1, bDefault);
 
-		// 역마차
+		// 고용
 		{
 			// 성녀 틀
 			CreateNewTexture(L"UI_HeroStat_Vestal_Base_Hire", TEX_NORMAL,
@@ -520,6 +520,22 @@ void CResourceMgr::BaseTextureLoad()
 			// 노상강도 틀
 			CreateNewTexture(L"UI_HeroStat_Highwayman_Base_Hire", TEX_NORMAL,
 				L"../Bin/Resource/Image/UI/Hero/Stat/HighwaymanBaseStatHire.png", 1, bDefault);
+		}
+
+		// 선택
+		{
+			// 성녀 틀
+			CreateNewTexture(L"UI_HeroStat_Vestal_Base_Select", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Stat/VestalBaseStatSelect.png", 1, bDefault);
+			// 방패파괴자 틀
+			CreateNewTexture(L"UI_HeroStat_Shieldbreaker_Base_Select", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Stat/ShieldbreakerBaseStatSelect.png", 1, bDefault);
+			// 광대 틀
+			CreateNewTexture(L"UI_HeroStat_Jester_Base_Select", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Stat/JesterBaseStatSelect.png", 1, bDefault);
+			// 노상강도 틀
+			CreateNewTexture(L"UI_HeroStat_Highwayman_Base_Select", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Stat/HighwaymanBaseStatSelect.png", 1, bDefault);
 		}
 
 		// 추천 위치, 목표

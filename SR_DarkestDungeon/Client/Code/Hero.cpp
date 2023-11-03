@@ -98,8 +98,16 @@ void CHero::RenderGameObject()
 
 void CHero::PickingObj()
 {
+	_vec3* pPlayerTransform = dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos();
+
+	if ((*pPlayerTransform).y < - 50 && (*pPlayerTransform).y > -150)
+		m_bForSelect = true;
+
 	if (!m_bHired)
 		m_pStatUI->SetForHire(true);
+
+	else if (m_bForSelect)
+		m_pStatUI->SetForSelect(true);
 
 	m_pStatUI->SetVisible(true);
 	CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);

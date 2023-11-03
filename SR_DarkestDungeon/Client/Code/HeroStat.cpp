@@ -110,18 +110,41 @@ _int CHeroStat::UpdateGameObject(const _float& fTimeDelta)
 
 		else if (GetAsyncKeyState('C') & 0x8000)
 		{
-			if (!m_bForHire)
-				return iExit;
+			if (m_bForSelect)
+			{
+				if (m_bSelectedAlready)
+					return iExit;
 
-			CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
+				if (m_pHero.lock()->GetHp() == m_pHero.lock()->GetMaxHp() && m_pHero.lock()->GetStress() <= 0)
+					return iExit;
 
-			// 영웅 추가 코드
-			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->AddHero(m_pHero.lock());
+				m_bSelectedAlready = true;
 
-			m_bVisible = false;
+				// 돈 사용해서
+				if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetGold() < 500)
+					return iExit;
 
-			// 역마차에서 영웅 삭제
-			m_pHero.lock()->SetHired(true);
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetGold(500, false);
+
+				// 체력이랑 스트레스 회복하기
+				m_pHero.lock()->IncreaseHP(20);
+				m_pHero.lock()->DecreaseStress(50);
+				if (m_pHero.lock()->GetHp() > m_pHero.lock()->GetMaxHp()) m_pHero.lock()->SetHp(m_pHero.lock()->GetMaxHp());
+				if (m_pHero.lock()->GetStress() < 0) m_pHero.lock()->SetStress(0);
+			}
+
+			else
+			{
+				CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
+
+				// 영웅 추가 코드
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->AddHero(m_pHero.lock());
+
+				m_bVisible = false;
+
+				// 역마차에서 영웅 삭제
+				m_pHero.lock()->SetHired(true);
+			}
 		}
 	}
 
@@ -221,6 +244,54 @@ void CHeroStat::RenderGameObject()
 			idx++;
 		}
 
+		// HP 출력
+		{
+			TCHAR buf[64];
+
+			_int _iHp = m_pHero.lock()->GetHp();
+			_int _iMaxHp = m_pHero.lock()->GetMaxHp();
+
+			_vec2 vPos = { m_vPos.x + WINCX * 0.5f - 305.f, (m_vPos.y) + WINCY * 0.5f - 225.f };
+
+			if (_iHp < 10) {
+				_stprintf_s(buf, TEXT("HP :    %d"), _iHp);
+
+			}
+			else if (_iHp < 100) {
+				_stprintf_s(buf, TEXT("HP :  %d"), _iHp);
+			}
+
+			Engine::Render_Font(L"Font_Default_Bold", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+			vPos = { m_vPos.x + WINCX * 0.5f - 195.f, (m_vPos.y) + WINCY * 0.5f - 225.f };
+			_stprintf_s(buf, TEXT(" /"));
+			Engine::Render_Font(L"Font_Default_Bold", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+			vPos = { m_vPos.x + WINCX * 0.5f - 175.f, (m_vPos.y) + WINCY * 0.5f - 225.f };
+			_stprintf_s(buf, TEXT("%d"), _iMaxHp);
+			Engine::Render_Font(L"Font_Default_Bold", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		}
+
+		// 스트레스 출력
+		{
+			TCHAR buf[64];
+
+			_int _iStress = m_pHero.lock()->GetStress();
+
+			_vec2 vPos = { m_vPos.x + WINCX * 0.5f - 305.f, (m_vPos.y) + WINCY * 0.5f - 200.f };
+
+			if (_iStress < 10) {
+				_stprintf_s(buf, TEXT("Stress :    %d"), _iStress);
+
+			}
+			else if (_iStress < 100) {
+				_stprintf_s(buf, TEXT("Stress :  %d"), _iStress);
+			}
+
+			Engine::Render_Font(L"Font_Default_Bold", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+		}
+
 		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -239,6 +310,7 @@ void CHeroStat::PickingUI(LONG _fX, LONG _fY)
 void CHeroStat::SetForHire(_bool _bForHire)
 {
 	m_bForHire = _bForHire;
+	m_bForSelect = false;
 
 	if (!m_bForHire) return;
 
@@ -258,6 +330,43 @@ void CHeroStat::SetForHire(_bool _bForHire)
 
 	case EHeroType::VESTAL:
 		m_strBackKey = L"UI_HeroStat_Vestal_Base_Hire";
+		break;
+
+	case EHeroType::ENUM_END:
+		m_strBackKey = L"UI_HeroStat_Base";
+		break;
+
+	default:
+		m_strBackKey = L"UI_HeroStat_Base";
+		break;
+	}
+
+	m_pTextureCom[0]->SetTextureKey(m_strBackKey, TEXTUREID::TEX_NORMAL);
+}
+
+void CHeroStat::SetForSelect(_bool _bForSelect)
+{
+	m_bForSelect = _bForSelect;
+	m_bForHire = false;
+
+	if (!m_bForSelect) return;
+
+	switch (m_pHero.lock()->GetHeroType())
+	{
+	case EHeroType::SHILEDBREAKER:
+		m_strBackKey = L"UI_HeroStat_Shieldbreaker_Base_Select";
+		break;
+
+	case EHeroType::HIGHWAYMAN:
+		m_strBackKey = L"UI_HeroStat_Highwayman_Base_Select";
+		break;
+
+	case EHeroType::JESTER:
+		m_strBackKey = L"UI_HeroStat_Jester_Base_Select";
+		break;
+
+	case EHeroType::VESTAL:
+		m_strBackKey = L"UI_HeroStat_Vestal_Base_Select";
 		break;
 
 	case EHeroType::ENUM_END:
