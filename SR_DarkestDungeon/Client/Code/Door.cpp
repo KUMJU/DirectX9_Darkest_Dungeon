@@ -82,14 +82,14 @@ void CDoor::GetInteractionKey(const _float& fTimeDelta)
 
 			// 진짜 테스트
 			{
-				shared_ptr<CPlayer> pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
-				
-				vector<shared_ptr<CGameObject>>* pHeroVec = pPlayer->GetHeroVec();
+				//shared_ptr<CPlayer> pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
+				//
+				//vector<shared_ptr<CGameObject>>* pHeroVec = pPlayer->GetHeroVec();
 
-				shared_ptr<CHero> pHero = dynamic_pointer_cast<CHero>((*pHeroVec)[0]);
+				//shared_ptr<CHero> pHero = dynamic_pointer_cast<CHero>((*pHeroVec)[0]);
 
-				pHero->SetStress(50);
-				pHero->SetHp(10);
+				//pHero->SetStress(50);
+				//pHero->SetHp(10);
 			}
 
 			// 여관 내부로 이동

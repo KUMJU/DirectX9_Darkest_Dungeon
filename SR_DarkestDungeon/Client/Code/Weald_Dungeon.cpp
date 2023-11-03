@@ -979,9 +979,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBrigandBloodletter1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_1);
 	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker1);
+	dynamic_pointer_cast<CHero>(m_pSheldBreaker1)->SetObjKey(L"Obj_ShieldBreaker");
 	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+	dynamic_pointer_cast<CHero>(m_pHighwayman)->SetObjKey(L"Obj_Highwayman");
 	m_pLayer->CreateGameObject(L"Obj_Jester", m_pJester);
+	dynamic_pointer_cast<CHero>(m_pJester)->SetObjKey(L"Obj_Jester");
 	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+	dynamic_pointer_cast<CHero>(m_pVestal)->SetObjKey(L"Obj_Vestal");
 	m_pLayer->CreateGameObject(L"OBJ_Trap", m_pTrap1);
 	m_pLayer->CreateGameObject(L"OBJ_Obstacle", m_pObstacle1);
 	m_pLayer->CreateGameObject(L"OBJ_Obstacle", m_pObstacle2);

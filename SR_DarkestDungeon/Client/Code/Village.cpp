@@ -130,7 +130,7 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 			{
 				m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Wall1_Texture", false, false, 1, false);
 				m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 2.f, VILLAGE_WALLSIZE * 2.f, 1));
-				m_pWall->SetAngle(_vec3(0.f, - PI / 11.f * i, 0.f));
+				m_pWall->SetAngle(_vec3(0.f, -PI / 11.f * i, 0.f));
 
 				_float IncreaseX = VILLAGE_WALLSIZE * 2.f * cos(PI / 11.f * i);
 				_float IncreaseY = VILLAGE_WALLSIZE * 2.f * sin(PI / 11.f * i);
@@ -185,7 +185,7 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 	}
 
 	// 마을 건물 내부
-	{	
+	{
 		//여관 내부
 		shared_ptr<CGameObject> m_pTervarnInside = make_shared<CTervarn>(m_pGraphicDev);
 		m_pTervarnInside->SetPos({ 50.f - VILLAGE_TILESIZE * 3 / 2, -100.f, 0.f });
@@ -235,7 +235,7 @@ HRESULT CVillage::Ready_Layer_Camera(tstring pLayerTag)
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;
-} 
+}
 
 HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 {
@@ -251,8 +251,12 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	//	m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
 	//	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(m_pPlayer->GetPos().x, m_pPlayer->GetPos().y, m_pPlayer->GetPos().z);
 
+	//	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	//	{
+	//		m_pLayer->CreateGameObject(dynamic_pointer_cast<CHero>(iter)->GetObjKey(), iter);
+	//	}
 	//}
-	//
+
 	//else
 	//{
 		// 마을에서부터 시작한 경우
@@ -281,29 +285,31 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	}
 
 	// 영웅 테스트
-	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
-	m_pVestal->SetPos({ 10.f, 3.f, 20.f });
+	{
+		shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+		m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+		m_pVestal->SetPos({ 10.f, 3.f, 20.f });
 
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pVestal);
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pVestal);
 
-	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
-	m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
+		shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
+		m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+		m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
 
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pHighwayman);
-
-
-	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
-	m_pJester->SetPos({ 15.f, 3.f, 20.f });
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pJester);
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pHighwayman);
 
 
-	shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
-	m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pShieldBreaker);
+		shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
+		m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
+		m_pJester->SetPos({ 15.f, 3.f, 20.f });
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pJester);
+
+
+		shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
+		m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
+		m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pShieldBreaker);
+	}
 
 	// 여관
 	{
@@ -354,6 +360,7 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 	return S_OK;
 }
+
 
 
 HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)

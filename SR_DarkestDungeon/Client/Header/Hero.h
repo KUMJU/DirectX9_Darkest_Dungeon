@@ -109,6 +109,9 @@ public:
 	void		SetForSelect(_bool _bForSelect) { m_bForSelect = _bForSelect; }
 	_bool		IsForSelect() { return m_bForSelect; }
 
+	void		SetObjKey(tstring _objKey) { m_strObjKey = _objKey; }
+	tstring		GetObjKey() { return m_strObjKey; }
+
 protected:
 
 	_int				m_iStress = 0;		// 스트레스
@@ -151,6 +154,8 @@ protected:
 	//shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
 
 	_tchar		m_szString4[128];
+
+	tstring		m_strObjKey;
 
 private:
 	virtual void	Free();
