@@ -157,6 +157,9 @@ protected:
 
 	tstring		m_strObjKey;
 
+protected:
+	_bool		m_bReady = false;
+
 private:
 	virtual void	Free();
 };

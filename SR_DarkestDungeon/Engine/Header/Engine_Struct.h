@@ -1,6 +1,7 @@
-
 #ifndef Engine_Struct_h__
-#define Enginclude "Engine_Typedef.h"
+#define Engine_Struct_h__
+
+#include "Engine_Typedef.h"
 
 namespace Engine
 {

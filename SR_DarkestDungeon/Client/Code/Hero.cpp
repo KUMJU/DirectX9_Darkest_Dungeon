@@ -170,6 +170,9 @@ void CHero::StressUp()
 
 void CHero::AddComponent()
 {
+	if (m_bReady)
+		return;
+
 	shared_ptr<CComponent> pComponent;
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();

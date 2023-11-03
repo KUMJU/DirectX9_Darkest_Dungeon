@@ -21,6 +21,9 @@ CJester::~CJester()
 
 HRESULT CJester::ReadyGameObject()
 {
+	if (m_bReady)
+		return S_OK;
+
 	__super::ReadyGameObject();
 
 	m_bIsHero = true;
@@ -140,6 +143,8 @@ HRESULT CJester::ReadyGameObject()
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
+
+	m_bReady = true;
 
 	return S_OK;
 }
@@ -296,6 +301,7 @@ void CJester::RenderGameObject()
 
 void CJester::AddComponent()
 {
+
 	__super::AddComponent();
 }
 
