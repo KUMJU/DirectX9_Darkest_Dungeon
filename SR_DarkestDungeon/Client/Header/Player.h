@@ -16,7 +16,9 @@ END
 
 class CPlayerHand;
 class CInventory;
+class CTavernUI;
 class CItem;
+class CHero;
 
 enum class EPlayerMove
 {
@@ -46,6 +48,9 @@ public:
 	_int			GetCurrentRoom() { return m_iCurrentRoom; }
 	void			SetCurrentRoom(_int _iCurrentRoom) { m_iCurrentRoom = _iCurrentRoom; }
 	void			SetInventory(shared_ptr<CInventory> _pInventory);
+
+	void			SetTavernUI(shared_ptr<CTavernUI> _pTavernUI);
+	void			ShowTavernUI(shared_ptr<CHero> _pHero);
 
 	void			SetInBattle(_bool _bInBattle) { 
 		m_bInBattle = _bInBattle;
@@ -161,6 +166,10 @@ private:
 
 	// 피킹 오브젝트 벡터 (뒤 돌아볼 때 생성되는 영웅용)
 	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};
+
+	// TavernUI ON/Off
+	shared_ptr<CTavernUI> m_pTavernUI = nullptr;
+	_bool		m_bShowTavernUI = false;
 
 private:
 	virtual void	Free();

@@ -21,6 +21,7 @@
 #include "Inventory.h"
 #include "UIMgr.h"
 #include"GoodsUI.h"
+#include "TavernUI.h"
 
 #include "Vestal.h"
 #include "Jester.h"
@@ -280,36 +281,37 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(false);
 
-	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
-	{
+	// 영웅 테스트
+	 {
+		//shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+		//m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+		//m_pVestal->SetPos({ 10.f, 3.f, 20.f });
+
+		//dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pVestal);
+
+		//shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
+		//m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+		//m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
+
+		//dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pHighwayman);
+
+
+		//shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
+		//m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
+		//m_pJester->SetPos({ 15.f, 3.f, 20.f });
+		//dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pJester);
+
+
+		//shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
+		//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
+		//m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
+		//dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pShieldBreaker);
 	}
 
-	// 영웅 테스트
-	/* {
-		shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
-		m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
-		m_pVestal->SetPos({ 10.f, 3.f, 20.f });
-
-		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pVestal);
-
-		shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
-		m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
-		m_pHighwayman->SetPos({ 20.f, 3.f, 20.f });
-
-		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pHighwayman);
-
-
-		shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
-		m_pLayer->CreateGameObject(L"Obj_Jestal", m_pJester);
-		m_pJester->SetPos({ 15.f, 3.f, 20.f });
-		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pJester);
-
-
-		shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
-		m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
-		m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
-		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pShieldBreaker);
-	}*/
+	 for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	 {
+		 dynamic_pointer_cast<CHero>(iter)->SetInDungeon(false);
+	 }
 
 	// 여관
 	{
@@ -378,8 +380,19 @@ HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 
 	m_pLayer->CreateGameObject(L"Obj_GoodsUI", pGoods);
 
+	shared_ptr<CGameObject> pTavernUI = make_shared<CTavernUI>(m_pGraphicDev);
+
+	// 영웅 주점 UI
+	pTavernUI = make_shared<CTavernUI>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_TavernUI", pTavernUI);
+
+	CUIMgr::GetInstance()->AddUIObject(L"Obj_TavernUI", dynamic_pointer_cast<CUIObj>(pTavernUI));
+
+
 
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetTavernUI(dynamic_pointer_cast<CTavernUI>(pTavernUI));
+
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;

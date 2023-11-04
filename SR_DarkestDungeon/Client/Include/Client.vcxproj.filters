@@ -58,6 +58,8 @@
     <ClCompile Include="..\Code\BattleHeroUI.cpp" />
     <ClCompile Include="..\Code\GoodsUI.cpp" />
     <ClCompile Include="..\Code\HeroSkillUI.cpp" />
+    <ClCompile Include="..\Code\TavernUI.cpp" />
+    <ClCompile Include="..\Code\Description.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -122,6 +124,8 @@
     <ClInclude Include="..\Header\PickingGame.h" />
     <ClInclude Include="..\Header\HeroSkillUI.h" />
     <ClInclude Include="..\Header\GoodsUI.h" />
+    <ClInclude Include="..\Header\TavernUI.h" />
+    <ClInclude Include="..\Header\Description.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

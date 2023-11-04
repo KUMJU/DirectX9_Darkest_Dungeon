@@ -9,6 +9,7 @@
 #include "PickingMgr.h"
 #include "Hero.h"
 #include"GoodsUI.h"
+#include "TavernUI.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -28,7 +29,7 @@ HRESULT CPlayer::ReadyGameObject()
 	m_bColliding = true;
 
 	SetGold(1000, true);
-	SetHeirloom(1, true);
+	SetHeirloom(5, true);
 
 	return S_OK;
 }
@@ -70,6 +71,9 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 		CPickingMgr::GetInstance()->AddList(iter);
 	}
 
+	if (m_pTavernUI)
+		m_pTavernUI->UpdateGameObject(fTimeDelta);
+
 	return iExit;
 }
 
@@ -90,6 +94,20 @@ void CPlayer::SetInventory(shared_ptr<CInventory> _pInventory)
 {
 	m_pInventory = _pInventory;
 	m_pInventory->SetPlayer(dynamic_pointer_cast<CPlayer>(shared_from_this()));
+}
+
+void CPlayer::SetTavernUI(shared_ptr<CTavernUI> _pTavernUI)
+{
+	m_pTavernUI = _pTavernUI;
+}
+
+void CPlayer::ShowTavernUI(shared_ptr<CHero> _pHero)
+{
+	for (auto& iter : m_pVecHero)
+		dynamic_pointer_cast<CHero>(iter)->SetSelected(false);
+
+	m_pTavernUI->SetHero(_pHero);
+	m_pTavernUI->SetVisible(true);
 }
 
 void CPlayer::SetCurrentItem(EHandItem _eItem)
@@ -382,10 +400,11 @@ void CPlayer::HideHeroesBackVillage()
 {
 	for (int i = 0; i < size(m_pVecHero); i++)
 	{
-		dynamic_pointer_cast<CCreature>(m_pVecHero[i])->SetFront(true);
+		dynamic_pointer_cast<CHero>(m_pVecHero[i])->SetFront(true);
 		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 			m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 		pTransform->SetPosition(m_pTransformCom->GetPos()->x - 3.f, m_pTransformCom->GetPos()->y - 400.f, m_pTransformCom->GetPos()->z - 9.f - 5.f * i);
+		dynamic_pointer_cast<CHero>(m_pVecHero[i])->SetSelected(false);
 	}
 
 	m_vecPickingObject.clear();
