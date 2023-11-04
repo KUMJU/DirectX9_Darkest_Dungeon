@@ -4,6 +4,7 @@
 #include "HeroStat.h"
 #include"Export_Utility.h"
 #include"StatView.h"
+#include "UIMgr.h"
 
 CShieldBreaker::CShieldBreaker(LPDIRECT3DDEVICE9 pGraphicDev) : CHero(pGraphicDev)
 {
@@ -261,6 +262,16 @@ _int CShieldBreaker::UpdateGameObject(const _float& fTimeDelta)
 			SetAttacking(false, 3);
 			m_fAttackTime = ATTACKTIME;
 		}
+	}
+
+	// ¸¶À»¿ë
+	if (!m_bInDungeon)
+	{
+		if (m_bSelected)
+			m_eCurAnimState = EAnimState::COMBAT;
+
+		else
+			m_eCurAnimState = EAnimState::IDLE;
 	}
 
 	return iExit;

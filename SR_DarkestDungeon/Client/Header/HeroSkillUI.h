@@ -48,5 +48,9 @@ private:
 	shared_ptr<CRcTex> m_arrSkillStateRcTex[2];
 	shared_ptr<CTexture> m_pSkillActivateTexture;
 	shared_ptr<CTexture> m_pSkillLockTexture;
+
+	// 잠금 스킬 금액 텍스처
+	shared_ptr<CRcTex> m_pSkillGoldRcTex;
+	shared_ptr<CTexture> m_pSkillGoldTexture;
 };
 

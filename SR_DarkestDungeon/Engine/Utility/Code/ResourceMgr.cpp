@@ -993,7 +993,36 @@ void CResourceMgr::VillageTextureLoad()
 			// 노상강도 스킬 UI
 			CreateNewTexture(L"UI_HeroSkill_Highwayman", TEX_NORMAL,
 				L"../Bin/Resource/Image/UI/Hero/Guild/highwayman_guild.png", 1, bDefault);
+		}
 
+		// 주점
+		{
+			// 기본 UI
+			CreateNewTexture(L"UI_HeroTavern_Base", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Tavern/base_tavern.png", 1, bDefault);
+			// 성녀 UI
+			CreateNewTexture(L"UI_HeroTavern_Vestal", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Tavern/vestal_tavern_button.png", 1, bDefault);
+			// 방패파괴자 UI
+			CreateNewTexture(L"UI_HeroTavern_ShieldBreaker", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Tavern/shieldbreaker_tavern_button.png", 1, bDefault);
+			// 광대 UI
+			CreateNewTexture(L"UI_HeroTavern_Jester", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Tavern/jester_tavern_button.png", 1, bDefault);
+			// 노상강도 UI
+			CreateNewTexture(L"UI_HeroTavern_Highwayman", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Hero/Tavern/highwayman_tavern_button.png", 1, bDefault);
+
+		}
+
+		// 아이콘
+		{
+			// 골드 아이콘
+			CreateNewTexture(L"UI_Icon_Gold", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/UI/currency.gold.icon.png", 1, bDefault);
+			// 가보 아이콘
+			CreateNewTexture(L"UI_Icon_Crest", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/UI/currency.crest.icon_1.png", 1, bDefault);
 		}
 	}
 }

@@ -3,6 +3,8 @@
 #include "Export_Utility.h"
 #include "StatView.h"
 #include "HeroStat.h"
+#include "UIMgr.h"
+#include "Player.h"
 
 CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
@@ -98,18 +100,22 @@ void CHero::RenderGameObject()
 
 void CHero::PickingObj()
 {
-	_vec3* pPlayerTransform = dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos();
+	shared_ptr<CPlayer> pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
+	_vec3* pPlayerTransform = dynamic_pointer_cast<CTransform>(pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos();
 
-	if ((*pPlayerTransform).y < - 50 && (*pPlayerTransform).y > -150)
-		m_bForSelect = true;
-
-	if (!m_bHired)
+	if ((*pPlayerTransform).y > -10)
+	{
 		m_pStatUI->SetForHire(true);
+		m_pStatUI->SetVisible(true);
+	}
 
-	else if (m_bForSelect)
-		m_pStatUI->SetForSelect(true);
+	else if ((*pPlayerTransform).y < -50 && (*pPlayerTransform).y > -150)
+	{
+		m_eCurAnimState = EAnimState::COMBAT;
+		pPlayer->ShowTavernUI(dynamic_pointer_cast<CHero>(shared_from_this()));
+		m_bSelected = true;
+	}
 
-	m_pStatUI->SetVisible(true);
 	CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 }
 
@@ -193,7 +199,7 @@ void CHero::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale(*m_pTransformCom->GetScale());
+	m_pColliderCom->SetScale({3.f, 3.f, 1.f});
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 }
 
@@ -204,14 +210,6 @@ void CHero::SwapSkill(_int _iIdx1, _int _iIdx2)
 
 void CHero::ChangeAnimState()
 {
-	// 마을인 경우
-	if (!m_bInDungeon)
-	{
-		m_ePrevAnimState = m_eCurAnimState;
-		m_eCurAnimState = EAnimState::IDLE;
-
-		return;
-	}
 
 	//// 임시
 	//if ((m_bAttacking1 || m_bAttacking2 || m_bAttacking3 || m_bAttacking4) && m_tCommonStat.iHp >= 0)

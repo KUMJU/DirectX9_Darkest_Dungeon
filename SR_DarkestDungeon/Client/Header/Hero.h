@@ -3,6 +3,7 @@
 #include "Skill.h"
 
 class CHeroStat;
+class CTavernUI;
 
 // ºØ±« (75%)
 enum class EAffliction
@@ -109,8 +110,14 @@ public:
 	void		SetForSelect(_bool _bForSelect) { m_bForSelect = _bForSelect; }
 	_bool		IsForSelect() { return m_bForSelect; }
 
+	void		SetSelected(_bool _bSelected) { m_bSelected = _bSelected; }
+	_bool		IsSelected() { return m_bSelected; }
+
 	void		SetObjKey(tstring _objKey) { m_strObjKey = _objKey; }
 	tstring		GetObjKey() { return m_strObjKey; }
+
+	void		SetInDungeon(_bool _bInDungeon) { m_bInDungeon = _bInDungeon; }
+	_bool		GetInDungeon() { return m_bInDungeon; }
 
 protected:
 
@@ -150,6 +157,7 @@ protected:
 	_bool		m_bShowStatUI = false;
 	_bool		m_bHired = false;
 	_bool		m_bForSelect = false;
+	_bool		m_bSelected = false;
 
 	//shared_ptr<vector<shared_ptr<tstring>>>	m_pVecAnimKey;
 

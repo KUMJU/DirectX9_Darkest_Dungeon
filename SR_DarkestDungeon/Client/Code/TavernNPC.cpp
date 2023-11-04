@@ -3,6 +3,7 @@
 #include "GameMgr.h"
 #include "CameraMgr.h"
 #include "Player.h"
+#include "Hero.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -100,9 +101,13 @@ void CTavernNPC::Interaction()
 _bool CTavernNPC::IsFinish()
 {
 	// 키 입력받기
-	if (GetAsyncKeyState('Z') & 0x8000)
+	if (GetAsyncKeyState('X') & 0x8000)
 	{
 		m_bInteracting = false;
+
+		// 모든 영웅 IDLE로 변경
+		for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+			dynamic_pointer_cast<CHero>(iter)->SetSelected(false);
 
 		// 카메라 원상복귀
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
