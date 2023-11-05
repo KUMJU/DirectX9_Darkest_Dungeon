@@ -52,6 +52,15 @@ void CFontMgr::Render_Font(const _tchar* pFontTag, const _tchar* pString, const 
 	pMyFont->Render_Font(pString, pPos, Color);
 }
 
+void CFontMgr::RenderFontCenter(const _tchar* pFontTag, const _tchar* pString, const _vec2* pStartPos, const _vec2* pEndPos, D3DXCOLOR Color)
+{
+	std::shared_ptr<CMyFont> pMyFont = Find_Font(pFontTag);
+	if (nullptr == pMyFont)
+		return;
+
+	pMyFont->RenderFontCenter(pString, pStartPos, pEndPos, Color);
+}
+
 shared_ptr<CMyFont> CFontMgr::Find_Font(const _tchar* pFontTag)
 {
 	auto		iter = find_if(m_mapFont.begin(), m_mapFont.end(), CTag_Finder(pFontTag));

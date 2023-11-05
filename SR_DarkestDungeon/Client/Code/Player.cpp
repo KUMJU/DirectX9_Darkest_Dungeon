@@ -199,7 +199,7 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 90.f);
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+	if (GetAsyncKeyState('D') & 0x8000) {
 		if (m_bMoveLock[1])
 			return;
 		m_pTransformCom->GetInfo(INFO_RIGHT, &vDir);
@@ -210,7 +210,7 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		m_eLastMove = EPlayerMove::RIGHT;
 	}
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+	if (GetAsyncKeyState('A') & 0x8000) {
 		if (m_bMoveLock[3])
 			return;
 		m_pTransformCom->GetInfo(INFO_RIGHT, &vDir);
@@ -221,7 +221,7 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		m_eLastMove = EPlayerMove::LEFT;
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
+	if (GetAsyncKeyState('S') & 0x8000) {
 		if (m_bMoveLock[2])
 			return;
 		m_pTransformCom->GetInfo(INFO_LOOK, &vDir);
@@ -233,7 +233,7 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	}
 
 
-	if (GetAsyncKeyState(VK_UP) & 0x8000) {
+	if (GetAsyncKeyState('W') & 0x8000) {
 		if (m_bMoveLock[0])
 			return;
 		m_pTransformCom->GetInfo(INFO_LOOK, &vDir);

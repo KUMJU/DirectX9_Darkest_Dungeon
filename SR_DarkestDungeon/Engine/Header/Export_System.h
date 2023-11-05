@@ -36,6 +36,13 @@ inline void		Render_Font(const _tchar* pFontTag,
 	const _vec2* pPos,
 	D3DXCOLOR Color);
 
+inline void		RenderFontCenter(const _tchar* pFontTag,
+	const _tchar* pString,
+	const _vec2* pStartPos,
+	const _vec2* pEndPos,
+	D3DXCOLOR Color);
+
+
 
 // InputDev
 inline _byte	Get_DIKeyState(_ubyte byKeyID);

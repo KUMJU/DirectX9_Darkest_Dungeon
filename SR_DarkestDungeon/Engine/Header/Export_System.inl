@@ -53,6 +53,11 @@ void		Render_Font(const _tchar* pFontTag, const _tchar* pString, const _vec2* pP
 	CFontMgr::GetInstance()->Render_Font(pFontTag, pString, pPos, Color);
 }
 
+inline void RenderFontCenter(const _tchar* pFontTag, const _tchar* pString, const _vec2* pStartPos, const _vec2* pEndPos, D3DXCOLOR Color)
+{
+	CFontMgr::GetInstance()->RenderFontCenter(pFontTag, pString, pStartPos, pEndPos, Color);
+}
+
 
 
 inline _byte Get_DIKeyState(_ubyte byKeyID)

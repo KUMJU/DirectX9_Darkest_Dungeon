@@ -7,7 +7,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\Code\StageCoachHero.cpp" />
     <ClCompile Include="..\Code\Village.cpp">
-      <Filter>00. Scene\01. Village</Filter>
+      <Filter>00. Scene\02. Village</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Creature.cpp">
       <Filter>01. GameObject\01. Creature</Filter>
@@ -64,7 +64,7 @@
       <Filter>01. GameObject\01. Creature\00. Hero</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Weald_Dungeon.cpp">
-      <Filter>00. Scene\00. Weald Dungeon</Filter>
+      <Filter>00. Scene\01. Weald Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Highwayman.cpp">
       <Filter>01. GameObject\01. Creature\00. Hero</Filter>
@@ -75,9 +75,6 @@
     <ClCompile Include="..\Code\EnvironmentObj.cpp">
       <Filter>01. GameObject\04. Environment</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BattleHeroUI.cpp">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\DungeonRoom.cpp">
       <Filter>01. GameObject\06. Dungeon</Filter>
     </ClCompile>
@@ -86,21 +83,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
       <Filter>01. GameObject\05. Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\GoodsUI.cpp">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\HeroStat.cpp">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\HeroSkillUI.cpp">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Inventory.cpp">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\StatView.cpp">
-      <Filter>01. GameObject\03. UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerHand.cpp">
       <Filter>01. GameObject\00. Player</Filter>
@@ -163,9 +145,32 @@
     <ClCompile Include="..\Code\SoundMgr.cpp">
       <Filter>02. Manager\01. SoundMgr</Filter>
     </ClCompile>
-   
     <ClCompile Include="..\Code\TavernUI.cpp" />
     <ClCompile Include="..\Code\Description.cpp" />
+    <ClCompile Include="..\Code\BattleHeroUI.cpp">
+      <Filter>01. GameObject\03. UI\00. BattleHeroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GoodsUI.cpp">
+      <Filter>01. GameObject\03. UI\01. GoodsUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HeroSkillUI.cpp">
+      <Filter>01. GameObject\03. UI\02. HeroSkillUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HeroStat.cpp">
+      <Filter>01. GameObject\03. UI\03. HeroStat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Inventory.cpp">
+      <Filter>01. GameObject\03. UI\04. Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StatView.cpp">
+      <Filter>01. GameObject\03. UI\05. StatView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Narration.cpp">
+      <Filter>01. GameObject\03. UI\06. Narration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Loading.cpp">
+      <Filter>00. Scene\00. Loading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -179,7 +184,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\Header\StageCoachHero.h" />
     <ClInclude Include="..\Header\Village.h">
-      <Filter>00. Scene\01. Village</Filter>
+      <Filter>00. Scene\02. Village</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Creature.h">
       <Filter>01. GameObject\01. Creature</Filter>
@@ -236,7 +241,7 @@
       <Filter>01. GameObject\01. Creature\00. Hero</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Weald_Dungeon.h">
-      <Filter>00. Scene\00. Weald Dungeon</Filter>
+      <Filter>00. Scene\01. Weald Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Highwayman.h">
       <Filter>01. GameObject\01. Creature\00. Hero</Filter>
@@ -247,9 +252,6 @@
     <ClInclude Include="..\Header\EnvironmentObj.h">
       <Filter>01. GameObject\04. Environment</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BattleHeroUI.h">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\DungeonRoom.h">
       <Filter>01. GameObject\06. Dungeon</Filter>
     </ClInclude>
@@ -258,21 +260,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\DynamicCamera.h">
       <Filter>01. GameObject\05. Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\GoodsUI.h">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\HeroStat.h">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\HeroSkillUI.h">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Inventory.h">
-      <Filter>01. GameObject\03. UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\StatView.h">
-      <Filter>01. GameObject\03. UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerHand.h">
       <Filter>01. GameObject\00. Player</Filter>
@@ -320,9 +307,37 @@
       <Filter>01. GameObject\08. Item</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Tervarn.h" />
-   
     <ClInclude Include="..\Header\TavernUI.h" />
     <ClInclude Include="..\Header\Description.h" />
+    <ClInclude Include="..\Header\Gambling.h" />
+    <ClInclude Include="..\Header\Guild.h" />
+    <ClInclude Include="..\Header\GuildNPC.h" />
+    <ClInclude Include="..\Header\SoundMgr.h" />
+    <ClInclude Include="..\Header\TavernNPC.h" />
+    <ClInclude Include="..\Header\BattleHeroUI.h">
+      <Filter>01. GameObject\03. UI\00. BattleHeroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GoodsUI.h">
+      <Filter>01. GameObject\03. UI\01. GoodsUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HeroSkillUI.h">
+      <Filter>01. GameObject\03. UI\02. HeroSkillUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HeroStat.h">
+      <Filter>01. GameObject\03. UI\03. HeroStat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Inventory.h">
+      <Filter>01. GameObject\03. UI\04. Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StatView.h">
+      <Filter>01. GameObject\03. UI\05. StatView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Narration.h">
+      <Filter>01. GameObject\03. UI\06. Narration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Loading.h">
+      <Filter>00. Scene\00. Loading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -337,12 +352,6 @@
     </Filter>
     <Filter Include="01. GameObject">
       <UniqueIdentifier>{a9ac03b2-3e7d-4e4e-9669-825485168745}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Scene\00. Weald Dungeon">
-      <UniqueIdentifier>{b0cf1a74-8448-424d-bc36-9e8e3243a42b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Scene\01. Village">
-      <UniqueIdentifier>{7a6cc157-b6f4-4651-9d94-e234ee2add51}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. GameObject\00. Player">
       <UniqueIdentifier>{87432530-3f52-47d6-9013-041cb104ff83}</UniqueIdentifier>
@@ -397,6 +406,39 @@
     </Filter>
     <Filter Include="02. Manager\01. SoundMgr">
       <UniqueIdentifier>{49b410f2-745a-440a-940e-44760d6c37cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\00. BattleHeroUI">
+      <UniqueIdentifier>{d7a0c0fc-d8cc-4764-97d9-1f815c6404b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\01. GoodsUI">
+      <UniqueIdentifier>{abcabc83-415d-4163-ab0e-b4ab8996524a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\02. HeroSkillUI">
+      <UniqueIdentifier>{ba4e67ae-62f4-449e-b744-eedb64519b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\03. HeroStat">
+      <UniqueIdentifier>{40e2fbb0-988e-4a64-a38d-7c4407a33620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\04. Inventory">
+      <UniqueIdentifier>{c24c5f6d-53bc-4468-b04a-a54e51afd5b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\05. StatView">
+      <UniqueIdentifier>{eea10a1b-72da-4589-8ecd-2e3c687bfcd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\06. Narration">
+      <UniqueIdentifier>{4585aade-a9f4-4965-9dd1-81c69f0b7fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\07. ScreenEffect">
+      <UniqueIdentifier>{2c9df052-b357-46c2-80fc-5ed350091984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Scene\00. Loading">
+      <UniqueIdentifier>{ce5e5f90-c734-40aa-a2ed-7db05dd654a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Scene\01. Weald Dungeon">
+      <UniqueIdentifier>{b0cf1a74-8448-424d-bc36-9e8e3243a42b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Scene\02. Village">
+      <UniqueIdentifier>{7a6cc157-b6f4-4651-9d94-e234ee2add51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

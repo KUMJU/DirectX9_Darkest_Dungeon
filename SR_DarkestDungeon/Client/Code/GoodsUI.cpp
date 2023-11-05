@@ -72,12 +72,12 @@ void CGoodsUI::RenderGameObject()
     _vec2 vPos = { m_vPos.x + WINCX * 0.5f - 110.f, (m_vPos.y * -1.f) + WINCY * 0.5f - 5.f};
 
     //Gold
-    Engine::Render_Font(L"Font_Point", buf, &vPos, D3DXCOLOR(144.f / 255.f, 129.f / 255.f, 79.f / 255.f, 1.f));
+    Engine::Render_Font(L"Font_Point", buf, &vPos, D3DXCOLOR(0.878f, 0.807f, 0.6f, 1.f));
     
     _stprintf_s(buf, TEXT("%d"), m_iHeirloom);
     vPos = { m_vPos.x + WINCX * 0.5f +90.f, (m_vPos.y * -1.f) + WINCY * 0.5f - 5.f };
     //Heirloom
-    Engine::Render_Font(L"Font_Point", buf, &vPos, D3DXCOLOR(144.f / 255.f, 129.f / 255.f, 79.f / 255.f, 1.f));
+    Engine::Render_Font(L"Font_Point", buf, &vPos, D3DXCOLOR(0.878f, 0.807f, 0.6f, 1.f));
 
 
     m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);

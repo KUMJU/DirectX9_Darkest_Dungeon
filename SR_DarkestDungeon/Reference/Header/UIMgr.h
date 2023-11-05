@@ -24,6 +24,8 @@ public:
 	void SelectUIVisibleOn(tstring _strKeyName);
 	void SelectUIVisibleOff(tstring _strKeyName);
 	
+	void NarrationOn(tstring _strKeyName);
+
 	shared_ptr<CUIObj> FindUI(tstring _strKeyName);
 
 	//현재 Visible이 true인 UI를 검사한 후, 그 UI만 대상으로 픽킹
@@ -31,7 +33,6 @@ public:
 	void HoverUI(LONG _fX, LONG _fY);
 
 private:
-
 
 	map<tstring, shared_ptr<CUIObj>> m_UIList;
 

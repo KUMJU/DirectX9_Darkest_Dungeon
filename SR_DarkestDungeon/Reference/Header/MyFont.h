@@ -13,6 +13,7 @@ public:
 	HRESULT		ReadyResourceFont(const _tchar* pFontPath, const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight);
 	HRESULT		Ready_Font(const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight);
 	void		Render_Font(const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color);
+	void		RenderFontCenter(const _tchar* pString, const _vec2* pStartPos, const _vec2* pEndPos, D3DXCOLOR Color);
 
 private:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;

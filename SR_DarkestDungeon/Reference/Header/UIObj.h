@@ -34,6 +34,7 @@ public:
 	virtual void PickingUI(LONG _fX, LONG _fY) {};
 	virtual void HoverUI(LONG _fX, LONG _fY) {};
 
+	virtual void ActiveUI(tstring _strKey) {};
 protected:
 
 	void CalculateUIRect();

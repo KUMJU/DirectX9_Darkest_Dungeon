@@ -20,6 +20,9 @@ public: //Camera Moving
 	
 	//기본 1인칭 화면으로 전환
 	void SetFPSMode();
+	//빌리지에서 사용하는 카메라(커서 고정+카메라 회전 자유)로 전환
+	void SetVillageMode();
+	void SetState(ECameraMode _eState);
 	//ZoomIn, ZoomOut, Basic Moving
 	void MovingStraight(ECameraMode _eType, _vec3 _vPos);
 	//공전
