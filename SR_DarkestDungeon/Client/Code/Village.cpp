@@ -284,10 +284,8 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 		m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
 		(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
-	}
-
-	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(false);
+		m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(false);
 
 	// 영웅 테스트
 	 {
@@ -320,7 +318,6 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	 {
 		 dynamic_pointer_cast<CHero>(iter)->SetInDungeon(false);
 	 }
-	}
 
 	// 여관
 	{
