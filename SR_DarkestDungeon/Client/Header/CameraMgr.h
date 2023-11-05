@@ -13,6 +13,8 @@ private:
 
 public:
 	void SetMainCamera(shared_ptr<CStaticCamera> _pCam) { m_pMainCam = _pCam; }
+	void RemoveMainCamera() { m_pMainCam = nullptr; }
+	shared_ptr<CGameObject> GetMainCamera() { return m_pMainCam; }
 
 public: //Camera Moving
 	

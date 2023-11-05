@@ -37,9 +37,6 @@
     <Filter Include="03. Component\04. VIBuffer\01. TerrainTex">
       <UniqueIdentifier>{bdc4ec49-5db3-4592-b9d9-99c52500acb4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Component\05. Sound">
-      <UniqueIdentifier>{f5c44b71-45bd-4079-bbeb-91338d14fe4b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98. Util">
       <UniqueIdentifier>{3809a9e7-c277-41ec-9706-ca12a7bc227f}</UniqueIdentifier>
     </Filter>
@@ -58,23 +55,23 @@
     <Filter Include="02. GameObject\Camera">
       <UniqueIdentifier>{ffe7859e-2dac-4053-8c5a-93d455687d18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Component\06. Animator">
-      <UniqueIdentifier>{478356ca-006c-471f-82e7-a2b2df54eebb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Component\04. VIBuffer\02. CubeTex">
       <UniqueIdentifier>{6a0b2b0b-d218-4e23-99c9-afc396cca2b5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\UI">
       <UniqueIdentifier>{deacfb9f-e57c-4ba8-b2a3-45285d6b4582}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Manager\04.UIMgr">
-      <UniqueIdentifier>{d6f542c0-c566-450d-a86e-ad2264e3baa7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Manager\05. CollisionMgr">
       <UniqueIdentifier>{169d7455-8645-44d1-9546-371d12f359ef}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Manager\06. PickingMgr">
       <UniqueIdentifier>{4005798a-2002-4e7e-8433-19cf82b6ae2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\04. UIMgr">
+      <UniqueIdentifier>{d6f542c0-c566-450d-a86e-ad2264e3baa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Component\05. Animator">
+      <UniqueIdentifier>{478356ca-006c-471f-82e7-a2b2df54eebb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +108,6 @@
     <ClCompile Include="..\Code\TerrainTex.cpp">
       <Filter>03. Component\04. VIBuffer\01. TerrainTex</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SoundComponent.cpp">
-      <Filter>03. Component\05. Sound</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\EngineUtil.cpp">
       <Filter>98. Util</Filter>
     </ClCompile>
@@ -127,7 +121,7 @@
       <Filter>02. GameObject\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Animator.cpp">
-      <Filter>03. Component\06. Animator</Filter>
+      <Filter>03. Component\05. Animator</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubeTex.cpp">
       <Filter>03. Component\04. VIBuffer\02. CubeTex</Filter>
@@ -136,7 +130,7 @@
       <Filter>02. GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIMgr.cpp">
-      <Filter>04. Manager\04.UIMgr</Filter>
+      <Filter>04. Manager\04. UIMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CollisionMgr.cpp">
       <Filter>04. Manager\05. CollisionMgr</Filter>
@@ -186,9 +180,6 @@
     <ClInclude Include="..\..\Header\TerrainTex.h">
       <Filter>03. Component\04. VIBuffer\01. TerrainTex</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\SoundComponent.h">
-      <Filter>03. Component\05. Sound</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Header\EngineUtil.h">
       <Filter>98. Util</Filter>
     </ClInclude>
@@ -202,7 +193,7 @@
       <Filter>02. GameObject\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\Animator.h">
-      <Filter>03. Component\06. Animator</Filter>
+      <Filter>03. Component\05. Animator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\CubeTex.h">
       <Filter>03. Component\04. VIBuffer\02. CubeTex</Filter>
@@ -211,7 +202,7 @@
       <Filter>02. GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\UIMgr.h">
-      <Filter>04. Manager\04.UIMgr</Filter>
+      <Filter>04. Manager\04. UIMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\CollisionMgr.h">
       <Filter>04. Manager\05. CollisionMgr</Filter>

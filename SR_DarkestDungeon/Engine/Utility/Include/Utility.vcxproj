@@ -166,7 +166,6 @@
     <ClInclude Include="..\..\Header\ResourceMgr.h" />
     <ClInclude Include="..\..\Header\Scene.h" />
     <ClInclude Include="..\..\Header\SceneMgr.h" />
-    <ClInclude Include="..\..\Header\SoundComponent.h" />
     <ClInclude Include="..\..\Header\TerrainTex.h" />
     <ClInclude Include="..\..\Header\Texture.h" />
     <ClInclude Include="..\..\Header\Transform.h" />
@@ -192,7 +191,6 @@
     <ClCompile Include="..\Code\ResourceMgr.cpp" />
     <ClCompile Include="..\Code\Scene.cpp" />
     <ClCompile Include="..\Code\SceneMgr.cpp" />
-    <ClCompile Include="..\Code\SoundComponent.cpp" />
     <ClCompile Include="..\Code\TerrainTex.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />
     <ClCompile Include="..\Code\Transform.cpp" />

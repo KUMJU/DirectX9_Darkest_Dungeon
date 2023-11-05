@@ -48,6 +48,7 @@ void CUIObj::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 }
 
+
 void CUIObj::CalculateUIRect()
 { 
 
@@ -59,7 +60,7 @@ void CUIObj::CalculateUIRect()
 	
 	m_UIRect.left = (LONG)((m_vPos.x + fScreenX*0.5f) - m_vSize.x);
 	m_UIRect.right = (LONG)(m_UIRect.left + (m_vSize.x * 2.f));
-	m_UIRect.top= (LONG)(-1 * m_vPos.y) + fScreenY * 0.5 - m_vSize.y;
+	m_UIRect.top= (LONG)((-1 * m_vPos.y) + fScreenY * 0.5f - m_vSize.y);
 	m_UIRect.bottom = (LONG)(m_UIRect.top + (m_vSize.y * 2.f));
 
 }

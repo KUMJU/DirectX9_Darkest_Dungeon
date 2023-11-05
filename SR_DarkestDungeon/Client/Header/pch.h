@@ -35,6 +35,8 @@
 #include <algorithm>
 #include <functional>
 #include <process.h>
+#include <io.h>
+#include <tchar.h>
 
 #ifdef _DEBUG
 
@@ -51,6 +53,12 @@
 #endif
 
 
+//#ifdef UNICODE
+//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+//#else
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+//#endif
+//
 
 extern HINSTANCE g_hInst;
 extern HWND g_hWnd;

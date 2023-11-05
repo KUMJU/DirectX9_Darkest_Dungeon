@@ -163,6 +163,7 @@ private:
 	_bool		m_bEventTrigger = false;
 	_bool		m_bEvent2Trigger = false;
 	_bool		m_bEvent3Trigger = false;
+	_bool		m_bReady = false;
 
 	// 피킹 오브젝트 벡터 (뒤 돌아볼 때 생성되는 영웅용)
 	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};

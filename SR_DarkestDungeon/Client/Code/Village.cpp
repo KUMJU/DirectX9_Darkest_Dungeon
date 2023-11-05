@@ -44,6 +44,7 @@ CVillage::~CVillage()
 HRESULT CVillage::ReadyScene()
 {
 	CResourceMgr::GetInstance()->VillageTextureLoad();
+	CCameraMgr::GetInstance()->RemoveMainCamera();
 
 	Ready_Layer_Environment(L"Layer_3_Environment");
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
@@ -273,12 +274,19 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 		//}
 	}
 
+		// 테스트 (돈, 가보 초기 세팅)
+		{
+			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitGold(2000);
+			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
+		}
+
+		shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
+		m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
+		(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
+
+	}
+
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
-
-	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
-	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
-
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(false);
 
 	// 영웅 테스트
@@ -312,6 +320,7 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	 {
 		 dynamic_pointer_cast<CHero>(iter)->SetInDungeon(false);
 	 }
+	}
 
 	// 여관
 	{

@@ -32,7 +32,6 @@ public:
 
 protected:
 	void	AddComponent();
-	void	HoverUI(LONG _fX, LONG _fY);
 
 private:
 	weak_ptr<CHero>	m_pHero;

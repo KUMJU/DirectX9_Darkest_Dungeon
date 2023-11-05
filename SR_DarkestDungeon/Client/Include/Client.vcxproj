@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>../Bin\</OutDir>
-    <IncludePath>$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(DXSDK_DIR)lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include;../../Fmod/inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(DXSDK_DIR)lib\x64;../../Fmod/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
@@ -128,8 +128,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../.../Fmod/lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -186,6 +186,7 @@
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\PickingGame.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
+    <ClInclude Include="..\Header\SoundMgr.h" />
     <ClInclude Include="..\Header\StageCoachHero.h" />
     <ClInclude Include="..\Header\StatView.h" />
     <ClInclude Include="..\Header\TavernNPC.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="..\Code\Outside.cpp" />
     <ClCompile Include="..\Code\PickingGame.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
+    <ClCompile Include="..\Code\SoundMgr.cpp" />
     <ClCompile Include="..\Code\StageCoachHero.cpp" />
     <ClCompile Include="..\Code\StatView.cpp" />
     <ClCompile Include="..\Code\TavernNPC.cpp" />

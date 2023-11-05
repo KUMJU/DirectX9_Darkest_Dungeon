@@ -23,14 +23,17 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::ReadyGameObject()
 {
+	if (m_bReady)
+		return S_OK;
+
 	__super::ReadyGameObject();
 
 	m_eCollideID = ECollideID::PLAYER;
 	m_bColliding = true;
 
-	SetGold(1000, true);
-	SetHeirloom(5, true);
-
+	SetGold(2000, true);
+	SetHeirloom(3, true);
+	m_bReady = true;
 	return S_OK;
 }
 
@@ -151,6 +154,9 @@ void CPlayer::SetHeirloom(_int _iNum, _bool _bIsEarn)
 
 void CPlayer::AddComponent()
 {
+	if (m_bReady)
+		return;
+
 	shared_ptr<CComponent> pComponent;
 
 	_vec3 vPosTemp = { 0.f,0.f,0.f };
@@ -176,13 +182,12 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	_vec3		vDir;
 
 	if (GetAsyncKeyState('P') & 0x8000 && m_bInDungeon) {
-		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
-
+		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::LOOKBACK, 180.f);
 		m_bSeeBack = true;
 	}
 
 	if (GetAsyncKeyState('O') & 0x8000) {
-		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, -180.f);
+		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::LOOKBACK, -180.f);
 		m_bSeeBack = false;
 	}
 
@@ -190,6 +195,10 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		SetCurrentItem(EHandItem::ENUM_END);
 	}
 	
+	if (GetAsyncKeyState('K') & 0x8000) {
+		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 90.f);
+	}
+
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 		if (m_bMoveLock[1])
 			return;
@@ -239,6 +248,11 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 void CPlayer::MouseInput()
 {
+
+	POINT	ptMouse{};
+	GetCursorPos(&ptMouse);
+	ScreenToClient(g_hWnd, &ptMouse);
+
 	//마우스 픽킹
 	if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
 
@@ -246,10 +260,6 @@ void CPlayer::MouseInput()
 
 		if (m_bCurMouse == m_bPrevMouse)
 			return;
-
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
 
  		_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
 
@@ -260,6 +270,14 @@ void CPlayer::MouseInput()
 
 	else
 		m_bCurMouse = false;
+	
+	//UI Hover
+	{
+		CUIMgr::GetInstance()->HoverUI(ptMouse.x, ptMouse.y);
+
+	}
+
+
 }
 
 void CPlayer::ClimbingTerrain()
@@ -374,6 +392,9 @@ void CPlayer::ShowHeroesBack()
 		dynamic_pointer_cast<CCreature>(m_pVecHero[i])->SetFront(false);
 		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 			m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+
+		const _vec3* vPlrPos = m_pTransformCom->GetPos();
+
 		pTransform->SetPosition(m_pTransformCom->GetPos()->x - 5.f, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 4.f * i);
 		pTransform->SetAngle(_vec3(0.f,0.f,0.f));
 	}
