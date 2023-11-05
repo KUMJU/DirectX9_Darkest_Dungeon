@@ -14,6 +14,8 @@ enum class ECameraMode {
 	ORBIT,
 	ZOOMIN,
 	ZOOMOUT,
+	LOOKBACK,
+	BATTLE,
 	ENUM_END
 };
 
@@ -60,6 +62,9 @@ public:
 	void AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.5f);
 	//오른쪽 왼쪽으로만 이동하는 함수
 	void MovingRightVec(_int _iDir);
+	
+	void SlopeCamera(_int _iDir, _int _iSlope);
+
 private:
 //Moving Function
 

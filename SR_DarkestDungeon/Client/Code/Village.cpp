@@ -43,6 +43,7 @@ CVillage::~CVillage()
 HRESULT CVillage::ReadyScene()
 {
 	CResourceMgr::GetInstance()->VillageTextureLoad();
+	CCameraMgr::GetInstance()->RemoveMainCamera();
 
 	Ready_Layer_Environment(L"Layer_3_Environment");
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
@@ -227,7 +228,7 @@ HRESULT CVillage::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
@@ -245,39 +246,35 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	//플레이어
 	shared_ptr<CGameObject> m_pPlayer;
 
-	//if (m_pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer()))
-	//{
-	//	// 던전에서 시작해서 넘어온 경우
-	//	m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
-	//	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(m_pPlayer->GetPos().x, m_pPlayer->GetPos().y, m_pPlayer->GetPos().z);
+	if (m_pPlayer = CGameMgr::GetInstance()->GetPlayer())
+	{
+		// 던전에서 시작해서 넘어온 경우
+		m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
+		dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(m_pPlayer->GetPos().x, m_pPlayer->GetPos().y, m_pPlayer->GetPos().z);
 
-	//	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
-	//	{
-	//		m_pLayer->CreateGameObject(dynamic_pointer_cast<CHero>(iter)->GetObjKey(), iter);
-	//	}
-	//}
-
-	//else
-	//{
+	}
+	
+	else
+	{
 		// 마을에서부터 시작한 경우
 		m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
 		CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
 		m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
 
 
-		//// 테스트 (돈, 가보 초기 세팅)
-		//{
-		//	dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitGold(2000);
-		//	dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
-		//}
-	//}
+		// 테스트 (돈, 가보 초기 세팅)
+		{
+			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitGold(2000);
+			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
+		}
+
+		shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
+		m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
+		(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
+
+	}
 
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
-
-	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
-	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
-
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(false);
 
 	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
@@ -285,10 +282,9 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	}
 
 	// 영웅 테스트
-	{
-		shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
-		m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
-		m_pVestal->SetPos({ 10.f, 3.f, 20.f });
+	/*shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+	m_pVestal->SetPos({ 10.f, 3.f, 20.f });
 
 		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pVestal);
 
@@ -305,11 +301,10 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pJester);
 
 
-		shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
-		m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
-		m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
-		dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pShieldBreaker);
-	}
+	shared_ptr<CGameObject> m_pShieldBreaker = make_shared<CShieldBreaker>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pShieldBreaker);
+	m_pShieldBreaker->SetPos({ 25.f, 3.f, 20.f });
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->AddHero(m_pShieldBreaker);*/
 
 	// 여관
 	{

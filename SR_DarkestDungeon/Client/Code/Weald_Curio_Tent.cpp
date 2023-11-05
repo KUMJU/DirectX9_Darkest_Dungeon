@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "SoundMgr.h"
 
 CWeald_Curio_Tent::CWeald_Curio_Tent(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
@@ -128,7 +129,7 @@ void CWeald_Curio_Tent::GetInteractionKey(const _float& fTimeDelta)
 
 	// 키 입력받기
 	if (GetAsyncKeyState('C') & 0x8000)
-	{
+	{	
 		//m_bInteracting = true;
 		m_bActive = true;
 

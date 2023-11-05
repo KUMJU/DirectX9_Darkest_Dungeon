@@ -32,6 +32,7 @@ public:
 	RECT GetUIRect() { return m_UIRect; }
 
 	virtual void PickingUI(LONG _fX, LONG _fY) {};
+	virtual void HoverUI(LONG _fX, LONG _fY) {};
 
 protected:
 

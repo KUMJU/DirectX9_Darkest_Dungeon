@@ -171,6 +171,8 @@ void CInventory::PickingUI(LONG _fX, LONG _fY)
     }
 }
 
+
+
 void CInventory::AddComponent()
 {
     shared_ptr<CComponent> pComponent;

@@ -28,6 +28,7 @@ public:
 
 	//현재 Visible이 true인 UI를 검사한 후, 그 UI만 대상으로 픽킹
 	_bool PickingUI(LONG _fX, LONG _fY);
+	void HoverUI(LONG _fX, LONG _fY);
 
 private:
 

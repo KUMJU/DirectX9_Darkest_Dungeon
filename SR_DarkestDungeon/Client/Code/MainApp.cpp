@@ -6,6 +6,7 @@
 #include"CameraMgr.h"
 #include"UIMgr.h"
 #include"PickingMgr.h"
+#include"SoundMgr.h"
 
 CMainApp::CMainApp()
 {
@@ -28,6 +29,8 @@ HRESULT CMainApp::Ready_MainApp()
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
 	CResourceMgr::GetInstance()->BaseTextureLoad();	
 	CResourceMgr::GetInstance()->UITextureLoad();
+
+	CSoundMgr::GetInstance()->Initialize();
 
 	CPickingMgr::GetInstance()->ReadyPickingMgr(m_pGraphicDev);
 
@@ -127,6 +130,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 void CMainApp::Free()
 {
+	CSoundMgr::DestroyInstance();
 	CPickingMgr::DestroyInstance();
 	CUIMgr::DestroyInstance();
 	CCameraMgr::DestroyInstance();

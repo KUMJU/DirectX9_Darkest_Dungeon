@@ -77,3 +77,17 @@ _bool CUIMgr::PickingUI(LONG _fX, LONG _fY)
 	}
 	return false;
 }
+
+void CUIMgr::HoverUI(LONG _fX, LONG _fY)
+{
+	for (auto& iter : m_UIList) {
+		if (iter.second->GetVisible()) {
+			RECT rc = iter.second->GetUIRect();
+
+			if (rc.left <= _fX && rc.right >= _fX
+				&& rc.top <= _fY && rc.bottom >= _fY) {
+				iter.second->HoverUI(_fX, _fY);
+			}
+		}
+	}
+}

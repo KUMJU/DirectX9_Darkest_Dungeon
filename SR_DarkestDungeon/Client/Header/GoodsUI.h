@@ -25,14 +25,30 @@ protected:
 
 public:
 
-	void SetHeirloomNum(_int _iNum) { m_iHeirloom = _iNum; }
-	void SetGoldNum(_int _iNum) { m_iGold = _iNum; }
+	void SetHeirloomNum(_int _iNum) 
+	{ 
+		m_iGoodsGap = _iNum - m_iHeirloom;
+		m_bHeirloomChange = true;
+	}
+
+	void SetGoldNum(_int _iNum) 
+	{ 
+		m_iGoodsGap = _iNum - m_iGold;
+		m_bGoldChange = true;
+	}
+
+	void IncreaseGoods(_bool _bGold);
 
 private:
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
 
 	_int m_iGold = 0;
 	_int m_iHeirloom = 0;
+
+	_int m_iGoodsGap = 0;
+
+	_bool m_bGoldChange = false;
+	_bool m_bHeirloomChange = false;
 
 };
 

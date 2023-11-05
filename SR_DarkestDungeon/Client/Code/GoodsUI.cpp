@@ -34,6 +34,13 @@ HRESULT CGoodsUI::ReadyGameObject()
 _int CGoodsUI::UpdateGameObject(const _float& fTimeDelta)
 {
     int iExit(0);
+
+    //µ· ¿À¸£´Â È¿°ú
+    if (m_bGoldChange)
+        IncreaseGoods(true);
+    else if(m_bHeirloomChange)
+        IncreaseGoods(false);
+
     iExit =  CGameObject::UpdateGameObject(fTimeDelta);
     AddRenderGroup(RENDER_UI, shared_from_this());
 
@@ -91,3 +98,34 @@ void CGoodsUI::AddComponent()
     m_pTextureCom->SetTextureKey(L"UI_Goods", TEX_NORMAL);
     m_mapComponent[ID_STATIC].insert({ L"Com_Texture",pComponent });
 }
+
+void CGoodsUI::IncreaseGoods(_bool _bGold)
+{
+    _int iSign = 1;
+
+    if (m_iGoodsGap < 0)
+        iSign = -1;
+
+    //°ñµå Value Change
+    if (_bGold) {
+        if (m_iGoodsGap * iSign < 7) {
+            m_iGold += m_iGoodsGap;
+            m_iGoodsGap = 0;
+            m_bGoldChange = false;
+        }
+        else {
+            m_iGold += 7 * iSign;
+            m_iGoodsGap -= 7 * iSign;
+        }
+    }
+    else {
+        if (m_iGoodsGap == 0) {
+            m_bHeirloomChange = false;
+        }
+        else {
+            m_iHeirloom += 1 * iSign;
+            m_iGoodsGap -= 1 * iSign;
+        }
+    }
+}
+

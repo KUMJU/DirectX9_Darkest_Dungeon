@@ -26,7 +26,6 @@ HRESULT CStaticCamera::ReadyGameObject()
 
 _int CStaticCamera::UpdateGameObject(const _float& fTimeDelta)
 {
-
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	m_deltaTime = fTimeDelta;
 	return 0;
@@ -71,6 +70,10 @@ void CStaticCamera::LateUpdateGameObject(){
 		MovingDirect();
 		break;
 
+	case ECameraMode::LOOKBACK:
+		ChangeCamEyePos();
+		break;
+
 	case ECameraMode::ENUM_END:
 
 		break;
@@ -91,7 +94,7 @@ void CStaticCamera::ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegre
 {
 	CamReset();
 
-	if (_eCamType == ECameraMode::ROTATION) {
+	if (_eCamType == ECameraMode::ROTATION || _eCamType == ECameraMode::LOOKBACK) {
 		m_eCurrentState = _eCamType;
 		m_fAngle = _fDegree / _fTime;
 		m_fTotalTime = _fTime;
@@ -198,23 +201,6 @@ void CStaticCamera::ChangeCamEyePos()
 
 	_float fCalAngle = D3DXToRadian(m_fAngle) * m_deltaTime;
 
-
-	if (m_fActTime >= m_fTotalTime) {
-		
-		if (m_bIsLookBack == false) {
-			m_bIsLookBack = true;
-			m_matView = m_matOrigin;
-			m_eCurrentState = ECameraMode::IDLE;
-			return;
-		}
-		else {
-			m_bIsLookBack = false;
-			m_eCurrentState = ECameraMode::FPS;
-			return;
-		}
-		
-	}
-
 	//m_fLerp += 0.003f * m_deltaTime;
 
 	//if (m_fLerp > 0.4f)
@@ -235,7 +221,23 @@ void CStaticCamera::ChangeCamEyePos()
 	m_fCurrentAngle += D3DXToRadian(m_fAngle) * m_deltaTime;
 	m_fActTime += m_deltaTime;
 
-	if (m_fActTime >= m_fTotalTime) {
+	//Battle
+	if (m_fActTime >= m_fTotalTime && m_eCurrentState == ECameraMode::BATTLE) {
+		return;
+	}
+
+	//Rotation
+	if (m_fActTime >= m_fTotalTime && m_eCurrentState == ECameraMode::ROTATION) {
+
+		const _vec3* vAngle = m_pPlrTransCom->GetAngles();
+		m_pPlrTransCom->SetAngle({ vAngle->x, vAngle->y + D3DXToRadian(m_fTotalAngle) , vAngle->z });
+		m_eCurrentState = ECameraMode::FPS;
+		return;
+
+	}
+
+	//Look Back
+	if (m_fActTime >= m_fTotalTime && m_eCurrentState == ECameraMode::LOOKBACK) {
 
 		if (m_bIsLookBack == false) {
 			m_bIsLookBack = true;
@@ -308,10 +310,10 @@ void CStaticCamera::MovingDirect()
 	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
 	vCurPos2 = vCurrentPos;
 
-	m_fLerp += (_float)0.5 * m_deltaTime;
+	m_fLerp += (_float)0.3 * m_deltaTime;
 
-	if (m_fLerp > 0.9f) 
-		m_fLerp = 0.9f;
+	if (m_fLerp > 0.8f) 
+		m_fLerp = 0.8f;
 
 	D3DXVec3Lerp(&vCurrentPos, &vCurrentPos, &m_vDstVec, m_fLerp);
 
@@ -352,6 +354,13 @@ void CStaticCamera::MovingRightVec(_int _iDir)
 	D3DXMatrixInverse(&matView, 0, &matView);
 
 	m_matView = matView;
+
+}
+
+void CStaticCamera::SlopeCamera(_int _iDir, _int _iSlope)
+{
+	
+
 
 }
 

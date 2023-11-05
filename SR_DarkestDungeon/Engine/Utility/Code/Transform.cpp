@@ -55,7 +55,6 @@ _int CTransform::UpdateComponent(const _float& fTimeDelta)
 		m_vInfo[i] *= *(((_float*)&m_vScale) + i);
 	}
 
-	// 회전 변환
 	_matrix			matRot[ROT_END];
 
 	D3DXMatrixRotationX(&matRot[ROT_X], m_vAngle.x);

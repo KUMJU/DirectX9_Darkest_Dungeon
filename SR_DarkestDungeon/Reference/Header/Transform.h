@@ -28,6 +28,7 @@ public:
 
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
+
 public:
 
 	void SetPosition(const _float& _fX, const _float& _fY, const _float& _fZ)
@@ -80,6 +81,7 @@ private:
 	_vec3 m_vScale;
 	_vec3 m_vAngle;
 	_matrix m_matWorld;
+
 };
 
 END

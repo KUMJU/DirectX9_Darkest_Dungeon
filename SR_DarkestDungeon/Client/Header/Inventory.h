@@ -37,7 +37,6 @@ public:
 	void DeleteItem(tstring _strItmeName);
 
 	virtual void PickingUI(LONG _fX, LONG _fY) override;
-
 protected:
 	void	AddComponent();
 

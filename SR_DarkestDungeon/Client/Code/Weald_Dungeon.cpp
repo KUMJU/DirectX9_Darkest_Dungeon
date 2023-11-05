@@ -49,6 +49,7 @@
 
 #include"UIMgr.h"
 #include"BattleHeroUI.h"
+#include"SoundMgr.h"
 
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
