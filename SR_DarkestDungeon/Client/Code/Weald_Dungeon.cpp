@@ -51,6 +51,8 @@
 #include"BattleHeroUI.h"
 #include"SoundMgr.h"
 
+#include"Narration.h"
+
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -87,6 +89,8 @@ HRESULT CWeald_Dungeon::ReadyScene()
 		iter.second->ReadyLayer();
 	}
 
+	CUIMgr::GetInstance()->NarrationOn(L"Narr_tut_firstdungeon");
+	//CSoundMgr::GetInstance()->PlayBGM(L"Combat_Level2_Loop2.wav", 0.5f);
 	return __super::ReadyScene();
 }
 
@@ -305,10 +309,10 @@ void CWeald_Dungeon::LateUpdateScene()
 void CWeald_Dungeon::RenderScene()
 {
 	// Font
-	_vec2 vDungeonName = _vec2(0.f, 0.f);
-	Engine::Render_Font(L"Font_Default", m_szString,
-		&vDungeonName, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	_vec2 vFontPos;
+	//_vec2 vDungeonName = _vec2(0.f, 0.f);
+	//Engine::Render_Font(L"Font_Default", m_szString,
+	//	&vDungeonName, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	//_vec2 vFontPos;
 
 	/*for (int i = 0; i < 4; i++)
 	{
@@ -753,6 +757,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
+	CCameraMgr::GetInstance()->SetFPSMode();
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
@@ -1052,6 +1057,11 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
 	
+	shared_ptr<CGameObject> m_pNarr = make_shared<CNarration>(m_pGraphicDev);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_Narration", dynamic_pointer_cast<CUIObj>(m_pNarr));
+	m_pLayer->CreateGameObject(L"Obj_Narr", m_pNarr);
+
+
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

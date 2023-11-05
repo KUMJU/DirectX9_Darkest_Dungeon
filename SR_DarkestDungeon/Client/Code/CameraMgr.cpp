@@ -16,6 +16,16 @@ void CCameraMgr::SetFPSMode()
 	m_pMainCam->SetState(ECameraMode::FPS);
 }
 
+void CCameraMgr::SetVillageMode()
+{
+	m_pMainCam->SetState(ECameraMode::VILLAGE);
+}
+
+void CCameraMgr::SetState(ECameraMode _eState)
+{
+	m_pMainCam->SetState(_eState);
+}
+
 void CCameraMgr::MovingStraight(ECameraMode _eType, _vec3 _vPos)
 {
 	m_pMainCam->MovingLineCamera(_eType, _vPos);

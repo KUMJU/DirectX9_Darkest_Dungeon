@@ -79,7 +79,7 @@ void CTavernNPC::GetInteractionKey(const _float& fTimeDelta)
 		CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 
 		// 카메라 이동
-		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 180.f);
+		CCameraMgr::GetInstance()->SetState(ECameraMode::INTERACTION);
 		dynamic_pointer_cast<CPlayer>(m_pPlayer)->ShowHeroesBackVillage();
 
 		Interaction();

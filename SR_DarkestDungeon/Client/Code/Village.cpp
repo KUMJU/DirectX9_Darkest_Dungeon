@@ -233,6 +233,7 @@ HRESULT CVillage::Ready_Layer_Camera(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
+	CCameraMgr::GetInstance()->SetVillageMode();
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

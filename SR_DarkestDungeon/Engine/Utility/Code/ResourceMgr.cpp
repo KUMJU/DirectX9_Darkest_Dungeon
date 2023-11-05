@@ -676,6 +676,10 @@ void CResourceMgr::UITextureLoad()
 	CreateNewTexture(L"UI_Goods", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Village/UI_Goods.png", 1, bDefault);
 
+	//나레이션 그라데이션
+	CreateNewTexture(L"UI_Narration_BackGround", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Background/UI_Narration_Grad.png", 1, bDefault);
+
 }
 
 void CResourceMgr::WealdDungeonTextureLoad()

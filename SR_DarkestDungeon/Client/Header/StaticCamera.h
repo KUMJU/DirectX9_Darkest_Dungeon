@@ -16,6 +16,8 @@ enum class ECameraMode {
 	ZOOMOUT,
 	LOOKBACK,
 	BATTLE,
+	VILLAGE,
+	INTERACTION,
 	ENUM_END
 };
 
@@ -82,9 +84,12 @@ private:
 	void CameraEffectProcess();
 	void ShakingCamera();
 
+private:
+//Village Camera Function
 	void CameraMove();
 	void Mouse_Fix();
-
+	void InteractionTervarn();
+	void KeyInput();
 private:
 	shared_ptr<CTransform> m_pPlrTransCom = nullptr;
 	ECameraMode m_eCurrentState = ECameraMode::IDLE;
@@ -102,7 +107,6 @@ private:
 
 	D3DXQUATERNION m_qPrev;
 	_vec3 m_vLook;
-//Time 
 
 	//Delta Time º¸°ü¿ë
 	_float m_deltaTime = 0.f;
@@ -115,9 +119,15 @@ private:
 
 	_float m_fLerp = 0.f;
 	_float m_fDir = 1.f;
-
-
+//State
 	_bool m_bIsLookBack = false;
+	_bool m_bCursorLock = true;
+	_bool m_bInVillage = false;
+
+//Village ------------------------------------------------
+
+	_float m_fYAngle = 0.f;
+
 private:
 	queue<unique_ptr<tagEffectInfo>> m_qEffectQueue;
 

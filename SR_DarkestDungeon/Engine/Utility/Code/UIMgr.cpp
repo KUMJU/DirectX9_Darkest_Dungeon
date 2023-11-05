@@ -51,6 +51,16 @@ void CUIMgr::SelectUIVisibleOff(tstring _strKeyName)
 
 }
 
+void CUIMgr::NarrationOn(tstring _strKeyName)
+{
+
+	auto iter = m_UIList.find(L"UI_Narration");
+
+	if (iter != m_UIList.end())
+		(*iter).second->ActiveUI(_strKeyName);
+
+}
+
 shared_ptr<CUIObj> CUIMgr::FindUI(tstring _strKeyName)
 {
 	auto iter = m_UIList.find(_strKeyName);

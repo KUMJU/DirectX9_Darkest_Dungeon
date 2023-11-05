@@ -32,6 +32,12 @@ public:
 		const _vec2* pPos,
 		D3DXCOLOR Color);
 
+	void		RenderFontCenter(const _tchar* pFontTag,
+		const _tchar* pString,
+		const _vec2* pStartPos,
+		const _vec2* pEndPos,
+		D3DXCOLOR Color);
+
 private:
 	map<const _tchar*, shared_ptr<CMyFont>>			m_mapFont;
 
