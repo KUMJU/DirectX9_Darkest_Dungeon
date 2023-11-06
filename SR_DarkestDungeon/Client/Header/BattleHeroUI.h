@@ -25,6 +25,7 @@ public:
 public:
 	void			SettingHeroInfo(_int _iMaxHP, _int _iHP, _int _iStress, tstring _strHeroName, vector<shared_ptr<CSkill>>* _vecSkill);
 	virtual			void PickingUI(LONG _fX, LONG _fY) override;
+	virtual			void HoverUI(LONG _fX, LONG _fY) override;
 
 protected:
 	void			AddComponent();

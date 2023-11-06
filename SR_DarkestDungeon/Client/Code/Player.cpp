@@ -11,6 +11,8 @@
 #include"GoodsUI.h"
 #include "TavernUI.h"
 
+#include "Description.h"
+
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -31,9 +33,10 @@ HRESULT CPlayer::ReadyGameObject()
 	m_eCollideID = ECollideID::PLAYER;
 	m_bColliding = true;
 
-	SetGold(2000, true);
-	SetHeirloom(3, true);
 	m_bReady = true;
+	SetGold(1000, true);
+	SetHeirloom(5, true);
+
 	return S_OK;
 }
 
@@ -243,6 +246,28 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		m_fDeltaTime = fTimeDelta;
 		m_eLastMove = EPlayerMove::UP;
 	}
+
+	//// UI 테스트 키 (추후 삭제 예정)
+	//if (GetAsyncKeyState('T') & 0x8000)
+	//{
+	//	(m_pDescription)->SetDescription(EDescriptionType::CONTENT, L"출혈을 막는 데 씁니다. 여러 줄 테스트를 해보겠습니다.", L"제목", L"부제목", L"스킬 특성", YELLOW, L"특성 설명");
+	//	(m_pDescription)->SetVisible(true);
+	//}
+	//if (GetAsyncKeyState('Y') & 0x8000)
+	//{
+	//	(m_pDescription)->SetDescription(EDescriptionType::ITEM, L"출혈을 막는 데 씁니다. 여러 줄 테스트를 해보겠습니다.", L"제목", L"부제목", L"스킬 특성", YELLOW, L"특성 설명");
+	//	(m_pDescription)->SetVisible(true);
+	//}
+	//if (GetAsyncKeyState('U') & 0x8000)
+	//{
+	//	(m_pDescription)->SetDescription(EDescriptionType::SKILL1, L"출혈을 막는 데 씁니다. 여러 줄 테스트를 해보겠습니다.", L"제목", L"부제목", L"스킬 특성", ORANGE, L"특성 설명");
+	//	(m_pDescription)->SetVisible(true);
+	//}
+	//if (GetAsyncKeyState('I') & 0x8000)
+	//{
+	//	(m_pDescription)->SetDescription(EDescriptionType::SKILL2, L"출혈을 막는 데 씁니다. 여러 줄 테스트를 해보겠습니다.", L"제목", L"부제목", L"스킬 특성", ORANGE, L"특성 설명");
+	//	(m_pDescription)->SetVisible(true);
+	//}
 
 }
 

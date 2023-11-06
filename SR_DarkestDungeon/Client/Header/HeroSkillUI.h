@@ -24,6 +24,9 @@ public:
 public:
 	void			SettingHeroInfo(_int _iMaxHp, _int _iHp, vector<shared_ptr<CSkill>>* _pSkillVec);
 	virtual			void PickingUI(LONG _fX, LONG _fY) override;
+	virtual			void HoverUI(LONG _fX, LONG _fY) override;
+
+	_int			GetEquippedCnt() { return m_iEquippedCnt; }
 
 protected:
 	void			AddComponent();
@@ -52,5 +55,9 @@ private:
 	// 잠금 스킬 금액 텍스처
 	shared_ptr<CRcTex> m_pSkillGoldRcTex;
 	shared_ptr<CTexture> m_pSkillGoldTexture;
+
+	// 장착 스킬 변경
+	_int	m_iSelectIdx = -1;
+	_int	m_iEquippedCnt = 4;
 };
 

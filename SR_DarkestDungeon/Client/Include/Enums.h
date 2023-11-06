@@ -82,8 +82,3 @@ enum class EHandItem {
 	TORCH,			// È¶ºÒ
 	ENUM_END	
 };
-
-
-
-
-

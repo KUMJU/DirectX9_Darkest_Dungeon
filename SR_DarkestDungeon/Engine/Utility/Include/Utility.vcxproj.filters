@@ -70,6 +70,9 @@
     <Filter Include="04. Manager\04. UIMgr">
       <UniqueIdentifier>{d6f542c0-c566-450d-a86e-ad2264e3baa7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Manager\04. UIMgr">
+      <UniqueIdentifier>{d6f542c0-c566-450d-a86e-ad2264e3baa7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. Component\05. Animator">
       <UniqueIdentifier>{478356ca-006c-471f-82e7-a2b2df54eebb}</UniqueIdentifier>
     </Filter>

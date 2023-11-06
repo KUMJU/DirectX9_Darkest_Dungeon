@@ -166,6 +166,19 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"UI_Inventory", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/panel_inventory.png", 1, bDefault);
 
+	CreateNewTexture(L"UI_Description", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/UI/ToolTip.png", 1, bDefault);
+	CreateNewTexture(L"UI_Active_Pos", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Hero/Skill/UI_active_pos.png", 1, bDefault);
+	CreateNewTexture(L"UI_Active_Target", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Hero/Skill/UI_active_target.png", 1, bDefault);
+	CreateNewTexture(L"UI_Deactive", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Hero/Skill/UI_deactive.png", 1, bDefault);
+	CreateNewTexture(L"UI_Active_Pos_Link", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Hero/Skill/UI_active_pos_link.png", 1, bDefault);
+	CreateNewTexture(L"UI_Active_Target_Link", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Hero/Skill/UI_active_target_link.png", 1, bDefault);
+
 	//PlayerHandItem
 	CreateNewTexture(L"Player_Item_Shovel", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_shovel.png", 1, bDefault);

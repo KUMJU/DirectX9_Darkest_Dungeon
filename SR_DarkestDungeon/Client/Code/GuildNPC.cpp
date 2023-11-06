@@ -15,7 +15,7 @@
 CGuildNPC::CGuildNPC(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
 {
-}
+}	
 
 CGuildNPC::CGuildNPC(const CGuildNPC& rhs)
 	: CInteractionObj(rhs)
@@ -56,8 +56,10 @@ _int CGuildNPC::UpdateGameObject(const _float& fTimeDelta)
 			pHeroSkillUI->SetVisible(false);
 			CUIMgr::GetInstance()->AddUIObject(L"UI_HeroSkill" + to_wstring(iIdx), pHeroSkillUI);
 
+			pHeroSkillUI->AwakeGameObject();
+			pHeroSkillUI->ReadyGameObject();
+
 			m_pUIVec.push_back(pHeroSkillUI);
-			m_vecGameObject.push_back(pHeroSkillUI);
 
 			iIdx++;
 		}
@@ -70,6 +72,11 @@ _int CGuildNPC::UpdateGameObject(const _float& fTimeDelta)
 	}
 
 	for (auto& iter : m_vecGameObject)
+	{
+		iter->UpdateGameObject(fTimeDelta);
+	}
+
+	for (auto& iter : m_pUIVec)
 	{
 		iter->UpdateGameObject(fTimeDelta);
 	}
@@ -151,10 +158,34 @@ _bool CGuildNPC::IsFinish()
 	// 키 입력받기
 	if (GetAsyncKeyState('X') & 0x8000)
 	{
+		_int _iCnt = 0;
+
+		for (auto& iter : m_pUIVec)
+			_iCnt += dynamic_pointer_cast<CHeroSkillUI>(iter)->GetEquippedCnt();
+
+		if (_iCnt < 16)
+		{
+			// 팝업 창 하나 종료 막기
+
+			return false;
+		}
+
 		m_bInteracting = false;
 
 		for (auto& iter : m_pUIVec)
 			iter->SetVisible(false);
+
+
+		for (auto& iterHero : *m_pHeroVec)
+		{
+			dynamic_pointer_cast<CHero>(iterHero)->ClearSkillVector();
+
+			for (auto& iterSkill : *dynamic_pointer_cast<CHero>(iterHero)->GetAllSkillVector())
+			{
+				if (iterSkill->IsEquipped())
+					dynamic_pointer_cast<CHero>(iterHero)->GetSkillVector()->push_back(iterSkill);
+			}
+		}
 
 		// 카메라 원상복귀
 

@@ -37,6 +37,8 @@ public:
 	void DeleteItem(tstring _strItmeName);
 
 	virtual void PickingUI(LONG _fX, LONG _fY) override;
+	virtual void HoverUI(LONG _fX, LONG _fY) override;
+
 protected:
 	void	AddComponent();
 
@@ -49,5 +51,7 @@ private:
 
 
 	weak_ptr<CPlayer> m_pPlayer;
+
+	_bool			m_bReady = false;
 
 };

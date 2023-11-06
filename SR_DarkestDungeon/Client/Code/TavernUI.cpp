@@ -3,6 +3,7 @@
 #include "Hero.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "UIMgr.h"
 
 #include"Export_Utility.h"
 #include"Export_System.h"
@@ -217,6 +218,18 @@ void CTavernUI::PickingUI(LONG _fX, LONG _fY)
 
 		m_iHP = m_pHero.lock()->GetHp();
 		m_iStress = m_pHero.lock()->GetStress();
+	}
+}
+
+void CTavernUI::HoverUI(LONG _fX, LONG _fY)
+{
+	//Y축검사
+	if (_fY > 590 || _fY < 564.f)
+		return;
+
+	if (661.f < _fX && 731.f >= _fX) {
+
+		CUIMgr::GetInstance()->SetDescription(L"휴식하기", { (_float)_fX - WINCX / 2.f, -(_float)_fY + WINCY / 2.f, 0.f });
 	}
 }
 

@@ -24,6 +24,7 @@ public:
 
 public:
 	virtual void PickingUI(LONG _fX, LONG _fY) override;
+	virtual void HoverUI(LONG _fX, LONG _fY) override;
 
 public:
 	void			SettingHeroInfo(_int _iMaxHP, _int _iHP, _int _iStress, _int _iGold);

@@ -59,6 +59,10 @@ public:
 public:
 	vector<shared_ptr<CSkill>>* GetSkillVector() { return &m_pVecSkill; }
 	shared_ptr<CSkill>		SelectSkill(_int _iSkillID);
+	void					ClearSkillVector() { m_pVecSkill.clear(); }
+
+	vector<shared_ptr<CSkill>>* GetAllSkillVector() { return &m_pVecSkillAll; }
+
 	virtual	void			StressUp();
 
 	// 선택한 두 스킬의 순서를 스왑하는 함수
@@ -164,6 +168,9 @@ protected:
 	_tchar		m_szString4[128];
 
 	tstring		m_strObjKey;
+
+	// 장착되지 않거나 잠금해제 되지 않은 스킬도 가지고 있는 변수
+	vector<shared_ptr<CSkill>>	m_pVecSkillAll;
 
 protected:
 	_bool		m_bReady = false;

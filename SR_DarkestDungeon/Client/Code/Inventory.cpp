@@ -1,6 +1,7 @@
 #include"pch.h"
 #include "Inventory.h"
 #include"Item.h"
+#include "UIMgr.h"
 #include"Export_Utility.h"
 #include"Player.h"
 #include"Export_System.h"
@@ -8,6 +9,7 @@
 CInventory::CInventory(LPDIRECT3DDEVICE9 _pGraphicDev)
     :Engine::CUIObj(_pGraphicDev)
 {
+    m_bReady = false;
 }
 
 CInventory::~CInventory()
@@ -16,6 +18,8 @@ CInventory::~CInventory()
 
 HRESULT CInventory::ReadyGameObject()
 {
+    if (m_bReady) return S_OK;
+
     m_vSize = { 208.f , 40.f ,0.f };
     m_vAngle = { 0.f, 0.f, 0.f };
     m_vPos = { 0.f, -320.f, 0.5f };
@@ -29,6 +33,8 @@ HRESULT CInventory::ReadyGameObject()
     m_pTransCom->SetAngle({0.f, 0.f, 0.f});
 
     CUIObj::ReadyGameObject();
+
+    m_bReady = true;
 
     return S_OK;
 }
@@ -171,10 +177,32 @@ void CInventory::PickingUI(LONG _fX, LONG _fY)
     }
 }
 
+void CInventory::HoverUI(LONG _fX, LONG _fY)
+{
+    size_t iCurrentNum = -1;
+    auto iter = m_itemList.begin();
+
+    for (size_t i = 0; i < m_itemList.size(); ++i) {
+        if (m_UIRect.left + 45.f * (i + 1) >= _fX) {
+            iCurrentNum = i;
+            break;
+        }
+        ++iter;
+    }
+
+
+    if (iCurrentNum >= 0 && iCurrentNum < m_itemList.size()) {
+
+        CUIMgr::GetInstance()->SetDescription((*iter)->pItem);
+    }
+}
+
 
 
 void CInventory::AddComponent()
 {
+    if (m_bReady) return;
+
     shared_ptr<CComponent> pComponent;
 
     CUIObj::AddComponent();
@@ -182,5 +210,4 @@ void CInventory::AddComponent()
     pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
     m_pTextureCom->SetTextureKey(L"UI_Inventory", TEX_NORMAL);
     m_mapComponent[ID_STATIC].insert({ L"Com_Texture",pComponent });
-
 }

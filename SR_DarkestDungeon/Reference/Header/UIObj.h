@@ -35,6 +35,10 @@ public:
 	virtual void HoverUI(LONG _fX, LONG _fY) {};
 
 	virtual void ActiveUI(tstring _strKey) {};
+	virtual void ActiveUI(tstring _strKey, _vec3 _vPos) {};
+	virtual void ActiveUI(shared_ptr<CGameObject> _pGameObject) {};
+	virtual void ActiveUI(shared_ptr<CGameObject> _pGameObject, _vec3 _vPos) {};
+
 protected:
 
 	void CalculateUIRect();

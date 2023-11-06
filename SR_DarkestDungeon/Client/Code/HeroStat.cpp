@@ -303,7 +303,7 @@ void CHeroStat::RenderGameObject()
 
 void CHeroStat::PickingUI(LONG _fX, LONG _fY)
 {
-
+	int i = 0;
 
 }
 
@@ -450,7 +450,7 @@ void CHeroStat::AddComponent()
 
 	}
 
-	m_pVecSkill = m_pHero.lock()->GetSkillVector();
+	m_pVecSkill = m_pHero.lock()->GetAllSkillVector();
 
 	{
 		/*

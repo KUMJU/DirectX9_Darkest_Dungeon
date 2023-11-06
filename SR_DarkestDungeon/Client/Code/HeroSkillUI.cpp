@@ -2,6 +2,7 @@
 #include "HeroSkillUI.h"
 #include "Skill.h"
 #include "Player.h"
+#include "UIMgr.h"
 
 #include"Export_Utility.h"
 #include"Export_System.h"
@@ -100,7 +101,7 @@ void CHeroSkillUI::RenderGameObject()
 	_matrix matTemp;
 
 	//Skill
-	vector<shared_ptr<CSkill>>* pSkillVector = m_pHero->GetSkillVector();
+	vector<shared_ptr<CSkill>>* pSkillVector = m_pHero->GetAllSkillVector();
 	_int test = 2;
 
 	if (pSkillVector) {
@@ -169,7 +170,7 @@ void CHeroSkillUI::PickingUI(LONG _fX, LONG _fY)
 		{
 			if (_fX > 880.f + 65.4f * iSkillNum && _fX < 927.f + 65.4f * iSkillNum)
 			{
-				vector<shared_ptr<CSkill>>* pSkillVector = m_pHero->GetSkillVector();
+				vector<shared_ptr<CSkill>>* pSkillVector = m_pHero->GetAllSkillVector();
 
 				// 잠금된 스킬인지 확인
 				if (!(*pSkillVector)[iSkillNum]->IsUnlocked())
@@ -185,6 +186,51 @@ void CHeroSkillUI::PickingUI(LONG _fX, LONG _fY)
 						(*pSkillVector)[iSkillNum]->SetUnlocked(true);
 					}
 				}
+
+				// 스킬 교환을 위한 클릭
+				else
+				{
+					if (!(*pSkillVector)[iSkillNum]->IsEquipped())
+					{
+						if (m_iEquippedCnt >= 4) return;
+
+						// 장착하기
+						else
+						{
+							++m_iEquippedCnt;
+							(*pSkillVector)[iSkillNum]->SetEquipped(true);
+						}
+					}
+
+					else
+					{
+						if (m_iEquippedCnt <= 0) return;
+
+						// 장착 해제하기
+						--m_iEquippedCnt;
+						(*pSkillVector)[iSkillNum]->SetEquipped(false);
+					}
+
+				}
+			}
+		}
+	}
+}
+
+void CHeroSkillUI::HoverUI(LONG _fX, LONG _fY)
+{
+	for (int iHeroNum = 0; iHeroNum < 4; ++iHeroNum)
+	{
+		if (_fY > 192.f + 124.f * iHeroNum || _fY < 146.f + 124.f * iHeroNum)
+			continue;
+
+		for (int iSkillNum = 0; iSkillNum < 6; ++iSkillNum)
+		{
+			if (_fX > 880.f + 65.4f * iSkillNum && _fX < 927.f + 65.4f * iSkillNum)
+			{
+				vector<shared_ptr<CSkill>>* pSkillVector = m_pHero->GetAllSkillVector();
+
+				CUIMgr::GetInstance()->SetDescription((*pSkillVector)[iSkillNum], { (_float)_fX - WINCX * 0.5f, -(_float)_fY + WINCY * 0.5f, 0.f });
 			}
 		}
 	}

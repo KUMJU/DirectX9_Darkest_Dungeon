@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-class CSkill
+class CSkill : public CGameObject
 {
 public:
 	// ¿µ¿õ ½ºÅ³ ¿ë

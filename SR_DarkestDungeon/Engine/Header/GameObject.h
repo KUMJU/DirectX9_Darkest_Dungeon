@@ -7,6 +7,32 @@ BEGIN(Engine)
 class CComponent;
 class CCollider;
 
+enum class EDescriptionType
+{
+	CONTENT,	// 내용
+	ITEM,		// 제목 + 내용
+	SKILL1,		// 위치, 타겟 텍스처 + 제목 + 부제목 + 내용
+	SKILL2,		// 위치, 타겟 텍서츠 + 제목 + 부제목 + 내용 + 능력1 + 설명1
+	SKILL3,		// 위치, 타겟 텍스처 + 제목 + 부제목 + 내용 + 능력1 + 설명1 + 능력2 + 설명2
+	ENUM_END
+};
+
+struct tagDescription {
+	EDescriptionType	m_eDescriptionType;
+
+	tstring		m_strMainContent = L"";
+	tstring		m_strTitle = L"";
+	tstring		m_strSubTitle = L"";
+
+	D3DCOLOR	m_tColor1 = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tstring		m_strColorTitle1 = L"";
+	tstring		m_strColorContent1 = L"";
+
+	D3DCOLOR	m_tColor2 = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tstring		m_strColorTitle2 = L"";
+	tstring		m_strColorContent2 = L"";
+};
+
 class ENGINE_DLL CGameObject : public enable_shared_from_this<CGameObject>
 {
 public:
@@ -50,6 +76,8 @@ public:
 	virtual void OnCollide(shared_ptr<CGameObject> _pObj) {}
 	virtual void OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection _eDir) {}
 
+	shared_ptr<tagDescription> GetDescription() { return m_tDescription; }
+
 public:
 	void SetLock(_bool _bLock) { m_bLock = _bLock; }
 	void	SetBillBoard(_matrix& _matWorld);
@@ -91,6 +119,9 @@ protected:
 	_bool m_bHorizontal = false;
 
 	_vec2 m_vOriginSize = {0.f, 0.f};
+
+	shared_ptr<tagDescription> m_tDescription;
+
 protected:
 	map<tstring, std::shared_ptr<CComponent>> m_mapComponent[ID_END];
 

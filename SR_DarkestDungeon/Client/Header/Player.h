@@ -19,6 +19,7 @@ class CInventory;
 class CTavernUI;
 class CItem;
 class CHero;
+class CDescription;
 
 enum class EPlayerMove
 {
