@@ -4,6 +4,7 @@
 #include"Export_Utility.h"
 #include"Export_System.h"
 #include"Skill.h"
+#include "UIMgr.h"
 
 CBattleHeroUI::CBattleHeroUI(LPDIRECT3DDEVICE9 _pGraphicDev)
     :CUIObj(_pGraphicDev)
@@ -20,7 +21,7 @@ HRESULT CBattleHeroUI::ReadyGameObject()
     m_vAngle = { 0.f, 0.f, 0.f };
     m_vPos = { -250.f, -250.f, 0.f };
 
-    m_bVisible = true;
+    m_bVisible = false;
     m_bEnable = true;
     m_bActive = true;
 
@@ -226,10 +227,50 @@ void CBattleHeroUI::PickingUI(LONG _fX, LONG _fY)
 
 
     }
+}
+
+void CBattleHeroUI::HoverUI(LONG _fX, LONG _fY)
+{
+    //Y축검사
+    if (_fY > (m_vPos.y * -1.f) + WINCY * 0.5f - 5.f || _fY < (m_vPos.y * -1.f) + WINCY * 0.5f - 60.f)
+        return;
+
+    if (m_vPos.x + WINCX * 0.5f - 80.f < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f >= _fX) {
+        //Skill1 버튼 클릭 트리거
+        CUIMgr::GetInstance()->SetDescription((*m_pSkillVec)[0], { (_float)_fX - WINCX * 0.5f, -(_float)_fY + WINCY * 0.5f, 0.f });
+
+    }
+    else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 2 >= _fX) {
+        //Skill2 버튼 클릭 트리거
+        CUIMgr::GetInstance()->SetDescription((*m_pSkillVec)[1], { (_float)_fX - WINCX * 0.5f, -(_float)_fY + WINCY * 0.5f, 0.f });
+
+
+    }
+    else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 2 < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 3 >= _fX) {
+        //Skill3 버튼 클릭 트리거
+        CUIMgr::GetInstance()->SetDescription((*m_pSkillVec)[2], { (_float)_fX - WINCX * 0.5f, -(_float)_fY + WINCY * 0.5f, 0.f });
 
 
 
+    }
+    else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 3 < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 4 >= _fX) {
+        //Skill4 버튼 클릭 트리거
+        CUIMgr::GetInstance()->SetDescription((*m_pSkillVec)[3], { (_float)_fX - WINCX * 0.5f, -(_float)_fY + WINCY * 0.5f, 0.f });
 
+
+    }
+    else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 4 < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 5 >= _fX) {
+        //자리 스왑 버튼 클릭 트리거 
+        CUIMgr::GetInstance()->SetDescription(L"자리 변경", { (_float)_fX - WINCX * 0.5f, -(_float)_fY + WINCY * 0.5f, 0.f });
+
+
+    }
+    else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 5 < _fX && m_vPos.x + WINCX * 0.5f - 120.f + 57.f * 6 >= _fX) {
+        //행동 취소(턴 넘기기) 버튼 클릭 트리거
+        CUIMgr::GetInstance()->SetDescription(L"턴 넘기기", { (_float)_fX - WINCX * 0.5f, -(_float)_fY + WINCY * 0.5f, 0.f });
+
+
+    }
 }
 
 void CBattleHeroUI::AddComponent()

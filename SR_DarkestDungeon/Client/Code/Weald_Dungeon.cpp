@@ -15,6 +15,7 @@
 #include"Inventory.h"
 #include"PlayerHand.h"
 #include"Item.h"
+#include "Description.h"
 
 #include"GameMgr.h"
 #include"CameraMgr.h"
@@ -1058,6 +1059,12 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pNarr = make_shared<CNarration>(m_pGraphicDev);
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Narration", dynamic_pointer_cast<CUIObj>(m_pNarr));
 	m_pLayer->CreateGameObject(L"Obj_Narr", m_pNarr);
+
+	// Description UI
+	shared_ptr<CGameObject> pDescriptionUI = make_shared<CDescription>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_DescriptionUI", pDescriptionUI);
+
+	CUIMgr::GetInstance()->AddUIObject(L"Obj_DescriptionUI", dynamic_pointer_cast<CUIObj>(pDescriptionUI));
 
 
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));

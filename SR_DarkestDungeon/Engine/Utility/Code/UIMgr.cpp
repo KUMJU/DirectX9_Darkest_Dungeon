@@ -1,5 +1,6 @@
 #include "UIMgr.h"
-#include"UIObj.h"
+#include "UIObj.h"
+#include "GameObject.h"
 
 IMPLEMENT_SINGLETON(CUIMgr)
 
@@ -17,6 +18,13 @@ void CUIMgr::AddUIObject(tstring _strKeyName, shared_ptr<CUIObj> _pObj)
 	if (m_UIList.end() == m_UIList.find(_strKeyName))
 		m_UIList.insert({ _strKeyName ,_pObj });
 
+}
+
+shared_ptr<CUIObj> CUIMgr::GetUIObject(tstring _strKeyName)
+{
+	auto iter = m_UIList.find(_strKeyName);
+
+	return iter->second;
 }
 
 void CUIMgr::AllVisibleOn()
@@ -105,4 +113,28 @@ void CUIMgr::HoverUI(LONG _fX, LONG _fY)
 			}
 		}
 	}
+}
+
+void CUIMgr::SetDescription(shared_ptr<CGameObject> _pGameObject)
+{
+	auto iter = m_UIList.find(L"Obj_DescriptionUI");
+
+	(*iter).second->SetVisible(true);
+	(*iter).second->ActiveUI(_pGameObject);
+}
+
+void CUIMgr::SetDescription(shared_ptr<CGameObject> _pGameObject, _vec3 _vPos)
+{
+	auto iter = m_UIList.find(L"Obj_DescriptionUI");
+
+	(*iter).second->SetVisible(true);
+	(*iter).second->ActiveUI(_pGameObject, _vPos);
+}
+
+void CUIMgr::SetDescription(tstring _strText, _vec3 _vPos)
+{
+	auto iter = m_UIList.find(L"Obj_DescriptionUI");
+
+	(*iter).second->SetVisible(true);
+	(*iter).second->ActiveUI(_strText, _vPos);
 }

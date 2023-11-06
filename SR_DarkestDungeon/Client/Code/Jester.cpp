@@ -45,6 +45,19 @@ HRESULT CJester::ReadyGameObject()
 			(L"DirkStab", L"Jester_DirkStab", L"DirkStab_Img", L"DirkStab_Effect",
 				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.f, 1.3f, -1, 0, 0, 0, 1, 1);
 
+		{
+			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill1->GetDescription()->m_strTitle = L"단검 찌르기";
+			pSkill1->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill1->GetDescription()->m_strMainContent = L"피해 보정 : 0%%\n치명타 보정 : +30%%";
+			pSkill1->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill1->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill1->GetDescription()->m_strColorContent1 = L"자신 : 1열 앞으로";
+			pSkill1->GetDescription()->m_strColorTitle2 = L"강화";
+			pSkill1->GetDescription()->m_tColor2 = ORANGE;
+			pSkill1->GetDescription()->m_strColorContent2 = L"대단원 +30%%";
+		}
+
 		// 수확의 낫질
 		_bool arrActivatePos2[4] = { 0, 1, 1, 0 };
 		_bool arrTargetPos2[4] = { 1, 1, 1, 1 };
@@ -56,7 +69,17 @@ HRESULT CJester::ReadyGameObject()
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"Harvest", L"Jester_Harvest", L"Harvest_Img", L"Harvest_Effect",
 				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDam2, 1.f, 0.5f, 0.8f, -1, 0, 0, 1, 1, 0);
-		
+
+		{
+			pSkill2->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill2->GetDescription()->m_strTitle = L"수확의 낫질";
+			pSkill2->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill2->GetDescription()->m_strMainContent = L"피해 보정 : -50%%\n치명타 보정 : -20%%";
+			pSkill2->GetDescription()->m_strColorTitle1 = L"출혈";
+			pSkill2->GetDescription()->m_tColor1 = RED;
+			pSkill2->GetDescription()->m_strColorContent1 = L"데미지:3 라운드:1";
+		}
+
 		// 대단원
 		_bool arrActivatePos3[4] = { 1, 1, 0, 0 };
 		_bool arrTargetPos3[4] = { 1, 1, 1, 1 };
@@ -67,6 +90,19 @@ HRESULT CJester::ReadyGameObject()
 			(L"Finale", L"Jester_Final", L"Finale_Img", L"Finale_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.5f, 2.f, -1, 0, 0, 0, 1, -5);
 
+		{
+			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill3->GetDescription()->m_strTitle = L"대단원";
+			pSkill3->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill3->GetDescription()->m_strMainContent = L"피해 보정:+50\n치명타 보정:+100%%";
+			pSkill3->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill3->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill3->GetDescription()->m_strColorContent1 = L"자신 : 맨 뒤로";
+			pSkill3->GetDescription()->m_strColorTitle2 = L"특성";
+			pSkill3->GetDescription()->m_tColor2 = WHITE;
+			pSkill3->GetDescription()->m_strColorContent2 = L"전투 당 1회";
+		}
+
 		// 독주
 		_bool arrActivatePos4[4] = { 0, 0, 1, 1 };
 		_bool arrTargetPos4[4] = { 1, 1, 1, 1 };
@@ -76,6 +112,19 @@ HRESULT CJester::ReadyGameObject()
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"Solo", L"Jester_Solo", L"Solo_Img", L"Solo_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.2f, 0.4f, -1, 0, 0, 1, 1, 5);
+
+		{
+			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill4->GetDescription()->m_strTitle = L"독주";
+			pSkill4->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill4->GetDescription()->m_strMainContent = L"피해 보정 : 80%%\n치명타 보정 : 60%%";
+			pSkill4->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill4->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill4->GetDescription()->m_strColorContent1 = L"자신 : 맨 앞으로";
+			pSkill4->GetDescription()->m_strColorTitle2 = L"특성";
+			pSkill4->GetDescription()->m_tColor2 = BROWN;
+			pSkill4->GetDescription()->m_strColorContent2 = L"회피+20 속도-3 대단원+75%%";
+		}
 
 		// 저며내기
 		_bool arrActivatePos5[4] = { 0, 1, 1, 0 };
@@ -89,12 +138,35 @@ HRESULT CJester::ReadyGameObject()
 			(L"SliceOff", L"Jester_SliceOff", L"SliceOff_Img", L"SliceOff_Effect",
 				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
 
+		{
+			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill5->GetDescription()->m_strTitle = L"저며내기";
+			pSkill5->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill5->GetDescription()->m_strMainContent = L"피해 보정 : -30%%\n치명타 보정 : 0%%";
+			pSkill5->GetDescription()->m_strColorTitle1 = L"출혈";
+			pSkill5->GetDescription()->m_tColor1 = RED;
+			pSkill5->GetDescription()->m_strColorContent1 = L"데미지:3 라운드:3";
+			pSkill5->GetDescription()->m_strColorTitle2 = L"강화";
+			pSkill5->GetDescription()->m_tColor2 = ORANGE;
+			pSkill5->GetDescription()->m_strColorContent2 = L"대단원+30%%";
+		}
+
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"BattleBallad", L"Jester_BattleBallad", L"BattleBallad_Img", L"BattleBallad_Effect",
 				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
 
-		pSkill3->SetEquipped(false);
-		pSkill3->SetUnlocked(false);
+		{
+			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill6->GetDescription()->m_strTitle = L"전투의 발라드";
+			pSkill6->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill6->GetDescription()->m_strMainContent = L"피해 보정 : 0%%\n치명타 보정 : 0%%";
+			pSkill6->GetDescription()->m_strColorTitle1 = L"강화";
+			pSkill6->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill6->GetDescription()->m_strColorContent1 = L"속도 +2";
+		}
+
+		pSkill5->SetEquipped(false);
+		pSkill5->SetUnlocked(false);
 
 		pSkill6->SetEquipped(false);
 		pSkill6->SetUnlocked(false);
@@ -104,9 +176,16 @@ HRESULT CJester::ReadyGameObject()
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
 
+		m_pVecSkill.push_back(pSkill5);
 		m_pVecSkill.push_back(pSkill6);
 
-		m_pVecSkill.push_back(pSkill5);
+		m_pVecSkillAll.push_back(pSkill1);
+		m_pVecSkillAll.push_back(pSkill2);
+		m_pVecSkillAll.push_back(pSkill3);
+		m_pVecSkillAll.push_back(pSkill4);
+
+		m_pVecSkillAll.push_back(pSkill5);
+		m_pVecSkillAll.push_back(pSkill6);
 
 	}
 
@@ -141,6 +220,8 @@ HRESULT CJester::ReadyGameObject()
 	m_pStatUI->SetHero(dynamic_pointer_cast<CJester>(shared_from_this()));
 	m_pStatUI->AwakeGameObject();
 	m_pStatUI->ReadyGameObject();
+
+	CUIMgr::GetInstance()->AddUIObject(L"UI_HeroStat_Jester", m_pStatUI);
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);

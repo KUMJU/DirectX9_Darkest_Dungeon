@@ -46,6 +46,13 @@ HRESULT CVestal::ReadyGameObject()
 			(L"MaceBash", L"Vestal_MaceBash", L"MaceBash_Img", L"MaceBash_Effect",
 				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.f, 1.25f, -1, 0, 0, 0, 1, 0);
 
+		{
+			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL1;
+			pSkill1->GetDescription()->m_strTitle = L"철퇴 후려치기";
+			pSkill1->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill1->GetDescription()->m_strMainContent = L"피해 보정 : 0%%\n치명타 보정 : +25%%";
+		}
+
 		// 눈부신 광채
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 1, 1, 1, 0 };
@@ -56,6 +63,19 @@ HRESULT CVestal::ReadyGameObject()
 			(L"DazzlingLight", L"Vestal_DazzlingLight", L"DazzlingLight_Img", L"DazzlingLight_Effect",
 				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.25f, 0.5f, -1, 0, 0, 0, 0, 0);
 
+		{
+			pSkill2->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill2->GetDescription()->m_strTitle = L"눈부신 광채";
+			pSkill2->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill2->GetDescription()->m_strMainContent = L"피해 보정 : -75%%\n치명타 보정 : -50%%";
+			pSkill2->GetDescription()->m_strColorTitle1 = L"기절";
+			pSkill2->GetDescription()->m_tColor1 = YELLOW;
+			pSkill2->GetDescription()->m_strColorContent1 = L"기절 1턴";
+			pSkill2->GetDescription()->m_strColorTitle2 = L"특성";
+			pSkill2->GetDescription()->m_tColor2 = BROWN;
+			pSkill2->GetDescription()->m_strColorContent2 = L"밝기 +6";
+		}
+
 		// 신성한 은총
 		_bool arrActivatePos3[4] = { 0, 0, 1, 1 };
 		_bool arrTargetPos3[4] = { 1, 1, 1, 1 };
@@ -65,6 +85,15 @@ HRESULT CVestal::ReadyGameObject()
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"DivineGrace", L"Vestal_DivineGrace", L"DivineGrace_Img", L"DivineGrace_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.f, 1.2f, -1, 0, 7, 0, 0, 0);
+		{
+			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill3->GetDescription()->m_strTitle = L"신성한 은총";
+			pSkill3->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill3->GetDescription()->m_strMainContent = L"피해 보정 : 0%%\n치명타 보정 : +20%%";
+			pSkill3->GetDescription()->m_strColorTitle1 = L"회복";
+			pSkill3->GetDescription()->m_tColor1 = LIGHTGREEN;
+			pSkill3->GetDescription()->m_strColorContent1 = L"회복 +7";
+		}
 
 		// 신성한 위무
 		_bool arrActivatePos4[4] = { 0, 1, 1, 1 };
@@ -75,14 +104,41 @@ HRESULT CVestal::ReadyGameObject()
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DivineComfort", L"Vestal_DivineComfort", L"DivineComfort_Img", L"DivineComfort_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+		{
+			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill4->GetDescription()->m_strTitle = L"신성한 위무";
+			pSkill4->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill4->GetDescription()->m_strMainContent = L"피해 보정 : 0%%\n치명타 보정 : +50%%";
+			pSkill4->GetDescription()->m_strColorTitle1 = L"회복";
+			pSkill4->GetDescription()->m_tColor1 = LIGHTGREEN;
+			pSkill4->GetDescription()->m_strColorContent1 = L"전체 회복 +3";
+		}
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
 			(L"HandOfLight", L"Vestal_HandOfLight", L"HandOfLight_Img", L"HandOfLight_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+		
+		{
+			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL1;
+			pSkill5->GetDescription()->m_strTitle = L"광휘";
+			pSkill5->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill5->GetDescription()->m_strMainContent = L"피해 보정 : -75%%\n치명타 보정 : +0%%";
+		}
 
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"Illumination", L"Vestal_Illumination", L"Illumination_Img", L"Illumination_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+		
+		
+		{
+			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill6->GetDescription()->m_strTitle = L"빛의 손길";
+			pSkill6->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill6->GetDescription()->m_strMainContent = L"피해 보정 : -50%%\n치명타 보정 : 5%%";
+			pSkill6->GetDescription()->m_strColorTitle1 = L"회복";
+			pSkill6->GetDescription()->m_tColor1 = LIGHTGREEN;
+			pSkill6->GetDescription()->m_strColorContent1 = L"전체 회복 +3";
+		}
 
 		m_pVecSkill.push_back(pSkill1);
 		m_pVecSkill.push_back(pSkill2);
@@ -97,6 +153,14 @@ HRESULT CVestal::ReadyGameObject()
 
 		m_pVecSkill.push_back(pSkill5);
 		m_pVecSkill.push_back(pSkill6);
+
+
+		m_pVecSkillAll.push_back(pSkill1);
+		m_pVecSkillAll.push_back(pSkill2);
+		m_pVecSkillAll.push_back(pSkill3);
+		m_pVecSkillAll.push_back(pSkill4);
+		m_pVecSkillAll.push_back(pSkill5);
+		m_pVecSkillAll.push_back(pSkill6);
 	}
 
 	// 영웅 스탯
@@ -129,6 +193,8 @@ HRESULT CVestal::ReadyGameObject()
 	m_pStatUI->SetHero(dynamic_pointer_cast<CVestal>(shared_from_this()));
 	m_pStatUI->AwakeGameObject();
 	m_pStatUI->ReadyGameObject();
+
+	CUIMgr::GetInstance()->AddUIObject(L"UI_HeroStat_Vestal", m_pStatUI);
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);

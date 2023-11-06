@@ -1,5 +1,17 @@
 #pragma once
 
+// Color
+#define WHITE	D3DXCOLOR(1.f, 1.f, 1.f, 1.f)
+#define YELLOW	D3DXCOLOR(0.878f, 0.807f, 0.6f, 1.f)
+#define BROWN	D3DXCOLOR(0.549f, 0.482f, 0.4f, 1.f)
+#define ORANGE	D3DXCOLOR(0.737f, 0.443f, 0.196f, 1.f)
+
+#define RED		D3DXCOLOR(0.694f, 0.0f, 0.0f, 1.f)
+#define LIGHTGREEN	D3DXCOLOR(0.529f, 0.760f, 0.254f, 1.f)
+#define SKYBLUE	D3DXCOLOR(0.368f, 0.788f, 0.839f, 1.f)
+#define LIME	D3DXCOLOR(0.741f, 0.76f, 0.254f, 1.f)
+
+
 // Weald Dungeon
 #define WEALD_WALLSIZEX 16.f
 #define WEALD_WALLSIZEUPY 5.f

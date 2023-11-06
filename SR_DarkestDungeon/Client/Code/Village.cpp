@@ -24,6 +24,7 @@
 #include "UIMgr.h"
 #include"GoodsUI.h"
 #include "TavernUI.h"
+#include "Description.h"
 
 #include "Vestal.h"
 #include "Jester.h"
@@ -389,10 +390,11 @@ HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	shared_ptr<CGameObject> m_pInventory = make_shared<CInventory>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pInventory = CUIMgr::GetInstance()->GetUIObject(L"UI_Inventory");
 	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
+	dynamic_pointer_cast<CUIObj>(m_pInventory)->SetVisible(true);
 
-	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
+	//CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
 
 	shared_ptr<CGameObject> pGoods = make_shared<CGoodsUI>(m_pGraphicDev);
 	CUIMgr::GetInstance()->AddUIObject(L"Obj_GoodsUI", dynamic_pointer_cast<CUIObj>(pGoods));
@@ -402,17 +404,20 @@ HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 
 	m_pLayer->CreateGameObject(L"Obj_GoodsUI", pGoods);
 
-	shared_ptr<CGameObject> pTavernUI = make_shared<CTavernUI>(m_pGraphicDev);
-
 	// øµøı ¡÷¡° UI
-	pTavernUI = make_shared<CTavernUI>(m_pGraphicDev);
+	shared_ptr<CGameObject> pTavernUI = make_shared<CTavernUI>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_TavernUI", pTavernUI);
 
 	CUIMgr::GetInstance()->AddUIObject(L"Obj_TavernUI", dynamic_pointer_cast<CUIObj>(pTavernUI));
 
+	// Description UI
+	shared_ptr<CGameObject> pDescriptionUI = CUIMgr::GetInstance()->GetUIObject(L"Obj_DescriptionUI");
+	m_pLayer->CreateGameObject(L"Obj_DescriptionUI", pDescriptionUI);
+
+	//CUIMgr::GetInstance()->AddUIObject(L"Obj_DescriptionUI", dynamic_pointer_cast<CUIObj>(pDescriptionUI));
 
 
-	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
+	//dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetTavernUI(dynamic_pointer_cast<CTavernUI>(pTavernUI));
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

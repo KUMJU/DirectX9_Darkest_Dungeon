@@ -39,15 +39,19 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		_bool arrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
 		_bool arrToEnemy1[6] = { 1, 1, 1, 1, 0, 1 };
 
-		/*
-		영웅 스킬 용
-		(스킬 이름, 스킬 애니메이션, 스킬 이미지, 이펙트키, 활성 위치, 타겟 위치, 공격종류(단순 공격, 중독, 출혈, 기절, 이동, 힐),
-		각 공격 타겟이 적인지 아닌지, 도트뎀[데미지][라운드], 스턴 확률, 공격력 계수, 치명타 확률, 라운드 당 사용 가능 횟수, 이동량, 힐량, 타겟 대상을 모두 공격하는지)
-		*/
-
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"Pierce", L"ShieldBreaker_Pierce", L"Pierce_Img", L"Pierce_Effect",
 				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 0.9f, 1.3f, -1, 0, 0, 0, 1, 1);
+
+		{
+			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill1->GetDescription()->m_strTitle = L"찌르기";
+			pSkill1->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill1->GetDescription()->m_strMainContent = L"피해 보정 : -10%%\n치명타 보정 : +30%%";
+			pSkill1->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill1->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill1->GetDescription()->m_strColorContent1 = L"자신 : 1열 앞으로";
+		}
 
 		// 구멍 내기
 		_bool arrActivatePos2[4] = { 1, 1, 1, 1 };
@@ -59,9 +63,22 @@ HRESULT CShieldBreaker::ReadyGameObject()
 			(L"Puncture", L"ShieldBreaker_Puncture", L"Puncture_Img", L"Puncture_Effect",
 				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.5f, 0.8f, -1, -1,0,0, 1, 1);
 
+		{
+			pSkill2->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill2->GetDescription()->m_strTitle = L"구멍내기";
+			pSkill2->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill2->GetDescription()->m_strMainContent = L"피해 보정 : -50%%\n치명타 보정 : -20%%";
+			pSkill2->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill2->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill2->GetDescription()->m_strColorContent1 = L"자신 : 1열 앞으로";
+			pSkill2->GetDescription()->m_strColorTitle2 = L"이동";
+			pSkill2->GetDescription()->m_tColor2 = SKYBLUE;
+			pSkill2->GetDescription()->m_strColorContent2 = L"상대 : 1열 당기기";
+		}
+
 		// 독사의 입맞춤
 		_bool arrActivatePos3[4] = { 1, 0, 0, 0 };
-		_bool arrTargetPos3[4] = { 1, 1, 1, 1};
+		_bool arrTargetPos3[4] = { 1, 1, 1, 1 };
 		_bool arrAttack3[6] = { 0, 1, 0, 0, 0, 0 };
 		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 0, 1 };
 
@@ -70,6 +87,19 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"AddersKiss", L"ShieldBreaker_AddersKiss", L"AddersKiss_Img", L"AddersKiss_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDam3, 1.f, 0.5f, 0.8f, -1, 0, 0, 0, 1, -1);
+
+		{
+			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill3->GetDescription()->m_strTitle = L"독사의 입맞춤";
+			pSkill3->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill3->GetDescription()->m_strMainContent = L"피해 보정 : -50%%\n치명타 보정 : -20%%";
+			pSkill3->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill3->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill3->GetDescription()->m_strColorContent1 = L"자신 : 1열 뒤로";
+			pSkill3->GetDescription()->m_strColorTitle2 = L"중독";
+			pSkill3->GetDescription()->m_tColor2 = LIME;
+			pSkill3->GetDescription()->m_strColorContent2 = L"데미지:3 라운드:3";
+		}
 
 		// 꿰뚫기
 		_bool arrActivatePos4[4] = { 1, 0, 0, 0 };
@@ -83,13 +113,46 @@ HRESULT CShieldBreaker::ReadyGameObject()
 			(L"Impale", L"ShieldBreaker_Impale", L"Impale_Img", L"Impale_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
+		{
+			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill4->GetDescription()->m_strTitle = L"꿰뚫기";
+			pSkill4->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill4->GetDescription()->m_strMainContent = L"피해 보정 : -60%%\n치명타 보정 : -40%%";
+			pSkill4->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill4->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill4->GetDescription()->m_strColorContent1 = L"자신 : 1열 뒤로";
+			pSkill4->GetDescription()->m_strColorTitle2 = L"중독";
+			pSkill4->GetDescription()->m_tColor2 = LIME;
+			pSkill4->GetDescription()->m_strColorContent2 = L"데미지:1 라운드:3";
+		}
+
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
 			(L"Captivate", L"ShieldBreaker_Captivate", L"Captivate_Img", L"Captivate_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
+		{
+			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill5->GetDescription()->m_strTitle = L"휘감기";
+			pSkill5->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill5->GetDescription()->m_strMainContent = L"피해 보정 : -25%%\n치명타 보정 : +10%%";
+			pSkill5->GetDescription()->m_strColorTitle1 = L"중독";
+			pSkill5->GetDescription()->m_tColor1 = LIME;
+			pSkill5->GetDescription()->m_strColorContent1 = L"데미지:3 라운드:3";
+		}
+
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"Expose", L"ShieldBreaker_Expose", L"Expose_Img", L"Expose_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
+
+		{
+			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill6->GetDescription()->m_strTitle = L"노출";
+			pSkill6->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill6->GetDescription()->m_strMainContent = L"피해 보정 : -40%%\n치명타 보정 : +5%%";
+			pSkill6->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill6->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill6->GetDescription()->m_strColorContent1 = L"자신 : 1열 뒤로";
+		}
 
 		pSkill5->SetEquipped(false);
 		pSkill5->SetUnlocked(false);
@@ -102,8 +165,16 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
 
-		m_pVecSkill.push_back(pSkill6);
 		m_pVecSkill.push_back(pSkill5);
+		m_pVecSkill.push_back(pSkill6);
+
+
+		m_pVecSkillAll.push_back(pSkill1);
+		m_pVecSkillAll.push_back(pSkill2);
+		m_pVecSkillAll.push_back(pSkill3);
+		m_pVecSkillAll.push_back(pSkill4);
+		m_pVecSkillAll.push_back(pSkill5);
+		m_pVecSkillAll.push_back(pSkill6);
 	}
 
 	// 영웅 스탯
@@ -136,6 +207,8 @@ HRESULT CShieldBreaker::ReadyGameObject()
 	m_pStatUI->SetHero(dynamic_pointer_cast<CShieldBreaker>(shared_from_this()));
 	m_pStatUI->AwakeGameObject();
 	m_pStatUI->ReadyGameObject();
+
+	CUIMgr::GetInstance()->AddUIObject(L"UI_HeroStat_Shieldbreaker", m_pStatUI);
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);

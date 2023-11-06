@@ -49,6 +49,13 @@ HRESULT CHighwayman::ReadyGameObject()
 			(L"WickedSlice", L"Highwayman_WickedSlice", L"WickedSlice_Img", L"WickedSlice_Effect",
 				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.15f, 1.5f, -1, 0, 0, 0, 1, 0);
 
+		{
+			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL1;
+			pSkill1->GetDescription()->m_strTitle = L"사악한 칼질";
+			pSkill1->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill1->GetDescription()->m_strMainContent = L"피해 보정 : +15%%\n치명타 보정 : +50%%";
+		}
+
 		// 권총 사격
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 1, 1, 1, 1 };
@@ -58,6 +65,13 @@ HRESULT CHighwayman::ReadyGameObject()
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"PistolShot", L"Highwayman_PistolShot", L"PistolShot_Img", L"PistolShot_Effect",
 				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.85f, 1.2f, -1, 0, 0, 0, 0, 0);
+
+		{
+			pSkill2->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL1;
+			pSkill2->GetDescription()->m_strTitle = L"권총 사격";
+			pSkill2->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill2->GetDescription()->m_strMainContent = L"피해 보정 : -15%%\n치명타 보정 : +20%%";
+		}
 
 		// 영거리 사격
 		_bool arrActivatePos3[4] = { 1, 0, 0, 0 };
@@ -69,6 +83,19 @@ HRESULT CHighwayman::ReadyGameObject()
 			(L"PointBlankShot", L"Highwayman_PointBlankShot", L"PointBlankShot_Img", L"PointBlankShot_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 0, -1);
 
+		{
+			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill3->GetDescription()->m_strTitle = L"영거리 사격";
+			pSkill3->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill3->GetDescription()->m_strMainContent = L"피해 보정 : +50%%\n치명타 보정 : +90%%";
+			pSkill3->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill3->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill3->GetDescription()->m_strColorContent1 = L"자신 : 1열 뒤로";
+			pSkill3->GetDescription()->m_strColorTitle2 = L"이동";
+			pSkill3->GetDescription()->m_tColor2 = SKYBLUE;
+			pSkill3->GetDescription()->m_strColorContent2 = L"상대 : 1열 밀치기";
+		}
+
 		// 결투가의 진격
 		_bool arrActivatePos4[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos4[4] = { 1, 1, 1, 0 };
@@ -79,13 +106,43 @@ HRESULT CHighwayman::ReadyGameObject()
 			(L"DuelistsAdvance", L"Highwayman_DuelistsAdvance", L"DuelistsAdvance_Img", L"DuelistsAdvance_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
 
+		{
+			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
+			pSkill4->GetDescription()->m_strTitle = L"결투가의 진격";
+			pSkill4->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill4->GetDescription()->m_strMainContent = L"피해 보정 : -20%%\n치명타 보정 : +10%%";
+			pSkill4->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill4->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill4->GetDescription()->m_strColorContent1 = L"자신 : 1열 앞으로";
+		}
+
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
 			(L"GrapeshotBlast", L"Highwayman_GrapeshotBlast", L"GrapeshotBlast_Img", L"GrapeshotBlast_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
 
+		{
+			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill5->GetDescription()->m_strTitle = L"포도탄 사격";
+			pSkill5->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill5->GetDescription()->m_strMainContent = L"피해 보정 : -50%%\n치명타 보정 : -10%%";
+			pSkill5->GetDescription()->m_strColorTitle1 = L"이동";
+			pSkill5->GetDescription()->m_tColor1 = SKYBLUE;
+			pSkill5->GetDescription()->m_strColorContent1 = L"상대 : 1열 뒤로";
+		}
+
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"TrackingShot", L"Highwayman_TrackingShot", L"TrackingShot_Img", L"TrackingShot_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
+
+		{
+			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
+			pSkill6->GetDescription()->m_strTitle = L"추적탄";
+			pSkill6->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill6->GetDescription()->m_strMainContent = L"피해 보정 : -80%%\n치명타 보정 : 0%%";
+			pSkill6->GetDescription()->m_strColorTitle1 = L"특성";
+			pSkill6->GetDescription()->m_tColor1 = BROWN;
+			pSkill6->GetDescription()->m_strColorContent1 = L"전투 당 1회 사용 가능";
+		}
 
 		pSkill5->SetEquipped(false);
 		pSkill5->SetUnlocked(false);
@@ -99,6 +156,14 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		m_pVecSkill.push_back(pSkill5);
 		m_pVecSkill.push_back(pSkill6);
+
+
+		m_pVecSkillAll.push_back(pSkill1);
+		m_pVecSkillAll.push_back(pSkill2);
+		m_pVecSkillAll.push_back(pSkill3);
+		m_pVecSkillAll.push_back(pSkill4);
+		m_pVecSkillAll.push_back(pSkill5);
+		m_pVecSkillAll.push_back(pSkill6);
 	}
 
 	// 영웅 스탯
@@ -132,6 +197,8 @@ HRESULT CHighwayman::ReadyGameObject()
 	m_pStatUI->SetHero(dynamic_pointer_cast<CHighwayman>(shared_from_this()));
 	m_pStatUI->AwakeGameObject();
 	m_pStatUI->ReadyGameObject();
+
+	CUIMgr::GetInstance()->AddUIObject(L"UI_HeroStat_Highwayman", m_pStatUI);
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);

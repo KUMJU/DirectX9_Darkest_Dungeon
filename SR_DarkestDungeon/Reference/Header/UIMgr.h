@@ -6,6 +6,7 @@
 BEGIN(Engine)
 
 class CUIObj;
+class CGameObject;
 
 class ENGINE_DLL CUIMgr
 {
@@ -17,6 +18,7 @@ private:
 
 public:
 	void AddUIObject(tstring _strKeyName, shared_ptr<CUIObj> _pObj);
+	shared_ptr<CUIObj> GetUIObject(tstring _strKeyName);
 	
 	void AllVisibleOn();
 	void AllVisibleOff();
@@ -29,9 +31,14 @@ public:
 
 	shared_ptr<CUIObj> FindUI(tstring _strKeyName);
 
-	//현재 Visible이 true인 UI를 검사한 후, 그 UI만 대상으로 픽킹
+	// 현재 Visible이 true인 UI를 검사한 후, 그 UI만 대상으로 픽킹
 	_bool PickingUI(LONG _fX, LONG _fY);
 	void HoverUI(LONG _fX, LONG _fY);
+
+	// 호버창 세팅 함수
+	void SetDescription(shared_ptr<CGameObject> _pGameObject);
+	void SetDescription(shared_ptr<CGameObject> _pGameObject, _vec3 _vPos);
+	void SetDescription(tstring _strText, _vec3 _vPos);
 
 private:
 

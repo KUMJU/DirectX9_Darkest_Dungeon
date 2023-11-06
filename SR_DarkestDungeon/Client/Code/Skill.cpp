@@ -14,6 +14,9 @@ CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, t
 	memcpy(m_bArrAttack, _bArrAttack, sizeof(_bool) * 6);
 	memcpy(m_bArrToEnemy, _bArrToEnemy, sizeof(_bool) * 6);
 	memcpy(m_iDotDamage, _iDotDamage, sizeof(_int) * 2);
+
+	if (!m_tDescription)
+		m_tDescription = make_shared<tagDescription>();
 }
 
 CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos, _int* _iDotDamage,
@@ -25,6 +28,9 @@ CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos,
 	memcpy(m_arrTargetPos, _arrTargetPos, sizeof(_bool) * 4);
 	memcpy(m_bArrAttack, _bArrAttack, sizeof(_bool) * 6);
 	memcpy(m_iDotDamage, _iDotDamage, sizeof(_int) * 2);
+
+	if (!m_tDescription)
+		m_tDescription = make_shared<tagDescription>();
 }
 
 CSkill::CSkill(const CSkill& rhs)

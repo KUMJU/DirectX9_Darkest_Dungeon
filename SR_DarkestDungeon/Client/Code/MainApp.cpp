@@ -98,7 +98,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 		return E_FAIL;
 	}
 
-	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Default_Light", L"이순신 돋움체 L", 15, 25, FW_HEAVY))) {
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Default_Light", L"이순신 돋움체 L", 11, 22, FW_MEDIUM))) {
 		//MSG_BOX("Ready InputDev Failed!");
 		return E_FAIL;
 	}
