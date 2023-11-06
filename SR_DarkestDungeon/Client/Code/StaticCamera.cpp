@@ -15,6 +15,7 @@ CStaticCamera::~CStaticCamera()
 HRESULT CStaticCamera::ReadyGameObject()
 {
 	m_pPlrTransCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
+	m_pPlrTransCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
 
 	HRESULT result = CCamera::ReadyGameObject();
 
@@ -30,6 +31,10 @@ HRESULT CStaticCamera::ReadyGameObject()
 
 _int CStaticCamera::UpdateGameObject(const _float& fTimeDelta)
 {
+
+	if (!m_pPlrTransCom)
+		m_pPlrTransCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
+
 	if (m_bInVillage)
 		KeyInput();
 
@@ -71,7 +76,6 @@ void CStaticCamera::LateUpdateGameObject(){
 		D3DXMatrixInverse(&m_matView, 0, &m_matView);
 		memcpy(&m_matView.m[3][0], &matCamWorld.m[3][0], sizeof(_vec3));
 		D3DXMatrixInverse(&m_matView, 0, &m_matView);
-
 
 		break;
 	case ECameraMode::ROTATION:
@@ -248,9 +252,27 @@ void CStaticCamera::ChangeCamEyePos()
 	//Rotation
 	if (m_fActTime >= m_fTotalTime && m_eCurrentState == ECameraMode::ROTATION) {
 
-		const _vec3* vAngle = m_pPlrTransCom->GetAngles();
-		m_pPlrTransCom->SetAngle({ vAngle->x, vAngle->y + D3DXToRadian(m_fTotalAngle) , vAngle->z });
-		m_eCurrentState = ECameraMode::FPS;
+		if (m_bInVillage) {
+			if (m_bIsLookBack) {
+				m_eCurrentState = ECameraMode::VILLAGE;
+				m_fYAngle = 0.f;
+				m_bIsLookBack = false;
+
+			}
+			else {
+				m_eCurrentState = ECameraMode::IDLE;
+				m_bIsLookBack = true;
+			}
+
+
+		}
+		else {
+
+			const _vec3* vAngle = m_pPlrTransCom->GetAngles();
+			m_pPlrTransCom->SetAngle({ vAngle->x, vAngle->y + D3DXToRadian(m_fTotalAngle) , vAngle->z });
+			m_eCurrentState = ECameraMode::FPS;
+		}
+	
 		return;
 
 	}
@@ -514,6 +536,9 @@ void CStaticCamera::CameraMove()
 		_matrix		matRot;
 
 		D3DXMatrixRotationAxis(&matRot, &vUp, D3DXToRadian(dwMouseMove / 10.f));
+
+		const _vec3* vAngle = m_pPlrTransCom->GetAngles();
+		m_pPlrTransCom->SetAngle({ 0.f, vAngle->y + D3DXToRadian(dwMouseMove / 10.f) , 0.f });
 		m_matView = m_matView * matRot;
 		D3DXMatrixInverse(&m_matView, 0, &m_matView);
 	}
@@ -543,18 +568,27 @@ void CStaticCamera::InteractionTervarn()
 
 	_matrix		matRot;
 
-	//fAngle
-	D3DXMatrixRotationX(&matRot, fAngle * m_deltaTime );
-	m_matView = matRot * m_matView ;
-	D3DXMatrixInverse(&m_matView, 0, &m_matView);
+	if (m_fActTime + m_deltaTime > 0.5f) {
+
+		_vec3 vLook = { 0.f, 0.f, 1.f };
+		_vec3 vRight = { 1.f , 0.f, 0.f };
+
+		memcpy(&m_matView.m[2][0], &vLook, sizeof(_vec3));
+		memcpy(&m_matView.m[0][0], &vRight, sizeof(_vec3));
+		D3DXMatrixInverse(&m_matView, 0, &m_matView);
+	}
+	else {
+
+		D3DXMatrixRotationX(&matRot, fAngle * m_deltaTime);
+		m_matView = matRot * m_matView;
+		D3DXMatrixInverse(&m_matView, 0, &m_matView);
+	}
 
 	m_fActTime += m_deltaTime;
 	if (m_fActTime > 0.5f) {
-		ChangeCameraWithDegree(ECameraMode::LOOKBACK, 180.f);
+		ChangeCameraWithDegree(ECameraMode::ROTATION, 180.f);
 	}
 
-
-	//ChangeCameraWithDegree(ECameraMode::LOOKBACK, 180.f);
 }
 
 void CStaticCamera::KeyInput()

@@ -139,6 +139,21 @@ void CResourceMgr::Free()
 	RemoveAllTexture();
 }
 
+void CResourceMgr::MainTitleTextureLoad()
+{
+	_bool bDefault = true;
+
+	CreateNewTexture(L"UI_Title_BG", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/MainLogo/Title_BackGround.png", 1, bDefault);
+
+	CreateNewTexture(L"UI_Title_Show", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/MainLogo/Title/armatureName_show_%d.png", 18, bDefault);
+
+	CreateNewTexture(L"UI_Title_Torch", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/MainLogo/Title/armatureName_torch_loop_0%d.png", 21, bDefault);
+
+}
+
 void CResourceMgr::BaseTextureLoad()
 {
 	_bool bDefault = false;

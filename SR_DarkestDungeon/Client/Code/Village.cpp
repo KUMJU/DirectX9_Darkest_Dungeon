@@ -31,6 +31,7 @@
 #include"CameraMgr.h"
 
 #include"Export_Utility.h"
+#include"SoundMgr.h"
 
 CVillage::CVillage(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -56,6 +57,8 @@ HRESULT CVillage::ReadyScene()
 		//GameComponenet Setting
 		iter.second->ReadyLayer();
 	}
+
+	CSoundMgr::GetInstance()->PlayBGM(L"Mus_Town_Base.wav", 1.f);
 
 	return __super::ReadyScene();
 }
@@ -384,6 +387,9 @@ HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 
 	shared_ptr<CGameObject> pGoods = make_shared<CGoodsUI>(m_pGraphicDev);
 	CUIMgr::GetInstance()->AddUIObject(L"Obj_GoodsUI", dynamic_pointer_cast<CUIObj>(pGoods));
+
+	dynamic_pointer_cast<CGoodsUI>(pGoods)->SetInitGold(dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetGold());
+	dynamic_pointer_cast<CGoodsUI>(pGoods)->SetInitHeirloom(dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeirloom());
 
 	m_pLayer->CreateGameObject(L"Obj_GoodsUI", pGoods);
 

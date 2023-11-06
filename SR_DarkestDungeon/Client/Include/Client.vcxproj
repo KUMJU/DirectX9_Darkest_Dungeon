@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\BattleHeroUI.h" />
     <ClInclude Include="..\Header\BattleSystem.h" />
     <ClInclude Include="..\Header\BoneCourtier.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="..\Header\Jester.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\MainLogo.h" />
     <ClInclude Include="..\Header\Narration.h" />
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\PickingGame.h" />
@@ -220,6 +222,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BattleHeroUI.cpp" />
     <ClCompile Include="..\Code\BattleSystem.cpp" />
     <ClCompile Include="..\Code\BoneCourtier.cpp" />
@@ -252,6 +255,7 @@
     <ClCompile Include="..\Code\Jester.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\MainLogo.cpp" />
     <ClCompile Include="..\Code\Narration.cpp" />
     <ClCompile Include="..\Code\Outside.cpp" />
     <ClCompile Include="..\Code\PickingGame.cpp" />

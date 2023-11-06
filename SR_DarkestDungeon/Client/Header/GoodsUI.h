@@ -39,6 +39,10 @@ public:
 
 	void IncreaseGoods(_bool _bGold);
 
+
+	void SetInitGold(_int _iNum) { m_iGold = _iNum; };
+	void SetInitHeirloom(_int _iNum) { m_iHeirloom = _iNum; };
+
 private:
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
 

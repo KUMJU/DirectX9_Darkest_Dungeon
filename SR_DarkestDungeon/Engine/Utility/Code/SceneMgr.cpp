@@ -40,8 +40,6 @@ HRESULT CSceneMgr::ChangeScene(shared_ptr<CScene> _newScene)
 	{
 		m_pCurrentScene.reset();
 	}
-
-	//CResourceMgr::GetInstance()->RemoveAllTexture();
 	
 	Engine::ClearRenderGroup();
 	m_pCurrentScene = _newScene;
@@ -61,6 +59,9 @@ shared_ptr<CComponent> CSceneMgr::GetComponenet(const tstring& _strLayerName, co
 	if (!m_pCurrentScene)
 		return nullptr;
 
+	if (m_bIsLoadingScene) {
+		return 	m_pReadyScene->GetComponent(_strLayerName, _strObjName, _strComName, _eID);
+	}
 	return 	m_pCurrentScene->GetComponent(_strLayerName, _strObjName, _strComName, _eID);
 }
 
@@ -68,6 +69,7 @@ HRESULT CSceneMgr::AddNewObject(const tstring& _LayerName, const tstring& _ObjKe
 {
 	if (m_pCurrentScene)
 		return m_pCurrentScene->AddNewObject(_LayerName, _ObjKeyName, _pObj);
+
 
 	return E_FAIL;
 }

@@ -89,13 +89,18 @@ HRESULT CWeald_Dungeon::ReadyScene()
 		iter.second->ReadyLayer();
 	}
 
-	CUIMgr::GetInstance()->NarrationOn(L"Narr_tut_firstdungeon");
-	//CSoundMgr::GetInstance()->PlayBGM(L"Combat_Level2_Loop2.wav", 0.5f);
 	return __super::ReadyScene();
 }
 
 _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 {
+	if (!m_binitNarrOn) {
+		CUIMgr::GetInstance()->NarrationOn(L"Narr_tut_firstdungeon");
+		CSoundMgr::GetInstance()->PlayBGM(L"Amb_Weald_Base.wav", 1.f);
+		m_binitNarrOn = true;
+	}
+
+
 	// 방 이동했는지 체크
 	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetRoomChange())
 	{
@@ -116,6 +121,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
 			pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 210.f);
 			m_pRoom3->SetBattleStart(true);
+			CSoundMgr::GetInstance()->PlayBGM(L"Combat_Level2_Loop2.wav", 0.6f);
 			m_pRoom3->SetBattleCameraOriginPos({ vPos->x , vPos->y + 5.f , 210.f });
 		}
 	}
@@ -279,6 +285,8 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 
 	// 마을로 씬 변경
 	if (GetAsyncKeyState('6') & 0x8000) {
+		CSoundMgr::GetInstance()->StopAll();
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
 		shared_ptr<CVillage> pScene = make_shared<CVillage>(m_pGraphicDev);
 		CSceneMgr::GetInstance()->ChangeScene(pScene);
 		pScene->ReadyScene();
@@ -773,9 +781,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
 	m_pPlayer->SetPos({ 55.f, 0.f, 2.f });
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
-
 	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
-
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
 
 	// GameObjects

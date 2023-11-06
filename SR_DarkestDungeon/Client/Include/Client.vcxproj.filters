@@ -7,7 +7,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\Code\StageCoachHero.cpp" />
     <ClCompile Include="..\Code\Village.cpp">
-      <Filter>00. Scene\02. Village</Filter>
+      <Filter>00. Scene\03. Village</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Creature.cpp">
       <Filter>01. GameObject\01. Creature</Filter>
@@ -64,7 +64,7 @@
       <Filter>01. GameObject\01. Creature\00. Hero</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Weald_Dungeon.cpp">
-      <Filter>00. Scene\01. Weald Dungeon</Filter>
+      <Filter>00. Scene\02. Weald Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Highwayman.cpp">
       <Filter>01. GameObject\01. Creature\00. Hero</Filter>
@@ -171,6 +171,12 @@
     <ClCompile Include="..\Code\Loading.cpp">
       <Filter>00. Scene\00. Loading</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\MainLogo.cpp">
+      <Filter>00. Scene\01. MainLogo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BackGround.cpp">
+      <Filter>00. Scene\01. MainLogo\BackGround</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -184,7 +190,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\Header\StageCoachHero.h" />
     <ClInclude Include="..\Header\Village.h">
-      <Filter>00. Scene\02. Village</Filter>
+      <Filter>00. Scene\03. Village</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Creature.h">
       <Filter>01. GameObject\01. Creature</Filter>
@@ -241,7 +247,7 @@
       <Filter>01. GameObject\01. Creature\00. Hero</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Weald_Dungeon.h">
-      <Filter>00. Scene\01. Weald Dungeon</Filter>
+      <Filter>00. Scene\02. Weald Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Highwayman.h">
       <Filter>01. GameObject\01. Creature\00. Hero</Filter>
@@ -312,7 +318,6 @@
     <ClInclude Include="..\Header\Gambling.h" />
     <ClInclude Include="..\Header\Guild.h" />
     <ClInclude Include="..\Header\GuildNPC.h" />
-    <ClInclude Include="..\Header\SoundMgr.h" />
     <ClInclude Include="..\Header\TavernNPC.h" />
     <ClInclude Include="..\Header\BattleHeroUI.h">
       <Filter>01. GameObject\03. UI\00. BattleHeroUI</Filter>
@@ -337,6 +342,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\Loading.h">
       <Filter>00. Scene\00. Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoundMgr.h">
+      <Filter>02. Manager\01. SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainLogo.h">
+      <Filter>00. Scene\01. MainLogo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BackGround.h">
+      <Filter>00. Scene\01. MainLogo\BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -434,11 +448,17 @@
     <Filter Include="00. Scene\00. Loading">
       <UniqueIdentifier>{ce5e5f90-c734-40aa-a2ed-7db05dd654a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Scene\01. Weald Dungeon">
+    <Filter Include="00. Scene\01. MainLogo">
+      <UniqueIdentifier>{37eb56d8-ce16-4176-b805-68211dc284f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Scene\02. Weald Dungeon">
       <UniqueIdentifier>{b0cf1a74-8448-424d-bc36-9e8e3243a42b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Scene\02. Village">
+    <Filter Include="00. Scene\03. Village">
       <UniqueIdentifier>{7a6cc157-b6f4-4651-9d94-e234ee2add51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Scene\01. MainLogo\BackGround">
+      <UniqueIdentifier>{6b3e744a-a765-4ee2-a84a-bd190043f9e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

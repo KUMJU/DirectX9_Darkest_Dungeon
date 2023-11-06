@@ -38,7 +38,9 @@ private:
 	shared_ptr<CDungeonRoom> m_pRoom5 = {};				// ¹æ5
 
 	_bool				m_bTestBattle = false;
+	_bool				m_binitNarrOn = false;
 
 	_tchar		m_szString[128];
+
 };
 
