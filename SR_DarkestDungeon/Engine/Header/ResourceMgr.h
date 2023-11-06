@@ -37,6 +37,7 @@ public:
 	void UITextureLoad();
 	void WealdDungeonTextureLoad();
 	void VillageTextureLoad();
+	void RuinDungeonTextureLoad();
 
 
 private:

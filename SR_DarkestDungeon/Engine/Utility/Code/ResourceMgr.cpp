@@ -738,7 +738,7 @@ void CResourceMgr::WealdDungeonTextureLoad()
 		L"../Bin/Resource/Image/Dungeons/Traps/Weald/idle/armatureName_idle_0.png", 1, bDefault);
 
 	CreateNewTexture(L"Weald_Traps_Sprung", TEX_NORMAL,
-		L"../Bin/Resource/Image/Dungeons/Traps/Weald/sprung/armatureName_sprung_%d.png", 66, bDefault);
+		L"../Bin/Resource/Image/Dungeons/Traps/Weald/sprung/armatureName_sprung_%d.png", 67, bDefault);
 
 	// 장애물
 	CreateNewTexture(L"Weald_Obstacles_Remains", TEX_NORMAL,
@@ -775,47 +775,7 @@ void CResourceMgr::WealdDungeonTextureLoad()
 	CreateNewTexture(L"Brigand Bloodletter_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
 
-	//Bone Soldier
-	CreateNewTexture(L"Bone Soldier_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/Bone Soldier/combat/armatureName_combat_%d.png", 28, bDefault);
-	CreateNewTexture(L"Bone Soldier_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/1.png", 1, bDefault);
-	CreateNewTexture(L"Bone Soldier_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/2.png", 1, bDefault);
-	CreateNewTexture(L"Bone Soldier_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/3.png", 1, bDefault);
-	CreateNewTexture(L"Bone Soldier_Death", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
-
-
-	CreateNewTexture(L"Bone Defender_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/Combat/armatureName_combat_%d.png", 30, bDefault);
-	CreateNewTexture(L"Bone Defender_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/1.png", 1, bDefault);
-	CreateNewTexture(L"Bone Defender_Attack2", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/2.png", 1, bDefault);
-	CreateNewTexture(L"Bone Defender_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/3.png", 1, bDefault);
-	CreateNewTexture(L"Bone Defender_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/4.png", 1, bDefault);
-	CreateNewTexture(L"Bone Defender_Death", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
-
-	CreateNewTexture(L"Bone Courtier_Combat", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/Combat/armatureName_combat_%d.png", 26, bDefault);
-	CreateNewTexture(L"Bone Courtier_Attack1", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/1.png", 1, bDefault);
-	CreateNewTexture(L"Bone Courtier_Attack2", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/2.png", 1, bDefault);
-	CreateNewTexture(L"Bone Courtier_Dead", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/3.png", 1, bDefault);
-	CreateNewTexture(L"Bone Courtier_Hitted", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/4.png", 1, bDefault);
-	CreateNewTexture(L"Bone Courtier_Death", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
-
-
-
+	// Brigand Cutthroat
 	CreateNewTexture(L"Brigand Cutthroat_Combat", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/Combat/armatureName_combat_%d.png", 33, bDefault);
 	CreateNewTexture(L"Brigand Cutthroat_Attack1", TEX_NORMAL,
@@ -829,7 +789,7 @@ void CResourceMgr::WealdDungeonTextureLoad()
 	CreateNewTexture(L"Brigand Cutthroat_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
 
-
+	// Brigand Fusilier
 	CreateNewTexture(L"Brigand Fusilier_Combat", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/Combat/armatureName_combat_%d.png", 34, bDefault);
 	CreateNewTexture(L"Brigand Fusilier_Attack1", TEX_NORMAL,
@@ -840,8 +800,6 @@ void CResourceMgr::WealdDungeonTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/3.png", 1, bDefault);
 	CreateNewTexture(L"Brigand Fusilier_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
-
-
 }
 
 void CResourceMgr::VillageTextureLoad()
@@ -1029,4 +987,112 @@ void CResourceMgr::VillageTextureLoad()
 				L"../Bin/Resource/Image/UI/UI/currency.crest.icon_1.png", 1, bDefault);
 		}
 	}
+}
+
+void CResourceMgr::RuinDungeonTextureLoad()
+{
+	_bool bDefault = true;
+
+	// Environment
+	CreateNewTexture(L"Com_Ruin_FloorTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/bricks.png", 1, bDefault);
+
+	CreateNewTexture(L"Com_Ruin_WallTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.corridor_wall.%d.png", 7, bDefault);
+	CreateNewTexture(L"Com_Ruin_BackWallTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.corridor_mid.png", 1, bDefault);
+
+
+	// 문
+	CreateNewTexture(L"Ruin_Door_Closed", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_door.basic.png", 1, bDefault);
+	CreateNewTexture(L"Ruin_Door_Opened", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.corridor_door.Opened.png", 1, bDefault);
+
+	// 골동품
+	CreateNewTexture(L"Ruin_Armor", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/suit_of_armor/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Armor_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/suit_of_armor/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Fountain", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/holy_fountain/idle/armatureName_idle_%d.png", 35, bDefault);
+
+	CreateNewTexture(L"Ruin_Fountain_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/holy_fountain/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_locked_sarcophagus", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/locked_sarcophagus/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_locked_sarcophagus_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/locked_sarcophagus/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Sconce", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/sconce/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Sconce_Finish", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/sconce/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	// 함정
+	CreateNewTexture(L"Ruin_Traps_Remains", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Traps/Ruin/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Traps_Sprung", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Traps/Ruin/sprung/armatureName_sprung_%d.png", 67, bDefault);
+
+	// 장애물
+	CreateNewTexture(L"Ruin_Obstacles_Remains", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Obstacles/Ruin/armatureName_clear_00.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Obstacles", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Obstacles/Ruin/armatureName_clear_%d.png", 30, bDefault);
+
+	// 배경이미지
+	CreateNewTexture(L"Ruin_Image_Altar", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.room_wall.altar.png", 1, bDefault);
+
+	// SkyBox
+	CreateNewTexture(L"Com_Weald_SkyBoxTexture", TEX_CUBE,
+		L"../Bin/Resource/Image/SkyBox/WealdSkyBox.dds", 1, bDefault);
+
+	// Bone Soldier
+	CreateNewTexture(L"Bone Soldier_Combat", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/Bone Soldier/combat/armatureName_combat_%d.png", 28, bDefault);
+	CreateNewTexture(L"Bone Soldier_Attack1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/1.png", 1, bDefault);
+	CreateNewTexture(L"Bone Soldier_Dead", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/2.png", 1, bDefault);
+	CreateNewTexture(L"Bone Soldier_Hitted", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Soldier/3.png", 1, bDefault);
+	CreateNewTexture(L"Bone Soldier_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
+
+	// Bone Defender
+	CreateNewTexture(L"Bone Defender_Combat", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/Combat/armatureName_combat_%d.png", 30, bDefault);
+	CreateNewTexture(L"Bone Defender_Attack1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/1.png", 1, bDefault);
+	CreateNewTexture(L"Bone Defender_Attack2", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/2.png", 1, bDefault);
+	CreateNewTexture(L"Bone Defender_Dead", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/3.png", 1, bDefault);
+	CreateNewTexture(L"Bone Defender_Hitted", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Defender/4.png", 1, bDefault);
+	CreateNewTexture(L"Bone Defender_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
+
+	// Bone Courtier
+	CreateNewTexture(L"Bone Courtier_Combat", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/Combat/armatureName_combat_%d.png", 26, bDefault);
+	CreateNewTexture(L"Bone Courtier_Attack1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/1.png", 1, bDefault);
+	CreateNewTexture(L"Bone Courtier_Attack2", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/2.png", 1, bDefault);
+	CreateNewTexture(L"Bone Courtier_Dead", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/3.png", 1, bDefault);
+	CreateNewTexture(L"Bone Courtier_Hitted", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/4.png", 1, bDefault);
+	CreateNewTexture(L"Bone Courtier_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
 }

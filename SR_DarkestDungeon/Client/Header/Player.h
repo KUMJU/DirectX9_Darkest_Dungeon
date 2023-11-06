@@ -124,7 +124,7 @@ public:
 	void HideHeroesBackVillage(); // 마을에서 뒤의 영웅들 숨기기
 
 private:
-	_float		m_fSpeed = 15.f;
+	_float		m_fSpeed = 45.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
 
