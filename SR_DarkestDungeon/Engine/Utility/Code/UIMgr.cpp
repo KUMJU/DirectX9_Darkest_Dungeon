@@ -61,6 +61,11 @@ void CUIMgr::NarrationOn(tstring _strKeyName)
 
 }
 
+void CUIMgr::RemoveAllListElements()
+{
+	m_UIList.clear();
+}
+
 shared_ptr<CUIObj> CUIMgr::FindUI(tstring _strKeyName)
 {
 	auto iter = m_UIList.find(_strKeyName);

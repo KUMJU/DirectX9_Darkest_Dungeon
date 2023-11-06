@@ -25,6 +25,7 @@ public:
 	void SelectUIVisibleOff(tstring _strKeyName);
 	
 	void NarrationOn(tstring _strKeyName);
+	void RemoveAllListElements();
 
 	shared_ptr<CUIObj> FindUI(tstring _strKeyName);
 

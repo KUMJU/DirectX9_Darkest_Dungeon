@@ -28,6 +28,16 @@ public:
 	void CreateScene(const tstring& _strSceneName , shared_ptr<CScene> _newScene);
 	shared_ptr<CComponent> GetComponenet(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID);
 
+	void SetReadyScene(shared_ptr<CScene> _pScene) { m_pReadyScene = _pScene; }
+
+	void SetLoadingState(_bool _bValue) { 
+		m_bIsLoadingScene = _bValue; 
+		if (!_bValue)
+			m_pReadyScene = nullptr;
+	}
+
+
+
 public:
 	
 	shared_ptr<CScene> GetCurrentScene() { return m_pCurrentScene; }
@@ -38,6 +48,9 @@ public:
 
 private:
 	shared_ptr<CScene> m_pCurrentScene;	
+	shared_ptr<CScene> m_pReadyScene;
+
+	_bool m_bIsLoadingScene = false;
 };
 
 END

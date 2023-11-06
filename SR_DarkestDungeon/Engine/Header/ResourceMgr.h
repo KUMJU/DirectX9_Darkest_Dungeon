@@ -33,6 +33,7 @@ public:
 
 public:
 	//Create Texture Function
+	void MainTitleTextureLoad();
 	void BaseTextureLoad();
 	void UITextureLoad();
 	void WealdDungeonTextureLoad();

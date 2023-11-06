@@ -23,6 +23,10 @@ HRESULT CPlayerHand::ReadyGameObject()
 
 _int CPlayerHand::UpdateGameObject(const _float& fTimeDelta)
 {
+	if (!m_pPlrTransmCom) {
+		m_pPlrTransmCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
+	}
+
 	if (!m_bEnable)
 		return 0;
 

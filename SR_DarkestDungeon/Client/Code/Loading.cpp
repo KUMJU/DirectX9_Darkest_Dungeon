@@ -1,5 +1,9 @@
 #include <pch.h>
 #include "Loading.h"
+#include"ResourceMgr.h"
+#include"Weald_Dungeon.h"
+#include"SceneMgr.h"
+#include"Village.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -12,6 +16,7 @@ CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CLoading::~CLoading()
 {
+	Free();
 }
 
 HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
@@ -25,12 +30,42 @@ HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 
 _uint CLoading::Loading_ForStage()
 {
-	return _uint();
+	CResourceMgr::GetInstance()->BaseTextureLoad();
+	CResourceMgr::GetInstance()->UITextureLoad();
+
+	m_pNextScene = make_shared<CWeald_Dungeon>(m_pGraphicDev);
+	CSceneMgr::GetInstance()->SetLoadingState(true);
+	CSceneMgr::GetInstance()->SetReadyScene(m_pNextScene);
+	m_pNextScene->ReadyScene();
+
+	m_bFinish = true;
+
+	return 0;
+
 }
 
 unsigned int CLoading::Thread_Main(void* pArg)
 {
-	return 0;
+	CLoading* pLoading = reinterpret_cast<CLoading*>(pArg);
+	_uint			iFlag(0);
+
+	EnterCriticalSection(pLoading->Get_Crt());
+
+	switch (pLoading->Get_LoadingID())
+	{
+	case LOADING_STAGE:
+		iFlag = pLoading->Loading_ForStage();
+		break;
+
+	case LOADING_VILLAGE:
+		break;
+	case LOADING_RUIN:
+		break;
+	}
+
+	LeaveCriticalSection(pLoading->Get_Crt());
+
+	return iFlag;
 }
 
 void CLoading::Free()

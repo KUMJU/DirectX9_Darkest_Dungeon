@@ -8,6 +8,7 @@
 #include"UIMgr.h"
 #include"PickingMgr.h"
 #include"SoundMgr.h"
+#include"MainLogo.h"
 
 CMainApp::CMainApp()
 {
@@ -22,20 +23,18 @@ HRESULT CMainApp::Ready_MainApp()
 {
 	srand(time(NULL));
 	if (FAILED(SetUp_DefaultSetting(&m_pGraphicDev))) {
-		//MSG_BOX("SetUpDefaultSetting Failed!");
 		return E_FAIL;
 	}
 
-	//UI
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
-	CResourceMgr::GetInstance()->BaseTextureLoad();	
-	CResourceMgr::GetInstance()->UITextureLoad();
+	CResourceMgr::GetInstance()->MainTitleTextureLoad();
+
+
 
 	CSoundMgr::GetInstance()->Initialize();
-
 	CPickingMgr::GetInstance()->ReadyPickingMgr(m_pGraphicDev);
 
-    shared_ptr<CScene> pMainLogo = make_shared<CRuin_Dungeon>(m_pGraphicDev);
+    shared_ptr<CScene> pMainLogo = make_shared<CMainLogo>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
 
@@ -58,7 +57,7 @@ void CMainApp::LateUpdate_MainApp()
 
 void CMainApp::Render_MainApp()
 {
-    m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
+    m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
     Engine::RenderScene(m_pGraphicDev);
 
