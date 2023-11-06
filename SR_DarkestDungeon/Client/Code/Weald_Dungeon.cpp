@@ -33,10 +33,6 @@
 #include "BrigandFusilier.h"
 #include "BrigandBloodletter.h"
 
-#include "BoneCourtier.h"
-#include "BoneDefender.h"
-#include "BoneSoldier.h"
-
 #include "Highwayman.h"
 #include "Jester.h"
 #include "Vestal.h"
@@ -159,7 +155,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		{
 			for (int i = 0; i < size(m_pRoom1->GetGameObjectVector()); i++)
 			{
-				float fNum = 1.f / (float)(rand() % 10) * 5.f;
+				float fNum = 1.f / (float)(rand() % 10 + 1) * 5.f;
 				if (dynamic_pointer_cast<CItem>(m_pRoom1->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom1->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
@@ -178,7 +174,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		{
 			for (int i = 0; i < size(m_pRoom2->GetGameObjectVector()); i++)
 			{
-				float fNum = 1.f / (float)(rand() % 10) * 5.f;
+				float fNum = 1.f / (float)(rand() % 10 + 1) * 5.f;
 				if (dynamic_pointer_cast<CItem>(m_pRoom2->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom2->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
@@ -194,7 +190,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			for (int i = 0; i < size(m_pRoom2->GetGameObjectVector()); i++)
 			{
 				if (i == 1) break;
-				float fNum = 1.f / (float)(rand() % 10) * 5.f;
+				float fNum = 1.f / (float)(rand() % 10 + 1) * 5.f;
 				if (dynamic_pointer_cast<CItem>(m_pRoom2->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom2->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
@@ -213,7 +209,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		{
 			for (int i = 0; i < size(m_pRoom3->GetGameObjectVector()); i++)
 			{
-				float fNum = 1.f / (float)(rand() % 10) * 5.f;
+				float fNum = 1.f / (float)(rand() % 10 + 1) * 5.f;
 				if (dynamic_pointer_cast<CItem>(m_pRoom3->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom3->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
@@ -229,7 +225,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			for (int i = 0; i < size(m_pRoom3->GetGameObjectVector()); i++)
 			{
 				if (i == 1) break;
-				float fNum = 1.f / (float)(rand() % 10) * 5.f;
+				float fNum = 1.f / (float)(rand() % 10 + 1) * 5.f;
 				if (dynamic_pointer_cast<CItem>(m_pRoom3->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom3->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
@@ -247,7 +243,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		{
 			for (int i = 0; i < size(m_pRoom4->GetGameObjectVector()); i++)
 			{
-				float fNum = 1.f / (float)(rand() % 10) * 5.f;
+				float fNum = 1.f / (float)(rand() % 10 + 1) * 5.f;
 				if (dynamic_pointer_cast<CItem>(m_pRoom4->GetGameObjectVector()[i]))
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom4->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
@@ -895,12 +891,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// monsters
 	shared_ptr<CGameObject> m_pBrigandCutthroat_1 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandCutthroat_2 = make_shared<CBrigandCutthroat>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBoneDefender1 = make_shared<CBoneDefender>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandBloodletter1 = make_shared<CBrigandBloodletter>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pBrigandFusilier_1 = make_shared<CBrigandFusilier>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBoneSoldier_1 = make_shared<CBoneSoldier>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBoneCourtier_1 = make_shared<CBoneCourtier>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pBoneSoldier_2 = make_shared<CBoneSoldier>(m_pGraphicDev);
 
 	// heroes
 	shared_ptr<CGameObject> m_pSheldBreaker1 = make_shared<CShieldBreaker>(m_pGraphicDev);

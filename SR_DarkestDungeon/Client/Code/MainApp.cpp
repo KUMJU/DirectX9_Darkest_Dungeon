@@ -2,6 +2,7 @@
 #include "MainApp.h"
 #include"SceneMgr.h"
 #include"Weald_Dungeon.h"
+#include"Ruin_Dungeon.h"
 #include "Village.h"
 #include"CameraMgr.h"
 #include"UIMgr.h"
@@ -34,7 +35,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 	CPickingMgr::GetInstance()->ReadyPickingMgr(m_pGraphicDev);
 
-    shared_ptr<CScene> pMainLogo = make_shared<CVillage>(m_pGraphicDev);
+    shared_ptr<CScene> pMainLogo = make_shared<CRuin_Dungeon>(m_pGraphicDev);
 	Engine::ChangeScene(pMainLogo);
 	pMainLogo->ReadyScene();
 

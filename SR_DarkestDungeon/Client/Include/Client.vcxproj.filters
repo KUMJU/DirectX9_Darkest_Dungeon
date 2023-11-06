@@ -171,6 +171,30 @@
     <ClCompile Include="..\Code\Loading.cpp">
       <Filter>00. Scene\00. Loading</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Ruin_Dungeon.cpp">
+      <Filter>00. Scene\03. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RuinDungeonDoor.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ruin_Obstacle.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ruin_Trap.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ruin_Curio_Armor.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ruin_Curio_Fountain.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ruin_Curio_Sarcophagus.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ruin_Curio_Sconce.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -338,6 +362,30 @@
     <ClInclude Include="..\Header\Loading.h">
       <Filter>00. Scene\00. Loading</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Ruin_Dungeon.h">
+      <Filter>00. Scene\03. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RuinDungeonDoor.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ruin_Obstacle.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ruin_Trap.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ruin_Curio_Armor.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ruin_Curio_Fountain.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ruin_Curio_Sarcophagus.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ruin_Curio_Sconce.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -439,6 +487,12 @@
     </Filter>
     <Filter Include="00. Scene\02. Village">
       <UniqueIdentifier>{7a6cc157-b6f4-4651-9d94-e234ee2add51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Scene\03. Ruin Dungeon">
+      <UniqueIdentifier>{e25c682d-5f62-4009-8ed3-b2c366484de1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\02 InteractionObj\02. Ruin Dungeon">
+      <UniqueIdentifier>{2ca345ff-fac0-414e-9006-5bb89942b27a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -12,6 +12,8 @@
 #include "Tervarn.h"
 #include "Guild.h"
 
+#include "Ruin_Dungeon.h"
+
 #include "Layer.h"
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
@@ -84,6 +86,13 @@ void CVillage::KeyInput()
 {
 	if (GetAsyncKeyState('V') & 0x8000) {
 		dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f);
+	}
+
+	// ∆Û«„∑Œ æ¿ ∫Ø∞Ê
+	if (GetAsyncKeyState('6') & 0x8000) {
+		shared_ptr<CRuin_Dungeon> pScene = make_shared<CRuin_Dungeon>(m_pGraphicDev);
+		CSceneMgr::GetInstance()->ChangeScene(pScene);
+		pScene->ReadyScene();
 	}
 }
 
