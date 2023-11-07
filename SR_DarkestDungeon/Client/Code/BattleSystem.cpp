@@ -7,6 +7,7 @@
 #include"Hero.h"
 
 #include"CameraMgr.h"
+#include "PickingMgr.h"
 
 CBattleSystem::CBattleSystem()
 {
@@ -18,6 +19,11 @@ CBattleSystem::~CBattleSystem()
 
 _bool CBattleSystem::Update(const _float& fTimeDelta)
 {
+	for (auto& iter : m_vecPickingObject)
+	{
+		CPickingMgr::GetInstance()->AddList(iter);
+	}
+
 	// 자동전투 여부
 	AutoBattleKeyInput();
 
@@ -309,6 +315,16 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			m_pCurrentCreature = NextCreature();
 			m_bNext = true;
 			m_bCounting = false;
+
+			// 각 객체의 자신의 위치 전달
+			for (int i = 0; i < size(m_vHeroes); i++)
+			{
+				dynamic_pointer_cast<CCreature>(m_vHeroes[i])->SetPosition(i + 1);
+			}
+			for (int i = 0; i < size(m_vMonsters); i++)
+			{
+				dynamic_pointer_cast<CCreature>(m_vMonsters[i])->SetPosition(i + 1);
+			}
 		}
 	}
 
@@ -379,37 +395,173 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			}
 			else
 			{
-				// 스킬 입력
-				if (!m_bSkillInput)
+				if (!m_bAblePickingInput)
 				{
-					m_bSkillInput = SkillKeyInput();
-				}
-				if (m_bSkillInput)
-				{
-					m_fKeyInputIntervel -= fTimeDelta;
-					if (m_fKeyInputIntervel < 0)
+					for (int i = 0; i < size(m_vMonsters); i++)
 					{
-						m_fKeyInputIntervel = KEYINPUTINTERVEL;
-						m_bAblePostionInput = true;
+						m_vecPickingObject.push_back(m_vMonsters[i]);
+					}
+					for (int i = 0; i < size(m_vHeroes); i++)
+					{
+						m_vecPickingObject.push_back(m_vHeroes[i]);
+					}
+					m_bAblePickingInput = true;
+				}
+				if (m_bAblePickingInput)
+				{
+					// 스킬 받아오기
+					m_iSelectSkill = m_pHeroUI->GetSkill();
+					
+					// 활성화 위치여야만 스킬 선택되도록
+					if (m_iSelectSkill != 0 && (m_iSelectSkill != 5) && !dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(m_iSelectSkill - 1)
+						->GetActivatePos()[dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetPosition() - 1])
+					{
+						m_iSelectSkill = 0;
+						OffTargetCursor();
+
+						for (int j = 0; j < size(m_vHeroes); j++)
+						{
+							dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetPicked(false);
+						}
+						for (int j = 0; j < size(m_vMonsters); j++)
+						{
+							dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetPicked(false);
+						}
+					}
+
+					// 경우에 따른 피킹 분류, 타겟 ui 띄우기 설정
+					if (m_iSelectPosition == 0 && m_iSelectSkill != 0)
+					{
+						OffTargetCursor();
+						// 자리 이동인경우
+						if (m_iSelectSkill == 5)
+						{
+							for (int i = 0; i < size(m_vHeroes); i++)
+							{
+								// 앞뒤만 켜지게
+								if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+								{
+									if (fabs(i - dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetPosition() + 1) == 1)
+										dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnTargetTeamCursor();
+								}
+							}
+							for (int i = 0; i < size(m_vHeroes); i++)
+							{
+								if (dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetPicked())
+								{
+									m_iSelectPosition = dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetPosition();
+									for (int j = 0; j < size(m_vHeroes); j++)
+									{
+										dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetPicked(false);
+									}
+									break;
+								}
+							}
+						}
+						// 힐인경우
+						else if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(m_iSelectSkill - 1)->GetHeal() != 0)
+						{
+							// 단일 힐
+							if (!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(m_iSelectSkill - 1)->IsTargetAll())
+							{
+								for (int i = 0; i < size(m_vHeroes); i++)
+								{
+									if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+									{
+										dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnTargetTeamCursor();
+									}
+								}
+							}
+							// 광역 힐
+							else
+							{
+								for (int i = 0; i < size(m_vHeroes); i++)
+								{
+									if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+									{
+										dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnTargetTeamCursor();
+										dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnTargetTeamsCursor();
+									}
+								}
+								dynamic_pointer_cast<CCreature>(m_vHeroes[0])->OffTargetTeamsCursor();
+							}
+							for (int i = 0; i < size(m_vHeroes); i++)
+							{
+								if (dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetPicked())
+								{
+									m_iSelectPosition = dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetPosition();
+									for (int j = 0; j < size(m_vHeroes); j++)
+									{
+										dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetPicked(false);
+									}
+									break;
+								}
+							}
+						}
+						// 일반 적 타겟팅
+						else
+						{
+							// 단일 공격
+							if (!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(m_iSelectSkill - 1)->IsTargetAll())
+							{
+								for (int i = 0; i < size(m_vMonsters); i++)
+								{
+									if (!dynamic_pointer_cast<CCreature>(m_vMonsters[i])->GetIsDeath() &&
+										dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(m_iSelectSkill - 1)->GetTargetPos()[i])
+									{
+										dynamic_pointer_cast<CCreature>(m_vMonsters[i])->OnTargetEnemyCursor();
+									}
+								}
+							}
+							// 광역 공격
+							else
+							{
+								int iLast = 0;
+								for (int i = 0; i < size(m_vMonsters); i++)
+								{
+									if (!dynamic_pointer_cast<CCreature>(m_vMonsters[i])->GetIsDeath())
+									{
+										dynamic_pointer_cast<CCreature>(m_vMonsters[i])->OnTargetEnemyCursor();
+										dynamic_pointer_cast<CCreature>(m_vMonsters[i])->OnTargetEnemiesCursor();
+										iLast = i;
+									}
+								}
+								dynamic_pointer_cast<CCreature>(m_vMonsters[iLast])->OffTargetEnemiesCursor();
+							}
+							for (int i = 0; i < size(m_vMonsters); i++)
+							{
+								if (dynamic_pointer_cast<CCreature>(m_vMonsters[i])->GetPicked())
+								{
+									m_iSelectPosition = dynamic_pointer_cast<CCreature>(m_vMonsters[i])->GetPosition();
+									for (int j = 0; j < size(m_vMonsters); j++)
+									{
+										dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetPicked(false);
+									}
+									break;
+								}
+							}
+						}
 					}
 				}
-				// 스킬 사용 위치 입력
-				if (m_bAblePostionInput)
-				{
-					m_bPositionInput = PositionKeyInput();
-				}
 			
-				if (m_bPositionInput)
+				if (m_iSelectPosition != 0 && m_iSelectSkill != 0)
 				{
-					m_bSkillInput = false;
-					m_bAblePostionInput = false;
-					m_bPositionInput = false;
+					//m_bSkillInput = false;
+					m_bAblePickingInput = false;
+					//m_bPositionInput = false;
 
+					// 타겟 커서 다 끄기
+					OffTargetCursor();
+					
 					Battle(m_iSelectSkill);
 					// 크리처 턴 엔드
 					CreatureTurnEnd();
 					m_bNext = false;
 					m_bCalculate = false;
+
+					m_pHeroUI->SetSkill(0);
+					m_iSelectPosition = 0;
+					m_vecPickingObject.clear();
 				}
 			}
 		}
@@ -1280,5 +1432,24 @@ void CBattleSystem::Battle(int _iNum)
 			(dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
 			dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
 		}
+	}
+}
+
+void CBattleSystem::OffTargetCursor()
+{
+	// 타겟 커서 다 끄기
+	for (int i = 0; i < size(m_vHeroes); i++)
+	{
+		dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OffTargetTeamCursor();
+		dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OffTargetTeamsCursor();
+		dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OffTargetEnemyCursor();
+		dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OffTargetEnemiesCursor();
+	}
+	for (int i = 0; i < size(m_vMonsters); i++)
+	{
+		dynamic_pointer_cast<CCreature>(m_vMonsters[i])->OffTargetTeamCursor();
+		dynamic_pointer_cast<CCreature>(m_vMonsters[i])->OffTargetTeamsCursor();
+		dynamic_pointer_cast<CCreature>(m_vMonsters[i])->OffTargetEnemyCursor();
+		dynamic_pointer_cast<CCreature>(m_vMonsters[i])->OffTargetEnemiesCursor();
 	}
 }

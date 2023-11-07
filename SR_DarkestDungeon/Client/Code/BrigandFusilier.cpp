@@ -244,6 +244,11 @@ void CBrigandFusilier::AddComponent()
 	m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Combat", 0.05f);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
+	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
+	m_pColliderCom->SetScale({ 3.f, 3.f, 1.f });
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
 	//pComponent = m_pEffectTransformCom = make_shared<CTransform>();
 	//NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");
 	//m_pEffectTransformCom->ReadyTransform();

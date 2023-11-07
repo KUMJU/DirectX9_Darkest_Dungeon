@@ -640,6 +640,10 @@ void CResourceMgr::BaseTextureLoad()
 		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/target_h_1.png", 1, bDefault);
 	CreateNewTexture(L"Target_TeamCreatures", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/target_h_4.png", 1, bDefault);
+	CreateNewTexture(L"Target_TeamPlus", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/plus_h.png", 1, bDefault);
+	CreateNewTexture(L"Target_EnemyPlus", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/plus.png", 1, bDefault);
 
 }
 

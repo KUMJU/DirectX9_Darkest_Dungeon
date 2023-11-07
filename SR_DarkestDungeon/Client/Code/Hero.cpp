@@ -100,23 +100,30 @@ void CHero::RenderGameObject()
 
 void CHero::PickingObj()
 {
-	shared_ptr<CPlayer> pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
-	_vec3* pPlayerTransform = dynamic_pointer_cast<CTransform>(pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos();
-
-	if ((*pPlayerTransform).y > -10)
+	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetInBattle())
 	{
-		m_pStatUI->SetForHire(true);
-		m_pStatUI->SetVisible(true);
+		m_bPicked = true;
 	}
-
-	else if ((*pPlayerTransform).y < -50 && (*pPlayerTransform).y > -150)
+	else
 	{
-		m_eCurAnimState = EAnimState::COMBAT;
-		pPlayer->ShowTavernUI(dynamic_pointer_cast<CHero>(shared_from_this()));
-		m_bSelected = true;
-	}
+		shared_ptr<CPlayer> pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
+		_vec3* pPlayerTransform = dynamic_pointer_cast<CTransform>(pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos();
 
-	CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
+		if ((*pPlayerTransform).y > -10)
+		{
+			m_pStatUI->SetForHire(true);
+			m_pStatUI->SetVisible(true);
+		}
+
+		else if ((*pPlayerTransform).y < -50 && (*pPlayerTransform).y > -150)
+		{
+			m_eCurAnimState = EAnimState::COMBAT;
+			pPlayer->ShowTavernUI(dynamic_pointer_cast<CHero>(shared_from_this()));
+			m_bSelected = true;
+		}
+
+		CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
+	}
 }
 
 shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)

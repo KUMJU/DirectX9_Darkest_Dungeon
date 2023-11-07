@@ -432,6 +432,46 @@ void CCreature::OnTurnCursor()
 	m_pStatInfo->SetIsTurn(true);
 }
 
+void CCreature::OnTargetTeamCursor()
+{
+	m_pStatInfo->SetIsTeamTarget(true);
+}
+
+void CCreature::OffTargetTeamCursor()
+{
+	m_pStatInfo->SetIsTeamTarget(false);
+}
+
+void CCreature::OnTargetTeamsCursor()
+{
+	m_pStatInfo->SetIsTeamsTarget(true);
+}
+
+void CCreature::OffTargetTeamsCursor()
+{
+	m_pStatInfo->SetIsTeamsTarget(false);
+}
+
+void CCreature::OnTargetEnemyCursor()
+{
+	m_pStatInfo->SetIsEnemyTarget(true);
+}
+
+void CCreature::OffTargetEnemyCursor()
+{
+	m_pStatInfo->SetIsEnemyTarget(false);
+}
+
+void CCreature::OnTargetEnemiesCursor()
+{
+	m_pStatInfo->SetIsEnemiesTarget(true);
+}
+
+void CCreature::OffTargetEnemiesCursor()
+{
+	m_pStatInfo->SetIsEnemiesTarget(false);
+}
+
 void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)
 {
 	if (!dynamic_pointer_cast<CCreature>(_pCreature)) return;

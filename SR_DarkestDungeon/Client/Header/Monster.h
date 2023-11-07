@@ -16,6 +16,9 @@ public:
 	CMonster(const CCreature& rhs);
 	virtual ~CMonster();
 
+protected:
+	virtual void		PickingObj();
+
 public:
 	virtual HRESULT ReadyGameObject() override;
 	virtual _int UpdateGameObject(const _float& fTimeDelta) override;

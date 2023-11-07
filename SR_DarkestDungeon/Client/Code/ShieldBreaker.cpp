@@ -55,7 +55,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		// ±∏∏€ ≥ª±‚
 		_bool arrActivatePos2[4] = { 1, 1, 1, 1 };
-		_bool arrTargetPos2[4] = { 1, 1, 1, 1 };
+		_bool arrTargetPos2[4] = { 0, 1, 1, 0 };
 		_bool arrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
 		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
 			
@@ -78,7 +78,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		// µ∂ªÁ¿« ¿‘∏¬√„
 		_bool arrActivatePos3[4] = { 1, 0, 0, 0 };
-		_bool arrTargetPos3[4] = { 1, 1, 1, 1 };
+		_bool arrTargetPos3[4] = { 1, 1, 0, 0 };
 		_bool arrAttack3[6] = { 0, 1, 0, 0, 0, 0 };
 		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 0, 1 };
 
