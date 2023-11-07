@@ -37,6 +37,10 @@ public:
 
 	void SetIsHero(_bool _bIsHero) { m_bHero = _bIsHero; }
 	void SetIsTurn(_bool _bIsTurn) { m_bTurn = _bIsTurn; }
+	void SetIsTeamTarget(_bool _bIsTurn) { m_bTargetTeam = _bIsTurn; }
+	void SetIsTeamsTarget(_bool _bIsTurn) { m_bTargetTeams = _bIsTurn; }
+	void SetIsEnemyTarget(_bool _bIsTurn) { m_bTargetEnemy = _bIsTurn; }
+	void SetIsEnemiesTarget(_bool _bIsTurn) { m_bTargetEnemies = _bIsTurn; }
 
 	// 0 : 중독 , 1: 출혈 , 2: 기절 , 3: 기상, 4: 붕괴
 	void SetAttribute(_int _iTypeNum) { m_bAttributeArr[_iTypeNum] = true;  }
@@ -49,12 +53,13 @@ private:
 
 private:
 
-	//0~9 : 스트레스 /10~11 : 체력바 /12~19 :상태값/ 20: 시체 체력바/ 21: 자기차례 표시, 22: 적 차례 표시
-	shared_ptr<CRcTex> m_pRCTexCom[23];
-	shared_ptr<CTransform> m_pTransformCom[23];
+	//0~9 : 스트레스 /10~11 : 체력바 /12~19 :상태값/ 20: 시체 체력바/ 21: 자기차례 표시, 22: 적 타겟 표시, 23: 적들, 24: 팀, 25: 팀들 타겟
+	shared_ptr<CRcTex> m_pRCTexCom[26];
+	shared_ptr<CTransform> m_pTransformCom[26];
 	// 0:스트레스X 1:스트레스o 2:빈 HP바 3:HP바 4: 중독 5:출혈 6:기절 7: 기상 8: 붕괴 9: 버프
-	// 10: 디버프 11: 죽음의 일격 12: 시체 HP바 13: 자기차례 표시, 14: 적 차례 표시
-	shared_ptr<CTexture> m_pTextureCom[15];
+	// 10: 디버프 11: 죽음의 일격 12: 시체 HP바 13: 차례 표시, 14: 적 타겟 표시, 15: 적들 타겟 표시
+	// 16: 팀 타겟 표시, 17: 팀들 타겟 표시
+	shared_ptr<CTexture> m_pTextureCom[18];
 
 	_bool m_bAttributeArr[8] = {false, false, false, false, false, false, false, false };
 
@@ -74,6 +79,11 @@ private:
 	_bool m_bCorpse = false;
 
 	_bool m_bTurn = false;
+
+	_bool m_bTargetTeam = false;
+	_bool m_bTargetTeams = false;
+	_bool m_bTargetEnemy = false;
+	_bool m_bTargetEnemies = false;
 
 };
 

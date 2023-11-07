@@ -59,7 +59,7 @@ HRESULT CJester::ReadyGameObject()
 		}
 
 		// 수확의 낫질
-		_bool arrActivatePos2[4] = { 0, 1, 1, 0 };
+		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 1, 1, 1, 1 };
 		_bool arrAttack2[6] = { 0, 0, 1, 0, 0, 0 };
 		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
@@ -127,8 +127,8 @@ HRESULT CJester::ReadyGameObject()
 		}
 
 		// 저며내기
-		_bool arrActivatePos5[4] = { 0, 1, 1, 0 };
-		_bool arrTargetPos5[4] = { 1, 1, 1, 1 };
+		_bool arrActivatePos5[4] = { 0, 1, 1, 1 };
+		_bool arrTargetPos5[4] = { 0, 1, 1, 1 };
 		_bool arrAttack5[6] = { 0, 0, 1, 0, 0, 0 };	
 		_bool arrToEnemy5[6] = { 1, 1, 1, 1, 1, 1 };
 

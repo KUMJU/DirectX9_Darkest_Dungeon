@@ -61,6 +61,7 @@ public:
 			m_pPlayerHand->SetCurrentItem(EHandItem::ENUM_END);
 		}
 	}
+	_bool			GetInBattle() { return m_bInBattle; }
 
 	// ¿µ¿õ º¤ÅÍ °Ù, ¼Â / ¿µ¿õ Ãß°¡ / ¿µ¿õ ½º¿Ò
 	vector<shared_ptr<CGameObject>>* GetHeroVec() { return &m_pVecHero; }

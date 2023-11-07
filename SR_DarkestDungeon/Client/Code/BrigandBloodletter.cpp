@@ -260,15 +260,17 @@ void CBrigandBloodletter::AddComponent()
 	_vec3 vPosTemp = { 0.f,0.f,0.f };
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();
-	if (nullptr == pComponent) {
-		//MSG_BOX("Make BrigandBloodetter TransformCom Failed");
-	}
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
 	m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Combat", 0.05f);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
+
+	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
+	m_pColliderCom->SetScale({ 3.f, 3.f, 1.f });
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 
 	//pComponent = m_pEffectTransformCom = make_shared<CTransform>();
 	//NULL_CHECK_MSG(pComponent, L"Make Player TransformCom Failed");

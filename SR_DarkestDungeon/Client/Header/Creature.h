@@ -92,6 +92,9 @@ public:
 	_bool	GetMoving() { return m_bMoving; }
 	void	SetMoving(_bool _bMoving) { m_bMoving = _bMoving; }
 
+	_bool	GetPicked() { return m_bPicked; }
+	void	SetPicked(_bool _bPicked) { m_bPicked = _bPicked; }
+
 	_bool	GetAttackMoving() { return m_bAttackMoving; }
 	void	SetAttackMoving(_bool _bMoving) { m_bAttackMoving = _bMoving; }
 
@@ -108,7 +111,7 @@ public:
 	void	SetCommonStat(STAT _tStat) { m_tCommonStat = _tStat; }
 
 	_int	GetPosition() { return m_iPosition; }
-	void	SetPosition(_int _iPosition) { m_iPosition += _iPosition; }
+	void	SetPosition(_int _iPosition) { m_iPosition = _iPosition; }
 
 	_int	GetSize() { return m_iSize; }
 	void	SetSize(_int _iSize) { m_iSize = _iSize; }
@@ -183,8 +186,16 @@ public:
 	virtual void	AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill);
 	void	MovePos(_vec3 _vPos, const _float& fTimeDelta, _float _fSpeed);
 	_float	MovingSpeed(_vec3 _vPos, _float _fMovingTime);
-	void	OffTurnCursor();	// 자기차례임을 나타내는 cursor 종료
-	void	OnTurnCursor();	// 자기차례임을 나타내는 cursor 키기
+	void	OffTurnCursor();			// 자기차례임을 나타내는 cursor 종료
+	void	OnTurnCursor();				// 자기차례임을 나타내는 cursor 키기
+	void	OnTargetTeamCursor();		// 팀원 target 키기
+	void	OffTargetTeamCursor();		// 팀원 target 끄기
+	void	OnTargetTeamsCursor();		// 팀원들 target 키기
+	void	OffTargetTeamsCursor();		// 팀원들 target 끄기
+	void	OnTargetEnemyCursor();		// 적 target 키기
+	void	OffTargetEnemyCursor();		// 적 target 끄기
+	void	OnTargetEnemiesCursor();	// 적들 target 키기
+	void	OffTargetEnemiesCursor();	// 적들 target 끄기
 
 public:
 
@@ -228,7 +239,7 @@ protected:
 	_bool		m_bIsHero = false;
 	STAT		m_tCommonStat;				// 스탯
 
-	_int		m_iPosition;				// 위치 (0~3)
+	_int		m_iPosition = 0;				// 위치 (0~3)
 
 	_bool		m_bDeath = false;			// 사망 여부(몬스터는 시체까지 소멸할때, 영웅은 사망할때)
 	_bool		m_bCorpse = false;			// 몬스터의 시체여부
@@ -279,6 +290,9 @@ protected:
 
 	// 플레이어 앞인지 뒤인지
 	_bool		m_bFront = true;
+
+	// 피킹됐는지 안됐는지
+	_bool		m_bPicked = false;
 
 
 protected:

@@ -27,6 +27,11 @@ CMonster::~CMonster()
 {
 }
 
+void CMonster::PickingObj()
+{
+	m_bPicked = true;
+}
+
 HRESULT CMonster::ReadyGameObject()
 {
 	__super::ReadyGameObject();

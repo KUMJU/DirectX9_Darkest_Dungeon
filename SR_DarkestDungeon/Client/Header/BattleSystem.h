@@ -70,6 +70,7 @@ protected:
 	_bool PositionKeyInput();		// 스킬 사용 키
 	void AutoBattleKeyInput();	// 자동 전투 키
 	void Battle(int _iNum);		// 전투 알고리즘
+	void OffTargetCursor();		// 타겟 커서 다 끄기
 
 private:
 	vector<shared_ptr<CGameObject>> m_vCreatures;		// 영웅, 몬스터 포함 리스트
@@ -107,9 +108,9 @@ private:
 	_bool	m_bAutoBattle = false;
 	_bool	m_bSkillInput = false;
 	_bool	m_bPositionInput = false;
-	_bool	m_bAblePostionInput = false;
+	_bool	m_bAblePickingInput = false;
 	_int	m_iSelectSkill = 0;
-	_int	m_iSelectPosition = 2;
+	_int	m_iSelectPosition = 0;
 	_bool	m_bCalculate = false;
 	_bool	m_bUISetDone = false;
 
@@ -120,6 +121,8 @@ private:
 
 	_vec3		  m_vCenterPos = { 0.f, 0.f, 0.f };
 
+	// 피킹오브젝트
+	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};
 
 //UI Test
 private:

@@ -23,6 +23,10 @@ public:
 	virtual void RenderGameObject() override;
 
 public:
+	_int	GetSkill() { return m_iSelectSkill; }
+	void	SetSkill(_int _iSkill) { m_iSelectSkill = _iSkill; }
+
+public:
 	void			SettingHeroInfo(_int _iMaxHP, _int _iHP, _int _iStress, tstring _strHeroName, vector<shared_ptr<CSkill>>* _vecSkill);
 	virtual			void PickingUI(LONG _fX, LONG _fY) override;
 	virtual			void HoverUI(LONG _fX, LONG _fY) override;
@@ -57,6 +61,7 @@ private:
 
 	//0~4 : 각 스킬슬롯 Index , 99 = NONE
 	_int m_iCursorPos = 99;
+	_int m_iSelectSkill = 0;
 
 	//아이콘 클릭 이벤트 관련 변수
 	_bool m_bIconClick = false;

@@ -85,6 +85,42 @@ void CStatView::RenderGameObject()
 		m_pRCTexCom[22]->RenderBuffer();
 	}
 
+	// TargetUI
+	if (m_bTargetEnemy)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[22]->GetWorld());
+		m_pTextureCom[14]->SetTexture(0);
+		m_pRCTexCom[22]->RenderBuffer();
+	}
+
+	if (m_bTargetEnemies)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[23]->GetWorld());
+		m_pTextureCom[15]->SetTexture(0);
+		m_pRCTexCom[23]->RenderBuffer();
+	}
+
+	if (m_bTargetTeam)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[24]->GetWorld());
+		m_pTextureCom[16]->SetTexture(0);
+		m_pRCTexCom[24]->RenderBuffer();
+	}
+
+	if (m_bTargetTeams)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[25]->GetWorld());
+		m_pTextureCom[17]->SetTexture(0);
+		m_pRCTexCom[25]->RenderBuffer();
+	}
+
+	//if (m_bTurn && !m_bHero)
+	//{
+	//	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[22]->GetWorld());
+	//	m_pTextureCom[14]->SetTexture(0);
+	//	m_pRCTexCom[22]->RenderBuffer();
+	//}
+
 	//Battle Attribute Render
 
 	iTexNum = 4;
@@ -111,7 +147,7 @@ void CStatView::RenderGameObject()
 
 void CStatView::AddComponent()
 {
-	for (int i = 0; i < 23; ++i) {
+	for (int i = 0; i < 26; ++i) {
 
 		shared_ptr<CComponent> pComponent;
 
@@ -135,7 +171,7 @@ void CStatView::AddComponent()
 	}
 
 
-	for (int i = 0; i < 15; ++i) {
+	for (int i = 0; i < 18; ++i) {
 
 		tstring strCurNum = to_wstring(i);
 		tstring strComName = L"Com_Texture" + strCurNum;
@@ -163,6 +199,9 @@ void CStatView::AddComponent()
 		m_pTextureCom[12]->SetTextureKey(L"Stat_CorpseFull", TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[13]->SetTextureKey(L"Target_TurnCreature", TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[14]->SetTextureKey(L"Target_AttackCreature", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[15]->SetTextureKey(L"Target_EnemyPlus", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[16]->SetTextureKey(L"Target_TeamCreature", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[17]->SetTextureKey(L"Target_TeamPlus", TEXTUREID::TEX_NORMAL);
 
 	}	
 }
@@ -236,6 +275,25 @@ void CStatView::SettingPos(_vec3 _vPos, _bool _bFront)
 		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 0.1f, m_vCenterPos.y + 1.4f, m_vCenterPos.z);
 		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 		m_pTransformCom[i]->SetScale(1.5f, 1.f, 1.f);
+	}
+
+	for (int i = 24; i < 25; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 0.1f, m_vCenterPos.y + 1.4f, m_vCenterPos.z);
+		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+		m_pTransformCom[i]->SetScale(1.5f, 1.f, 1.f);
+	}
+
+	// Target Plus
+	for (int i = 23; i < 24; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 1.5f, m_vCenterPos.y + 0.4f, m_vCenterPos.z);
+		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+		m_pTransformCom[i]->SetScale(0.8f, 0.8f, 1.f);
+	}
+
+	for (int i = 25; i < 26; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 1.5f, m_vCenterPos.y + 0.4f, m_vCenterPos.z);
+		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+		m_pTransformCom[i]->SetScale(0.8f, 0.8f, 1.f);
 	}
 	
 	iInitPos = -0.8f;
