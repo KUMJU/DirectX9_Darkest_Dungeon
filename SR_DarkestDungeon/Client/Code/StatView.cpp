@@ -20,6 +20,7 @@ HRESULT CStatView::ReadyGameObject()
 
 _int CStatView::UpdateGameObject(const _float& fTimeDelta)
 {
+	ChangeActiveUI(fTimeDelta);
 	__super::UpdateGameObject(fTimeDelta);
 
 	
@@ -53,6 +54,13 @@ void CStatView::RenderGameObject()
 		}
 	}
 	_int iTexNum = 2;
+
+	if (m_bHpGap) {
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[26]->GetWorld());
+		m_pTextureCom[18]->SetTexture(0);
+		m_pRCTexCom[26]->RenderBuffer();
+	}
+
 
 	//HPBar Render
 	for (int i = 10; i < 12; ++i) {
@@ -147,7 +155,7 @@ void CStatView::RenderGameObject()
 
 void CStatView::AddComponent()
 {
-	for (int i = 0; i < 26; ++i) {
+	for (int i = 0; i < 27; ++i) {
 
 		shared_ptr<CComponent> pComponent;
 
@@ -171,7 +179,7 @@ void CStatView::AddComponent()
 	}
 
 
-	for (int i = 0; i < 18; ++i) {
+	for (int i = 0; i < 19; ++i) {
 
 		tstring strCurNum = to_wstring(i);
 		tstring strComName = L"Com_Texture" + strCurNum;
@@ -202,8 +210,30 @@ void CStatView::AddComponent()
 		m_pTextureCom[15]->SetTextureKey(L"Target_EnemyPlus", TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[16]->SetTextureKey(L"Target_TeamCreature", TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[17]->SetTextureKey(L"Target_TeamPlus", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[18]->SetTextureKey(L"Stat_HealthGap", TEXTUREID::TEX_NORMAL);
+
 
 	}	
+}
+
+void CStatView::ChangeActiveUI(_float fTimeDelta)
+{
+	m_fHpRegemTime += fTimeDelta;
+	if (m_fHpRegemTime < 0.06f)
+		return;
+
+
+	if (m_bHpGap) {
+		 
+		m_iGapHp -= 0.001f * fTimeDelta * 0.5f;
+		m_fHpGapRange = static_cast<float>(m_iGapHp) / static_cast<float>(m_iMaxHp);
+		if (m_iGapHp <= m_iHp) {
+			m_bHpGap = false;
+		}
+	}
+
+	m_fHpRegemTime = 0.f;
+
 }
 
 
@@ -258,7 +288,7 @@ void CStatView::SettingPos(_vec3 _vPos, _bool _bFront)
 	if (!m_bCorpse)
 	{
 		for (int i = 11; i < 12; ++i) {
-			m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - fFrontGap);
+			m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpBarRange) + 0.1f * m_fHpBarRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - fFrontGap * 2);
 			m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 			m_pTransformCom[i]->SetScale(1.f * m_fHpBarRange, 0.1f, 1.f);
 		}
@@ -305,6 +335,12 @@ void CStatView::SettingPos(_vec3 _vPos, _bool _bFront)
 		m_pTransformCom[i]->SetScale(0.2f, 0.2f, 1.f);
 		iInitPos += 0.3f;
 	}
+	//HPGap
+	for (int i = 26; i < 27; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpGapRange) + 0.1f * m_fHpGapRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - fFrontGap);
+		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+		m_pTransformCom[i]->SetScale(1.f * m_fHpGapRange, 0.1f, 1.f);
+	}
 
 }                  
 
@@ -320,6 +356,14 @@ void CStatView::SetStress(int _iStress)
 
 void CStatView::SetHp(int _iHp)
 {
+	//Stat_HealthGap
+
+	if (_iHp != m_iHp && _iHp < m_iHp) {
+		m_fHpGapRange = static_cast<float>(m_iHp) / static_cast<float>(m_iMaxHp);
+		m_iGapHp = m_iHp;
+		m_bHpGap = true;
+	}
+
 	m_iHp = _iHp;
 
 	if (m_iHp < 0) {

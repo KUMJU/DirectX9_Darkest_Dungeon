@@ -36,7 +36,7 @@ HRESULT CBoneCourtier::ReadyGameObject()
 	_bool	m_bArrAttack1[6] = { 0, 1, 0, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneCourtier_1 = make_shared<CSkill>
-		(L"Attack1", L"Bone Courtier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 1.f, 1.2f,
+		(L"Attack1", L"Bone Courtier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.f, 1.f, 1.2f,
 			m_bArrAttack1, 0, 20, 0, true);
 	pVecSkill.push_back(m_pBoneCourtier_1);
 
@@ -44,7 +44,7 @@ HRESULT CBoneCourtier::ReadyGameObject()
 	_bool	bArrAttack2[6] = { 0, 1, 0, 0, 0, 0 };
 	_bool	bTargetPos2[4] = { 1,1,1,1 };
 	shared_ptr<CSkill> m_pBoneCourtier_2 = make_shared<CSkill>
-		(L"Attack2", L"Bone Courtier_Attack2", bTargetPos2, Skill2_Dot, 0.f, 1.f, 1.2f,
+		(L"Attack2", L"Bone Courtier_Attack2", bTargetPos2, Skill2_Dot, 0.f, 0.f, 1.f, 1.2f,
 			bArrAttack2, 0, 20);
 	pVecSkill.push_back(m_pBoneCourtier_2);
 	SetSkill(pVecSkill);
@@ -233,14 +233,14 @@ void CBoneCourtier::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

@@ -47,7 +47,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"WickedSlice", L"Highwayman_WickedSlice", L"WickedSlice_Img", L"WickedSlice_Effect",
-				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.15f, 1.5f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, -3.f, 1.f, 1.15f, 1.5f, -1, 0, 0, 0, 1, 0);
 
 		{
 			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL1;
@@ -64,7 +64,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"PistolShot", L"Highwayman_PistolShot", L"PistolShot_Img", L"PistolShot_Effect",
-				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.85f, 1.2f, -1, 0, 0, 0, 0, 0);
+				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 0.f, 1.f, 0.85f, 1.2f, -1, 0, 0, 0, 0, 0);
 
 		{
 			pSkill2->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL1;
@@ -81,7 +81,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"PointBlankShot", L"Highwayman_PointBlankShot", L"PointBlankShot_Img", L"PointBlankShot_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 0, -1);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 0, -1);
 
 		{
 			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -104,7 +104,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DuelistsAdvance", L"Highwayman_DuelistsAdvance", L"DuelistsAdvance_Img", L"DuelistsAdvance_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, -2.5f, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
 
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -118,7 +118,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
 			(L"GrapeshotBlast", L"Highwayman_GrapeshotBlast", L"GrapeshotBlast_Img", L"GrapeshotBlast_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 0.f, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
 
 		{
 			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
@@ -132,7 +132,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"TrackingShot", L"Highwayman_TrackingShot", L"TrackingShot_Img", L"TrackingShot_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 0.f, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
 
 		{
 			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
@@ -354,14 +354,14 @@ void CHighwayman::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

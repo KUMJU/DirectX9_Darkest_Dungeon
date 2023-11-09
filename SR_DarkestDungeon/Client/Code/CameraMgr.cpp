@@ -37,15 +37,15 @@ void CCameraMgr::CameraOrbit(ECameraMode _eType, _vec3 _vDst, _vec3 _vCenter)
 	m_pMainCam->ChangeCameraWithPoint(_eType, _vDst, _vCenter);
 }
 
-void CCameraMgr::CameraRotation(ECameraMode _eType, _float _fDegree)
+void CCameraMgr::CameraRotation(ECameraMode _eType, _float _fDegree, _float _fTime)
 {
-	m_pMainCam->ChangeCameraWithDegree(_eType, _fDegree);
+	m_pMainCam->ChangeCameraWithDegree(_eType, _fDegree, _fTime);
 
 }
 
-void CCameraMgr::MovingRightVec(_int _iDir)
+void CCameraMgr::MovingRightVec(_bool _bValue , _float _fDir)
 {
-	m_pMainCam->MovingRightVec(_iDir);
+	m_pMainCam->SetCamMovingStateOnOff(_bValue, _fDir);
 }
 
 void CCameraMgr::AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude)

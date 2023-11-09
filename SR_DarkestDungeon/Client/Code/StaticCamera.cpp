@@ -15,8 +15,6 @@ CStaticCamera::~CStaticCamera()
 HRESULT CStaticCamera::ReadyGameObject()
 {
 	m_pPlrTransCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
-	m_pPlrTransCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
-
 	HRESULT result = CCamera::ReadyGameObject();
 
 	m_matView = *(m_pPlrTransCom->GetWorld());
@@ -101,6 +99,8 @@ void CStaticCamera::LateUpdateGameObject(){
 	case ECameraMode::INTERACTION:
 		InteractionTervarn();
 		break;
+	case ECameraMode::BATTLE:
+		break;
 	case ECameraMode::ENUM_END:
 
 		break;
@@ -108,6 +108,20 @@ void CStaticCamera::LateUpdateGameObject(){
 	default:
 		break;
 	}
+
+
+	//동시에 여러 상태를 갖기 위한 State------------------------------------------------------------------
+	if (m_bCamRotationBattle) {
+		ChangeCamEyePos();
+	}
+	
+	if (m_bCamMovingHorizontal)
+		MovingRightVec(1);
+
+	if (m_bCamMoving) {
+		MovingDirect();
+	}
+	//----------------------------------------------------------------------------------------------------
 
 	if (!m_qEffectQueue.empty())
 		CameraEffectProcess();
@@ -118,7 +132,11 @@ void CStaticCamera::ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegre
 {
 	CamReset();
 
-	if (_eCamType == ECameraMode::ROTATION || _eCamType == ECameraMode::LOOKBACK) {
+	if (_eCamType == ECameraMode::BATTLE) {
+		m_bCamRotationBattle = true;
+	}
+
+	if (_eCamType == ECameraMode::ROTATION || _eCamType == ECameraMode::LOOKBACK || _eCamType == ECameraMode::BATTLE) {
 		m_eCurrentState = _eCamType;
 		m_fAngle = _fDegree / _fTime;
 		m_fTotalTime = _fTime;
@@ -191,7 +209,8 @@ void CStaticCamera::ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _v
 
 void CStaticCamera::MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float _fTime)
 {
-	m_eCurrentState = _eCamType;
+	//m_eCurrentState = _eCamType;
+	m_bCamMoving = true;
 
 	CamReset();
 
@@ -202,7 +221,7 @@ void CStaticCamera::MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float 
 	D3DXMatrixInverse(&matView, 0, &matView);
 	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
 
-	m_fTotalTime = _fTime;
+	m_fTotalTime2 = _fTime;
 	_vec3 vDir = _vDst - vCurrentPos;
 	m_vSpeed.x =  D3DXVec3Length(&vDir);
 	m_vSpeed.x /= _fTime;
@@ -224,14 +243,7 @@ void CStaticCamera::ChangeCamEyePos()
 
 	_float fCalAngle = D3DXToRadian(m_fAngle) * m_deltaTime;
 
-	//m_fLerp += 0.003f * m_deltaTime;
-
-	//if (m_fLerp > 0.4f)
-	//	m_fLerp = 0.4f;
-
 	D3DXQuaternionRotationAxis(&q, &vUpvec, fCalAngle);
-	//D3DXQuaternionSlerp(&q, &q, &m_qPrev, m_fLerp);
-
 	//쿼터니언을 행렬로 변환
 	D3DXMatrixRotationQuaternion(&matYpos, &q);
 
@@ -245,7 +257,9 @@ void CStaticCamera::ChangeCamEyePos()
 	m_fActTime += m_deltaTime;
 
 	//Battle
-	if (m_fActTime >= m_fTotalTime && m_eCurrentState == ECameraMode::BATTLE) {
+	if (m_fActTime >= m_fTotalTime && m_bCamRotationBattle) {
+		m_eCurrentState = ECameraMode::IDLE;
+		m_bCamRotationBattle = false;
 		return;
 	}
 
@@ -339,19 +353,23 @@ void CStaticCamera::MovingDirect()
 	_vec3 vCurrentPos, vCurPos2;
 	_matrix matView;
 
-	m_fActTime += m_deltaTime;
+	m_fActTime3 += m_deltaTime;
 
-	if (m_fTotalTime <= m_fActTime) {
+	if (m_fTotalTime2 <= m_fActTime3) {
+		m_bCamMoving = false;
+		m_fActTime3 = 0.f;
 		m_eCurrentState = ECameraMode::IDLE;
 	}
 
-	
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	matView = m_matView;
+
+//	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
 	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
 	vCurPos2 = vCurrentPos;
 
 	m_fLerp += (_float)0.3 * m_deltaTime;
+
 
 	if (m_fLerp > 0.8f) 
 		m_fLerp = 0.8f;
@@ -382,19 +400,22 @@ void CStaticCamera::MovingRightVec(_int _iDir)
 	_matrix matView;
 	_vec3 vRight, vPos;
 	
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	matView = m_matView;
 
 	D3DXMatrixInverse(&matView, 0, &matView);
 
 	memcpy(&vRight, &matView.m[0][0], sizeof(_vec3));
 	memcpy(&vPos, &matView.m[3][0], sizeof(_vec3));
 
-	vPos += vRight * m_deltaTime *0.5f;
+	vPos += vRight * m_deltaTime *2.f * m_fRightVecDir;
 
 	memcpy(&matView.m[3][0], &vPos, sizeof(_vec3));
 	D3DXMatrixInverse(&matView, 0, &matView);
 
 	m_matView = matView;
+
+	if(m_bCamMoving)
+		m_vDstVec.x += vRight.x * m_deltaTime * 2.f;
 
 }
 
@@ -404,6 +425,43 @@ void CStaticCamera::SlopeCamera(_int _iDir, _int _iSlope)
 
 
 }
+
+void CStaticCamera::CalcAngle(_vec3 _Dst)
+{
+
+
+
+
+}
+
+void CStaticCamera::LineCameraNoLerp()
+{
+
+	_vec3 vCurrentPos, vCurPos2;
+	_matrix matView;
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0, &matView);
+	memcpy(&vCurrentPos, &matView.m[3][0], sizeof(_vec3));
+
+	vCurrentPos += m_vDir * m_vSpeed.x * 2.f * m_deltaTime;
+	
+	memcpy(&matView.m[3][0], &vCurrentPos, sizeof(_vec3));
+	D3DXMatrixInverse(&matView, 0, &matView);
+
+	m_matView = matView;
+
+	m_fActTime2 += m_deltaTime;
+
+	if (m_fTotalTime <= m_fActTime2) {
+		m_bCamMoving = false;
+		m_fActTime2 = 0.f;
+	}
+
+
+
+}
+
 
 void CStaticCamera::AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude)
 {
@@ -466,6 +524,7 @@ void CStaticCamera::ShakingCamera()
 	memcpy(&vCurrentPos, &m_matView.m[3][0], sizeof(_vec3));
 
 	vCurrentPos.y += fDistance;
+	vCurrentPos.x += fDistance;
 
 	memcpy(&m_matView.m[3][0], &vCurrentPos, sizeof(_vec3));
 

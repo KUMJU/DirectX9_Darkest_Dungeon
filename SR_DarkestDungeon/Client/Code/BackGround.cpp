@@ -73,7 +73,8 @@ void CBackGround::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-	
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 	//BackGround
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->GetWorld());
 	m_pTextureCom->SetTexture(0);

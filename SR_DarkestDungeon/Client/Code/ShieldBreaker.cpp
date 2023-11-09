@@ -41,7 +41,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"Pierce", L"ShieldBreaker_Pierce", L"Pierce_Img", L"Pierce_Effect",
-				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 0.9f, 1.3f, -1, 0, 0, 0, 1, 1);
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, -4.f,  1.f, 0.9f, 1.3f, -1, 0, 0, 0, 1, 1);
 
 		{
 			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
@@ -61,7 +61,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 			
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"Puncture", L"ShieldBreaker_Puncture", L"Puncture_Img", L"Puncture_Effect",
-				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.5f, 0.8f, -1, -1,0,0, 1, 1);
+				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, -3.f, 1.f, 0.5f, 0.8f, -1, -1,0,0, 1, 1);
 
 		{
 			pSkill2->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -86,7 +86,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"AddersKiss", L"ShieldBreaker_AddersKiss", L"AddersKiss_Img", L"AddersKiss_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDam3, 1.f, 0.5f, 0.8f, -1, 0, 0, 0, 1, -1);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDam3, -3.f,  1.f, 0.5f, 0.8f, -1, 0, 0, 0, 1, -1);
 
 		{
 			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -111,7 +111,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"Impale", L"ShieldBreaker_Impale", L"Impale_Img", L"Impale_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, -4.f, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -128,7 +128,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
 			(L"Captivate", L"ShieldBreaker_Captivate", L"Captivate_Img", L"Captivate_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, -3.f, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
 		{
 			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
@@ -142,7 +142,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"Expose", L"ShieldBreaker_Expose", L"Expose_Img", L"Expose_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 0.f, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
 		{
 			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
@@ -361,14 +361,14 @@ void CShieldBreaker::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

@@ -61,20 +61,26 @@
     <Filter Include="02. GameObject\UI">
       <UniqueIdentifier>{deacfb9f-e57c-4ba8-b2a3-45285d6b4582}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Manager\05. CollisionMgr">
-      <UniqueIdentifier>{169d7455-8645-44d1-9546-371d12f359ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\06. PickingMgr">
-      <UniqueIdentifier>{4005798a-2002-4e7e-8433-19cf82b6ae2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\04. UIMgr">
-      <UniqueIdentifier>{d6f542c0-c566-450d-a86e-ad2264e3baa7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Manager\04. UIMgr">
       <UniqueIdentifier>{d6f542c0-c566-450d-a86e-ad2264e3baa7}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Component\05. Animator">
       <UniqueIdentifier>{478356ca-006c-471f-82e7-a2b2df54eebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\06. LightMgr">
+      <UniqueIdentifier>{681eaf0a-f97b-4716-a410-e49972f49378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\03. UIMgr">
+      <UniqueIdentifier>{d6f542c0-c566-450d-a86e-ad2264e3baa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\04. CollisionMgr">
+      <UniqueIdentifier>{169d7455-8645-44d1-9546-371d12f359ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\05. PickingMgr">
+      <UniqueIdentifier>{4005798a-2002-4e7e-8433-19cf82b6ae2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\06. LightMgr\Light">
+      <UniqueIdentifier>{c083c00e-c246-4252-aef7-aa9b6cd62a6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -133,16 +139,22 @@
       <Filter>02. GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIMgr.cpp">
-      <Filter>04. Manager\04. UIMgr</Filter>
+      <Filter>04. Manager\03. UIMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CollisionMgr.cpp">
-      <Filter>04. Manager\05. CollisionMgr</Filter>
+      <Filter>04. Manager\04. CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Collider.cpp">
       <Filter>03. Component\03. Collider</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PickingMgr.cpp">
-      <Filter>04. Manager\06. PickingMgr</Filter>
+      <Filter>04. Manager\05. PickingMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LightMgr.cpp">
+      <Filter>04. Manager\06. LightMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Light.cpp">
+      <Filter>04. Manager\06. LightMgr\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,16 +217,22 @@
       <Filter>02. GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\UIMgr.h">
-      <Filter>04. Manager\04. UIMgr</Filter>
+      <Filter>04. Manager\03. UIMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\CollisionMgr.h">
-      <Filter>04. Manager\05. CollisionMgr</Filter>
+      <Filter>04. Manager\04. CollisionMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\Collider.h">
       <Filter>03. Component\03. Collider</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\PickingMgr.h">
-      <Filter>04. Manager\06. PickingMgr</Filter>
+      <Filter>04. Manager\05. PickingMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\LightMgr.h">
+      <Filter>04. Manager\06. LightMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\Light.h">
+      <Filter>04. Manager\06. LightMgr\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

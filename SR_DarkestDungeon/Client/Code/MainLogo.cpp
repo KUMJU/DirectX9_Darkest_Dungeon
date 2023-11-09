@@ -19,6 +19,8 @@ CMainLogo::~CMainLogo()
 
 HRESULT CMainLogo::ReadyScene()
 {
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 	m_pLoading = make_shared<CLoading>(m_pGraphicDev);
 	m_pLoading->Ready_Loading(CLoading::LOADING_STAGE);
 
@@ -33,6 +35,7 @@ HRESULT CMainLogo::ReadyScene()
 
 
 	CSoundMgr::GetInstance()->PlayBGM(L"Main_Loading_loop.wav", 1.f);
+
 
 	return S_OK;
 }

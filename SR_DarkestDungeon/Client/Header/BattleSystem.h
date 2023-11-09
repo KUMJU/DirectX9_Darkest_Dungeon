@@ -77,6 +77,8 @@ private:
 	vector<shared_ptr<CGameObject>> m_vHeroes;			// 영웅 리스트		0: 제일 앞
 	vector<shared_ptr<CGameObject>> m_vMonsters;		// 몬스터 리스트
 
+
+	//공격시 다가가는 거리 
 	_vec3	m_vApproachingGapR = _vec3{ -2.f, 0.f, -1.f };
 	_vec3	m_vApproachingGapL = _vec3{ 2.f, 0.f, -1.f };
 
@@ -121,6 +123,11 @@ private:
 
 	_vec3		  m_vCenterPos = { 0.f, 0.f, 0.f };
 
+	//Camera Effect Debounce State
+	_bool	m_bCamEffectCheck = false;
+	_bool	m_bRotationCheck = false;
+	_float	m_fAngle = 0.f;
+	_float m_fActTime = 0.f;
 	// 피킹오브젝트
 	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};
 

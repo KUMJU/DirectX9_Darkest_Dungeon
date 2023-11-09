@@ -7,17 +7,17 @@ class CSkill : public CGameObject
 public:
 	// 영웅 스킬 용
 	// (스킬 이름, 스킬 애니메이션, 스킬 이미지, 이펙트키, 활성 위치, 타겟 위치, 공격종류(단순 공격, 중독, 출혈, 기절, 이동, 힐), 
-	//	각 공격 타겟이 적인지 아닌지, 도트뎀[데미지][라운드], 스턴 확률, 공격력 계수, 치명타 확률, 라운드 당 사용 가능 횟수, 이동량, 힐량, 타겟 대상을 모두 공격하는지)
+	//	각 공격 타겟이 적인지 아닌지, 도트뎀[데미지][라운드], 스킬 사용 거리, 스턴 확률, 공격력 계수, 치명타 확률, 라운드 당 사용 가능 횟수, 이동량, 힐량, 타겟 대상을 모두 공격하는지)
 	CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, tstring _strEffectKey,
 		_bool* _arrActivatePos, _bool* _arrTargetPos, _bool* _bArrAttack, _bool* _bArrToEnemy,
-		_int* _iDotDamage = nullptr, _float _fStunRatio = 1.f, _float _fDamageRatio = 1.f,
-		_float _fCriticalRatio = 1.f, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0, _bool _bTargetAll = 0, _bool _bApproach = 0, _int _iSkillMoveCnt = 0);
+		_int* _iDotDamage = nullptr, _float _fDistance = 0.f ,_float _fStunRatio = 1.f, _float _fDamageRatio = 1.f,
+		_float _fCriticalRatio = 1.f, _int _iActivateCnt = -1, _int _iMoveCnt = 0, _int _iHeal = 0, _bool _bTargetAll = 0, _bool _bApproach = 0, _int _iSkillMoveCnt = 0 );
 
 	// 몬스터 스킬 용
-	// (스킬 이름, 스킬 애니메이션(크리처의 애니메이션), 도트뎀[데미지][라운드],
+	// (스킬 이름, 스킬 애니메이션(크리처의 애니메이션), 도트뎀[데미지][라운드], 스킬 사용거리(근접 공격시 애니메이션에 맞춰야해서 넣음)
 	//    스턴 확률, 공격력 계수, 치명타 확률
 	//    공격종류, 영웅을 움직이게 할 칸수, 영웅에게 줄 스트레스)
-	CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos, _int* _iDotDamage,
+	CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos, _int* _iDotDamage, _float _fDistance,
 		_float _fStunRatio, _float _fDamageRatio, _float _fCriticalRatio,
 		_bool* _bArrAttack, _int _iMoveCnt = 0, _int _iStress = 0, _bool _bTargetAll = 0, _bool _bApproach = 0, _int _iSkillMoveCnt = 0);
 
@@ -63,6 +63,8 @@ public:
 
 	tstring		GetAnimKey() { return m_strAnimKey; }
 	tstring		GetImgKey() { return m_strImgKey; }
+
+	_float		GetSkillDistance() { return m_fSkillDistance; }
 
 protected:
 
@@ -124,4 +126,7 @@ protected:
 	tstring		m_strEffectAnimKey;
 	// 스킬 이미지 키
 	tstring		m_strImgKey = L"";
+
+	//스킬 사용시 적으로부터 띄워줘야하는 거리
+	_float		m_fSkillDistance = 0.f;
 };

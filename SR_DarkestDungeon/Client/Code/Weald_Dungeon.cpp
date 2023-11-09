@@ -113,12 +113,14 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		if (pTransform->GetPos()->z > 200.f)
 		{
 			_vec3* vPos = pTransform->GetPos();
+			CCameraMgr::GetInstance()->SetState(ECameraMode::BATTLE);
 			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vPos->x , vPos->y+5.f , 210.f });
 			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_Inventory");
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
 			pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 210.f);
 			m_pRoom3->SetBattleStart(true);
 			CSoundMgr::GetInstance()->PlayBGM(L"Combat_Level2_Loop2.wav", 0.6f);
+			CUIMgr::GetInstance()->NarrationOn(L"Narr_tut_firstBattle");
 			m_pRoom3->SetBattleCameraOriginPos({ vPos->x , vPos->y + 5.f , 210.f });
 		}
 	}

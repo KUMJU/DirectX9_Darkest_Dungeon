@@ -607,9 +607,12 @@ void CResourceMgr::BaseTextureLoad()
 		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_pip_full.png", 1, bDefault);
 	CreateNewTexture(L"Stat_HealthEmpty", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_pip_Empty.png", 1, bDefault);
+	CreateNewTexture(L"Stat_HealthGap", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_pip_gap.png", 1, bDefault);
 	CreateNewTexture(L"Stat_CorpseFull", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/HeroStat/health_corpse_full.png", 1, bDefault);
 
+	
 	//전투 스테이터스
 
 	CreateNewTexture(L"Stat_Attribute_Poison", TEX_NORMAL,
