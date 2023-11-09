@@ -214,6 +214,9 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Hero_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
 
+	CreateNewTexture(L"Effect_Blood", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Effect/Blood/armatureName_blood_splatter_%d.png", 57, bDefault);
+
 	//방패파괴자
 	{
 		// 영웅 애니메이션

@@ -525,11 +525,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 
 	// 타겟 이펙트
 	{
-		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
-		if (_pSkill->GetTargetEffectAnimKey() != L"")
-		{
-			_pCreature->SetEffectInfo(_pSkill, true);
-		}
+		_pCreature->SetEffectInfo(_pSkill, true);
 	}
 
 }
@@ -719,15 +715,22 @@ void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget)
 {
 	if (_bTarget)
 	{
+		m_pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		tstring strEffectAnimKey;
+
 		if (_pSkill->GetTargetEffectAnimKey() != L"")
 		{
-			m_pEffect = CEffectMgr::GetInstance()->GetEffect();
-
-			shared_ptr< tagTextureInfo> textureInfo = *CResourceMgr::GetInstance()->GetTexture(_pSkill->GetAnimKey(), TEX_NORMAL)->begin();
-
-			m_pEffect->SetInfo(_pSkill->GetTargetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME, false);
-			m_pEffect->SetActive(true);
+			strEffectAnimKey = _pSkill->GetTargetEffectAnimKey();
 		}
+
+		else
+		{
+			strEffectAnimKey = L"Effect_Blood";
+		}
+
+		m_pEffect->SetInfo(strEffectAnimKey, m_pTextureCom->GetTextureSize(), m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME, false);
+		m_pEffect->SetActive(true);
 	}
 
 	else
