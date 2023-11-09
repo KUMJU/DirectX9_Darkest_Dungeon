@@ -80,7 +80,7 @@ HRESULT CHighwayman::ReadyGameObject()
 		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
-			(L"PointBlankShot", L"Highwayman_PointBlankShot", L"PointBlankShot_Img", L"PointBlankShot_Effect",
+			(L"PointBlankShot", L"Highwayman_PointBlankShot", L"PointBlankShot_Img", L"PointBlankShot_Effect", L"PointBlankShot_Target_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 1, -1);
 
 		{

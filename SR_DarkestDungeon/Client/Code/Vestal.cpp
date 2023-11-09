@@ -102,7 +102,7 @@ HRESULT CVestal::ReadyGameObject()
 		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
-			(L"DivineComfort", L"Vestal_DivineComfort", L"DivineComfort_Img", L"DivineComfort_Effect",
+			(L"DivineComfort", L"Vestal_DivineComfort", L"DivineComfort_Img", L"DivineComfort_Effect", L"DivineComfort_Target_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 0.f, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
