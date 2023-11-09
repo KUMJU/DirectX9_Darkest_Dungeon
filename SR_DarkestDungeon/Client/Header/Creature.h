@@ -4,6 +4,8 @@
 #include "Skill.h"
 #include "Effect.h"
 
+#include"SoundMgr.h"
+
 BEGIN(Engine)
 
 class CRcTex;

@@ -5,6 +5,7 @@
 #include"Export_Utility.h"
 #include"StatView.h"
 #include "UIMgr.h"
+#include"SoundMgr.h"
 
 CShieldBreaker::CShieldBreaker(LPDIRECT3DDEVICE9 pGraphicDev) : CHero(pGraphicDev)
 {
@@ -404,15 +405,23 @@ void CShieldBreaker::ChangeAnim()
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Pierce", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_sb_pierce.wav", CHANNELID::SHIELDBREAKER, 1.f);
+
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Puncture", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_sb_puncher.wav", CHANNELID::SHIELDBREAKER, 1.f);
+
 			break;
 		case EAnimState::SKILL3:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_AddersKiss", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_sb_adderskiss.wav", CHANNELID::SHIELDBREAKER, 1.f);
+
 			break;
 		case EAnimState::SKILL4:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Impale", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_sb_impale.wav", CHANNELID::SHIELDBREAKER, 1.f);
+
 			break;
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"ShieldBreaker_Affliction", 0.04f);
@@ -424,6 +433,8 @@ void CShieldBreaker::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Hero_Death", 0.02f);
 			break;
 		}
+		m_ePrevAnimState = m_eCurAnimState;
+
 	}
 
 	_vec2 vcurPos = m_pTextureCom->GetTextureSize();

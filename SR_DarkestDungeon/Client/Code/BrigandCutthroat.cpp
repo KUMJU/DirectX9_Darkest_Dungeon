@@ -88,12 +88,15 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack1", 0.02f);
 			m_pTransformCom->SetScale(2.5f * 427.f / 232.f, 2.5f * 268.f / 311.f, 1.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 268.f / 311.f, m_vPos.z);
+			CSoundMgr::GetInstance()->PlaySound(L"En_brigcut_uppercutslice.wav", CHANNELID::MONSTER, 1.f);
 
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack2", 0.02f);
 			m_pTransformCom->SetScale(2.5f * 232.f / 232.f, 2.5f * 365.f / 311.f, 1.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 365.f / 311.f, m_vPos.z);
+			CSoundMgr::GetInstance()->PlaySound(L"En_brigcut_doubleslice.wav", CHANNELID::MONSTER, 1.f);
+
 
 			break;
 		case EAnimState::CORPSE:
@@ -107,6 +110,8 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 
 			break;
 		}
+		m_ePrevAnimState = m_eCurAnimState;
+
 	}
 
 	// юс╫ц
@@ -239,15 +244,18 @@ void CBrigandCutthroat::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	if (m_bSetAlpha)
+		RenderObjAlpha(150);
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-
+	if (m_bSetAlpha) {
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xffffffff);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	}
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	__super::RenderGameObject();

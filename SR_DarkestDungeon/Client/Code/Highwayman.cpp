@@ -6,6 +6,8 @@
 #include"StatView.h"
 #include "UIMgr.h"
 
+#include"SoundMgr.h"
+
 CHighwayman::CHighwayman(LPDIRECT3DDEVICE9 pGraphicDev) : CHero(pGraphicDev)
 {
 }
@@ -400,21 +402,30 @@ void CHighwayman::ChangeAnim()
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Highwayman_WickedSlice", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_hwy_wickedslice.wav", CHANNELID::HIGHWAYMAN, 1.f);
+
 			//m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Highwayman_PistolShot", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_hwy_pistolshot.wav", CHANNELID::HIGHWAYMAN, 1.f);
+
 			//m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL3:
 			m_pTextureCom->SetAnimKey(L"Highwayman_PointBlankShot", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_hwy_pointblank.wav", CHANNELID::HIGHWAYMAN, 1.f);
+
 			//m_pTransformCom->SetScale(2.f, 3.f, 1.f);
 			break;
 		case EAnimState::SKILL4:
 			m_pTextureCom->SetAnimKey(L"Highwayman_DuelistsAdvance", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_hwy_duelistadvance.wav", CHANNELID::HIGHWAYMAN, 1.f);
+
 			break;
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"Highwayman_Affliction", 0.04f);
+
 			break;
 		case EAnimState::VIRTUE:
 			m_pTextureCom->SetAnimKey(L"Highwayman_Virtue", 0.04f);
@@ -423,6 +434,9 @@ void CHighwayman::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Hero_Death", 0.02f);
 			break;
 		}
+
+		m_ePrevAnimState = m_eCurAnimState;
+
 		_vec2 vcurPos = m_pTextureCom->GetTextureSize(); 
 		
 		if (m_eCurAnimState == EAnimState::IDLE || m_eCurAnimState == EAnimState::WALK || m_eCurAnimState == EAnimState::COMBAT) {

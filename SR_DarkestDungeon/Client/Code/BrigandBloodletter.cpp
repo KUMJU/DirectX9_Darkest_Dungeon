@@ -3,6 +3,7 @@
 #include"Export_Utility.h"
 #include"StatView.h"
 
+
 CBrigandBloodletter::CBrigandBloodletter(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 {
@@ -89,11 +90,14 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 			m_pTransformCom->SetScale(3.f * 482.f / 303.f, 3.f * 383.f / 382.f, 1.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 383.f / 382.f, m_vPos.z);
 
+			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_whipsingle.wav", CHANNELID::MONSTER, 1.f);
+
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack2", 0.02f);
 			m_pTransformCom->SetScale(3.f * 474.f / 303.f, 3.f * 379.f / 382.f, 1.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 379.f / 382.f, m_vPos.z);
+			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_pointblank.wav", CHANNELID::MONSTER, 1.f);
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Dead", 0.02f);
@@ -106,6 +110,7 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 			m_pTransformCom->SetScale(3.f, 3.f, 1.f);
 			break;
 		}
+		m_ePrevAnimState = m_eCurAnimState;
 	}
 
 	// юс╫ц
@@ -234,18 +239,21 @@ void CBrigandBloodletter::LateUpdateGameObject()
 
 void CBrigandBloodletter::RenderGameObject()
 {
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	if (m_bSetAlpha) {
+		
+	}
+	
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	if (m_bSetAlpha) {
+	
+	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
