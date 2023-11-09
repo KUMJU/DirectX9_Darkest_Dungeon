@@ -126,6 +126,48 @@ void CHero::PickingObj()
 	}
 }
 
+void CHero::IncreaseStress(_int _iValue)
+{
+	m_iStress += _iValue;
+
+	if (m_iStress >= 100 && !m_bVirtue && !m_bAffliction)
+	{
+		switch (rand() % 2)
+		{
+		case 0:
+			m_bVirtue = true;
+			switch (rand() % 2)
+			{
+			case 0:
+				m_eVirtue = EVirtue::COURAGEOUS;
+				break;
+			case 1:
+				m_eVirtue = EVirtue::VIGOROUS;
+				break;
+			}
+			break;
+		case 1:
+			m_bAffliction = true;
+			switch (rand() % 2)
+			{
+			case 0:
+				m_eAffliction = EAffliction::SELFISH;
+				break;
+			case 1:
+				m_eAffliction = EAffliction::IRRATIONAL;
+				break;
+			}
+			break;
+		}
+		//m_bAffliction = true;
+		//m_eAffliction = EAffliction::SELFISH;
+	}
+	if (m_iStress > 200)
+	{
+		m_iStress = 200;
+	}
+}
+
 shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)
 {
 	shared_ptr<CSkill> m_pSelectedSkill = (m_pVecSkill)[_iSkillID];

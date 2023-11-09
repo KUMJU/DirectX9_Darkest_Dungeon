@@ -477,13 +477,21 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			dynamic_pointer_cast<CHero>(_pCreature)->IncreaseStress(_pSkill->GetStress());
+
 		}
 	}
 
 	// 힐일때, 광역버프일때만 피격 애니메이션 x
-	if (!arrAttack[5] && _pSkill->GetArrToEnemy()[3])
+	if (arrAttack[5])
 	{
-		// 상대
+		dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(false);
+	}
+	else if (m_bIsHero && !_pSkill->GetArrToEnemy()[3])
+	{
+		dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(false);
+	}
+	else
+	{
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(true);
 	}
 
@@ -610,6 +618,26 @@ void CCreature::OnTurnUi()
 void CCreature::OffTurnUi()
 {
 	m_pStatInfo->SetIsTurnOff(true);
+}
+
+void CCreature::OnVirtue()
+{
+	m_pStatInfo->SetVirtue(true);
+}
+
+void CCreature::OffVirtue()
+{
+	m_pStatInfo->SetVirtue(false);
+}
+
+void CCreature::OnAffliction()
+{
+	m_pStatInfo->SetAffliction(true);
+}
+
+void CCreature::OffAffliction()
+{
+	m_pStatInfo->SetAffliction(false);
 }
 
 void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)

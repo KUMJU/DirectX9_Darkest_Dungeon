@@ -241,9 +241,8 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue.png", 1, bDefault);
 
-
 		// 스킬 이미지
-
+		
 		CreateNewTexture(L"Pierce_Img", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Skill/Pierce_Img.png", 1, bDefault);
 		CreateNewTexture(L"Puncture_Img", TEX_NORMAL,

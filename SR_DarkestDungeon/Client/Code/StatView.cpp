@@ -56,9 +56,9 @@ void CStatView::RenderGameObject()
 	_int iTexNum = 2;
 
 	if (m_bHpGap) {
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[26]->GetWorld());
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[27]->GetWorld());
 		m_pTextureCom[18]->SetTexture(0);
-		m_pRCTexCom[26]->RenderBuffer();
+		m_pRCTexCom[27]->RenderBuffer();
 	}
 
 
@@ -130,6 +130,64 @@ void CStatView::RenderGameObject()
 		m_pRCTexCom[26]->RenderBuffer();
 	}
 
+	if (m_bHero)
+	{
+		// ºØ±«
+		if (m_bAffliction)
+		{
+			switch (m_iHeroType)
+			{
+			case 1:
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[28]->GetWorld());
+				m_pTextureCom[19]->SetTexture(0);
+				m_pRCTexCom[28]->RenderBuffer();
+				break;
+			case 2:
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[30]->GetWorld());
+				m_pTextureCom[21]->SetTexture(0);
+				m_pRCTexCom[30]->RenderBuffer();
+				break;
+			case 3:
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[32]->GetWorld());
+				m_pTextureCom[23]->SetTexture(0);
+				m_pRCTexCom[32]->RenderBuffer();
+				break;
+			case 4:
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[34]->GetWorld());
+				m_pTextureCom[25]->SetTexture(0);
+				m_pRCTexCom[34]->RenderBuffer();
+				break;
+			}
+		}
+		// ±â»ó
+		if (m_bVirtue)
+		{
+			switch (m_iHeroType)
+			{
+			case 1:
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[29]->GetWorld());
+				m_pTextureCom[20]->SetTexture(0);
+				m_pRCTexCom[29]->RenderBuffer();
+				break;
+			case 2:
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[31]->GetWorld());
+				m_pTextureCom[22]->SetTexture(0);
+				m_pRCTexCom[31]->RenderBuffer();
+				break;
+			case 3:
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[33]->GetWorld());
+				m_pTextureCom[24]->SetTexture(0);
+				m_pRCTexCom[33]->RenderBuffer();
+				break;
+			case 4:
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[35]->GetWorld());
+				m_pTextureCom[26]->SetTexture(0);
+				m_pRCTexCom[35]->RenderBuffer();
+				break;
+			}
+		}
+	}
+
 	//TCHAR buf[64];
 	//// ºø³ª°¨
 	//_vec2 vPos = { m_vPos.x + WINCX * 0.5f - 175.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f };
@@ -168,7 +226,7 @@ void CStatView::RenderGameObject()
 
 void CStatView::AddComponent()
 {
-	for (int i = 0; i < 27; ++i) {
+	for (int i = 0; i < 36; ++i) {
 
 		shared_ptr<CComponent> pComponent;
 
@@ -192,7 +250,7 @@ void CStatView::AddComponent()
 	}
 
 
-	for (int i = 0; i < 19; ++i) {
+	for (int i = 0; i < 27; ++i) {
 
 		tstring strCurNum = to_wstring(i);
 		tstring strComName = L"Com_Texture" + strCurNum;
@@ -224,7 +282,14 @@ void CStatView::AddComponent()
 		m_pTextureCom[16]->SetTextureKey(L"Target_TeamCreature", TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[17]->SetTextureKey(L"Target_TeamPlus", TEXTUREID::TEX_NORMAL);
 		m_pTextureCom[18]->SetTextureKey(L"Stat_HealthGap", TEXTUREID::TEX_NORMAL);
-
+		m_pTextureCom[19]->SetTextureKey(L"ShieldBreaker_Affliction", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[20]->SetTextureKey(L"ShieldBreaker_Virtue", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[21]->SetTextureKey(L"Highwayman_Affliction", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[22]->SetTextureKey(L"Highwayman_Virtue", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[23]->SetTextureKey(L"Vestal_Affliction", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[24]->SetTextureKey(L"Vestal_Virtue", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[25]->SetTextureKey(L"Jester_Affliction", TEXTUREID::TEX_NORMAL);
+		m_pTextureCom[26]->SetTextureKey(L"Jester_Virtue", TEXTUREID::TEX_NORMAL);
 
 	}	
 }
@@ -356,12 +421,18 @@ void CStatView::SettingPos(_vec3 _vPos, _bool _bFront)
 		iInitPos += 0.3f;
 	}
 	//HPGap
-	for (int i = 26; i < 27; ++i) {
+	for (int i = 27; i < 28; ++i) {
 		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + (-1.f + m_fHpGapRange) + 0.1f * m_fHpGapRange, m_vCenterPos.y + 0.3f, m_vCenterPos.z - fFrontGap);
 		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 		m_pTransformCom[i]->SetScale(1.f * m_fHpGapRange, 0.1f, 1.f);
 	}
 
+	//±â»ó, ºØ±«
+	for (int i = 28; i < 36; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x, m_vCenterPos.y + 0.5f, m_vCenterPos.z - 3.f);
+		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+		m_pTransformCom[i]->SetScale(11.f, 11.f, 8.f);
+	}
 }                  
 
 void CStatView::SetStress(int _iStress)
