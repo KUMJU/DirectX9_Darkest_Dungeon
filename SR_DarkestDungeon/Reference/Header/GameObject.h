@@ -99,6 +99,9 @@ protected:
 	virtual void AddComponent();
 
 protected:
+	void	SetMaterial();
+
+protected:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
 	shared_ptr<CCollider> m_pColliderCom = nullptr;
 

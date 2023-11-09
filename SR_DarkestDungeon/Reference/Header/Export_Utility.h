@@ -14,6 +14,9 @@
 #include"Animator.h"
 #include "Collider.h"
 
+#include"Light.h"
+#include"LightMgr.h"
+
 
 BEGIN(Engine)
 

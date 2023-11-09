@@ -51,15 +51,18 @@ private:
 	void	AddComponent();
 	//이 Stat정보를 소유한 크리쳐의 Top Position을 잡아 그에 맞춰 세팅해준다
 
+	//실시간으로 scale이 바뀌는 UI를 확인 후 조정해줍니다
+	void	ChangeActiveUI(_float fTimeDelta);
+
 private:
 
 	//0~9 : 스트레스 /10~11 : 체력바 /12~19 :상태값/ 20: 시체 체력바/ 21: 자기차례 표시, 22: 적 타겟 표시, 23: 적들, 24: 팀, 25: 팀들 타겟
-	shared_ptr<CRcTex> m_pRCTexCom[26];
-	shared_ptr<CTransform> m_pTransformCom[26];
+	shared_ptr<CRcTex> m_pRCTexCom[27];
+	shared_ptr<CTransform> m_pTransformCom[27];
 	// 0:스트레스X 1:스트레스o 2:빈 HP바 3:HP바 4: 중독 5:출혈 6:기절 7: 기상 8: 붕괴 9: 버프
 	// 10: 디버프 11: 죽음의 일격 12: 시체 HP바 13: 차례 표시, 14: 적 타겟 표시, 15: 적들 타겟 표시
 	// 16: 팀 타겟 표시, 17: 팀들 타겟 표시
-	shared_ptr<CTexture> m_pTextureCom[18];
+	shared_ptr<CTexture> m_pTextureCom[19];
 
 	_bool m_bAttributeArr[8] = {false, false, false, false, false, false, false, false };
 
@@ -73,11 +76,12 @@ private:
 	_int m_iStressNum = 0;
 	//전체 체력에 대해 현재 체력 비율
 	_float m_fHpBarRange = 1.f;
+	//체력 차감 바 비율
+	_float m_fHpGapRange = 0.f;
+	_int m_iGapHp = 0.f;
 
 	_bool m_bHero = true;
-
 	_bool m_bCorpse = false;
-
 	_bool m_bTurn = false;
 
 	_bool m_bTargetTeam = false;
@@ -85,5 +89,7 @@ private:
 	_bool m_bTargetEnemy = false;
 	_bool m_bTargetEnemies = false;
 
+	_bool	m_bHpGap = false;
+	_float	m_fHpRegemTime = 0.f;
 };
 

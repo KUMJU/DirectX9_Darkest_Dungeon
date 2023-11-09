@@ -28,11 +28,11 @@ public: //Camera Moving
 	//공전
 	void CameraOrbit(ECameraMode _eType, _vec3 _vDst, _vec3 _vCenter);
 	//자전
-	void CameraRotation(ECameraMode _eType, _float _fDegree);
+	void CameraRotation(ECameraMode _eType, _float _fDegree,_float _fTime = 1.5f);
+	//현재 카메라의 Right 벡터를 기준으로 오른쪽 , 왼쪽으로 이동(_fDir 1.f = 오른쪽 -1.f = 왼쪽)
+	void MovingRightVec(_bool _bValue, _float _fDir);
 
-	void MovingRightVec(_int _iDir);
-
-public: //Camera Effect : 아직 작업 안함
+public: 
 
 	void AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.1f);
 

@@ -44,7 +44,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"MaceBash", L"Vestal_MaceBash", L"MaceBash_Img", L"MaceBash_Effect",
-				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.f, 1.25f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, -2.f, 1.f, 1.f, 1.25f, -1, 0, 0, 0, 1, 0);
 
 		{
 			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL1;
@@ -61,7 +61,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"DazzlingLight", L"Vestal_DazzlingLight", L"DazzlingLight_Img", L"DazzlingLight_Effect",
-				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 1.f, 0.25f, 0.5f, -1, 0, 0, 0, 0, 0);
+				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, 0.f, 1.f, 0.25f, 0.5f, -1, 0, 0, 0, 0, 0);
 
 		{
 			pSkill2->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -84,7 +84,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"DivineGrace", L"Vestal_DivineGrace", L"DivineGrace_Img", L"DivineGrace_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.f, 1.2f, -1, 0, 7, 0, 0, 0);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.f, 1.2f, -1, 0, 7, 0, 0, 0);
 		{
 			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
 			pSkill3->GetDescription()->m_strTitle = L"신성한 은총";
@@ -103,7 +103,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DivineComfort", L"Vestal_DivineComfort", L"DivineComfort_Img", L"DivineComfort_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 0.f, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
 			pSkill4->GetDescription()->m_strTitle = L"신성한 위무";
@@ -116,7 +116,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
 			(L"HandOfLight", L"Vestal_HandOfLight", L"HandOfLight_Img", L"HandOfLight_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 0.f,  1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
 		
 		{
 			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL1;
@@ -127,7 +127,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"Illumination", L"Vestal_Illumination", L"Illumination_Img", L"Illumination_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 0.f, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
 		
 		
 		{
@@ -350,14 +350,14 @@ void CVestal::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

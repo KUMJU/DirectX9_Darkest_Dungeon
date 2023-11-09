@@ -61,6 +61,19 @@ void CGameObject::AddComponent()
 {
 }
 
+void CGameObject::SetMaterial()
+{
+	D3DMATERIAL9			tMtrl;
+	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
+
+	tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
+	tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
+	tMtrl.Ambient = { 0.2f, 0.2f, 0.2f, 1.f };
+	tMtrl.Emissive = { 0.f, 0.f, 0.f, 0.f };
+	tMtrl.Power = 0.f;
+
+}
+
 void CGameObject::GetMinMaxPos(_vec3& vMin , _vec3& vMax )
 {
 	if (m_pColliderCom != nullptr)

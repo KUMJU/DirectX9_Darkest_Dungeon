@@ -31,6 +31,9 @@ HRESULT CRcTex::ReadyBuffer(void)
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 
+	_vec3		vDst, vSrc, vNormal;
+
+
 	// 위쪽
 	pVertex[0].vPosition = { -1.f, 1.f, 0.f };
 	pVertex[0].vTexUV = { 0.f, 0.f };
@@ -55,10 +58,30 @@ HRESULT CRcTex::ReadyBuffer(void)
 	pIndex[0]._1 = 1;
 	pIndex[0]._2 = 2;
 
+	vDst = pVertex[pIndex[0]._1].vPosition - pVertex[pIndex[0]._0].vPosition;
+	vSrc = pVertex[pIndex[0]._2].vPosition - pVertex[pIndex[0]._1].vPosition;
+	D3DXVec3Cross(&vNormal, &vDst, &vSrc);
+
+	pVertex[pIndex[0]._0].vNormal += vNormal;
+	pVertex[pIndex[0]._1].vNormal += vNormal;
+	pVertex[pIndex[0]._2].vNormal += vNormal;
+
 	// 왼쪽 아래
 	pIndex[1]._0 = 0;
 	pIndex[1]._1 = 2;
 	pIndex[1]._2 = 3;
+
+	vDst = pVertex[pIndex[1]._1].vPosition - pVertex[pIndex[1]._0].vPosition;
+	vSrc = pVertex[pIndex[1]._2].vPosition - pVertex[pIndex[1]._1].vPosition;
+	D3DXVec3Cross(&vNormal, &vDst, &vSrc);
+
+	pVertex[pIndex[1]._0].vNormal += vNormal;
+	pVertex[pIndex[1]._1].vNormal += vNormal;
+	pVertex[pIndex[1]._2].vNormal += vNormal;
+
+
+	for (_ulong i = 0; i < m_dwVtxCnt; ++i)
+		D3DXVec3Normalize(&pVertex[i].vNormal, &pVertex[i].vNormal);
 
 	m_pIB->Unlock();
 

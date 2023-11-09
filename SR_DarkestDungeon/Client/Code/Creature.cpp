@@ -402,7 +402,6 @@ void CCreature::MovePos(_vec3 _vPos, const _float& fTimeDelta, _float _fSpeed)
 
 	D3DXVec3Normalize(&vDir, &vDir);
 	m_pTransformCom->MoveForward(&vDir, fTimeDelta, _fSpeed);
-	int a = 3;
 }
 
 _float CCreature::MovingSpeed(_vec3 _vPos, _float _fMovingTime)

@@ -97,13 +97,13 @@ void CWeald_Curio_Chest::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

@@ -46,15 +46,30 @@ void CTerrain::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+
+	//D3DMATERIAL9			tMtrl;
+	//ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
+
+	//tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
+	//tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
+	//tMtrl.Ambient = { 0.2f, 0.2f, 0.2f, 1.f };
+	//tMtrl.Emissive = { 0.f, 0.f, 0.f, 0.f };
+	//tMtrl.Power = 0.f;
+
+	//m_pGraphicDev->SetMaterial(&tMtrl);
+
 
 	m_pTextureCom->SetTextureKey(m_strKeyName, TEX_NORMAL);
 	m_pTextureCom->SetTexture(0);
 
+
+
+
 	m_pBufferCom->RenderBuffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

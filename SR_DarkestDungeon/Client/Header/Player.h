@@ -10,6 +10,7 @@ class CTexture;
 class CTransform;
 class CAnimator;
 class CCollider;
+class CLight;
 
 END
 
@@ -100,6 +101,9 @@ public:
 	_bool	GetEvent3Trigger() { return m_bEvent3Trigger; }
 	void	SetEvent3Trigger(_bool _bEventTrigger) { m_bEvent3Trigger = _bEventTrigger; }
 
+public:
+	void SettingLight();
+
 private:
 	void			AddComponent();
 	void			KeyInput(const _float& fTimeDelta);
@@ -126,7 +130,7 @@ public:
 	void HideHeroesBackVillage(); // 마을에서 뒤의 영웅들 숨기기
 
 private:
-	_float		m_fSpeed = 45.f;
+	_float		m_fSpeed = 10.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
 
@@ -173,6 +177,10 @@ private:
 	// TavernUI ON/Off
 	shared_ptr<CTavernUI> m_pTavernUI = nullptr;
 	_bool		m_bShowTavernUI = false;
+
+	shared_ptr<CLight> m_pLight = nullptr;
+	shared_ptr<CLight> m_pLight2 = nullptr;
+	shared_ptr<CLight> m_pLight3 = nullptr;
 
 private:
 	virtual void	Free();

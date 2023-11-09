@@ -121,5 +121,6 @@ void CNarration::SetNarrationMap()
 {
 
 	m_NarrationMap.insert({L"Narr_tut_firstdungeon", L"이 길은 산적들이 점령하고 있으니, 샛길을 통해 가자꾸나.\n 영지는 바로 저 앞에 있다."});
+	m_NarrationMap.insert({L"Narr_tut_firstBattle", L"기습이다! 이 버러지들에게 똑똑히 전하라.\n이 땅의 적법한 상속자가 돌아왔으니, 너희 족속들은 이제 발붙일 곳조차 없을 것이라고!"});
 
 }

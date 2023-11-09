@@ -9,6 +9,7 @@
 #include"PickingMgr.h"
 #include"SoundMgr.h"
 #include"MainLogo.h"
+#include"LightMgr.h"
 
 CMainApp::CMainApp()
 {
@@ -21,6 +22,7 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp()
 {
+	AllocConsole();
 	srand(time(NULL));
 	if (FAILED(SetUp_DefaultSetting(&m_pGraphicDev))) {
 		return E_FAIL;
@@ -130,6 +132,10 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 void CMainApp::Free()
 {
+
+	FreeConsole();
+
+	CLightMgr::DestroyInstance();
 	CSoundMgr::DestroyInstance();
 	CPickingMgr::DestroyInstance();
 	CUIMgr::DestroyInstance();

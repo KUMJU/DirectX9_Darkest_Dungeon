@@ -43,7 +43,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"DirkStab", L"Jester_DirkStab", L"DirkStab_Img", L"DirkStab_Effect",
-				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, 1.f, 1.f, 1.3f, -1, 0, 0, 0, 1, 1);
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero,-2.5f, 1.f, 1.f, 1.3f, -1, 0, 0, 0, 1, 1);
 
 		{
 			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -68,7 +68,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"Harvest", L"Jester_Harvest", L"Harvest_Img", L"Harvest_Effect",
-				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDam2, 1.f, 0.5f, 0.8f, -1, 0, 0, 1, 1, 0);
+				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDam2, -3.f, 1.f, 0.5f, 0.8f, -1, 0, 0, 1, 1, 0);
 
 		{
 			pSkill2->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
@@ -88,7 +88,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"Finale", L"Jester_Final", L"Finale_Img", L"Finale_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 1.f, 1.5f, 2.f, -1, 0, 0, 0, 1, -5);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 2.f, -1, 0, 0, 0, 1, -5);
 
 		{
 			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -111,7 +111,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"Solo", L"Jester_Solo", L"Solo_Img", L"Solo_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 1.f, 0.2f, 0.4f, -1, 0, 0, 1, 1, 5);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero,0.f, 1.f, 0.2f, 0.4f, -1, 0, 0, 1, 1, 5);
 
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -136,7 +136,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
 			(L"SliceOff", L"Jester_SliceOff", L"SliceOff_Img", L"SliceOff_Effect",
-				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 0.f,  1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
 
 		{
 			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -153,7 +153,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"BattleBallad", L"Jester_BattleBallad", L"BattleBallad_Img", L"BattleBallad_Effect",
-				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 0.f, 1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
 
 		{
 			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
@@ -377,14 +377,14 @@ void CJester::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

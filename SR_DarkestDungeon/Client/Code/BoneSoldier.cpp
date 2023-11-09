@@ -36,7 +36,7 @@ HRESULT CBoneSoldier::ReadyGameObject()
 	_bool	m_bArrAttack1[6] = { 0, 1, 0, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneSoldier_1 = make_shared<CSkill>
-		(L"Attack1", L"Bone Soldier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.8f, 1.f,
+		(L"Attack1", L"Bone Soldier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.f, 0.8f, 1.f,
 			m_bArrAttack1, 0, 10, 0, true);
 	pVecSkill.push_back(m_pBoneSoldier_1);
 
@@ -209,14 +209,14 @@ void CBoneSoldier::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

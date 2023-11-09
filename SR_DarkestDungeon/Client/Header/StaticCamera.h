@@ -55,9 +55,9 @@ public:
 	void SetState(ECameraMode _eCamType) { m_eCurrentState = _eCamType; }
 	ECameraMode GetState() { return m_eCurrentState; }
 	//각도 계산으로 카메라 돌리기 : 자전
-	void ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegree, _float _fTime = 1.f);
+	void ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegree, _float _fTime = 0.5f);
 	//기준점(_vCenter)을 잡고 호선(호선 크기: _fXSpeed, _fZSpeed)을 그리며 카메라 포지션(_vDst) 옮기기 : 공전
-	void ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _vec3 _vCenter, _float _fTime = 1.5f);
+	void ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _vec3 _vCenter, _float _fTime = 0.5f);
 	//최종 포지션을 잡고 직선을 그리며 카메라 포지션 옮기기 : 줌인, 줌아웃, 카메라 무빙
 	void MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float _fTime = 1.f);
 	//카메라 이펙트 세팅
@@ -66,6 +66,14 @@ public:
 	void MovingRightVec(_int _iDir);
 	
 	void SlopeCamera(_int _iDir, _int _iSlope);
+
+	void CalcAngle(_vec3 _Dst);
+	void LineCameraNoLerp();
+
+	void SetCamMovingStateOnOff(_bool _bValue, _float _fDir) {
+		m_bCamMovingHorizontal = _bValue;
+		m_fRightVecDir = _fDir;
+	}
 
 private:
 //Moving Function
@@ -111,23 +119,34 @@ private:
 	//Delta Time 보관용
 	_float m_deltaTime = 0.f;
 	//카메라가 동작할 전체 시간
-	_float m_fTotalTime = 0.f;
+	_float m_fTotalTime = 0.f; // For Rotation
+	_float m_fTotalTime2 = 0.f; //For MoveLineCam
+
 	//특정 동작을 명령받은 이후 카메라가 움직인 시간
 	_float m_fActTime = 0.f;
+	_float m_fActTime2 = 0.f;
+	_float m_fActTime3 = 0.f;
+
 	_vec3 m_vSpeed;
 	_vec3 m_vDir;
 
 	_float m_fLerp = 0.f;
 	_float m_fDir = 1.f;
+	_float m_fRightVecDir = 1.f;
 //State
 	_bool m_bIsLookBack = false;
 	_bool m_bCursorLock = true;
 	_bool m_bInVillage = false;
 
+	//회전중 움직임을 위한 state
+	_bool m_bCamMoving = false;
+	_bool m_bCamMovingHorizontal = false;
+	_bool m_bCamRotationBattle = false;
+
 //Village ------------------------------------------------
 
 	_float m_fYAngle = 0.f;
-
+	
 private:
 	queue<unique_ptr<tagEffectInfo>> m_qEffectQueue;
 

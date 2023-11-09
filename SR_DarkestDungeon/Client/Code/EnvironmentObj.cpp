@@ -76,7 +76,7 @@ void CEnvironmentObj::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pTextureCom->SetTextureKey(m_strKeyName, TEX_NORMAL);
 	m_pTextureCom->SetTexture(m_iNum);
@@ -86,7 +86,7 @@ void CEnvironmentObj::RenderGameObject()
 	if(m_bColliding)
 		m_pColliderCom->RenderCollider();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 

@@ -37,6 +37,10 @@ HRESULT CPlayer::ReadyGameObject()
 	SetGold(1000, true);
 	SetHeirloom(5, true);
 
+	//m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
+	//m_pLight2 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
+	//m_pLight3 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
+
 	return S_OK;
 }
 
@@ -80,6 +84,12 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 	if (m_pTavernUI)
 		m_pTavernUI->UpdateGameObject(fTimeDelta);
 
+	//_vec3* vPos = m_pTransformCom->GetPos();
+	//m_pLight->SetPosition({ vPos ->x, vPos->y + 7.f, vPos->z + 4.f});
+	/*m_pLight2->SetPosition({vPos->x, vPos->y + 7.f, vPos->z + 4.f});
+	m_pLight3->SetPosition({ vPos ->x, vPos->y + 7.f, vPos->z + 4.f});*/
+
+
 	return iExit;
 }
 
@@ -94,6 +104,7 @@ void CPlayer::LateUpdateGameObject()
 void CPlayer::RenderGameObject()
 {
 	m_pColliderCom->RenderCollider();
+
 }
 
 void CPlayer::SetInventory(shared_ptr<CInventory> _pInventory)
@@ -153,6 +164,13 @@ void CPlayer::SetHeirloom(_int _iNum, _bool _bIsEarn)
 	if (nullptr != pGoodsUI) {
 		dynamic_pointer_cast<CGoodsUI>(pGoodsUI)->SetHeirloomNum(m_iHeirlooms);
 	}
+}
+
+void CPlayer::SettingLight()
+{
+	
+
+
 }
 
 void CPlayer::AddComponent()

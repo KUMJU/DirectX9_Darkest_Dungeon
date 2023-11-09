@@ -28,6 +28,7 @@ void CRenderer::RenderGameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	RenderAlpha(pGraphicDev);
 	RenderFront(pGraphicDev);
 
+
 	//직교투영
 	SetProjOrth(pGraphicDev);
 	RenderUI(pGraphicDev);
