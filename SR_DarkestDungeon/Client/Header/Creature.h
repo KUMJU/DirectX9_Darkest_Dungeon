@@ -132,6 +132,8 @@ public:
 	void	SetBlight(_bool _bBlight) { m_bState[0] = true; }
 	void	SetBleed(_bool _bBleed) { m_bState[1] = true; }
 	void	SetStun(_bool _bStun) { m_bState[2] = true; }
+	void	SetBuff(_bool _bBuff) { m_bState3[0] = true; }
+	void	SetDeBuff(_bool _bDeBuff) { m_bState3[1] = true; }
 	void	SetStartBarOn(_bool _bStatBarOn) { bStatBarOn = _bStatBarOn; }
 
 	_int	GetMaxHp() { return m_tCommonStat.iMaxHp; }
@@ -153,8 +155,8 @@ public:
 		}
 	}
 
-	_int	GetCurrentBleed() { return m_bBleedDot[0]; }
-	_int	GetCurrentPoision() { return m_bBlightDot[0]; }
+	_int	GetCurrentBleed() { return m_iBleedDot[0]; }
+	_int	GetCurrentPoision() { return m_iBlightDot[0]; }
 
 	_int	GetDodge() { return m_tCommonStat.iDodge; }
 	void	SetDodge(_int _iValue) { m_tCommonStat.iDodge = _iValue; }
@@ -183,7 +185,8 @@ public:
 	void	SetDone(_bool _bDone) { m_bDone = _bDone; }
 	void	SetAbleAct(_bool _bAbleAct) { m_bAbleAct = _bAbleAct; }
 
-	virtual void	AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill);
+	// 공격당하는애, 공격하는애, 스킬
+	virtual void	AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCreature> _pCreature2, shared_ptr<CSkill> _pSkill);
 	void	MovePos(_vec3 _vPos, const _float& fTimeDelta, _float _fSpeed);
 	_float	MovingSpeed(_vec3 _vPos, _float _fMovingTime);
 	void	OffTurnCursor();			// 자기차례임을 나타내는 cursor 종료
@@ -196,6 +199,8 @@ public:
 	void	OffTargetEnemyCursor();		// 적 target 끄기
 	void	OnTargetEnemiesCursor();	// 적들 target 키기
 	void	OffTargetEnemiesCursor();	// 적들 target 끄기
+	void	OnTurnUi();					// 턴 ui 키기
+	void	OffTurnUi();				// 턴 ui 끄기
 
 public:
 
@@ -203,6 +208,14 @@ public:
 
 	// 공격 종료시
 	virtual void	EndAttack(shared_ptr<CGameObject> _pCreature);
+
+	// 버프 적용
+	virtual void	Buff1Skill(_int* _iDotBuff);	// 대단원 버프
+	virtual void	Buff2Skill(_int* _iDotBuff);	// 회피 버프
+	virtual void	DeBuffSkill(_int* _iDotDeBuff);	// 회피 디버프
+
+	// 버프 초기화
+	virtual void	Buff1Reset();					// 대단원 버프 초기화
 
 	// 중독 공격
 	virtual void	BlightAttack(_int* _iDotDam);
@@ -239,15 +252,20 @@ protected:
 	_bool		m_bIsHero = false;
 	STAT		m_tCommonStat;				// 스탯
 
-	_int		m_iPosition = 0;				// 위치 (0~3)
+	_int		m_iPosition = 0;			// 위치 (0~3)
 
 	_bool		m_bDeath = false;			// 사망 여부(몬스터는 시체까지 소멸할때, 영웅은 사망할때)
 	_bool		m_bCorpse = false;			// 몬스터의 시체여부
 	_bool		m_bBeforeDeath = false;		// 영웅의 죽음의 일격 여부
 	_bool		m_bState[4] = { 0 };	// 순서대로 중독, 출혈, 기절, 시체 여부
+	_bool		m_bState3[2] = {0};		// 순서대로 버프, 디버프
 
-	_int		m_bBlightDot[4] = { 0 };	// 턴마다 중독 도트뎀
-	_int		m_bBleedDot[4] = { 0 };		// 턴마다 출혈 도트뎀
+	_int		m_iBlightDot[4] = { 0 };	// 턴마다 중독 도트뎀
+	_int		m_iBleedDot[4] = { 0 };		// 턴마다 출혈 도트뎀
+
+	_int		m_iBuff1Dot[4] = { 0 };		// 대단원 버프(광대 전용)
+	_int		m_iBuff2Dot[4] = { 0 };		// 회피 버프
+	_int		m_iDeBuff1Dot[4] = { 0 };	// 회피 디버프
 
 	_bool		m_bHitted = false;			// 자신의 피격상태 여부
 	_bool		m_bEffectOn = false;		// 이펙트 여부

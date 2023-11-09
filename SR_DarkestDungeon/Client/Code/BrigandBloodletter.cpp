@@ -33,7 +33,7 @@ HRESULT CBrigandBloodletter::ReadyGameObject()
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
 	int Skill1_Dot[2] = { 1,3 };
-	_bool	m_bArrAttack1[6] = { 0, 0, 1, 0, 0, 0 };
+	_bool	m_bArrAttack1[8] = { 0, 0, 1, 0, 0, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,1,1 };
 	shared_ptr<CSkill> m_pBrigandBloodletter_1 = make_shared<CSkill>
 		(L"Attack1", L"Brigand Bloodletter_Attack1", bTargetPos1, Skill1_Dot, 4.f, 0.f, 0.2f, 0.3f,
@@ -41,7 +41,7 @@ HRESULT CBrigandBloodletter::ReadyGameObject()
 	pVecSkill.push_back(m_pBrigandBloodletter_1);
 
 	int Skill2_Dot[2] = { 0,0 };
-	_bool	bArrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
+	_bool	bArrAttack2[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	_bool	bTargetPos2[4] = { 1,0,0,0 };
 	shared_ptr<CSkill> m_pBrigandBloodletter_2 = make_shared<CSkill>
 		(L"Attack2", L"Brigand Bloodletter_Attack2", bTargetPos2, Skill2_Dot, 0.f, 0.f, 2.f, 2.2f,

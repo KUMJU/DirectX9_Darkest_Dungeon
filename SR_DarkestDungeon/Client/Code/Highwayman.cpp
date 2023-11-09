@@ -36,7 +36,7 @@ HRESULT CHighwayman::ReadyGameObject()
 		// 사약한 칼질
 		_bool arrActivatePos1[4] = { 1, 1, 1, 0 };
 		_bool arrTargetPos1[4] = { 1, 1, 0, 0 };
-		_bool arrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrAttack1[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 		_bool arrToEnemy1[6] = { 1, 1, 1, 1, 1, 1 };
 
 		/*
@@ -59,7 +59,7 @@ HRESULT CHighwayman::ReadyGameObject()
 		// 권총 사격
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 0, 1, 1, 1 };
-		_bool arrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrAttack2[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
@@ -74,9 +74,9 @@ HRESULT CHighwayman::ReadyGameObject()
 		}
 
 		// 영거리 사격
-		_bool arrActivatePos3[4] = { 1, 0, 0, 0 };
+		_bool arrActivatePos3[4] = { 1, 1, 0, 0 };
 		_bool arrTargetPos3[4] = { 1, 1, 0, 0 };
-		_bool arrAttack3[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrAttack3[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
@@ -99,8 +99,8 @@ HRESULT CHighwayman::ReadyGameObject()
 		// 결투가의 진격
 		_bool arrActivatePos4[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos4[4] = { 1, 1, 1, 0 };
-		_bool arrAttack4[6] = { 1, 0, 0, 0, 0, 0 };
-		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 0, 1 };
+		_bool arrAttack4[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
+		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DuelistsAdvance", L"Highwayman_DuelistsAdvance", L"DuelistsAdvance_Img", L"DuelistsAdvance_Effect",

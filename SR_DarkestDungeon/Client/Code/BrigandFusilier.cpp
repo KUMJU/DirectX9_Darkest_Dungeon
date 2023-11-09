@@ -33,7 +33,7 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
 	int Skill1_Dot[2] = { 0,0 };
-	_bool	bArrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
+	_bool	bArrAttack1[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBrigandFusilier_1 = make_shared<CSkill>
 		(L"Attack1", L"Brigand Fusilier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.f, 1.f, 1.2f,

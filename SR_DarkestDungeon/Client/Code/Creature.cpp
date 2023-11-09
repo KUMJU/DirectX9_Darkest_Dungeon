@@ -66,6 +66,17 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 		else
 			m_pStatInfo->SetAttributeOff(i);
 	}
+	// 기상, 붕괴
+
+	// 버프, 디버프
+	for (int i = 5; i < 7; i++)
+	{
+		if (m_bState3[i - 5])
+			m_pStatInfo->SetAttribute(i);
+		else
+			m_pStatInfo->SetAttributeOff(i);
+	}
+
 	// 죽음의 일격 표시
 	if (m_bBeforeDeath)	m_pStatInfo->SetAttribute(7);
 	else
@@ -143,14 +154,25 @@ void CCreature::StartCalculate()
 	if (m_bState[0] || m_bState[1])
 	{
 		// 도트뎀 계산
-		m_tCommonStat.iHp -= (m_bBlightDot[0] + m_bBleedDot[0]);
+		m_tCommonStat.iHp -= (m_iBlightDot[0] + m_iBleedDot[0]);
+		// 사망하지 않았을때는 피가 0아래로 안닳게 하기
+		if (!m_bDeath)
+		{
+			if (m_tCommonStat.iHp < 0)
+			{
+				m_tCommonStat.iHp = 0;
+			}
+		}
 		for (int i = 1; i < 3; i++)
 		{
-			m_bBlightDot[i - 1] = m_bBlightDot[i];
-			m_bBleedDot[i - 1] = m_bBleedDot[i];
+			m_iBlightDot[i - 1] = m_iBlightDot[i];
+			m_iBleedDot[i - 1] = m_iBleedDot[i];
 		}
-		m_bBlightDot[3] = 0;
-		m_bBleedDot[3] = 0;
+		m_iBlightDot[3] = 0;
+		m_iBleedDot[3] = 0;
+		
+		if (!m_iBlightDot[0]) m_bState[0] = false;
+		if (!m_iBleedDot[0]) m_bState[1] = false;
 	}
 
 	// 기절
@@ -158,6 +180,33 @@ void CCreature::StartCalculate()
 	{
 		m_bState[2] = false;
 		m_bMyTurn = false;
+	}
+
+	// 버프
+	if (m_bState3[0])
+	{
+		for (int i = 1; i < 3; i++)
+		{
+			m_iBuff1Dot[i - 1] = m_iBuff1Dot[i];
+			m_iBuff2Dot[i - 1] = m_iBuff2Dot[i];
+		}
+		m_iBuff1Dot[3] = 0;
+		m_iBuff2Dot[3] = 0;
+
+		if (!m_iBuff1Dot[0] && !m_iBuff2Dot[0]) m_bState3[0] = false;
+	}
+
+	// 디버프
+	if (m_bState3[1])
+	{
+		for (int i = 1; i < 3; i++)
+		{
+			m_iDeBuff1Dot[i - 1] = m_iDeBuff1Dot[i];
+			m_iDeBuff1Dot[i - 1] = m_iDeBuff1Dot[i];
+		}
+		m_iDeBuff1Dot[3] = 0;
+
+		if (!m_iDeBuff1Dot[0]) m_bState3[1] = false;
 	}
 
 	if (!m_bIsHero)
@@ -208,7 +257,7 @@ void CCreature::StartCalculate()
 	}
 }
 
-void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSkill> _pSkill)
+void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCreature> _pCreature2, shared_ptr<CSkill> _pSkill)
 {
 	if (!_pCreature) return;
 	if (!_pSkill) return;
@@ -220,23 +269,44 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	int iCritical = rand() % 100;
 
 	_bool* arrAttack = _pSkill->GetArrAttack();
-
-
+	
+	
 	// 단순 공격
 	if (arrAttack[0])
 	{
-		if (iDodgeNum >= _pCreature->GetDodge())
+		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
 			{
-				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
+				// 대단원일때
+				if (!_pSkill->GetArrToEnemy()[2])
+				{
+					_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()
+						* (m_iBuff1Dot[0]/100.f + 1.f)));
+				}
+				else
+				{
+					_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
+				}
+
 				if (dynamic_cast<CHero*>(this))
 				{
 					dynamic_cast<CHero*>(this)->DecreaseStress(5);
 				}
 			}
 			else
-				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+			{
+				// 대단원일때
+				if (!_pSkill->GetArrToEnemy()[2])
+				{
+					_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()
+						* (m_iBuff1Dot[0] / 100.f + 1.f)));
+				}
+				else
+				{
+					_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
+				}
+			}
 		}
 		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
@@ -244,7 +314,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 중독
 	if (arrAttack[1])
 	{
-		if (iDodgeNum >= _pCreature->GetDodge())
+		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
 			{
@@ -266,7 +336,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 출혈
 	if (arrAttack[2])
 	{
-		if (iDodgeNum >= _pCreature->GetDodge())
+		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
 			{
@@ -288,7 +358,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 기절
 	if (arrAttack[3])
 	{
-		if (iDodgeNum >= _pCreature->GetDodge())
+		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
 			{
@@ -309,7 +379,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 	// 이동
 	if (arrAttack[4])
 	{
-		if (iDodgeNum >= _pCreature->GetDodge())
+		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
 			{
@@ -321,7 +391,6 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 			}
 			else
 				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
-			//_pCreature->SetPosition(_pSkill->GetMoveCnt());
 		}
 	}
 
@@ -340,24 +409,71 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CSki
 		if (_pCreature->GetIsBeforeDeath()) _pCreature->SetBeforeDeath(false);
 	}
 
+	// 버프
+	if (arrAttack[6])
+	{
+		// 대단원 버프
+		if (!_pSkill->GetArrToEnemy()[0])
+		{
+			_int  DotBuff[2] = { 30, 3 };
+			_pCreature2->Buff1Skill(DotBuff);
+			_pCreature2->SetBuff(true);
+		}
+		// 대단원 극버프
+		if (!_pSkill->GetArrToEnemy()[1])
+		{
+			_int  DotBuff[2] = { 75, 3 };
+			_pCreature2->Buff1Skill(DotBuff);
+			_pCreature2->SetBuff(true);
+		}
+		// 대단원 버프 초기화
+		if (!_pSkill->GetArrToEnemy()[2])
+		{
+			_pCreature2->Buff1Reset();
+			if (!m_iBuff1Dot[0] && !m_iBuff2Dot[0]) m_bState3[0] = false;
+		}
+		// 회피 버프
+		if (!_pSkill->GetArrToEnemy()[3])
+		{
+			_int  DotBuff[2] = { 10, 3 };
+			_pCreature->Buff2Skill(DotBuff);
+			_pCreature->SetBuff(true);
+		}
+	}
+
+	// 디버프
+	if (arrAttack[7])
+	{
+		// 회피 디버프
+		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
+		{
+			if (!_pSkill->GetArrToEnemy()[4])
+			{
+				_int  DotDeBuff[2] = { -10, 3 };
+				_pCreature->DeBuffSkill(DotDeBuff);
+				_pCreature->SetDeBuff(true);
+			}
+		}
+	}
+
 	// 스트레스
 	if (dynamic_pointer_cast<CHero>(_pCreature))
 	{
-		if (iDodgeNum >= _pCreature->GetDodge())
+		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			dynamic_pointer_cast<CHero>(_pCreature)->IncreaseStress(_pSkill->GetStress());
 		}
 	}
 
-	// 힐일때만 피격 애니메이션 x
-	if (/*(iDodgeNum >= _pCreature->GetDodge()) && */!arrAttack[5])
+	// 힐일때, 광역버프일때만 피격 애니메이션 x
+	if (!arrAttack[5] && _pSkill->GetArrToEnemy()[3])
 	{
 		// 상대
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetHitted(true);
 	}
 
 	// 맞았으면
-	if (iDodgeNum >= _pCreature->GetDodge())
+	if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 	{
 		// 상대
 		dynamic_pointer_cast<CCreature>(_pCreature)->SetEffectOn(true);
@@ -471,6 +587,16 @@ void CCreature::OffTargetEnemiesCursor()
 	m_pStatInfo->SetIsEnemiesTarget(false);
 }
 
+void CCreature::OnTurnUi()
+{
+	m_pStatInfo->SetIsTurnOff(false);
+}
+
+void CCreature::OffTurnUi()
+{
+	m_pStatInfo->SetIsTurnOff(true);
+}
+
 void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)
 {
 	if (!dynamic_pointer_cast<CCreature>(_pCreature)) return;
@@ -486,11 +612,41 @@ void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)
 	m_bMyTurn = false;
 }
 
+void CCreature::Buff1Skill(_int* _iDotBuff)
+{
+	for (int i = 0; i < _iDotBuff[1]; i++)
+	{
+		m_iBuff1Dot[i] += _iDotBuff[0];
+	}
+}
+
+void CCreature::Buff2Skill(_int* _iDotBuff)
+{
+	for (int i = 0; i < _iDotBuff[1]; i++)
+	{
+		m_iBuff2Dot[i] += _iDotBuff[0];
+	}
+}
+
+void CCreature::DeBuffSkill(_int* _iDotDeBuff)
+{
+	for (int i = 0; i < _iDotDeBuff[1]; i++)
+	{
+		m_iDeBuff1Dot[i] += _iDotDeBuff[0];
+	}
+}
+
+void CCreature::Buff1Reset()
+{
+	m_bState3[0] = false;
+	for (int i = 0; i < 4; i++) m_iBuff1Dot[i] = 0;
+}
+
 void CCreature::BlightAttack(_int* _iDotDam)
 {
 	for (int i = 0; i < _iDotDam[1]; i++)
 	{
-		m_bBlightDot[i] += _iDotDam[0];
+		m_iBlightDot[i] += _iDotDam[0];
 	}
 }
 
@@ -498,20 +654,20 @@ void CCreature::BleedAttack(_int* _iDotDam)
 {
 	for (int i = 0; i < _iDotDam[1]; i++)
 	{
-		m_bBleedDot[i] += _iDotDam[0];
+		m_iBleedDot[i] += _iDotDam[0];
 	}
 }
 
 void CCreature::BlightCure()
 {
 	m_bState[0] = false;
-	for (int i = 0; i < 4; i++) m_bBlightDot[i] = 0;
+	for (int i = 0; i < 4; i++) m_iBlightDot[i] = 0;
 }
 
 void CCreature::BleedCure()
 {
 	m_bState[1] = false;
-	for (int i = 0; i < 4; i++) m_bBleedDot[i] = 0;
+	for (int i = 0; i < 4; i++) m_iBleedDot[i] = 0;
 }
 
 void CCreature::AddComponent()

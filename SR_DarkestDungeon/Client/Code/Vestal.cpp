@@ -38,8 +38,8 @@ HRESULT CVestal::ReadyGameObject()
 		// Ã¶Åð ÈÄ·ÁÄ¡±â
 		_bool arrActivatePos1[4] = { 1, 1, 0, 0 };
 		_bool arrTargetPos1[4] = { 1, 1, 0, 0 };
-		_bool arrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
-		_bool arrToEnemy1[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrAttack1[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
+		_bool arrToEnemy1[6] = { 1, 1, 1, 1, 1, 1 };
 
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
@@ -56,8 +56,8 @@ HRESULT CVestal::ReadyGameObject()
 		// ´«ºÎ½Å ±¤Ã¤
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 1, 1, 1, 0 };
-		_bool arrAttack2[6] = { 0, 0, 0, 1, 0, 0 };
-		_bool arrToEnemy2[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrAttack2[8] = { 0, 0, 0, 1, 0, 0, 0, 0 };
+		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
 			(L"DazzlingLight", L"Vestal_DazzlingLight", L"DazzlingLight_Img", L"DazzlingLight_Effect",
@@ -79,8 +79,8 @@ HRESULT CVestal::ReadyGameObject()
 		// ½Å¼ºÇÑ ÀºÃÑ
 		_bool arrActivatePos3[4] = { 0, 0, 1, 1 };
 		_bool arrTargetPos3[4] = { 1, 1, 1, 1 };
-		_bool arrAttack3[6] = { 0, 0, 0, 0, 0, 1 };
-		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 1, 0 };
+		_bool arrAttack3[8] = { 0, 0, 0, 0, 0, 1, 0, 0 };
+		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"DivineGrace", L"Vestal_DivineGrace", L"DivineGrace_Img", L"DivineGrace_Effect",
@@ -98,8 +98,8 @@ HRESULT CVestal::ReadyGameObject()
 		// ½Å¼ºÇÑ À§¹«
 		_bool arrActivatePos4[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos4[4] = { 1, 1, 1, 1 };	
-		_bool arrAttack4[6] = { 0, 0, 0, 0, 0, 1 };
-		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 1, 0 };
+		_bool arrAttack4[8] = { 0, 0, 0, 0, 0, 1, 0, 0 };
+		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DivineComfort", L"Vestal_DivineComfort", L"DivineComfort_Img", L"DivineComfort_Effect",

@@ -1,7 +1,7 @@
 #include"pch.h"
 #include "StatView.h"
 #include"Export_Utility.h"
-
+#include"Export_System.h"
 
 CStatView::CStatView(LPDIRECT3DDEVICE9 _pGraphicDev)
 	:CGameObject(_pGraphicDev)
@@ -122,6 +122,19 @@ void CStatView::RenderGameObject()
 		m_pRCTexCom[25]->RenderBuffer();
 	}
 
+	// Turn
+	if (!m_bTurnOff)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[26]->GetWorld());
+		m_pTextureCom[3]->SetTexture(0);
+		m_pRCTexCom[26]->RenderBuffer();
+	}
+
+	//TCHAR buf[64];
+	//// ºø³ª°¨
+	//_vec2 vPos = { m_vPos.x + WINCX * 0.5f - 175.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f };
+	//tstring m_strHeroName = L"ºø³ª°¨";
+	//Engine::Render_Font(L"Font_Point_Small", m_strHeroName.c_str(), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	//if (m_bTurn && !m_bHero)
 	//{
 	//	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[22]->GetWorld());
@@ -324,6 +337,13 @@ void CStatView::SettingPos(_vec3 _vPos, _bool _bFront)
 		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 1.5f, m_vCenterPos.y + 0.4f, m_vCenterPos.z);
 		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
 		m_pTransformCom[i]->SetScale(0.8f, 0.8f, 1.f);
+	}
+
+	// Turn
+	for (int i = 26; i < 27; ++i) {
+		m_pTransformCom[i]->SetPosition(m_vCenterPos.x + 1.25f, m_vCenterPos.y + 0.35f, m_vCenterPos.z);
+		m_pTransformCom[i]->SetAngle({ 0.f, 0.f, 0.f });
+		m_pTransformCom[i]->SetScale(0.05f, 0.2f, 1.f);
 	}
 	
 	iInitPos = -0.8f;

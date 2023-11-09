@@ -11,7 +11,7 @@ CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, tstring _strImgKey, t
 {
 	memcpy(m_arrActivatePos, _arrActivatePos, sizeof(_bool) * 4);
 	memcpy(m_arrTargetPos, _arrTargetPos, sizeof(_bool) * 4);
-	memcpy(m_bArrAttack, _bArrAttack, sizeof(_bool) * 6);
+	memcpy(m_bArrAttack, _bArrAttack, sizeof(_bool) * 8);
 	memcpy(m_bArrToEnemy, _bArrToEnemy, sizeof(_bool) * 6);
 	memcpy(m_iDotDamage, _iDotDamage, sizeof(_int) * 2);
 
@@ -26,7 +26,7 @@ CSkill::CSkill(tstring _strSkillName, tstring _strAnimKey, _bool* _arrTargetPos,
 	m_fStunRatio(_fStunRatio), m_fDamageRatio(_fDamageRatio), m_fCriticalRatio(_fCriticalRatio), m_bTargetAll(_bTargetAll), m_bApproach(_bApproach), m_iMovingCnt(_iSkillMoveCnt), m_fSkillDistance(_fDistance)
 {
 	memcpy(m_arrTargetPos, _arrTargetPos, sizeof(_bool) * 4);
-	memcpy(m_bArrAttack, _bArrAttack, sizeof(_bool) * 6);
+	memcpy(m_bArrAttack, _bArrAttack, sizeof(_bool) * 8);
 	memcpy(m_iDotDamage, _iDotDamage, sizeof(_int) * 2);
 
 	if (!m_tDescription)

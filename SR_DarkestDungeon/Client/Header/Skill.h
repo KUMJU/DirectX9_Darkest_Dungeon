@@ -33,13 +33,13 @@ public:
 
 	_bool		IsActivatePos(_int _idx) { return m_arrActivatePos[_idx]; }
 	_bool		IsTargetPos(_int _idx) { return m_arrTargetPos[_idx]; }
-	_bool* GetActivatePos() { return m_arrActivatePos; }
-	_bool* GetTargetPos() { return m_arrTargetPos; }
-	_bool* GetArrToEnemy() { return m_bArrToEnemy; }
+	_bool*		GetActivatePos() { return m_arrActivatePos; }
+	_bool*		GetTargetPos() { return m_arrTargetPos; }
+	_bool*		GetArrToEnemy() { return m_bArrToEnemy; }
 	_bool		IsTargetAll() { return m_bTargetAll; }
 	_bool		CanActivateCnt() { if (0 == m_iActivateCnt) return false; return true; }
 	void		DecreaseActivateCnt() { --m_iActivateCnt; }
-	_bool* GetArrAttack() { return m_bArrAttack; }
+	_bool*		GetArrAttack() { return m_bArrAttack; }
 
 	_bool		IsApproach() { return m_bApproach; }
 
@@ -55,7 +55,7 @@ public:
 
 	_int		GetMoveCnt() { return m_iMoveCnt; }
 	_int		GetMovingCnt() { return m_iMovingCnt; }
-	_int* GetDotDamage() { return m_iDotDamage; }
+	_int*		GetDotDamage() { return m_iDotDamage; }
 	_int		GetHeal() { return m_iHeal; }
 	_float		GetStunRatio() { return m_fStunRatio; }
 	_float		GetDamageRatio() { return m_fDamageRatio; }
@@ -80,9 +80,10 @@ protected:
 	_int		m_iActivateCnt = -1;
 
 	// 능력 개수
-	_bool		m_bArrAttack[6] = { false };		// 단순 공격, 중독, 출혈, 기절, 이동, 힐
+	_bool		m_bArrAttack[8] = { false };		// 단순 공격, 중독, 출혈, 기절, 이동, 힐, 버프, 디버프
 
-	// 타겟 적(true) or 아군(false)
+	// 0: 대단원 버프, 1: 대단원 극버프, 2: 대단원 버프 초기화
+	// 3: 회피 버프, 4: 회피 디버프
 	_bool		m_bArrToEnemy[6] = { true };
 
 	// 타겟 포지션 모두 공격

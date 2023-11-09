@@ -41,8 +41,9 @@ public:
 	void SetIsTeamsTarget(_bool _bIsTurn) { m_bTargetTeams = _bIsTurn; }
 	void SetIsEnemyTarget(_bool _bIsTurn) { m_bTargetEnemy = _bIsTurn; }
 	void SetIsEnemiesTarget(_bool _bIsTurn) { m_bTargetEnemies = _bIsTurn; }
+	void SetIsTurnOff(_bool _bTurnOff) { m_bTurnOff = _bTurnOff; }
 
-	// 0 : 중독 , 1: 출혈 , 2: 기절 , 3: 기상, 4: 붕괴
+	// 0 : 중독 , 1: 출혈 , 2: 기절 , 3: 기상, 4: 붕괴, 5: 버프, 6: 디버프, 7: 죽음의 일격
 	void SetAttribute(_int _iTypeNum) { m_bAttributeArr[_iTypeNum] = true;  }
 	void SetAttributeOff(_int _iTypeNum) { m_bAttributeArr[_iTypeNum] = false;  }
 
@@ -56,7 +57,7 @@ private:
 
 private:
 
-	//0~9 : 스트레스 /10~11 : 체력바 /12~19 :상태값/ 20: 시체 체력바/ 21: 자기차례 표시, 22: 적 타겟 표시, 23: 적들, 24: 팀, 25: 팀들 타겟
+	//0~9 : 스트레스 /10~11 : 체력바 /12~19 :상태값/ 20: 시체 체력바/ 21: 자기차례 표시, 22: 적 타겟 표시, 23: 적들, 24: 팀, 25: 팀들 타겟, 26: 턴표시
 	shared_ptr<CRcTex> m_pRCTexCom[27];
 	shared_ptr<CTransform> m_pTransformCom[27];
 	// 0:스트레스X 1:스트레스o 2:빈 HP바 3:HP바 4: 중독 5:출혈 6:기절 7: 기상 8: 붕괴 9: 버프
@@ -88,6 +89,7 @@ private:
 	_bool m_bTargetTeams = false;
 	_bool m_bTargetEnemy = false;
 	_bool m_bTargetEnemies = false;
+	_bool m_bTurnOff = false;
 
 	_bool	m_bHpGap = false;
 	_float	m_fHpRegemTime = 0.f;

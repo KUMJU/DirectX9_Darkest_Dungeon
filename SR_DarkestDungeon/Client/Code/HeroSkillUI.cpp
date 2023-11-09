@@ -87,7 +87,7 @@ void CHeroSkillUI::RenderGameObject()
 	else if (_iHp < 100) {
 		_stprintf_s(buf, TEXT("  %d"), _iHp);
 	}
-
+	
 	Engine::Render_Font(L"Font_Default_Small", buf, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
 	vPos = { m_vPos.x + WINCX * 0.5f - 185.f, (m_vPos.y * -1.f) + WINCY * 0.5f + 31.f };
