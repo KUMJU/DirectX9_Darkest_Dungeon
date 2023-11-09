@@ -35,7 +35,7 @@ public:
 
 public:
 	//애니메이션을 loop로 돌리지 않고 한번만 돌릴때 
-	_bool CheckFinish() { return m_bFinishCount; }
+	_bool	CheckFinish() { return m_bFinishCount; }
 
 	_vec2 GetTextureSize() { 
 		if (m_vecTexture)
