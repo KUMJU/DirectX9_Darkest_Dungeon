@@ -37,7 +37,7 @@ HRESULT CBrigandCutthroat::ReadyGameObject()
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBrigandCutthroat_1 = make_shared<CSkill>
 		(L"Attack1", L"Brigand Cutthroat_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.f, 1.2f, 1.5f,
-			bArrAttack1, 0, 0, 0, true);
+			bArrAttack1, 0, 100, 0, 1);
 	pVecSkill.push_back(m_pBrigandCutthroat_1);
 
 	int Skill2_Dot[2] = { 3,2 };
@@ -45,7 +45,7 @@ HRESULT CBrigandCutthroat::ReadyGameObject()
 	_bool	bTargetPos2[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBrigandCutthroat_2 = make_shared<CSkill>
 		(L"Attack2", L"Brigand Cutthroat_Attack2", bTargetPos2, Skill2_Dot, 0.f, 0.f, 1.f, 1.2f,
-			bArrAttack2, 0, 0, 0, true);
+			bArrAttack2, 0, 100, 0, 1);
 	pVecSkill.push_back(m_pBrigandCutthroat_2);
 	SetSkill(pVecSkill);
 

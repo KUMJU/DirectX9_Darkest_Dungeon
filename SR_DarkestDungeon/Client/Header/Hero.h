@@ -10,7 +10,7 @@ enum class EAffliction
 {
 	// 이기적
 	// 본인이 맞을 시 아군들에게 스트레스
-	// 아군이 공격 시 해당 아군에게 스트레스
+	// 아군의 턴이 올시 해당 아군을 모욕하며 해당 아군스트레스
 	SELFISH,
 
 	// 비이성적
@@ -86,7 +86,7 @@ public:
 
 	_int		GetStress() { return m_iStress; }
 	void		SetStress(_int _iValue) { m_iStress = _iValue; }
-	void		IncreaseStress(_int _iValue) { m_iStress += _iValue; }
+	void		IncreaseStress(_int _iValue);
 	void		DecreaseStress(_int _iValue)
 	{
 		m_iStress -= _iValue;
@@ -99,6 +99,9 @@ public:
 
 	_bool		IsDeathDoor() { return m_bDeathDoor; }
 	void		SetDeathDoor(_bool _bDeathDoor) { m_bDeathDoor = _bDeathDoor; }
+
+	_bool		GetStressEvent() { return m_bStressEvent; }
+	void		SetStressEvent(_bool _bStressEvent) { m_bStressEvent = _bStressEvent; }
 
 	_bool		IsAffliction() { return m_bAffliction; }
 	void		SetAffliction(_bool _bAffliction) { m_bAffliction = _bAffliction; }
@@ -123,12 +126,17 @@ public:
 	void		SetInDungeon(_bool _bInDungeon) { m_bInDungeon = _bInDungeon; }
 	_bool		GetInDungeon() { return m_bInDungeon; }
 
+	EAffliction	GetAffliction() { return m_eAffliction; }
+	EVirtue		GetVirtue() { return m_eVirtue; }
+
 protected:
 
 	_int				m_iStress = 0;		// 스트레스
 	_float				m_fCritical;		// 치명타 확률
 
 	_bool				m_bDeathDoor = false;		// 죽음의 문턱 여부
+
+	_bool				m_bStressEvent = false;		// 스트레스 이벤트 발생 여부
 
 	_bool				m_bAffliction = false;		// 붕괴 여부
 	EAffliction			m_eAffliction = EAffliction::ENUM_END;

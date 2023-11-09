@@ -103,7 +103,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DivineComfort", L"Vestal_DivineComfort", L"DivineComfort_Img", L"DivineComfort_Effect", L"DivineComfort_Target_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy4, DotDamZero, 0.f, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, 0.f, 1.f, 1.f, 1.5f, -1, 0, 3, 1, 0, 0);
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
 			pSkill4->GetDescription()->m_strTitle = L"신성한 위무";
@@ -180,7 +180,7 @@ HRESULT CVestal::ReadyGameObject()
 
 		m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 		m_pTransformCom->SetScale(2.f, 3.f, 1.f);
-
+		
 		m_pTransformCom->SetAngle(m_vAngle);
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
 
@@ -198,7 +198,8 @@ HRESULT CVestal::ReadyGameObject()
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
-	
+	m_pStatInfo->SetIsHeroType(3);
+
 	m_bReady = true;
 
 	return S_OK;

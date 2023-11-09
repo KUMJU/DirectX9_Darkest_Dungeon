@@ -212,6 +212,8 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
+	m_pStatInfo->SetIsHeroType(1);
+
 	m_bReady = true;
 
 	return S_OK;

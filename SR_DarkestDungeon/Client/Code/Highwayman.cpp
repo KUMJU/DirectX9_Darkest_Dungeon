@@ -55,7 +55,7 @@ HRESULT CHighwayman::ReadyGameObject()
 			pSkill1->GetDescription()->m_strSubTitle = L"근거리";
 			pSkill1->GetDescription()->m_strMainContent = L"피해 보정 : +15%%\n치명타 보정 : +50%%";
 		}
-
+		
 		// 권총 사격
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 0, 1, 1, 1 };
@@ -81,7 +81,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"PointBlankShot", L"Highwayman_PointBlankShot", L"PointBlankShot_Img", L"PointBlankShot_Effect", L"PointBlankShot_Target_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 0, -1);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 1, -1);
 
 		{
 			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -202,6 +202,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
+	m_pStatInfo->SetIsHeroType(2);
 
 	m_bReady = true;
 

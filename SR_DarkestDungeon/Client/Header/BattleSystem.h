@@ -94,6 +94,8 @@ private:
 	_float	m_fBackMovingTime = MOVINGBACKINTERVEL;		// 스킬 이후 돌아가는 시간
 	_float	m_fWhileAttackingTime = WHILEATTACKINTERVEL;	// 멈춰서 스킬 사용 시간
 	_float	m_fSwitchingTime = SWITCHINGINTERVEL;	// 자리 교체 시간
+	_float	m_fStressEventTime = STRESSEVENTINTERVEL;	// 스트레스 이벤트 시간
+	_float	m_fStressOutputTime = STRESSOUTPUTINTERVEL; // 스트레스 영웅 이벤트 시간
 	_float	m_fKeyInputIntervel = KEYINPUTINTERVEL;
 	
 	_bool	m_bNext = false;
@@ -104,6 +106,8 @@ private:
 	_bool	m_bBackMoving = false;			// 공격 스킬 시전 이후에 제자리로 돌아가는 이동
 	_bool	m_bSwitching = false;			// 자료 교체 이후에 서로 교체되는 이동
 	_bool	m_bWhileAttack = false;			// 공격 스킬을 사용하는 중
+	_bool	m_bWhileStressEvent = false;	// 스트레스 이벤트가 발생중
+	_bool	m_bWhileStressOutput = false;	// 스트레스 영웅 이벤트 발생중
 	_bool	m_bHero = false;				// 공격 주체가 영웅인지?
 	_bool	m_bCounting = false;
 	_bool	m_bDeadCheck = false;
@@ -121,6 +125,9 @@ private:
 	vector<_vec3> m_vMonsterLocation = {};		// monster position
 	_int iCurrentHeroIndex = 0;
 	_int iCurrentMonsterIndex = 0;
+
+	_int iStressOutputType[4] = { 0 };
+		// 0: selfish, 1: irrational, 2: COURAGEOUS, 3: VIGOROUS
 
 	_vec3		  m_vCenterPos = { 0.f, 0.f, 0.f };
 

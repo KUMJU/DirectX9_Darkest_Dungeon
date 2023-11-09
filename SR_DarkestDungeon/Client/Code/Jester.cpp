@@ -43,7 +43,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"DirkStab", L"Jester_DirkStab", L"DirkStab_Img", L"", L"",
-				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero,-2.5f, 1.f, 1.f, 1.3f, -1, 0, 0, 0, 1, 1);
+				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, -2.5f, 1.f, 1.f, 1.3f, -1, 0, 0, 0, 1, 1);
 
 		{
 			pSkill1->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -231,6 +231,7 @@ HRESULT CJester::ReadyGameObject()
 
 	m_pStatInfo->SettingInit(*(m_pTransformCom->GetPos()),
 		m_tCommonStat.iHp, m_tCommonStat.iMaxHp, m_bIsHero);
+	m_pStatInfo->SetIsHeroType(4);
 
 	m_bReady = true;
 

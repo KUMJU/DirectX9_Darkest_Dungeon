@@ -202,6 +202,10 @@ public:
 	void	OffTargetEnemiesCursor();	// Àûµé target ²ô±â
 	void	OnTurnUi();					// ÅÏ ui Å°±â
 	void	OffTurnUi();				// ÅÏ ui ²ô±â
+	void	OnVirtue();					// ±â»ó Å°±â
+	void	OffVirtue();				// ±â»ó ²ô±â
+	void	OnAffliction();				// ºØ±« Å°±â
+	void	OffAffliction();			// ºØ±« ²ô±â
 
 public:
 

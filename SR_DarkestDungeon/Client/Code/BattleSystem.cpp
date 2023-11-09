@@ -317,7 +317,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	if (m_pCurrentCreature == nullptr) StartTurn();
 
 	// 상태에 따른 턴 사이 간격 설정
-	if (!m_bNext && !m_bCounting)
+	if (!m_bNext && !m_bCounting && !m_bWhileStressEvent && !m_bWhileStressOutput)
 	{
 		if (!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse() &&
 			!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsDeath())
@@ -335,7 +335,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		m_bCounting = true;
 	}
 
-	if (!m_bNext && m_bCounting)
+	if (!m_bNext && m_bCounting && !m_bWhileStressEvent && !m_bWhileStressOutput)
 	{
 		m_fBattleTime -= fTimeDelta;
 		if (m_fBattleTime < 0.f)
@@ -361,6 +361,180 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			{
 				dynamic_pointer_cast<CCreature>(m_vMonsters[i])->SetPosition(i + 1);
 			}
+
+			// 스트레스 이벤트
+			for (int i = 0; i < size(m_vHeroes); i++)
+			{
+				if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+				{
+					if (!dynamic_pointer_cast<CHero>(m_vHeroes[i])->GetStressEvent())
+					{
+						// 붕괴 발생한 영웅
+						if (dynamic_pointer_cast<CHero>(m_vHeroes[i])->IsAffliction())
+						{
+							dynamic_pointer_cast<CHero>(m_vHeroes[i])->SetStressEvent(true);
+							dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnAffliction();
+							m_bNext = false;
+							m_bWhileStressEvent = true;
+						}
+						// 기상 발생한 영웅
+						else if (dynamic_pointer_cast<CHero>(m_vHeroes[i])->IsVirtue())
+						{
+							dynamic_pointer_cast<CHero>(m_vHeroes[i])->SetStressEvent(true);
+							dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnVirtue();
+							m_bNext = false;
+							m_bWhileStressEvent = true;
+						}
+					}
+				}
+			}
+
+			// 스트레스 영웅 이벤트 발생
+			if (m_bHero && !m_bWhileStressEvent)
+			{
+				for (int i = 0; i < size(m_vHeroes); i++)
+				{
+					if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+					{
+						// selfish 영웅 있는지
+						if (dynamic_pointer_cast<CHero>(m_vHeroes[i])->GetAffliction() == EAffliction::SELFISH)
+						{
+							if ((rand() % 2) == 1)
+							{
+								m_bNext = false;
+								m_bWhileStressOutput = true;
+								iStressOutputType[0] = 1;
+							}
+						}
+					}
+				}
+			}
+
+			if (m_bHero && !m_bWhileStressEvent)
+			{
+				for (int i = 0; i < size(m_vHeroes); i++)
+				{
+					if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+					{
+						// irrational 영웅 있는지
+						if (dynamic_pointer_cast<CHero>(m_vHeroes[i])->GetAffliction() == EAffliction::IRRATIONAL)
+						{
+							if (m_pCurrentCreature == m_vHeroes[i])
+							{
+								if ((rand() % 2) == 1)
+								{
+									m_bNext = false;
+									m_bWhileStressOutput = true;
+									iStressOutputType[1] = 1;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (m_bHero && !m_bWhileStressEvent)
+			{
+				for (int i = 0; i < size(m_vHeroes); i++)
+				{
+					if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+					{
+						// COURAGEOUS 영웅 있는지
+						if (dynamic_pointer_cast<CHero>(m_vHeroes[i])->GetVirtue() == EVirtue::COURAGEOUS)
+						{
+							if (m_pCurrentCreature == m_vHeroes[i])
+							{
+								if ((rand() % 2) == 1)
+								{
+									m_bNext = false;
+									m_bWhileStressOutput = true;
+									iStressOutputType[2] = 1;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (m_bHero && !m_bWhileStressEvent)
+			{
+				for (int i = 0; i < size(m_vHeroes); i++)
+				{
+					if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+					{
+						// VIGOROUS 영웅 있는지
+						if (dynamic_pointer_cast<CHero>(m_vHeroes[i])->GetVirtue() == EVirtue::VIGOROUS)
+						{
+							if (m_pCurrentCreature == m_vHeroes[i])
+							{
+								if ((rand() % 2) == 1)
+								{
+									m_bNext = false;
+									m_bWhileStressOutput = true;
+									iStressOutputType[3] = 1;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// 스트레스 이벤트 발생중인 시간
+	if (m_bWhileStressEvent)
+	{
+		m_fStressEventTime -= fTimeDelta;
+
+		if (m_fStressEventTime < 0.f)
+		{
+			for (int i = 0; i < size(m_vHeroes); i++)
+			{
+				dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OffVirtue();
+				dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OffAffliction();
+			}
+
+			m_fStressEventTime = STRESSEVENTINTERVEL;
+			m_bWhileStressEvent = false;
+			m_bNext = true;
+		}
+	}
+
+	// 스트레스 영웅 행동 발생 시간
+	if (m_bWhileStressOutput)
+	{
+		m_fStressOutputTime -= fTimeDelta;
+
+		if (m_fStressOutputTime < 0.f)
+		{
+			if (iStressOutputType[0])
+			{
+				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->IncreaseStress(10);
+			}
+			if (iStressOutputType[1])
+			{
+				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->DecreaseHP(5);
+			}
+			if (iStressOutputType[2])
+			{
+				for (int i = 0; i < size(m_vHeroes); i++)
+				{
+					dynamic_pointer_cast<CHero>(m_vHeroes[i])->DecreaseStress(10);
+				}
+			}
+			if (iStressOutputType[3])
+			{
+				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->IncreaseHP(10);
+			}
+
+			for (int i = 0; i < 4; i++)
+			{
+				iStressOutputType[i] = 0;
+			}
+
+			m_fStressOutputTime = STRESSOUTPUTINTERVEL;
+			m_bWhileStressOutput = false;
+			m_bNext = true;
 		}
 	}
 
