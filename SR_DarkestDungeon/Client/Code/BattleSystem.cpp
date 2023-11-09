@@ -19,6 +19,32 @@ CBattleSystem::~CBattleSystem()
 
 _bool CBattleSystem::Update(const _float& fTimeDelta)
 {
+
+	//근접 공격을 제외한 공격 시 일정시간 이후 원상복구로 돌려놓는 부분 
+	if (m_bChangeSkillAnim) {
+
+		m_fTurnResetTime += fTimeDelta;
+
+		if (m_fTurnResetTime > 1.5f) {
+			m_fTurnResetTime = 0.f;
+			m_bChangeSkillAnim = false;
+			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
+			
+			if (m_fAngle != 0.f) {
+				CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, m_fAngle, 0.4f);
+				m_fAngle = 0.f;
+			}
+
+		}
+
+		if (m_fTurnResetTime > 0.5f && !m_bShakingDone) {
+			CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.2f, 0.15f);
+			m_bShakingDone = true;
+		}
+
+	}
+
+
 	for (auto& iter : m_vecPickingObject)
 	{
 		CPickingMgr::GetInstance()->AddList(iter);
@@ -639,6 +665,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 						}
 						for (int j = 0; j < size(m_vMonsters); j++)
 						{
+							printf("%d", j);
 							dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetPicked(false);
 						}
 					}
@@ -777,6 +804,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 					m_pHeroUI->SetSkill(0);
 					m_iSelectPosition = 0;
 					m_vecPickingObject.clear();
+
 				}
 			}
 		}
@@ -847,10 +875,7 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 					CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, m_fAngle, 0.5);
 					m_fAngle = 0.f;
 				}*/
-			//	CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
-				CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
-				printf("돌아오기");
-			
+			//	CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);			
 
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTurn(true);
 				m_bHero = true;
@@ -872,8 +897,6 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 					m_fAngle = 0.f;
 				}*/
 			//	CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
-				CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
-				printf("돌아오기");
 
 
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetTurn(true);
@@ -1310,6 +1333,7 @@ void CBattleSystem::Battle(int _iNum)
 
 	int iTarget = 0;
 	int iTargetTeam = 0;
+	
 
 	// 죽은 애들 빼주기
 	int iDeathHeroes = 0;
@@ -1569,7 +1593,7 @@ void CBattleSystem::Battle(int _iNum)
 				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->IsTargetAll())
 			{
 				CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { m_vCenterPos.x - 10.f , m_vCenterPos.y , m_vCenterPos.z + 4.f });
-
+				m_bChangeSkillAnim = true;
 				for (int i = 0; i < size(m_vHeroes); i++)
 				{
 					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
@@ -1583,7 +1607,7 @@ void CBattleSystem::Battle(int _iNum)
 				!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->IsTargetAll())
 			{
 				CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { m_vCenterPos.x - 10.f , m_vCenterPos.y , m_vCenterPos.z + 4.f });
-
+				m_bChangeSkillAnim = true;
 				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
 				(dynamic_pointer_cast<CCreature>(m_vHeroes[iTargetTeam]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
 				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
@@ -1633,12 +1657,30 @@ void CBattleSystem::Battle(int _iNum)
 			else
 			{
 				//원거리 공격
-				/*if (!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->IsApproach()) {
-					CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { m_pCurrentCreature->GetPos().x+ 2.f  , m_pCurrentCreature->GetPos().y , m_pCurrentCreature->GetPos().z - 15.f });
-					CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, 25.f, 0.7);
-					CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.2f, 0.15f);
-					m_fAngle -= 15.f;
-				}*/
+				if (!static_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->IsApproach()) {
+
+					//카메라 이펙트
+					_int iPos = static_pointer_cast<CCreature>(m_pCurrentCreature)->GetPosition();
+					_float fRevision = 0.f;
+
+					if (3 == iPos || 4 == iPos) {
+						fRevision = 10.f;
+					}
+
+					CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { m_pCurrentCreature->GetPos().x+ 2.f + fRevision , m_pCurrentCreature->GetPos().y , m_pCurrentCreature->GetPos().z - 5.f+ (- 1.f * 5.f * iPos) });
+					CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, 20.f + iPos * -1.f * 5.f, 0.5f);
+					 // 20 degree 
+					m_bChangeSkillAnim = true;
+					m_bShakingDone = false;
+					m_fAngle -= (20.f + iPos * -1.f * 5.f);
+
+					//적 알파값
+
+					//for (int i = 0; i < iTarget; ++i) {
+					//	m_vMonsters[i]->SetRenderState(true);
+					//}
+				}
+
 
 				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
 				(dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));

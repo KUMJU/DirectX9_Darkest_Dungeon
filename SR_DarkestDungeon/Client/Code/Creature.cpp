@@ -523,6 +523,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				dynamic_pointer_cast<CCreature>(_pCreature)->SetBeforeDeath(true);
 			}
 		}
+		
 	}
 	// 회피했으면
 	else

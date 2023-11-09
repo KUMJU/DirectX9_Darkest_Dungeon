@@ -135,7 +135,15 @@ private:
 	_bool	m_bCamEffectCheck = false;
 	_bool	m_bRotationCheck = false;
 	_float	m_fAngle = 0.f;
-	_float m_fActTime = 0.f;
+	_float	m_fActTime = 0.f;
+	//공격이후 애니메이션이 풀리고 턴 리셋을 위해 기록하는 시간
+	_float	m_fTurnResetTime = 0.f;
+	//스킬 사용이후 텍스쳐(애니메이션)이 변경했는지 여부
+	_bool	m_bChangeSkillAnim = false;
+	//특정 시간 이후 셰이킹 해야하는 경우 
+	_bool	m_bShakingDone = true;
+	
+
 	// 피킹오브젝트
 	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};
 

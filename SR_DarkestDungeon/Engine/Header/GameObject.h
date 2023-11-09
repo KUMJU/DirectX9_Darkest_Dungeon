@@ -78,6 +78,8 @@ public:
 
 	shared_ptr<tagDescription> GetDescription() { return m_tDescription; }
 
+	void SetRenderState(_bool _bValue) {	m_bSetAlpha = _bValue;	}
+
 public:
 	void SetLock(_bool _bLock) { m_bLock = _bLock; }
 	void	SetBillBoard(_matrix& _matWorld);
@@ -94,6 +96,7 @@ public:
 	//Component Manage
 protected:
 	void RemoveComponent();
+	void RenderObjAlpha(_int _iAlpha);
 
 protected:
 	virtual void AddComponent();
@@ -124,6 +127,8 @@ protected:
 	_vec2 m_vOriginSize = {0.f, 0.f};
 
 	shared_ptr<tagDescription> m_tDescription;
+	//알파값을 조절해서 렌더하는지의 여부
+	_bool m_bSetAlpha = false;
 
 protected:
 	map<tstring, std::shared_ptr<CComponent>> m_mapComponent[ID_END];

@@ -5,6 +5,7 @@
 #include"Export_Utility.h"
 #include"StatView.h"
 #include "UIMgr.h"
+#include"SoundMgr.h"
 
 CJester::CJester(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CHero(pGraphicDev)
@@ -88,7 +89,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"Finale", L"Jester_Finale", L"Finale_Img", L"Finale_Effect", L"Finale_Target_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 2.f, -1, 0, 0, 0, 1, -5);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, -2.f, 1.f, 1.5f, 2.f, -1, 0, 0, 0, 1, -5);
 
 		{
 			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -111,7 +112,7 @@ HRESULT CJester::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"Solo", L"Jester_Solo", L"Solo_Img", L"Solo_Effect", L"Solo_Target_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero,0.f, 1.f, 0.2f, 0.4f, -1, 0, 0, 1, 1, 5);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, -2.f, 1.f, 0.2f, 0.4f, -1, 0, 0, 1, 1, 5);
 
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -426,21 +427,28 @@ void CJester::ChangeAnim()
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Jester_DirkStab", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_jest_sliceoff.wav", CHANNELID::JESTER, 1.f);
+
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Jester_Harvest", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_jest_harvest.wav", CHANNELID::JESTER, 1.f);
 			break;
 		case EAnimState::SKILL3:
 			m_pTextureCom->SetAnimKey(L"Jester_Finale", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_jest_finale.wav", CHANNELID::JESTER, 1.f);
 			break;
 		case EAnimState::SKILL4:
 			m_pTextureCom->SetAnimKey(L"Jester_Solo", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_jest_solo.wav", CHANNELID::JESTER, 1.f);
 			break;
 		case EAnimState::SKILL5:
 			m_pTextureCom->SetAnimKey(L"Jester_SliceOff", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_jest_sliceoff.wav", CHANNELID::JESTER, 1.f);
 			break;
 		case EAnimState::SKILL6:
 			m_pTextureCom->SetAnimKey(L"Jester_BattleBallad", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_jest_battleball.wav", CHANNELID::JESTER, 1.f);
 			break;
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"Jester_Affliction", 0.04f);
@@ -452,6 +460,8 @@ void CJester::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Hero_Death", 0.02f);
 			break;
 		}
+		m_ePrevAnimState = m_eCurAnimState;
+
 	}
 
 	_vec2 vcurPos = m_pTextureCom->GetTextureSize();

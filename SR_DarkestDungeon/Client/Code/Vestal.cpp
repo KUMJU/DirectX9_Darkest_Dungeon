@@ -6,6 +6,8 @@
 #include"StatView.h"
 #include "UIMgr.h"
 
+#include"SoundMgr.h"
+
 CVestal::CVestal(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CHero(pGraphicDev)
 {
@@ -393,15 +395,22 @@ void CVestal::ChangeAnim()
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Vestal_MaceBash", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_vst_macebash.wav", CHANNELID::VESTAL, 1.f);
+
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Vestal_DazzlingLight", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_vst_dazzlinglight.wav", CHANNELID::VESTAL, 1.f);
+
 			break;
 		case EAnimState::SKILL3:
 			m_pTextureCom->SetAnimKey(L"Vestal_DivineGrace", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_vst_divinegrace.wav", CHANNELID::VESTAL, 1.f);
+
 			break;
 		case EAnimState::SKILL4:
 			m_pTextureCom->SetAnimKey(L"Vestal_DivineComfort", 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(L"Hero_vst_divinegrace.wav", CHANNELID::VESTAL, 1.f);
 			break;
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"Vestal_Affliction", 0.04f);
@@ -413,6 +422,7 @@ void CVestal::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Hero_Death", 0.02f);
 			break;
 		}
+		m_ePrevAnimState = m_eCurAnimState;
 	}
 
 	_vec2 vcurPos = m_pTextureCom->GetTextureSize();
