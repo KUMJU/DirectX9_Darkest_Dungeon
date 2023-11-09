@@ -33,7 +33,7 @@ HRESULT CBoneSoldier::ReadyGameObject()
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
 	int Skill1_Dot[2] = { 3,2 };
-	_bool	m_bArrAttack1[6] = { 0, 1, 0, 0, 0, 0 };
+	_bool	m_bArrAttack1[8] = { 0, 1, 0, 0, 0, 0, 0, 0 };
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneSoldier_1 = make_shared<CSkill>
 		(L"Attack1", L"Bone Soldier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.f, 0.8f, 1.f,

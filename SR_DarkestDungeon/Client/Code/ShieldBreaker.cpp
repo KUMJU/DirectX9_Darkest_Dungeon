@@ -36,8 +36,8 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		// ¬Ó∏£±‚
 		_bool arrActivatePos1[4] = { 1, 1, 1, 0 };
 		_bool arrTargetPos1[4] = { 1, 1, 1, 1 };
-		_bool arrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
-		_bool arrToEnemy1[6] = { 1, 1, 1, 1, 0, 1 };
+		_bool arrAttack1[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
+		_bool arrToEnemy1[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"Pierce", L"ShieldBreaker_Pierce", L"Pierce_Img", L"Pierce_Effect",
@@ -56,7 +56,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		// ±∏∏€ ≥ª±‚
 		_bool arrActivatePos2[4] = { 1, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 0, 1, 1, 0 };
-		_bool arrAttack2[6] = { 1, 0, 0, 0, 0, 0 };
+		_bool arrAttack2[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
 			
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
@@ -77,10 +77,10 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		}
 
 		// µ∂ªÁ¿« ¿‘∏¬√„
-		_bool arrActivatePos3[4] = { 1, 0, 0, 0 };
+		_bool arrActivatePos3[4] = { 1, 1, 0, 0 };
 		_bool arrTargetPos3[4] = { 1, 1, 0, 0 };
-		_bool arrAttack3[6] = { 0, 1, 0, 0, 0, 0 };
-		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 0, 1 };
+		_bool arrAttack3[8] = { 0, 1, 0, 0, 0, 0, 0, 0 };
+		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 1, 1 };
 
 		_int DotDam3[2] = { 3, 3 };
 
@@ -102,10 +102,10 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		}
 
 		// ≤Á∂’±‚
-		_bool arrActivatePos4[4] = { 1, 0, 0, 0 };
+		_bool arrActivatePos4[4] = { 1, 1, 0, 0 };
 		_bool arrTargetPos4[4] = { 1, 1, 1, 1 };
-		_bool arrAttack4[6] = { 0, 1, 0, 0, 0, 0 };
-		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 0, 1 };
+		_bool arrAttack4[8] = { 0, 1, 0, 0, 0, 0, 0, 0 };
+		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 1, 1 };
 
 		_int DotDam4[2] = { 1, 3 };
 

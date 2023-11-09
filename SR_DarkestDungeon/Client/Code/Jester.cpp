@@ -38,8 +38,8 @@ HRESULT CJester::ReadyGameObject()
 		// 단검 찌르기
 		_bool arrActivatePos1[4] = { 1, 1, 1, 1 };
 		_bool arrTargetPos1[4] = { 1, 1, 1, 0 };
-		_bool arrAttack1[6] = { 1, 0, 0, 0, 0, 0 };
-		_bool arrToEnemy1[6] = { 1, 1, 1, 1, 0, 1 };
+		_bool arrAttack1[8] = { 1, 0, 0, 0, 0, 0, 1, 0 };
+		_bool arrToEnemy1[6] = { 0, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
 			(L"DirkStab", L"Jester_DirkStab", L"DirkStab_Img", L"DirkStab_Effect",
@@ -61,8 +61,8 @@ HRESULT CJester::ReadyGameObject()
 		// 수확의 낫질
 		_bool arrActivatePos2[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos2[4] = { 1, 1, 1, 1 };
-		_bool arrAttack2[6] = { 0, 0, 1, 0, 0, 0 };
-		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
+		_bool arrAttack2[8] = { 0, 0, 1, 0, 0, 0, 1, 0 };
+		_bool arrToEnemy2[6] = { 0, 1, 1, 1, 1, 1 };
 
 		_int  DotDam2[2] = { 1, 3 };
 
@@ -83,8 +83,8 @@ HRESULT CJester::ReadyGameObject()
 		// 대단원
 		_bool arrActivatePos3[4] = { 1, 1, 0, 0 };
 		_bool arrTargetPos3[4] = { 1, 1, 1, 1 };
-		_bool arrAttack3[6] = { 1, 0, 0, 0, 0, 0 };
-		_bool arrToEnemy3[6] = { 1, 1, 1, 1, 0, 1 };
+		_bool arrAttack3[8] = { 1, 0, 0, 0, 0, 0, 1, 0 };
+		_bool arrToEnemy3[6] = { 1, 1, 0, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"Finale", L"Jester_Final", L"Finale_Img", L"Finale_Effect",
@@ -106,8 +106,8 @@ HRESULT CJester::ReadyGameObject()
 		// 독주
 		_bool arrActivatePos4[4] = { 0, 0, 1, 1 };
 		_bool arrTargetPos4[4] = { 1, 1, 1, 1 };
-		_bool arrAttack4[6] = { 1, 0, 0, 0, 0, 0 };
-		_bool arrToEnemy4[6] = { 1, 1, 1, 1, 0, 1 };
+		_bool arrAttack4[8] = { 1, 0, 0, 0, 0, 0, 1, 1 };
+		_bool arrToEnemy4[6] = { 1, 0, 1, 1, 0, 1 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"Solo", L"Jester_Solo", L"Solo_Img", L"Solo_Effect",
@@ -129,8 +129,8 @@ HRESULT CJester::ReadyGameObject()
 		// 저며내기
 		_bool arrActivatePos5[4] = { 0, 1, 1, 1 };
 		_bool arrTargetPos5[4] = { 0, 1, 1, 1 };
-		_bool arrAttack5[6] = { 0, 0, 1, 0, 0, 0 };	
-		_bool arrToEnemy5[6] = { 1, 1, 1, 1, 1, 1 };
+		_bool arrAttack5[8] = { 0, 0, 1, 0, 0, 0, 1, 0 };
+		_bool arrToEnemy5[6] = { 0, 1, 1, 1, 1, 1 };
 
 		_int  DotDam5[2] = { 3, 3 };
 
@@ -151,9 +151,15 @@ HRESULT CJester::ReadyGameObject()
 			pSkill5->GetDescription()->m_strColorContent2 = L"대단원+30%%";
 		}
 
+		// 전투의 발라드
+		_bool arrActivatePos6[4] = { 0, 1, 1, 1 };
+		_bool arrTargetPos6[4] = { 1, 1, 1, 1 };
+		_bool arrAttack6[8] = { 0, 0, 0, 0, 0, 0, 1, 0 };
+		_bool arrToEnemy6[6] = { 1, 1, 1, 0, 1, 1 };
+
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
 			(L"BattleBallad", L"Jester_BattleBallad", L"BattleBallad_Img", L"BattleBallad_Effect",
-				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 0.f, 1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
+				arrActivatePos6, arrTargetPos6, arrAttack6, arrToEnemy6, DotDamZero, 0.f, 1.f, 0.7f, 1.f, -1, 0, 1, 1, 0, 0);
 
 		{
 			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
@@ -172,12 +178,12 @@ HRESULT CJester::ReadyGameObject()
 		pSkill6->SetUnlocked(false);
 
 		m_pVecSkill.push_back(pSkill1);
-		m_pVecSkill.push_back(pSkill2);
+		m_pVecSkill.push_back(pSkill6);
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
-
+		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill5);
-		m_pVecSkill.push_back(pSkill6);
+
 
 		m_pVecSkillAll.push_back(pSkill1);
 		m_pVecSkillAll.push_back(pSkill2);
@@ -251,7 +257,7 @@ _int CJester::UpdateGameObject(const _float& fTimeDelta)
 					m_eCurAnimState = EAnimState::SKILL1;
 					break;
 				case 1:
-					m_eCurAnimState = EAnimState::SKILL2;
+					m_eCurAnimState = EAnimState::SKILL6;
 					break;
 				case 2:
 					m_eCurAnimState = EAnimState::SKILL3;
@@ -260,10 +266,10 @@ _int CJester::UpdateGameObject(const _float& fTimeDelta)
 					m_eCurAnimState = EAnimState::SKILL4;
 					break;
 				case 4:
-					m_eCurAnimState = EAnimState::SKILL5;
+					m_eCurAnimState = EAnimState::SKILL2;
 					break;
 				case 5:
-					m_eCurAnimState = EAnimState::SKILL6;
+					m_eCurAnimState = EAnimState::SKILL5;
 					break;
 				case 6:
 					m_eCurAnimState = EAnimState::SKILL7;
@@ -428,6 +434,12 @@ void CJester::ChangeAnim()
 			break;
 		case EAnimState::SKILL4:
 			m_pTextureCom->SetAnimKey(L"Jester_Solo", 0.04f);
+			break;
+		case EAnimState::SKILL5:
+			m_pTextureCom->SetAnimKey(L"Jester_SliceOff", 0.04f);
+			break;
+		case EAnimState::SKILL6:
+			m_pTextureCom->SetAnimKey(L"Jester_BattleBallad", 0.04f);
 			break;
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"Jester_Affliction", 0.04f);

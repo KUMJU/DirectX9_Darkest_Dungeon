@@ -71,6 +71,7 @@ protected:
 	void AutoBattleKeyInput();	// 자동 전투 키
 	void Battle(int _iNum);		// 전투 알고리즘
 	void OffTargetCursor();		// 타겟 커서 다 끄기
+	void OnTurnUi();			// 턴 ui 다 키기
 
 private:
 	vector<shared_ptr<CGameObject>> m_vCreatures;		// 영웅, 몬스터 포함 리스트
