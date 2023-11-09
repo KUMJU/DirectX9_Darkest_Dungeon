@@ -112,12 +112,12 @@ HRESULT CShieldBreaker::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"Impale", L"ShieldBreaker_Impale", L"Impale_Img", L"Impale_Effect", L"Impale_Target_Effect",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, -4.f, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, -4.f, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 0, -1);
 
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
 			pSkill4->GetDescription()->m_strTitle = L"꿰뚫기";
-			pSkill4->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill4->GetDescription()->m_strSubTitle = L"원거리";
 			pSkill4->GetDescription()->m_strMainContent = L"피해 보정 : -60%%\n치명타 보정 : -40%%";
 			pSkill4->GetDescription()->m_strColorTitle1 = L"이동";
 			pSkill4->GetDescription()->m_tColor1 = SKYBLUE;

@@ -83,7 +83,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
 			(L"PointBlankShot", L"Highwayman_PointBlankShot", L"PointBlankShot_Img", L"PointBlankShot_Effect", L"PointBlankShot_Target_Effect",
-				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 1, -1);
+				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 1.9f, -1, 1, 0, 0, 0, -1);
 
 		{
 			pSkill3->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
@@ -106,7 +106,7 @@ HRESULT CHighwayman::ReadyGameObject()
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
 			(L"DuelistsAdvance", L"Highwayman_DuelistsAdvance", L"DuelistsAdvance_Img", L"", L"",
-				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, -2.5f, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 1, 1);
+				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, -2.5f, 1.f, 0.8f, 1.1f, -1, 0, 0, 0, 0, 1);
 
 		{
 			pSkill4->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;

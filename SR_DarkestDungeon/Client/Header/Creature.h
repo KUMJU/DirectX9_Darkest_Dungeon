@@ -236,6 +236,11 @@ public:
 	// ÃâÇ÷ Ä¡·á
 	virtual void	BleedCure();
 
+	// ÀÌÆåÆ®
+	shared_ptr<CEffect> GetEffect() { return m_pEffect; }
+	void				SetEffect(shared_ptr<CEffect> _pEffect) { m_pEffect = _pEffect; }
+	void				SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget);
+
 protected:
 	virtual void			AddComponent();
 	virtual void			ClimbingTerrain();

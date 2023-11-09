@@ -64,6 +64,7 @@ public:
 	tstring		GetAnimKey() { return m_strAnimKey; }
 	tstring		GetImgKey() { return m_strImgKey; }
 	tstring		GetEffectAnimKey() { return m_strEffectAnimKey; }
+	tstring		GetTargetEffectAnimKey() { return m_strTargetEffectAnimKey; }
 
 	_float		GetSkillDistance() { return m_fSkillDistance; }
 

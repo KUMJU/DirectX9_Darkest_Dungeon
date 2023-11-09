@@ -460,17 +460,6 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 		}
 	}
 
-	// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
-	if (_pSkill->GetEffectAnimKey() != L"")
-	{
-		m_pEffect = CEffectMgr::GetInstance()->GetEffect();
-
-		shared_ptr< tagTextureInfo> textureInfo = *CResourceMgr::GetInstance()->GetTexture(_pSkill->GetAnimKey(), TEX_NORMAL)->begin();
-
-		m_pEffect->SetInfo(_pSkill->GetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME, false);
-		m_pEffect->SetActive(true);
-	}
-
 	// 스트레스
 	if (dynamic_pointer_cast<CHero>(_pCreature))
 	{
@@ -533,6 +522,16 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 
 	// 나
 	m_bEffectOn = true;
+
+	// 타겟 이펙트
+	{
+		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
+		if (_pSkill->GetTargetEffectAnimKey() != L"")
+		{
+			_pCreature->SetEffectInfo(_pSkill, true);
+		}
+	}
+
 }
 
 void CCreature::MovePos(_vec3 _vPos, const _float& fTimeDelta, _float _fSpeed)
@@ -712,6 +711,37 @@ void CCreature::BleedCure()
 {
 	m_bState[1] = false;
 	for (int i = 0; i < 4; i++) m_iBleedDot[i] = 0;
+}
+
+
+
+void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget)
+{
+	if (_bTarget)
+	{
+		if (_pSkill->GetTargetEffectAnimKey() != L"")
+		{
+			m_pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+			shared_ptr< tagTextureInfo> textureInfo = *CResourceMgr::GetInstance()->GetTexture(_pSkill->GetAnimKey(), TEX_NORMAL)->begin();
+
+			m_pEffect->SetInfo(_pSkill->GetTargetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME, false);
+			m_pEffect->SetActive(true);
+		}
+	}
+
+	else
+	{
+		if (_pSkill->GetEffectAnimKey() != L"")
+		{
+			m_pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+			shared_ptr< tagTextureInfo> textureInfo = *CResourceMgr::GetInstance()->GetTexture(_pSkill->GetAnimKey(), TEX_NORMAL)->begin();
+
+			m_pEffect->SetInfo(_pSkill->GetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME, false);
+			m_pEffect->SetActive(true);
+		}
+	}
 }
 
 void CCreature::AddComponent()

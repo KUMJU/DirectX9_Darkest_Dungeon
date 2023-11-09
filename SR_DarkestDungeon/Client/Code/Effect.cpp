@@ -69,7 +69,7 @@ void CEffect::RenderGameObject()
     m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
     m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-    m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(160, 255, 255, 255));
+    m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(255, 255, 255, 255));
 
     m_pAnimatorCom->SetAnimTexture();
     m_pRcTexCom->RenderBuffer();

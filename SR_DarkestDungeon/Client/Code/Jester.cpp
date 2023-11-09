@@ -99,7 +99,7 @@ HRESULT CJester::ReadyGameObject()
 			pSkill3->GetDescription()->m_strColorTitle1 = L"이동";
 			pSkill3->GetDescription()->m_tColor1 = SKYBLUE;
 			pSkill3->GetDescription()->m_strColorContent1 = L"자신 : 맨 뒤로";
-			pSkill3->GetDescription()->m_strColorTitle2 = L"특성";
+			pSkill3->GetDescription()->m_strColorTitle2 = L"특수";
 			pSkill3->GetDescription()->m_tColor2 = WHITE;
 			pSkill3->GetDescription()->m_strColorContent2 = L"전투 당 1회";
 		}
@@ -122,9 +122,9 @@ HRESULT CJester::ReadyGameObject()
 			pSkill4->GetDescription()->m_strColorTitle1 = L"이동";
 			pSkill4->GetDescription()->m_tColor1 = SKYBLUE;
 			pSkill4->GetDescription()->m_strColorContent1 = L"자신 : 맨 앞으로";
-			pSkill4->GetDescription()->m_strColorTitle2 = L"특성";
+			pSkill4->GetDescription()->m_strColorTitle2 = L"특수";
 			pSkill4->GetDescription()->m_tColor2 = BROWN;
-			pSkill4->GetDescription()->m_strColorContent2 = L"회피+20 속도-3 대단원+75%%";
+			pSkill4->GetDescription()->m_strColorContent2 = L"적 전체 회피-10 대단원+75%%";
 		}
 
 		// 저며내기
@@ -142,7 +142,7 @@ HRESULT CJester::ReadyGameObject()
 		{
 			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
 			pSkill5->GetDescription()->m_strTitle = L"저며내기";
-			pSkill5->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill5->GetDescription()->m_strSubTitle = L"근거리";
 			pSkill5->GetDescription()->m_strMainContent = L"피해 보정 : -30%%\n치명타 보정 : 0%%";
 			pSkill5->GetDescription()->m_strColorTitle1 = L"출혈";
 			pSkill5->GetDescription()->m_tColor1 = RED;
