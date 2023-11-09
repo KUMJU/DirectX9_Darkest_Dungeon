@@ -2,6 +2,7 @@
 
 #include"GameObject.h"
 #include "Skill.h"
+#include "Effect.h"
 
 BEGIN(Engine)
 
@@ -247,6 +248,8 @@ protected:
 	shared_ptr<CTransform> m_pEffectTransformCom = nullptr;
 	shared_ptr<CRcTex> m_pEffectBufCom = nullptr;
 	shared_ptr<CAnimator> m_pEffectTextureCom = nullptr;
+
+	shared_ptr<CEffect> m_pEffect = nullptr;
 
 protected:
 	_bool		m_bIsHero = false;

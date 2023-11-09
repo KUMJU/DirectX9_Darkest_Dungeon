@@ -42,7 +42,7 @@ HRESULT CJester::ReadyGameObject()
 		_bool arrToEnemy1[6] = { 0, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
-			(L"DirkStab", L"Jester_DirkStab", L"DirkStab_Img", L"DirkStab_Effect",
+			(L"DirkStab", L"Jester_DirkStab", L"DirkStab_Img", L"", L"",
 				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero,-2.5f, 1.f, 1.f, 1.3f, -1, 0, 0, 0, 1, 1);
 
 		{
@@ -67,7 +67,7 @@ HRESULT CJester::ReadyGameObject()
 		_int  DotDam2[2] = { 1, 3 };
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
-			(L"Harvest", L"Jester_Harvest", L"Harvest_Img", L"Harvest_Effect",
+			(L"Harvest", L"Jester_Harvest", L"Harvest_Img", L"", L"",
 				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDam2, -3.f, 1.f, 0.5f, 0.8f, -1, 0, 0, 1, 1, 0);
 
 		{
@@ -87,7 +87,7 @@ HRESULT CJester::ReadyGameObject()
 		_bool arrToEnemy3[6] = { 1, 1, 0, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
-			(L"Finale", L"Jester_Final", L"Finale_Img", L"Finale_Effect",
+			(L"Finale", L"Jester_Finale", L"Finale_Img", L"Finale_Effect", L"Finale_Target_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, 0.f, 1.f, 1.5f, 2.f, -1, 0, 0, 0, 1, -5);
 
 		{
@@ -110,7 +110,7 @@ HRESULT CJester::ReadyGameObject()
 		_bool arrToEnemy4[6] = { 1, 0, 1, 1, 0, 1 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
-			(L"Solo", L"Jester_Solo", L"Solo_Img", L"Solo_Effect",
+			(L"Solo", L"Jester_Solo", L"Solo_Img", L"Solo_Effect", L"Solo_Target_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero,0.f, 1.f, 0.2f, 0.4f, -1, 0, 0, 1, 1, 5);
 
 		{
@@ -135,13 +135,13 @@ HRESULT CJester::ReadyGameObject()
 		_int  DotDam5[2] = { 3, 3 };
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
-			(L"SliceOff", L"Jester_SliceOff", L"SliceOff_Img", L"SliceOff_Effect",
+			(L"SliceOff", L"Jester_SliceOff", L"SliceOff_Img", L"", L"",
 				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 0.f,  1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
 
 		{
 			pSkill5->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL3;
 			pSkill5->GetDescription()->m_strTitle = L"저며내기";
-			pSkill5->GetDescription()->m_strSubTitle = L"근거리";
+			pSkill5->GetDescription()->m_strSubTitle = L"원거리";
 			pSkill5->GetDescription()->m_strMainContent = L"피해 보정 : -30%%\n치명타 보정 : 0%%";
 			pSkill5->GetDescription()->m_strColorTitle1 = L"출혈";
 			pSkill5->GetDescription()->m_tColor1 = RED;
@@ -158,17 +158,17 @@ HRESULT CJester::ReadyGameObject()
 		_bool arrToEnemy6[6] = { 1, 1, 1, 0, 1, 1 };
 
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
-			(L"BattleBallad", L"Jester_BattleBallad", L"BattleBallad_Img", L"BattleBallad_Effect",
+			(L"BattleBallad", L"Jester_BattleBallad", L"BattleBallad_Img", L"BattleBallad_Effect", L"BattleBallad_Target_Effect",
 				arrActivatePos6, arrTargetPos6, arrAttack6, arrToEnemy6, DotDamZero, 0.f, 1.f, 0.7f, 1.f, -1, 0, 1, 1, 0, 0);
 
 		{
 			pSkill6->GetDescription()->m_eDescriptionType = EDescriptionType::SKILL2;
 			pSkill6->GetDescription()->m_strTitle = L"전투의 발라드";
-			pSkill6->GetDescription()->m_strSubTitle = L"근거리";
-			pSkill6->GetDescription()->m_strMainContent = L"피해 보정 : 0%%\n치명타 보정 : 0%%";
+			pSkill6->GetDescription()->m_strSubTitle = L"원거리";
+			pSkill6->GetDescription()->m_strMainContent = L"";
 			pSkill6->GetDescription()->m_strColorTitle1 = L"강화";
 			pSkill6->GetDescription()->m_tColor1 = SKYBLUE;
-			pSkill6->GetDescription()->m_strColorContent1 = L"속도 +2";
+			pSkill6->GetDescription()->m_strColorContent1 = L"아군 전체 회피 +10";
 		}
 
 		pSkill5->SetEquipped(false);

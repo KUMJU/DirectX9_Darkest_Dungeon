@@ -432,6 +432,8 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light_target/armatureName_dazzling_light_target_%d.png", 20, bDefault);
 		CreateNewTexture(L"DivineComfort_Target_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort_target/armatureName_gods_comfort_target_%d.png", 20, bDefault);
+		CreateNewTexture(L"DivineGrace_Target_Effect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_comfort_target/armatureName_gods_comfort_target_%d.png", 20, bDefault);
 		//CreateNewTexture(L"Test_Target_Effect", TEX_NORMAL,
 		//	L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/gods_illumination_target/armatureName_gods_illumination_target_%d.png", 40);
 	}

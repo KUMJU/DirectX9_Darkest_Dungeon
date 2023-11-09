@@ -5,6 +5,9 @@
 #include "Export_Utility.h"
 #include"StatView.h"
 
+#include "EffectMgr.h"
+#include "Effect.h"
+
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -87,6 +90,11 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 		m_pStatInfo->UpdateGameObject(fTimeDelta);
 	}
 
+	if (m_pEffect && m_pEffect->GetIsActive())
+	{
+		m_pEffect->UpdateGameObject(fTimeDelta);
+	}
+
 	return iExit;
 }
 
@@ -112,6 +120,8 @@ void CCreature::RenderGameObject()
 	if (m_pStatInfo != nullptr && bStatBarOn)
 		m_pStatInfo->RenderGameObject();
 
+	if (m_pEffect && m_pEffect->GetIsActive())
+		m_pEffect->RenderGameObject();
 
 }
 
@@ -329,8 +339,6 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 			_pCreature->BlightAttack(_pSkill->GetDotDamage());
 			_pCreature->SetBlight(true);
 		}
-
-		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
 
 	// 출혈
@@ -351,8 +359,6 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 			_pCreature->BleedAttack(_pSkill->GetDotDamage());
 			_pCreature->SetBleed(true);
 		}
-
-		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
 
 	// 기절
@@ -372,8 +378,6 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 			_pCreature->SetStun(true);
 		}
-
-		// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 	}
 
 	// 이동
@@ -454,6 +458,17 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				_pCreature->SetDeBuff(true);
 			}
 		}
+	}
+
+	// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
+	if (_pSkill->GetEffectAnimKey() != L"")
+	{
+		m_pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		shared_ptr< tagTextureInfo> textureInfo = *CResourceMgr::GetInstance()->GetTexture(_pSkill->GetAnimKey(), TEX_NORMAL)->begin();
+
+		m_pEffect->SetInfo(_pSkill->GetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME, false);
+		m_pEffect->SetActive(true);
 	}
 
 	// 스트레스

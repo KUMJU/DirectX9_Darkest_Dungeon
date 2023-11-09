@@ -163,6 +163,8 @@
     <ClInclude Include="..\Header\BrigandFusilier.h" />
     <ClInclude Include="..\Header\CardGame.h" />
     <ClInclude Include="..\Header\Description.h" />
+    <ClInclude Include="..\Header\Effect.h" />
+    <ClInclude Include="..\Header\EffectMgr.h" />
     <ClInclude Include="..\Header\EnvironmentObj.h" />
     <ClInclude Include="..\Header\Creature.h" />
     <ClInclude Include="..\Header\Define.h" />
@@ -247,6 +249,8 @@
     <ClCompile Include="..\Code\DungeonRoom.cpp" />
     <ClCompile Include="..\Code\DungeonSystem.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Effect.cpp" />
+    <ClCompile Include="..\Code\EffectMgr.cpp" />
     <ClCompile Include="..\Code\EnvironmentObj.cpp" />
     <ClCompile Include="..\Code\Gambling.cpp" />
     <ClCompile Include="..\Code\GoodsUI.cpp" />

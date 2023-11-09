@@ -10,6 +10,7 @@
 #include"SoundMgr.h"
 #include"MainLogo.h"
 #include"LightMgr.h"
+#include "EffectMgr.h"
 
 CMainApp::CMainApp()
 {
@@ -31,7 +32,7 @@ HRESULT CMainApp::Ready_MainApp()
 	CResourceMgr::GetInstance()->ReadyResource(m_pGraphicDev);
 	CResourceMgr::GetInstance()->MainTitleTextureLoad();
 
-
+	CEffectMgr::GetInstance()->SetEffectMgr(m_pGraphicDev);
 
 	CSoundMgr::GetInstance()->Initialize();
 	CPickingMgr::GetInstance()->ReadyPickingMgr(m_pGraphicDev);
@@ -136,6 +137,7 @@ void CMainApp::Free()
 	FreeConsole();
 
 	CLightMgr::DestroyInstance();
+	CEffectMgr::DestroyInstance();
 	CSoundMgr::DestroyInstance();
 	CPickingMgr::DestroyInstance();
 	CUIMgr::DestroyInstance();

@@ -40,7 +40,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		_bool arrToEnemy1[6] = { 1, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
-			(L"Pierce", L"ShieldBreaker_Pierce", L"Pierce_Img", L"Pierce_Effect",
+			(L"Pierce", L"ShieldBreaker_Pierce", L"Pierce_Img", L"Pierce_Effect", L"",
 				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, -4.f,  1.f, 0.9f, 1.3f, -1, 0, 0, 0, 1, 1);
 
 		{
@@ -60,7 +60,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		_bool arrToEnemy2[6] = { 1, 1, 1, 1, 1, 1 };
 			
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
-			(L"Puncture", L"ShieldBreaker_Puncture", L"Puncture_Img", L"Puncture_Effect",
+			(L"Puncture", L"ShieldBreaker_Puncture", L"Puncture_Img", L"Puncture_Effect", L"",
 				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDamZero, -3.f, 1.f, 0.5f, 0.8f, -1, -1,0,0, 1, 1);
 
 		{
@@ -85,7 +85,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		_int DotDam3[2] = { 3, 3 };
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
-			(L"AddersKiss", L"ShieldBreaker_AddersKiss", L"AddersKiss_Img", L"AddersKiss_Effect",
+			(L"AddersKiss", L"ShieldBreaker_AddersKiss", L"AddersKiss_Img", L"AddersKiss_Effect", L"AddersKiss_Target_Effect",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDam3, -3.f,  1.f, 0.5f, 0.8f, -1, 0, 0, 0, 1, -1);
 
 		{
@@ -110,7 +110,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		_int DotDam4[2] = { 1, 3 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
-			(L"Impale", L"ShieldBreaker_Impale", L"Impale_Img", L"Impale_Effect",
+			(L"Impale", L"ShieldBreaker_Impale", L"Impale_Img", L"Impale_Effect", L"Impale_Target_Effect",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, -4.f, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
 		{
@@ -127,7 +127,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		}
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
-			(L"Captivate", L"ShieldBreaker_Captivate", L"Captivate_Img", L"Captivate_Effect",
+			(L"Captivate", L"ShieldBreaker_Captivate", L"Captivate_Img", L"Captivate_Effect", L"",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, -3.f, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
 		{
@@ -141,7 +141,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 		}
 
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
-			(L"Expose", L"ShieldBreaker_Expose", L"Expose_Img", L"Expose_Effect",
+			(L"Expose", L"ShieldBreaker_Expose", L"Expose_Img", L"Expose_Effect", L"",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDam4, 0.f, 1.f, 0.4f, 0.6f, -1, 0, 0, 1, 1, -1);
 
 		{

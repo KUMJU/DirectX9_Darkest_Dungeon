@@ -201,6 +201,12 @@
     <ClCompile Include="..\Code\BackGround.cpp">
       <Filter>00. Scene\01. MainLogo\BackGround</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\EffectMgr.cpp">
+      <Filter>02. Manager\02. EffectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect.cpp">
+      <Filter>01. GameObject\09. Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -400,6 +406,12 @@
     <ClInclude Include="..\Header\BackGround.h">
       <Filter>00. Scene\01. MainLogo\BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\EffectMgr.h">
+      <Filter>02. Manager\02. EffectMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect.h">
+      <Filter>01. GameObject\09. Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -513,6 +525,12 @@
     </Filter>
     <Filter Include="00. Scene\01. MainLogo\BackGround">
       <UniqueIdentifier>{6b3e744a-a765-4ee2-a84a-bd190043f9e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Manager\02. EffectMgr">
+      <UniqueIdentifier>{4910af64-ea52-4094-9200-cb8747283a9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\09. Effect">
+      <UniqueIdentifier>{ca7122e8-93bc-43de-919d-47dadc347255}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

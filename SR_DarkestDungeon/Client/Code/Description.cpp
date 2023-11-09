@@ -347,7 +347,7 @@ void CDescription::PrintPosInfo()
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, &_matTemp);
 
 		// 활성 위치면
-		if (dynamic_pointer_cast<CSkill>(m_pHoverObject)->IsActivatePos(i) || dynamic_pointer_cast<CSkill>(m_pHoverObject)->IsTargetAll())
+		if (dynamic_pointer_cast<CSkill>(m_pHoverObject)->IsTargetPos(i) || dynamic_pointer_cast<CSkill>(m_pHoverObject)->IsTargetAll())
 			m_pFillTargetTexture->SetTexture(0);
 
 		// 비활성 위치면
