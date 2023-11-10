@@ -92,6 +92,9 @@ void CTerrain::AddComponent()
 	case ETerrainType::DUNGEON:
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
 		break;
+	case ETerrainType::DUNGEON2:
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(640.f, 640.f, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
+		break;
 	case ETerrainType::ENUM_END:
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
 		break;

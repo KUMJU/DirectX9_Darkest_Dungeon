@@ -162,6 +162,7 @@
     <ClInclude Include="..\Header\CameraMgr.h" />
     <ClInclude Include="..\Header\BrigandFusilier.h" />
     <ClInclude Include="..\Header\CardGame.h" />
+    <ClInclude Include="..\Header\BossMap.h" />
     <ClInclude Include="..\Header\Description.h" />
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\EffectMgr.h" />
@@ -243,6 +244,7 @@
     <ClCompile Include="..\Code\BrigandFusilier.cpp" />
     <ClCompile Include="..\Code\CameraMgr.cpp" />
     <ClCompile Include="..\Code\CardGame.cpp" />
+    <ClCompile Include="..\Code\BossMap.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
     <ClCompile Include="..\Code\Description.cpp" />
     <ClCompile Include="..\Code\Door.cpp" />

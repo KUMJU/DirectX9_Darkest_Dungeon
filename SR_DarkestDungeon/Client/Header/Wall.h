@@ -29,6 +29,10 @@ public:
 	
 	virtual void OnCollide(shared_ptr<CGameObject> _pObj) override;
 
+public:
+	void	SetBreak(_bool _bBreak) { m_bBreak = _bBreak; }
+	tstring	GetKey2Name() { return m_strKey2Name; }
+	void	SetKey2Name(tstring _tKey) { m_strKey2Name = _tKey; }
 
 private:
 	virtual void			AddComponent();
@@ -48,5 +52,8 @@ private:
 
 	_bool		m_bRandom = false;
 
+	_bool		m_bBreak = false;
+
 	tstring		m_strKeyName = L"";
+	tstring		m_strKey2Name = L"";
 };
