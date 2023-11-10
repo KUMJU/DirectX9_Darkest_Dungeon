@@ -61,6 +61,8 @@ unsigned int CLoading::Thread_Main(void* pArg)
 		break;
 	case LOADING_RUIN:
 		break;
+	case LOADING_BOSSMAP:
+		break;
 	}
 
 	LeaveCriticalSection(pLoading->Get_Crt());

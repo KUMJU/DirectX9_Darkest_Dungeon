@@ -53,6 +53,9 @@
 
 #include"Narration.h"
 
+#include "BossMap.h"
+#include "Weald_Dungeon.h"
+
 CRuin_Dungeon::CRuin_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -190,9 +193,11 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
 
-	// 마을로 씬 변경
+	// 보스 씬 순간이동
 	if (GetAsyncKeyState('6') & 0x8000) {
-		shared_ptr<CVillage> pScene = make_shared<CVillage>(m_pGraphicDev);
+		CSoundMgr::GetInstance()->StopAll();
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+		shared_ptr<CBossMap> pScene = make_shared<CBossMap>(m_pGraphicDev);
 		CSceneMgr::GetInstance()->ChangeScene(pScene);
 		pScene->ReadyScene();
 	}
@@ -261,7 +266,7 @@ HRESULT CRuin_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Ruin_FloorTexture", ETerrainType::DUNGEON);
+	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Ruin_FloorTexture", ETerrainType::DUNGEON2);
 	m_pLayer->CreateGameObject(L"OBJ_Terrain", m_pTerrain);
 
 	shared_ptr<CGameObject> m_pDoor;
@@ -714,14 +719,14 @@ HRESULT CRuin_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	// Camera
-	//shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-
-	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-	
-	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
-	CCameraMgr::GetInstance()->SetFPSMode();
+
+	//shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	//m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
+	//
+	//CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
+	//CCameraMgr::GetInstance()->SetFPSMode();
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

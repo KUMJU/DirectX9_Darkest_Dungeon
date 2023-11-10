@@ -1135,3 +1135,26 @@ void CResourceMgr::RuinDungeonTextureLoad()
 	CreateNewTexture(L"Bone Courtier_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
 }
+
+void CResourceMgr::BossMapTextureLoad()
+{
+	_bool bDefault = true;
+
+	// Environment
+	CreateNewTexture(L"Com_Boss_FloorTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/BossMap/texture_hell_rock_01a.png", 1, bDefault);
+
+	CreateNewTexture(L"Com_Boss_WallTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/BossMap/darkestdungeon.corridor_wall.%d.png", 6, bDefault);
+	
+
+	// 부서지는 벽
+	CreateNewTexture(L"Com_Boss_ObjectWallTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/BossMap/TEXTURE_SEWER_WALL_2.png", 1, bDefault);
+	CreateNewTexture(L"Com_Boss_ObjectWallTopTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/BossMap/texture_egypt_rock06a.png", 1, bDefault);
+	// 부서지는 애니메이션
+	CreateNewTexture(L"Com_Boss_ObjectWallTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/BossMap/sewer_wall_broken00%d.png", 4, bDefault);
+
+}

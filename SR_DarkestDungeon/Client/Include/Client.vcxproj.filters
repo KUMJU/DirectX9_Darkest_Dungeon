@@ -207,6 +207,9 @@
     <ClCompile Include="..\Code\Effect.cpp">
       <Filter>01. GameObject\09. Effect</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BossMap.cpp">
+      <Filter>00. Scene\04. BossMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -412,6 +415,9 @@
     <ClInclude Include="..\Header\Effect.h">
       <Filter>01. GameObject\09. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BossMap.h">
+      <Filter>00. Scene\04. BossMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -531,6 +537,9 @@
     </Filter>
     <Filter Include="01. GameObject\09. Effect">
       <UniqueIdentifier>{ca7122e8-93bc-43de-919d-47dadc347255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Scene\04. BossMap">
+      <UniqueIdentifier>{7ff0345d-344c-4200-b80c-517dc61e3435}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -39,6 +39,7 @@ public:
 	void WealdDungeonTextureLoad();
 	void VillageTextureLoad();
 	void RuinDungeonTextureLoad();
+	void BossMapTextureLoad();
 
 
 private:

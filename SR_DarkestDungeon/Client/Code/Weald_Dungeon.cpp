@@ -21,6 +21,7 @@
 #include"CameraMgr.h"
 
 #include"Village.h"
+#include"Ruin_Dungeon.h"
 
 #include "WealdDungeonDoor.h"
 #include "Weald_Trap.h"
