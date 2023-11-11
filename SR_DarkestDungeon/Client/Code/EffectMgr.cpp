@@ -39,6 +39,7 @@ shared_ptr<CEffect> CEffectMgr::GetEffect()
 
 void CEffectMgr::ReturnEffect(shared_ptr<CEffect> _pEffect)
 {
-	_pEffect->SetActive(false);
 	// 이펙트 초기화
+	_pEffect->Reset();
+	_pEffect->SetActive(false);
 }

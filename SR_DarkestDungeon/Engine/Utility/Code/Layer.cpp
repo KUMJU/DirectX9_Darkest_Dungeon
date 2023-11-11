@@ -91,6 +91,28 @@ void CLayer::LateUpdateLayer()
 			// Collision Check
 			if ((*it)->IsColliding())
 			{
+				switch ((*it)->GetColType())
+				{
+				case Engine::ECollideID::PLAYER:
+					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::PLAYER, *it);
+					break;
+				case Engine::ECollideID::WALL:
+					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::WALL, *it);
+					break;
+				case Engine::ECollideID::BOSS:
+					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::BOSS, *it);
+					break;
+				case Engine::ECollideID::PLAYER_PROJECTILE:
+					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::PLAYER_PROJECTILE, *it);
+					break;
+				case Engine::ECollideID::BOSS_PROJECTILE:
+					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::BOSS_PROJECTILE, *it);
+					break;
+				default:
+					break;
+				}
+
+				// 플레이어 이동 충돌 검사
 				if (ECollideID::PLAYER != (*it)->GetColType())
 					CCollisionMgr::GetInstance()->CheckCollision(*it);
 

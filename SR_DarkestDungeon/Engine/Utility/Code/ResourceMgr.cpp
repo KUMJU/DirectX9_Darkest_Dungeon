@@ -227,7 +227,7 @@ void CResourceMgr::BaseTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
 
 	CreateNewTexture(L"Effect_Blood", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/Effect/Blood/armatureName_blood_splatter_%d.png", 57, bDefault);
+		L"../Bin/Resource/Image/UI/Effect/Blood/armatureName_blood_splatter_%d.png", 35, bDefault);
 
 	//방패파괴자
 	{
@@ -293,7 +293,7 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"Puncture_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/break_guard/armatureName_break_guard_%d.png", 20, bDefault);
 		CreateNewTexture(L"Impale_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing/armatureName_spearing_%d.png", 16, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/fx/spearing/armatureName_spearing_%d.png", 17, bDefault);
 
 
 
@@ -363,7 +363,7 @@ void CResourceMgr::BaseTextureLoad()
 		// 스킬 이펙트 (본인에게)
 
 		CreateNewTexture(L"PointBlankShot_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot/armatureName_point_blank_shot_%d.png", 19, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/fx/point_blank_shot/armatureName_point_blank_shot_%d.png", 20, bDefault);
 
 
 		// 스킬 이펙트 (타겟)
@@ -431,7 +431,7 @@ void CResourceMgr::BaseTextureLoad()
 		// 스킬 이펙트 (본인에게)
 
 		CreateNewTexture(L"DazzlingLight_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light/armatureName_dazzling_light_%d.png", 20, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/dazzling_light/armatureName_dazzling_light_%d.png", 22, bDefault);
 		CreateNewTexture(L"DivineGrace_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/fx/divine_grace/armatureName_divine_grace_%d.png", 20, bDefault);
 		CreateNewTexture(L"DivineComfort_Effect", TEX_NORMAL,
@@ -856,6 +856,101 @@ void CResourceMgr::WealdDungeonTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/3.png", 1, bDefault);
 	CreateNewTexture(L"Brigand Fusilier_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
+
+	// Battle UI
+	{
+		// Damage Number Font
+		{
+			CreateNewTexture(L"UI_Damage0", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/0.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage1", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/1.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage2", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/2.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage3", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/3.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage4", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/4.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage5", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/5.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage6", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/6.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage7", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/7.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage8", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/8.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage9", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Damage/9.png", 1, bDefault);
+		}
+
+		// Heal Number Font
+		{
+			CreateNewTexture(L"UI_Heal0", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/0.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal1", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/1.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal2", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/2.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal3", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/3.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal4", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/4.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal5", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/5.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal6", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/6.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal7", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/7.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal8", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/8.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal9", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Heal/9.png", 1, bDefault);
+		}
+
+		// Stress Number Font
+		{
+			CreateNewTexture(L"UI_Stress0", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/0.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress1", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/1.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress2", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/2.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress3", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/3.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress4", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/4.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress5", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/5.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress6", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/6.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress7", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/7.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress8", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/8.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stress9", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Number/Stress/9.png", 1, bDefault);
+		}
+
+		// Font Effect
+		{
+			CreateNewTexture(L"UI_Dodge", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Letter/Dodge.png", 1, bDefault);
+			CreateNewTexture(L"UI_Blight", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Letter/Blight.png", 1, bDefault);
+			CreateNewTexture(L"UI_Blood", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Letter/Blood.png", 1, bDefault);
+			CreateNewTexture(L"UI_Buff", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Letter/Buff.png", 1, bDefault);
+			CreateNewTexture(L"UI_Damage_Critical", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Letter/Damage_Critical.png", 1, bDefault);
+			CreateNewTexture(L"UI_Debuff", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Letter/Debuff.png", 1, bDefault);
+			CreateNewTexture(L"UI_Heal_Critical", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Letter/Heal_Critical.png", 1, bDefault);
+			CreateNewTexture(L"UI_Stun", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/Letter/Stun.png", 1, bDefault);
+		}
+	}
 }
 
 void CResourceMgr::VillageTextureLoad()

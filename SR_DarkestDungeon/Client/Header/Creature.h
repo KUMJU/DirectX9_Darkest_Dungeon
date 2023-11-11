@@ -43,6 +43,7 @@ enum class EAnimState
 	CORPSE,			// 시체
 
 	// 스킬	
+	SKILL,
 	SKILL1,
 	SKILL2,
 	SKILL3,
@@ -149,14 +150,7 @@ public:
 		if (m_tCommonStat.iHp >= m_tCommonStat.iMaxHp)
 			m_tCommonStat.iHp = m_tCommonStat.iMaxHp;
 	}
-	void	DecreaseHP(_int _iValue)
-	{ 
-		m_tCommonStat.iHp -= _iValue; 
-		if (m_tCommonStat.iHp < 0)
-		{
-			m_tCommonStat.iHp = 0;
-		}
-	}
+	void	DecreaseHP(_int _iValue);
 
 	_int	GetCurrentBleed() { return m_iBleedDot[0]; }
 	_int	GetCurrentPoision() { return m_iBlightDot[0]; }
@@ -178,6 +172,9 @@ public:
 	const _tchar* Get_String3() const { return m_szString3; }
 
 	void	StartCalculate();
+
+	tstring GetSoundKey() { return m_strSoundKey; }
+	void	SetSoundKey(tstring _strSoundKey) { m_strSoundKey = _strSoundKey; }
 
 
 	// 쓰는지??
@@ -239,7 +236,7 @@ public:
 	// 이펙트
 	shared_ptr<CEffect> GetEffect() { return m_pEffect; }
 	void				SetEffect(shared_ptr<CEffect> _pEffect) { m_pEffect = _pEffect; }
-	void				SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget);
+	void				SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool _bDodge);
 
 protected:
 	virtual void			AddComponent();
@@ -261,6 +258,9 @@ protected:
 	shared_ptr<CAnimator> m_pEffectTextureCom = nullptr;
 
 	shared_ptr<CEffect> m_pEffect = nullptr;
+	shared_ptr<CEffect> m_pHeadEffect = nullptr;
+	shared_ptr<CEffect> m_pFontEffect = nullptr;
+	shared_ptr<CEffect> m_pDamageEffect = nullptr;
 
 protected:
 	_bool		m_bIsHero = false;
@@ -293,7 +293,8 @@ protected:
 	EAnimState m_eCurAnimState = EAnimState::IDLE;	// 애니메이션 변경을 위한 상태값
 	EAnimState m_ePrevAnimState = EAnimState::IDLE;	// 애니메이션 변경을 위한 상태값
 	tstring		m_strAnimKey = L"";				// 애니메이션 키
-	tstring		m_strEffectKey = L"";				// 이펙트 키
+	tstring		m_strEffectKey = L"";			// 이펙트 키
+	tstring		m_strSoundKey = L"";			// 사운드 키
 
 	// 쓰는지??
 	_bool		m_bMyTurn = false;			// 자신의 턴 여부 

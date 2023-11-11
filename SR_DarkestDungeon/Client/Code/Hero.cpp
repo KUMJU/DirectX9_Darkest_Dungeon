@@ -130,6 +130,8 @@ void CHero::IncreaseStress(_int _iValue)
 {
 	m_iStress += _iValue;
 
+	// 이펙트 넣을 시점
+
 	if (m_iStress >= 100 && !m_bVirtue && !m_bAffliction)
 	{
 		switch (rand() % 2)

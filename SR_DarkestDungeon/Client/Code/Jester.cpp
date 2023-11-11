@@ -43,7 +43,7 @@ HRESULT CJester::ReadyGameObject()
 		_bool arrToEnemy1[6] = { 0, 1, 1, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill1 = make_shared<CSkill>
-			(L"DirkStab", L"Jester_DirkStab", L"DirkStab_Img", L"", L"",
+			(L"DirkStab", L"Jester_DirkStab", L"DirkStab_Img", L"", L"", L"Hero_jest_sliceoff.wav",
 				arrActivatePos1, arrTargetPos1, arrAttack1, arrToEnemy1, DotDamZero, -2.5f, 1.f, 1.f, 1.3f, -1, 0, 0, 0, 1, 1);
 
 		{
@@ -68,7 +68,7 @@ HRESULT CJester::ReadyGameObject()
 		_int  DotDam2[2] = { 1, 3 };
 
 		shared_ptr<CSkill> pSkill2 = make_shared<CSkill>
-			(L"Harvest", L"Jester_Harvest", L"Harvest_Img", L"", L"",
+			(L"Harvest", L"Jester_Harvest", L"Harvest_Img", L"", L"", L"Hero_jest_harvest.wav",
 				arrActivatePos2, arrTargetPos2, arrAttack2, arrToEnemy2, DotDam2, -3.f, 1.f, 0.5f, 0.8f, -1, 0, 0, 1, 1, 0);
 
 		{
@@ -88,7 +88,7 @@ HRESULT CJester::ReadyGameObject()
 		_bool arrToEnemy3[6] = { 1, 1, 0, 1, 1, 1 };
 
 		shared_ptr<CSkill> pSkill3 = make_shared<CSkill>
-			(L"Finale", L"Jester_Finale", L"Finale_Img", L"Finale_Effect", L"Finale_Target_Effect",
+			(L"Finale", L"Jester_Finale", L"Finale_Img", L"Finale_Effect", L"Finale_Target_Effect", L"Hero_jest_finale.wav",
 				arrActivatePos3, arrTargetPos3, arrAttack3, arrToEnemy3, DotDamZero, -2.f, 1.f, 1.5f, 2.f, -1, 0, 0, 0, 1, -5);
 
 		{
@@ -111,7 +111,7 @@ HRESULT CJester::ReadyGameObject()
 		_bool arrToEnemy4[6] = { 1, 0, 1, 1, 0, 1 };
 
 		shared_ptr<CSkill> pSkill4 = make_shared<CSkill>
-			(L"Solo", L"Jester_Solo", L"Solo_Img", L"Solo_Effect", L"Solo_Target_Effect",
+			(L"Solo", L"Jester_Solo", L"Solo_Img", L"Solo_Effect", L"Solo_Target_Effect", L"Hero_jest_solo.wav",
 				arrActivatePos4, arrTargetPos4, arrAttack4, arrToEnemy4, DotDamZero, -2.f, 1.f, 0.2f, 0.4f, -1, 0, 0, 1, 1, 5);
 
 		{
@@ -136,7 +136,7 @@ HRESULT CJester::ReadyGameObject()
 		_int  DotDam5[2] = { 3, 3 };
 
 		shared_ptr<CSkill> pSkill5 = make_shared<CSkill>
-			(L"SliceOff", L"Jester_SliceOff", L"SliceOff_Img", L"", L"",
+			(L"SliceOff", L"Jester_SliceOff", L"SliceOff_Img", L"", L"", L"Hero_jest_sliceoff.wav",
 				arrActivatePos5, arrTargetPos5, arrAttack5, arrToEnemy5, DotDam5, 0.f,  1.f, 0.7f, 1.f, -1, 0, 0, 0, 1, 0);
 
 		{
@@ -159,7 +159,7 @@ HRESULT CJester::ReadyGameObject()
 		_bool arrToEnemy6[6] = { 1, 1, 1, 0, 1, 1 };
 
 		shared_ptr<CSkill> pSkill6 = make_shared<CSkill>
-			(L"BattleBallad", L"Jester_BattleBallad", L"BattleBallad_Img", L"BattleBallad_Effect", L"BattleBallad_Target_Effect",
+			(L"BattleBallad", L"Jester_BattleBallad", L"BattleBallad_Img", L"BattleBallad_Effect", L"BattleBallad_Target_Effect", L"Hero_jest_battleball.wav",
 				arrActivatePos6, arrTargetPos6, arrAttack6, arrToEnemy6, DotDamZero, 0.f, 1.f, 0.7f, 1.f, -1, 0, 1, 1, 0, 0);
 
 		{
@@ -249,11 +249,16 @@ _int CJester::UpdateGameObject(const _float& fTimeDelta)
 
 	if ((IsAttacking()))
 	{
+		m_eCurAnimState = EAnimState::SKILL;
+
 		for (int i = 0; i < 7; i++)
 		{
 			if (GetAttacking(i))
 			{
-				switch (i)
+				m_strAnimKey = m_pVecSkill[i]->GetAnimKey();
+				m_strSoundKey = m_pVecSkill[i]->GetSoundKey();
+
+				/*switch (i)
 				{
 				case 0:
 					m_eCurAnimState = EAnimState::SKILL1;
@@ -276,7 +281,7 @@ _int CJester::UpdateGameObject(const _float& fTimeDelta)
 				case 6:
 					m_eCurAnimState = EAnimState::SKILL7;
 					break;
-				}
+				}*/
 				break;
 			}
 
@@ -425,7 +430,11 @@ void CJester::ChangeAnim()
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Jester_Defend", 0.04f);
 			break;
-		case EAnimState::SKILL1:
+		case EAnimState::SKILL:
+			m_pTextureCom->SetAnimKey(m_strAnimKey, 0.04f);
+			CSoundMgr::GetInstance()->PlaySound(m_strSoundKey.c_str(), CHANNELID::JESTER, 1.f);
+			break;
+		/*case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Jester_DirkStab", 0.04f);
 			CSoundMgr::GetInstance()->PlaySound(L"Hero_jest_sliceoff.wav", CHANNELID::JESTER, 1.f);
 
@@ -449,7 +458,7 @@ void CJester::ChangeAnim()
 		case EAnimState::SKILL6:
 			m_pTextureCom->SetAnimKey(L"Jester_BattleBallad", 0.04f);
 			CSoundMgr::GetInstance()->PlaySound(L"Hero_jest_battleball.wav", CHANNELID::JESTER, 1.f);
-			break;
+			break;*/
 		case EAnimState::AFFLICTION:
 			m_pTextureCom->SetAnimKey(L"Jester_Affliction", 0.04f);
 			break;
