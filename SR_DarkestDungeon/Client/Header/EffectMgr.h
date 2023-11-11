@@ -7,7 +7,7 @@
 
 class CEffect;
 
-#define	POOLSIZE 10
+#define	POOLSIZE 20
 
 class CEffectMgr
 {

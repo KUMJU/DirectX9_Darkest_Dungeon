@@ -1,6 +1,6 @@
 #include "Scene.h"
 #include "CollisionMgr.h"
-#include"PickingMgr.h"
+#include "PickingMgr.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 _pGraphicDev) : m_pGraphicDev(_pGraphicDev)
 {
@@ -36,6 +36,14 @@ void CScene::LateUpdateScene()
 {
 	for (auto& iter : m_mapLayer)
 		iter.second->LateUpdateLayer();
+
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::PLAYER_PROJECTILE, ECollideID::WALL);
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::PLAYER_PROJECTILE, ECollideID::BOSS);
+
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_PROJECTILE, ECollideID::WALL);
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_PROJECTILE, ECollideID::PLAYER);
+
+	CCollisionMgr::GetInstance()->ClearCollisionGroup();
 
 	CPickingMgr::GetInstance()->RemoveList();
 

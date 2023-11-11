@@ -1694,7 +1694,7 @@ void CBattleSystem::Battle(int _iNum)
 				// 애니메이션, 이펙트 바꾸는 코드 넣어야할듯
 				if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetEffectAnimKey() != L"")
 				{
-					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetEffectInfo(dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum), false);
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetEffectInfo(dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum), false, false);
 				}
 			}
 		}

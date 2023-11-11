@@ -26,7 +26,7 @@ HRESULT CPlayerProj::ReadyGameObject()
 
 
 	m_bColliding = true;
-	ECollideID m_eCollideID = ECollideID::PLR_PROJ;
+	m_eCollideID = ECollideID::PLAYER_PROJECTILE;
  
 	return S_OK;
 }

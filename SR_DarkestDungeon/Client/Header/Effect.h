@@ -6,6 +6,7 @@ BEGIN(Engine)
 class CAnimator;
 class CTransform;
 class CRcTex;
+class CTexture;
 
 END
 
@@ -25,7 +26,11 @@ public:
 	virtual void	AddComponent();
 
 	// 애니메이션 설정
-	void	SetInfo(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime, _bool _bLoop);
+	void	SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime);
+	void	SetDamageEffect(_int _iDamage, _bool _bDamage, _vec3* _vPos, _float _fAnimTime);
+	void	SetFontEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime);
+	void	SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime, _bool _bLoop);
+
 	void	SetAnimKey(tstring _strAnimKey) { m_strAnimKey = _strAnimKey; }
 	void	SetTime(_float _fAnimTime) { m_fAnimTime = _fAnimTime; }
 	void	SetLoop(_bool _bLoop) { m_bLoop = _bLoop; }
@@ -42,10 +47,16 @@ public:
 	void	Move();
 	void	Fade();
 
+	void	Reset();
+
 private:
 	shared_ptr<CTransform>	m_pTransformCom;
+	shared_ptr<CTransform>	m_pTransformCom2;
 	shared_ptr<CAnimator>	m_pAnimatorCom;
 	shared_ptr<CRcTex>		m_pRcTexCom;
+
+	shared_ptr<CTexture>	m_pTextureCom1;
+	shared_ptr<CTexture>	m_pTextureCom2;
 
 private:
 	_float	m_fDeltaTime;
@@ -53,7 +64,9 @@ private:
 	// 이펙트를 호출한 객체의 포지션
 	_vec3*	m_vPos;
 	// 이펙트를 호출한 객체의 스케일
-	const _vec3*	m_vScale;
+	//const _vec3*	m_vScale;
+	// 객체와 상관없이 사용할 스케일
+	_vec3	m_vScale;
 
 	// 이펙트 출력을 위한 갭 (포지션, 스케일 차이 세팅)
 	_vec3	m_vPosGap = { 0.f, 0.f, 0.f };
@@ -85,4 +98,9 @@ private:
 
 	// 페이드 인 or 아웃
 	_bool	m_bAppear;
+
+	// 애니메이션인지 or 텍스처인지
+	_bool	m_bAnimation;
+	// 텍스처 1개 or 2개
+	_bool	m_bTwoTexture;
 };

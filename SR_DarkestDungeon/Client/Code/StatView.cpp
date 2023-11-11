@@ -132,60 +132,60 @@ void CStatView::RenderGameObject()
 
 	if (m_bHero)
 	{
-		// ºØ±«
-		if (m_bAffliction)
-		{
-			switch (m_iHeroType)
-			{
-			case 1:
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[28]->GetWorld());
-				m_pTextureCom[19]->SetTexture(0);
-				m_pRCTexCom[28]->RenderBuffer();
-				break;
-			case 2:
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[30]->GetWorld());
-				m_pTextureCom[21]->SetTexture(0);
-				m_pRCTexCom[30]->RenderBuffer();
-				break;
-			case 3:
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[32]->GetWorld());
-				m_pTextureCom[23]->SetTexture(0);
-				m_pRCTexCom[32]->RenderBuffer();
-				break;
-			case 4:
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[34]->GetWorld());
-				m_pTextureCom[25]->SetTexture(0);
-				m_pRCTexCom[34]->RenderBuffer();
-				break;
-			}
-		}
-		// ±â»ó
-		if (m_bVirtue)
-		{
-			switch (m_iHeroType)
-			{
-			case 1:
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[29]->GetWorld());
-				m_pTextureCom[20]->SetTexture(0);
-				m_pRCTexCom[29]->RenderBuffer();
-				break;
-			case 2:
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[31]->GetWorld());
-				m_pTextureCom[22]->SetTexture(0);
-				m_pRCTexCom[31]->RenderBuffer();
-				break;
-			case 3:
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[33]->GetWorld());
-				m_pTextureCom[24]->SetTexture(0);
-				m_pRCTexCom[33]->RenderBuffer();
-				break;
-			case 4:
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[35]->GetWorld());
-				m_pTextureCom[26]->SetTexture(0);
-				m_pRCTexCom[35]->RenderBuffer();
-				break;
-			}
-		}
+		//// ºØ±«
+		//if (m_bAffliction)
+		//{
+		//	switch (m_iHeroType)
+		//	{
+		//	case 1:
+		//		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[28]->GetWorld());
+		//		m_pTextureCom[19]->SetTexture(0);
+		//		m_pRCTexCom[28]->RenderBuffer();
+		//		break;
+		//	case 2:
+		//		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[30]->GetWorld());
+		//		m_pTextureCom[21]->SetTexture(0);
+		//		m_pRCTexCom[30]->RenderBuffer();
+		//		break;
+		//	case 3:
+		//		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[32]->GetWorld());
+		//		m_pTextureCom[23]->SetTexture(0);
+		//		m_pRCTexCom[32]->RenderBuffer();
+		//		break;
+		//	case 4:
+		//		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[34]->GetWorld());
+		//		m_pTextureCom[25]->SetTexture(0);
+		//		m_pRCTexCom[34]->RenderBuffer();
+		//		break;
+		//	}
+		//}
+		//// ±â»ó
+		//if (m_bVirtue)
+		//{
+		//	switch (m_iHeroType)
+		//	{
+		//	case 1:
+		//		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[29]->GetWorld());
+		//		m_pTextureCom[20]->SetTexture(0);
+		//		m_pRCTexCom[29]->RenderBuffer();
+		//		break;
+		//	case 2:
+		//		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[31]->GetWorld());
+		//		m_pTextureCom[22]->SetTexture(0);
+		//		m_pRCTexCom[31]->RenderBuffer();
+		//		break;
+		//	case 3:
+		//		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[33]->GetWorld());
+		//		m_pTextureCom[24]->SetTexture(0);
+		//		m_pRCTexCom[33]->RenderBuffer();
+		//		break;
+		//	case 4:
+		//		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[35]->GetWorld());
+		//		m_pTextureCom[26]->SetTexture(0);
+		//		m_pRCTexCom[35]->RenderBuffer();
+		//		break;
+		//	}
+		//}
 	}
 
 	//TCHAR buf[64];

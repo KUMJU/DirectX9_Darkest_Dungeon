@@ -64,7 +64,7 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 	m_pStatInfo->SetHp(m_tCommonStat.iHp);
 	for (int i = 0; i < 3; i++)
 	{
-		if(m_bState[i])
+		if (m_bState[i])
 			m_pStatInfo->SetAttribute(i);
 		else
 			m_pStatInfo->SetAttributeOff(i);
@@ -90,10 +90,21 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 		m_pStatInfo->UpdateGameObject(fTimeDelta);
 	}
 
+	// 스킬 이펙트
 	if (m_pEffect && m_pEffect->GetIsActive())
-	{
 		m_pEffect->UpdateGameObject(fTimeDelta);
-	}
+
+	// 데미지 폰트 이펙트
+	if (m_pDamageEffect && m_pDamageEffect->GetIsActive())
+		m_pDamageEffect->UpdateGameObject(fTimeDelta);
+
+	// 약화, 기절, 치명타 등등 이펙트
+	if (m_pFontEffect && m_pFontEffect->GetIsActive())
+		m_pFontEffect->UpdateGameObject(fTimeDelta);
+
+	// 머리 이펙트
+	if (m_pHeadEffect && m_pHeadEffect->GetIsActive())
+		m_pHeadEffect->UpdateGameObject(fTimeDelta);
 
 	return iExit;
 }
@@ -122,6 +133,15 @@ void CCreature::RenderGameObject()
 
 	if (m_pEffect && m_pEffect->GetIsActive())
 		m_pEffect->RenderGameObject();
+
+	if (m_pFontEffect && m_pFontEffect->GetIsActive())
+		m_pFontEffect->RenderGameObject();
+
+	if (m_pHeadEffect && m_pHeadEffect->GetIsActive())
+		m_pHeadEffect->RenderGameObject();
+
+	if (m_pDamageEffect && m_pDamageEffect->GetIsActive())
+		m_pDamageEffect->RenderGameObject();
 
 }
 
@@ -158,6 +178,20 @@ _bool CCreature::IsAttacking()
 //	return S_OK;
 //}
 
+void CCreature::DecreaseHP(_int _iValue)
+{
+	m_pFontEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	m_pFontEffect->SetDamageEffect(_iValue, true, m_pTransformCom->GetPos(), ATTACKTIME);
+	m_pFontEffect->SetActive(true);
+
+	m_tCommonStat.iHp -= _iValue;
+	if (m_tCommonStat.iHp < 0)
+	{
+		m_tCommonStat.iHp = 0;
+	}
+}
+
 void CCreature::StartCalculate()
 {
 	// 출혈이나 중독 상태라면
@@ -180,7 +214,7 @@ void CCreature::StartCalculate()
 		}
 		m_iBlightDot[3] = 0;
 		m_iBleedDot[3] = 0;
-		
+
 		if (!m_iBlightDot[0]) m_bState[0] = false;
 		if (!m_iBleedDot[0]) m_bState[1] = false;
 	}
@@ -241,7 +275,7 @@ void CCreature::StartCalculate()
 			m_bCorpse = false;
 			m_bDeath = true;
 			m_tCommonStat.iHp = -100;
-			
+
 			bStatBarOn = false;
 		}
 	}
@@ -279,8 +313,8 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	int iCritical = rand() % 100;
 
 	_bool* arrAttack = _pSkill->GetArrAttack();
-	
-	
+
+
 	// 단순 공격
 	if (arrAttack[0])
 	{
@@ -292,7 +326,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				if (!_pSkill->GetArrToEnemy()[2])
 				{
 					_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()
-						* (m_iBuff1Dot[0]/100.f + 1.f)));
+						* (m_iBuff1Dot[0] / 100.f + 1.f)));
 				}
 				else
 				{
@@ -407,7 +441,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 			dynamic_pointer_cast<CHero>(_pCreature)->DecreaseStress(5);
 		}
 		else
-			_pCreature->IncreaseHP(_pSkill->GetHeal()* _pSkill->GetDamageRatio());
+			_pCreature->IncreaseHP(_pSkill->GetHeal() * _pSkill->GetDamageRatio());
 
 		// 죽음의 저항 삭제
 		if (_pCreature->GetIsBeforeDeath()) _pCreature->SetBeforeDeath(false);
@@ -512,21 +546,20 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				dynamic_pointer_cast<CCreature>(_pCreature)->SetBeforeDeath(true);
 			}
 		}
-		
+
+		// 타겟 이펙트
+		{
+			_pCreature->SetEffectInfo(_pSkill, true, false);
+		}
 	}
 	// 회피했으면
 	else
 	{
-
+		_pCreature->SetEffectInfo(_pSkill, true, true);
 	}
 
 	// 나
 	m_bEffectOn = true;
-
-	// 타겟 이펙트
-	{
-		_pCreature->SetEffectInfo(_pSkill, true);
-	}
 
 }
 
@@ -711,26 +744,41 @@ void CCreature::BleedCure()
 
 
 
-void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget)
+void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool _bDodge)
 {
 	if (_bTarget)
 	{
-		m_pEffect = CEffectMgr::GetInstance()->GetEffect();
-
 		tstring strEffectAnimKey;
 
-		if (_pSkill->GetTargetEffectAnimKey() != L"")
+		if (!_bDodge)
 		{
-			strEffectAnimKey = _pSkill->GetTargetEffectAnimKey();
+			m_pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+			if (_pSkill->GetTargetEffectAnimKey() != L"")
+			{
+				strEffectAnimKey = _pSkill->GetTargetEffectAnimKey();
+			}
+
+			else
+			{
+				strEffectAnimKey = L"Effect_Blood";
+			}
+
+			m_pEffect->SetSkillEffect(strEffectAnimKey, m_pTextureCom->GetTextureSize(), m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+
+			m_pEffect->SetActive(true);
 		}
 
+		// 회피했을 경우
 		else
 		{
-			strEffectAnimKey = L"Effect_Blood";
-		}
+			m_pFontEffect = CEffectMgr::GetInstance()->GetEffect();
 
-		m_pEffect->SetInfo(strEffectAnimKey, m_pTextureCom->GetTextureSize(), m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME, false);
-		m_pEffect->SetActive(true);
+			strEffectAnimKey = L"UI_Dodge";
+			m_pFontEffect->SetFontEffect(strEffectAnimKey, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+
+			m_pFontEffect->SetActive(true);
+		}
 	}
 
 	else
@@ -741,7 +789,7 @@ void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget)
 
 			shared_ptr< tagTextureInfo> textureInfo = *CResourceMgr::GetInstance()->GetTexture(_pSkill->GetAnimKey(), TEX_NORMAL)->begin();
 
-			m_pEffect->SetInfo(_pSkill->GetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME, false);
+			m_pEffect->SetSkillEffect(_pSkill->GetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
 			m_pEffect->SetActive(true);
 		}
 	}
