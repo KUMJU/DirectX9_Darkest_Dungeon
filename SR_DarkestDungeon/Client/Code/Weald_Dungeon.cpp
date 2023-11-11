@@ -48,6 +48,7 @@
 #include"UIMgr.h"
 #include"BattleHeroUI.h"
 #include"SoundMgr.h"
+#include"MouseCursor.h"
 
 #include"Narration.h"
 
@@ -1062,6 +1063,11 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pNarr = make_shared<CNarration>(m_pGraphicDev);
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Narration", dynamic_pointer_cast<CUIObj>(m_pNarr));
 	m_pLayer->CreateGameObject(L"Obj_Narr", m_pNarr);
+
+	//shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
+	//m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);
+	//CUIMgr::GetInstance()->AddUIObject(L"UI_Mouse", dynamic_pointer_cast<CUIObj>(pMouse));
+
 
 	// Description UI
 	shared_ptr<CGameObject> pDescriptionUI = make_shared<CDescription>(m_pGraphicDev);

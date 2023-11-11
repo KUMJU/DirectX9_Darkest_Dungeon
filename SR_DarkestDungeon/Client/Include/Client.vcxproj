@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MainLogo.h" />
+    <ClInclude Include="..\Header\MouseCursor.h" />
     <ClInclude Include="..\Header\Narration.h" />
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\PickingGame.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainLogo.cpp" />
+    <ClCompile Include="..\Code\MouseCursor.cpp" />
     <ClCompile Include="..\Code\Narration.cpp" />
     <ClCompile Include="..\Code\Outside.cpp" />
     <ClCompile Include="..\Code\PickingGame.cpp" />

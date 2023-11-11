@@ -32,9 +32,15 @@ public:
 	virtual void LateUpdateGameObject() override;
 	virtual void RenderGameObject() override;
 
+
+public:
+	_int GetProjDamage() { return m_tProjInfo.iDamage; }
+	_int GetProjSpeed() { return m_tProjInfo.iSpeed; }
+
+
 private:
 	virtual void			AddComponent();
-	virtual void			OnCollide(shared_ptr<CGameObject> _pObj);
+	virtual virtual void			OnCollide(shared_ptr<CGameObject> _pObj) override;
 
 private:
 	shared_ptr<CTransform> m_pTransmCom = nullptr;

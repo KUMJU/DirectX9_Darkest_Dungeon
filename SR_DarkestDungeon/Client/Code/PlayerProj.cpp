@@ -107,7 +107,7 @@ void CPlayerProj::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 0.5f, 0.5, 1.f });
+	m_pColliderCom->SetScale({ 1.f, 1.f, 1.f });
 
 }
 

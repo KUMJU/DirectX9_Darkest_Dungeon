@@ -23,6 +23,8 @@ public:
 	void		RenderFront(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		RenderUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		RenderLast(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		RenderMouse(LPDIRECT3DDEVICE9& pGraphicDev);
+
 
 public:
 
