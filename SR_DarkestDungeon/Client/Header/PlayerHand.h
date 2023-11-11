@@ -7,6 +7,7 @@ BEGIN(Engine)
 class CRcTex;
 class CTexture;
 class CTransform;
+class CAnimator;
 
 END
 
@@ -26,6 +27,7 @@ public:
 public:
 	//현재 들고 있는 아이템을 변경
 	void SetCurrentItem(EHandItem _handItem);
+	void CreateProjection();
 
 private:
 	void			AddComponent();
@@ -51,6 +53,8 @@ private:
 	shared_ptr<CRcTex> m_pItemBufCom = nullptr;
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
 
+	shared_ptr<CAnimator> m_pAnimCom = nullptr;
+
 	//LateUpdate에서 포지션을 잡아주기 때문에 deltaTime을 변수에 따로 받아서 넘겨줌
 	_float m_fTime = 0.f;
 	//위/아래로 규칙적으로 움직여야하기 때문에 특정 시간이 지나면 -1을 곱해줘 반대 방향으로 움직일 수 있게한다
@@ -61,6 +65,7 @@ private:
 	//현재 높이를 기록해서 다음 연산값으로 사용
 	_float m_fTotalHeight = 0.f;
 
+	_bool m_bPlrSpellHand = false;
 
 };
 

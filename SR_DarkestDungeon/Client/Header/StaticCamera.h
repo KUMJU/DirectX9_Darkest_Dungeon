@@ -52,7 +52,15 @@ public:
 public:
 //외부에서 호출해서 사용하는 함수
 
-	void SetState(ECameraMode _eCamType) { m_eCurrentState = _eCamType; }
+	void SetState(ECameraMode _eCamType) { 	
+		m_eCurrentState = _eCamType; 
+		if (ECameraMode::VILLAGE == _eCamType)
+			m_bInVillage = true;
+		else
+			m_bInVillage = false;	
+	}
+
+
 	ECameraMode GetState() { return m_eCurrentState; }
 	//각도 계산으로 카메라 돌리기 : 자전
 	void ChangeCameraWithDegree(ECameraMode _eCamType, _float _fDegree, _float _fTime = 0.5f);
@@ -74,6 +82,8 @@ public:
 		m_bCamMovingHorizontal = _bValue;
 		m_fRightVecDir = _fDir;
 	}
+
+	_float GetYAngle() { return m_fYAngle; }
 
 private:
 //Moving Function

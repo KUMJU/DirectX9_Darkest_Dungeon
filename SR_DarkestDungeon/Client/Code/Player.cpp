@@ -173,6 +173,34 @@ void CPlayer::SettingLight()
 
 }
 
+void CPlayer::SetPlayerMode(EPlayerMode _ePlrMode)
+{
+	if (EPlayerMode::DEFAULT == _ePlrMode) {
+
+		CCameraMgr::GetInstance()->SetFPSMode();
+
+
+	}
+	else if(EPlayerMode::BOSS_FIELD == _ePlrMode) {
+
+		CCameraMgr::GetInstance()->SetVillageMode();
+
+		m_eCurrentItem = EHandItem::SPELLHAND_FIRE;
+		m_ePlayerMode = EPlayerMode::BOSS_FIELD;
+
+		if (m_pPlayerHand) {
+			m_pPlayerHand->SetCurrentItem(m_eCurrentItem);
+			m_pPlayerHand->ShakingHand();
+		}
+		//FPS Player UI 세팅
+		//PlayerHandSetting
+
+	}
+
+
+
+}
+
 void CPlayer::AddComponent()
 {
 	if (m_bReady)
@@ -202,22 +230,26 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 	_vec3		vDir;
 
-	if (GetAsyncKeyState('P') & 0x8000 && m_bInDungeon) {
-		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::LOOKBACK, 180.f);
-		m_bSeeBack = true;
-	}
+	//기본 던전 플레이어 카메라 move
+	if (m_ePlayerMode == EPlayerMode::DEFAULT) {
 
-	if (GetAsyncKeyState('O') & 0x8000) {
-		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::LOOKBACK, -180.f);
-		m_bSeeBack = false;
-	}
+		if (GetAsyncKeyState('P') & 0x8000 && m_bInDungeon) {
+			CCameraMgr::GetInstance()->CameraRotation(ECameraMode::LOOKBACK, 180.f);
+			m_bSeeBack = true;
+		}
 
-	if (GetAsyncKeyState('E') & 0x8000) {
-		SetCurrentItem(EHandItem::ENUM_END);
-	}
-	
-	if (GetAsyncKeyState('K') & 0x8000) {
-		CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 90.f);
+		if (GetAsyncKeyState('O') & 0x8000) {
+			CCameraMgr::GetInstance()->CameraRotation(ECameraMode::LOOKBACK, -180.f);
+			m_bSeeBack = false;
+		}
+
+		if (GetAsyncKeyState('E') & 0x8000) {
+			SetCurrentItem(EHandItem::ENUM_END);
+		}
+
+		if (GetAsyncKeyState('K') & 0x8000) {
+			CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 90.f);
+		}
 	}
 
 	if (GetAsyncKeyState('D') & 0x8000) {
@@ -265,27 +297,17 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		m_eLastMove = EPlayerMove::UP;
 	}
 
-	//// UI 테스트 키 (추후 삭제 예정)
-	//if (GetAsyncKeyState('T') & 0x8000)
-	//{
-	//	(m_pDescription)->SetDescription(EDescriptionType::CONTENT, L"출혈을 막는 데 씁니다. 여러 줄 테스트를 해보겠습니다.", L"제목", L"부제목", L"스킬 특성", YELLOW, L"특성 설명");
-	//	(m_pDescription)->SetVisible(true);
-	//}
-	//if (GetAsyncKeyState('Y') & 0x8000)
-	//{
-	//	(m_pDescription)->SetDescription(EDescriptionType::ITEM, L"출혈을 막는 데 씁니다. 여러 줄 테스트를 해보겠습니다.", L"제목", L"부제목", L"스킬 특성", YELLOW, L"특성 설명");
-	//	(m_pDescription)->SetVisible(true);
-	//}
-	//if (GetAsyncKeyState('U') & 0x8000)
-	//{
-	//	(m_pDescription)->SetDescription(EDescriptionType::SKILL1, L"출혈을 막는 데 씁니다. 여러 줄 테스트를 해보겠습니다.", L"제목", L"부제목", L"스킬 특성", ORANGE, L"특성 설명");
-	//	(m_pDescription)->SetVisible(true);
-	//}
-	//if (GetAsyncKeyState('I') & 0x8000)
-	//{
-	//	(m_pDescription)->SetDescription(EDescriptionType::SKILL2, L"출혈을 막는 데 씁니다. 여러 줄 테스트를 해보겠습니다.", L"제목", L"부제목", L"스킬 특성", ORANGE, L"특성 설명");
-	//	(m_pDescription)->SetVisible(true);
-	//}
+
+	//기본 던전 카메라
+	if (GetAsyncKeyState('1') & 0x8000) {
+		CCameraMgr::GetInstance()->SetFPSMode();
+	}
+
+	//빌리지 카메라 & FPS 보스 카메라
+	if (GetAsyncKeyState('2') & 0x8000) {
+		SetPlayerMode(EPlayerMode::BOSS_FIELD);
+	//	CCameraMgr::GetInstance()->SetVillageMode();
+	}
 
 }
 
@@ -296,36 +318,50 @@ void CPlayer::MouseInput()
 	GetCursorPos(&ptMouse);
 	ScreenToClient(g_hWnd, &ptMouse);
 
-	//마우스 픽킹
-	if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
+	if (m_ePlayerMode == EPlayerMode::DEFAULT) {
 
-		m_bCurMouse = true;
+		//마우스 픽킹
+		if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
 
-		if (m_bCurMouse == m_bPrevMouse)
-			return;
+			m_bCurMouse = true;
 
- 		_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
+			if (m_bCurMouse == m_bPrevMouse)
+				return;
 
-		if (!result) {
-			CPickingMgr::GetInstance()->RayPicking(ptMouse.x, ptMouse.y);
+			_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
+
+			if (!result) {
+				CPickingMgr::GetInstance()->RayPicking(ptMouse.x, ptMouse.y);
+			}
+		}
+
+		else
+			m_bCurMouse = false;
+
+		//UI Hover
+		{
+			CUIMgr::GetInstance()->HoverUI(ptMouse.x, ptMouse.y);
+
 		}
 	}
-
-	else
-		m_bCurMouse = false;
-	
-	//UI Hover
+	else if (m_ePlayerMode == EPlayerMode::BOSS_FIELD) 
 	{
-		CUIMgr::GetInstance()->HoverUI(ptMouse.x, ptMouse.y);
+		if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
+			m_bCurMouse = true;
+
+			if (m_bCurMouse == m_bPrevMouse)
+				return;
+
+			m_pPlayerHand->CreateProjection();
+		}
+		else
+			m_bCurMouse = false;
 
 	}
 
-
 }
 
-void CPlayer::ClimbingTerrain()
-{
-}
+
 
 void CPlayer::ShakingHand()
 {
@@ -346,11 +382,11 @@ void CPlayer::DeleteItem(tstring _strItmeName)
 
 void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 {
-	shared_ptr<CItem> pItem = dynamic_pointer_cast<CItem>(_pObj);
 
 	// ITEM 충돌
 	if (ECollideID::ITEM == _pObj->GetColType())
 	{
+		shared_ptr<CItem> pItem = dynamic_pointer_cast<CItem>(_pObj);
 		shared_ptr<CItem> pNewItem = make_shared<CItem>(m_pGraphicDev);
 		pNewItem->GetUITextureKeyName(pItem->GetItemKeyName());
 

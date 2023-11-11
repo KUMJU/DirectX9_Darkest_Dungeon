@@ -213,6 +213,9 @@
     <ClCompile Include="..\Code\Boss.cpp">
       <Filter>01. GameObject\10. Boss</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\PlayerProj.cpp">
+      <Filter>01. GameObject\10. Projectile\00. PlrProj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -418,6 +421,9 @@
     <ClInclude Include="..\Header\Effect.h">
       <Filter>01. GameObject\09. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerProj.h">
+      <Filter>01. GameObject\10. Projectile\00. PlrProj</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\BossMap.h">
       <Filter>00. Scene\04. BossMap</Filter>
     </ClInclude>
@@ -549,6 +555,12 @@
     </Filter>
     <Filter Include="01. GameObject\10. Boss">
       <UniqueIdentifier>{b7ec3dff-92bb-45e2-a7c4-0aec2adb0fd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\10. Projectile">
+      <UniqueIdentifier>{540267ba-8f2b-473b-9453-ee15ec635f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\10. Projectile\00. PlrProj">
+      <UniqueIdentifier>{4562ee9a-16e5-467c-8320-75be9da922c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

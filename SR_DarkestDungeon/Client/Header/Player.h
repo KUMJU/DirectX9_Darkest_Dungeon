@@ -31,6 +31,13 @@ enum class EPlayerMove
 	ENUM_END
 };
 
+
+enum class EPlayerMode {
+	DEFAULT,	//기본 던전
+	BOSS_FIELD,	//보스전(플레이어가 직접 싸우는 필드)
+	ENUM_END
+};
+
 class CPlayer : public CGameObject
 {
 
@@ -103,12 +110,12 @@ public:
 
 public:
 	void SettingLight();
+	void SetPlayerMode(EPlayerMode _ePlrMode);
 
 private:
 	void			AddComponent();
 	void			KeyInput(const _float& fTimeDelta);
 	void			MouseInput();
-	void			ClimbingTerrain();
 
 	void			ShakingHand();
 
@@ -181,6 +188,15 @@ private:
 	shared_ptr<CLight> m_pLight = nullptr;
 	shared_ptr<CLight> m_pLight2 = nullptr;
 	shared_ptr<CLight> m_pLight3 = nullptr;
+
+
+	EPlayerMode m_ePlayerMode = EPlayerMode::DEFAULT;
+
+	//------------------------------------FPS BOSS ----------------------------------------------------
+
+
+
+
 
 private:
 	virtual void	Free();

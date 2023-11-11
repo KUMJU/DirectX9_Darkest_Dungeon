@@ -187,6 +187,18 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Player_Item_Bandage", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_bandage.png", 1, bDefault);
 
+	//PlayerHand
+
+	CreateNewTexture(L"Player_SpellHand_Fire", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerHand/Fire/spellhand_fire_00%d.png", 5, bDefault);
+	CreateNewTexture(L"Player_SpellHand_Storm", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerHand/Storm/spellhand_storm_00%d.png", 5, bDefault);
+
+
+	CreateNewTexture(L"SpellHand_Proj_Fire", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerHand/Fire/Projectile/particle_fire_0000.png", 1, bDefault);
+
+
 	// Item
 	CreateNewTexture(L"Item_Torch", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_torch.png", 1, bDefault);
