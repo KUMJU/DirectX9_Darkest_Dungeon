@@ -1190,4 +1190,14 @@ void CResourceMgr::BossMapTextureLoad()
 
 	// Phase2
 
+
+	// Projectile
+	CreateNewTexture(L"Boss_Projectile1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Bullet1/hell_bullet00%d.png", 4, bDefault);
+	CreateNewTexture(L"Boss_Projectile2", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Bullet2/ice_bullet00%d.png", 9, bDefault);
+	CreateNewTexture(L"Boss_Projectile3", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Bullet3/stormball00%d.png", 8, bDefault);
+	CreateNewTexture(L"Boss_Laser", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Laser/Laser.png", 1, bDefault);
 }

@@ -160,6 +160,8 @@
     <ClInclude Include="..\Header\Boss.h" />
     <ClInclude Include="..\Header\BrigandBloodletter.h" />
     <ClInclude Include="..\Header\BrigandCutthroat.h" />
+    <ClInclude Include="..\Header\Bullet1.h" />
+    <ClInclude Include="..\Header\Bullet2.h" />
     <ClInclude Include="..\Header\CameraMgr.h" />
     <ClInclude Include="..\Header\BrigandFusilier.h" />
     <ClInclude Include="..\Header\CardGame.h" />
@@ -187,6 +189,7 @@
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\Jester.h" />
+    <ClInclude Include="..\Header\Laser.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MainLogo.h" />
@@ -245,6 +248,8 @@
     <ClCompile Include="..\Code\BrigandBloodletter.cpp" />
     <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
     <ClCompile Include="..\Code\BrigandFusilier.cpp" />
+    <ClCompile Include="..\Code\Bullet1.cpp" />
+    <ClCompile Include="..\Code\Bullet2.cpp" />
     <ClCompile Include="..\Code\CameraMgr.cpp" />
     <ClCompile Include="..\Code\CardGame.cpp" />
     <ClCompile Include="..\Code\BossMap.cpp" />
@@ -270,6 +275,7 @@
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\Jester.cpp" />
+    <ClCompile Include="..\Code\Laser.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainLogo.cpp" />

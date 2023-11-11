@@ -216,6 +216,15 @@
     <ClCompile Include="..\Code\PlayerProj.cpp">
       <Filter>01. GameObject\10. Projectile\00. PlrProj</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Bullet2.cpp">
+      <Filter>01. GameObject\10. Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bullet1.cpp">
+      <Filter>01. GameObject\10. Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Laser.cpp">
+      <Filter>01. GameObject\10. Projectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -429,6 +438,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\Boss.h">
       <Filter>01. GameObject\10. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bullet2.h">
+      <Filter>01. GameObject\10. Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bullet1.h">
+      <Filter>01. GameObject\10. Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Laser.h">
+      <Filter>01. GameObject\10. Projectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

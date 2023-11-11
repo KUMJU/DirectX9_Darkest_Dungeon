@@ -10,7 +10,9 @@ public:
 	virtual ~CDungeonSystem();
 
 public:
-	void	CurrentRoom(int _iNum);
+	void	AbleRoom(int _iNum);
+	void	DisableRoom(int _iNum);
+	void	DisableAllRoom();
 
 public:
 	vector<shared_ptr<CDungeonRoom>>	GetDungeonRoomVector() { return m_vDungeonRoom; }
