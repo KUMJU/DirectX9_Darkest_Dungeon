@@ -3,6 +3,9 @@
 #include "Export_Utility.h"
 #include "Export_System.h"
 
+#include "Bullet1.h"
+#include "Bullet2.h"
+#include "Laser.h"
 #include "Player.h"
 
 
@@ -68,16 +71,6 @@ _int CBoss::UpdateGameObject(const _float& fTimeDelta)
 	// Å° ÀÔ·Â
 	KeyInput();
 
-
-
-
-	//ºôº¸µå ½ÃÀÛ
-	/*_matrix matWorld;
-
-	matWorld = *m_pTransformCom->GetWorld();
-	SetBillBoard(matWorld);
-	m_pTransformCom->SetWorld(&matWorld);*/
-
 	return iExit;
 }
 
@@ -133,7 +126,55 @@ void CBoss::FSM(const _float& fTimeDelta)
 	{
 		ChasePlayer(fTimeDelta, m_fP1_IdleSpeed);
 	}
+	
+	// ¿øÇüÅº
+	if (m_eCurAnimState == EBossState::P1_ATTACK)
+	{
+		if (!m_bBullet1Fire)
+		{
+			m_fBullet1Intervel -= fTimeDelta;
+			if (m_fBullet1Intervel < 0.f)
+			{
+				ShootBullet1();
+				m_fBullet1Intervel = 0.5f;
+				m_bBullet1Fire = true;
+			}
+		}
 
+		if (!m_bBullet2Fire)
+		{
+			ShootBullet2();
+			m_bBullet2Fire = true;
+		}
+		if (m_bBullet2Fire)
+		{
+			m_fBullet2Intervel -= fTimeDelta;
+			if (m_fBullet2Intervel < 0.f)
+			{
+				m_fBullet2Intervel = 0.06f;
+				m_bBullet2Fire = false;
+			}
+		}
+	}
+
+	// ·¹ÀÌÀú ¹ß»ç
+	if (m_eCurAnimState == EBossState::P1_LASER2)
+	{
+		if (!m_bLaserFire)
+		{
+			ShootLaser();
+			m_bLaserFire = true;
+		}
+		//if (m_bLaserFire)
+		//{
+		//	m_fLaserIntervel -= fTimeDelta;
+		//	if (m_fLaserIntervel < 0.f)
+		//	{
+		//		m_fLaserIntervel = 0.5f;
+		//		m_bLaserFire = false;
+		//	}
+		//}
+	}
 
 	// µ¹Áø »óÅÂ
 	if (m_eCurAnimState == EBossState::P1_DASH && m_fP1DashTime < 0.06f * 6)
@@ -197,6 +238,8 @@ void CBoss::AnimDuration(const _float& fTimeDelta)
 		{
 			m_fP1AttackTime = 0.06f * 12;
 			m_eCurAnimState = EBossState::P1_IDLE;
+			m_bBullet1Fire = false;
+			m_bBullet2Fire = false;
 		}
 	}
 	if (m_eCurAnimState == EBossState::P1_LASER1)
@@ -215,6 +258,7 @@ void CBoss::AnimDuration(const _float& fTimeDelta)
 		{
 			m_fP1Laser2Time = 0.06f * 4;
 			m_eCurAnimState = EBossState::P1_IDLE;
+			m_bLaserFire = false;
 		}
 	}
 	if (m_eCurAnimState == EBossState::P1_DASH)
@@ -289,4 +333,83 @@ void CBoss::ChasePlayer(const _float& fTimeDelta, float _fSpeed)
 	D3DXVec3Normalize(&vDir, &vDir);
 	vDir.y = 0.f;
 	m_pTransformCom->MoveForward(&vDir, fTimeDelta, _fSpeed);
+}
+
+void CBoss::ShootBullet1()
+{
+	for (int i = 0; i < m_iBullet1TotalNum; i++)
+	{
+		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet1[i])->GetIsEnable())
+		{
+			dynamic_pointer_cast<CGameObject>(m_pVecBullet1[i])->SetEnable(true);
+			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
+				m_pVecBullet1[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+			break;
+		}
+	}
+}
+
+void CBoss::ShootBullet2()
+{
+	for (int i = 0; i < m_iBullet2TotalNum; i++)
+	{
+		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->GetIsEnable())
+		{
+			dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->SetEnable(true);
+			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
+				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+			_vec3 vPosPlayer;
+			m_pPlayerTransformCom->GetInfo(INFO_POS, &vPosPlayer);
+			vPosPlayer = _vec3(vPosPlayer.x - 10.f + (rand()%10) * 2.f, vPosPlayer.y - 10.f + (rand() % 10) * 2.f, vPosPlayer.z);
+			m_pVecBullet2[i]->SetTarget(vPosPlayer);
+			break;
+		}
+	}
+}
+
+void CBoss::ShootLaser()
+{
+	for (int i = 0; i < m_iLaserTotalNum; i++)
+	{
+		if (!dynamic_pointer_cast<CGameObject>(m_pVecLaser[i])->GetIsEnable())
+		{
+			dynamic_pointer_cast<CGameObject>(m_pVecLaser[i])->SetEnable(true);
+			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
+				m_pVecLaser[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			_vec3 vPosition = m_vPos;
+			_vec3 vDirX;
+			_vec3 vDirY;
+			m_pTransformCom->GetInfo(INFO_RIGHT, &vDirX);
+			m_pTransformCom->GetInfo(INFO_UP, &vDirY);
+			D3DXVec3Normalize(&vDirX, &vDirX);
+			D3DXVec3Normalize(&vDirY, &vDirY);
+			switch (i)
+			{
+			// À­ ´«
+			case 0:
+				vPosition += vDirY * 7.f;
+				pTransform->SetPosition(vPosition.x, vPosition.y, vPosition.z);
+				pTransform->SetAngle(_vec3(PI * 0.3f, 0.f, 0.f));
+				break;
+			// ¾Æ·¡ ¿Þ ´«
+			case 1:
+				vPosition -= vDirX * 8.f;
+				pTransform->SetPosition(vPosition.x, vPosition.y, vPosition.z);
+				pTransform->SetAngle(_vec3(PI * 0.3f, 0.f, 0.f));
+				break;
+			// ¾Æ·¡ ¿À¸¥ ´«
+			case 2:
+				vPosition += vDirX * 8.f;
+				pTransform->SetPosition(vPosition.x, vPosition.y, vPosition.z);
+				pTransform->SetAngle(_vec3(PI * 0.3f, 0.f, 0.f));
+				break;
+			}
+			_vec3 vPosPlayer;
+			m_pPlayerTransformCom->GetInfo(INFO_POS, &vPosPlayer);
+			vPosPlayer = _vec3(vPosPlayer.x - 10.f + (rand() % 10) * 2.f, vPosPlayer.y - 10.f + (rand() % 10) * 2.f, vPosPlayer.z);
+			m_pVecLaser[i]->SetTarget(vPosPlayer);
+		}
+	}
 }

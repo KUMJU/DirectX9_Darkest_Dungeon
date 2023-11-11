@@ -27,6 +27,9 @@
 #include "ShieldBreaker.h"
 
 #include "Boss.h"
+#include "Bullet1.h"
+#include "Bullet2.h"
+#include "Laser.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -59,6 +62,7 @@ HRESULT CBossMap::ReadyScene()
 	m_pBossMap = make_shared<CDungeonSystem>();
 	// 방1
 	m_pRoom1 = make_shared<CDungeonRoom>();
+	m_pRoom2 = make_shared<CDungeonRoom>();
 
 	Ready_Layer_Environment(L"Layer_3_Environment");
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
@@ -253,28 +257,80 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pPlayer->SetPos({ 320.f, 0.f, 200.f });
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
+	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
+
 	// Boss
 	shared_ptr<CGameObject> m_pBoss = make_shared<CBoss>(m_pGraphicDev);
 	m_pBoss->SetPos({ 320.f, 35.f, 250.f });
+	m_pLayer->CreateGameObject(L"Obj_Boss", m_pBoss);
 
-	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
-
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
+	// BossBullet
+	vector<shared_ptr<CBullet1>> pVecProjectile1;
+	vector<shared_ptr<CBullet2>> pVecProjectile2;
+	vector<shared_ptr<CLaser>> pVecLaser;
+	shared_ptr<CBullet1> pBullet1;
+	shared_ptr<CBullet2> pBullet2;
+	shared_ptr<CLaser> pLaser;
+	for (int i = 0; i < 50; i++)
+	{
+		pBullet1 = nullptr;
+		pBullet1 = make_shared<CBullet1>(m_pGraphicDev);
+		pBullet1->SetPos({ -100.f, -100.f, -100.f });
+		pVecProjectile1.push_back(pBullet1);
+		m_pLayer->CreateGameObject(L"Obj_Boss_P1_Bullet1", pVecProjectile1[i]);
+	}
+	for (int i = 0; i < 50; i++)
+	{
+		pBullet2 = nullptr;
+		pBullet2 = make_shared<CBullet2>(m_pGraphicDev);
+		pBullet2->SetPos({ -100.f, -200.f, -100.f });
+		pVecProjectile2.push_back(pBullet2);
+		m_pLayer->CreateGameObject(L"Obj_Boss_P1_Bullet2", pVecProjectile2[i]);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		pLaser = nullptr;
+		pLaser = make_shared<CLaser>(m_pGraphicDev);
+		pLaser->SetPos({ -100.f, -200.f, -100.f });
+		pVecLaser.push_back(pLaser);
+		m_pLayer->CreateGameObject(L"Obj_Boss_P1_Bullet2", pVecLaser[i]);
+	}
+	dynamic_pointer_cast<CBoss>(m_pBoss)->SetBullet1(pVecProjectile1);
+	dynamic_pointer_cast<CBoss>(m_pBoss)->SetBullet2(pVecProjectile2);
+	dynamic_pointer_cast<CBoss>(m_pBoss)->SetLaser(pVecLaser);
 
 	// 방에 GameObject 넣기
 	// Room1
 	vector<shared_ptr<CGameObject>> Room1_v1;
 	Room1_v1.push_back(m_pBoss);
+	for (int i = 0; i < 50; i++)
+	{
+		Room1_v1.push_back(pVecProjectile1[i]);
+	}
+	for (int i = 0; i < 50; i++)
+	{
+		Room1_v1.push_back(pVecProjectile2[i]);
+	}
 	m_pRoom1->PushGameObjectVector(Room1_v1);
 
+	// Room2
+	vector<shared_ptr<CGameObject>> Room2_v1;
+	/*for (int i = 0; i < 30; i++)
+	{
+		Room2_v1.push_back(m_pBoss);
+	}*/
+	m_pRoom2->PushGameObjectVector(Room2_v1);
 
 	// 던전에 방 넣기
 	vector<shared_ptr<CDungeonRoom>> Dungeon1_v;
 	Dungeon1_v.push_back(m_pRoom1);
+	Dungeon1_v.push_back(m_pRoom2);
 	m_pBossMap->PushDungeonRoomVector(Dungeon1_v);
 
 	// 현재 active 방
-	m_pBossMap->CurrentRoom(1);
+	m_pBossMap->DisableAllRoom();
+	m_pBossMap->AbleRoom(1);
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(1);
 
 	// Layer에 GameObject 넣기
@@ -284,7 +340,6 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
 	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
-	m_pLayer->CreateGameObject(L"Obj_Boss", m_pBoss);
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;

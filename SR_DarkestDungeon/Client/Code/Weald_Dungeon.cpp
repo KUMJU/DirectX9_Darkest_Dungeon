@@ -103,7 +103,8 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetRoomChange())
 	{
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetRoomChange(false);
-		m_pWealdDungeon->CurrentRoom(dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom());
+		m_pWealdDungeon->DisableAllRoom();
+		m_pWealdDungeon->AbleRoom(dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom());
 	}
 
 	// 세번째 방 전투 트리거
@@ -269,7 +270,8 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>((CGameMgr::GetInstance()->GetPlayer())->GetComponent(L"Com_Transform", ID_DYNAMIC));
 		pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 195.f);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(3);
-		m_pWealdDungeon->CurrentRoom(3);
+		m_pWealdDungeon->DisableAllRoom();
+		m_pWealdDungeon->AbleRoom(3);
 	}
 	// 전투 강제종료
 	if (GetAsyncKeyState('9') & 0x8000) {
@@ -1015,7 +1017,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pWealdDungeon->PushDungeonRoomVector(Dungeon1_v);
 
 	// 현재 active 방
-	m_pWealdDungeon->CurrentRoom(1);
+	m_pWealdDungeon->DisableAllRoom();
+	m_pWealdDungeon->AbleRoom(1);
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(1);
 
 	// Layer에 GameObject 넣기

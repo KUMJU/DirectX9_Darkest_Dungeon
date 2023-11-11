@@ -14,7 +14,7 @@ CDungeonSystem::~CDungeonSystem()
 {
 }
 
-void CDungeonSystem::CurrentRoom(int _iNum)
+void CDungeonSystem::AbleRoom(int _iNum)
 {
 	if (size(m_vDungeonRoom) == 0) return;
 	for (int i = 0; i < size(m_vDungeonRoom); i++)
@@ -24,9 +24,26 @@ void CDungeonSystem::CurrentRoom(int _iNum)
 			// Object들 Update 활성화
 			(m_vDungeonRoom)[i]->MakeAbleAllObject();
 		}
-		else
+	}
+}
+
+void CDungeonSystem::DisableRoom(int _iNum)
+{
+	if (size(m_vDungeonRoom) == 0) return;
+	for (int i = 0; i < size(m_vDungeonRoom); i++)
+	{
+		if (i == (_iNum - 1))
 		{
 			(m_vDungeonRoom)[i]->MakeDisableAllObject();
 		}
+	}
+}
+
+void CDungeonSystem::DisableAllRoom()
+{
+	if (size(m_vDungeonRoom) == 0) return;
+	for (int i = 0; i < size(m_vDungeonRoom); i++)
+	{
+		(m_vDungeonRoom)[i]->MakeDisableAllObject();
 	}
 }

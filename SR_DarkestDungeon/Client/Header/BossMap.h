@@ -37,6 +37,7 @@ private:
 
 	shared_ptr<CDungeonSystem>	m_pBossMap = {};			//
 	shared_ptr<CDungeonRoom>	m_pRoom1 = {};				// 방1	
+	shared_ptr<CDungeonRoom>	m_pRoom2 = {};				// 방1	
 
 	vector<shared_ptr<CWall>>	m_pVecWallList;		// 벽들 벡터
 
