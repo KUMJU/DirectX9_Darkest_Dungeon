@@ -41,7 +41,8 @@ bool CCollisionMgr::AABB_AABB(shared_ptr<CGameObject> _pSrc, shared_ptr<CGameObj
 		(vSrcPos.z - vSrcScale.z / 2.f < vDstPos.z + vDstScale.z / 2.f) &&
 		(vSrcPos.z + vSrcScale.z / 2.f > vDstPos.z - vDstScale.z / 2.f))
 	{
-		if (ECollideID::WALL == _pDst->GetColType() || ECollideID::ENVIRONMENT == _pDst->GetColType())
+		if (ECollideID::WALL == _pDst->GetColType() || ECollideID::ENVIRONMENT == _pDst->GetColType() ||
+			ECollideID::PLR_PROJ == _pDst->GetColType())
 		{
 			// x충돌 (동시검사)
 			if (abs(vSrcPos.x - vDstPos.x) < ((vSrcScale.x + vDstScale.x) / 2.f))

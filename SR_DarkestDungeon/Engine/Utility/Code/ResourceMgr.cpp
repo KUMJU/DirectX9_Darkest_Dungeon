@@ -674,6 +674,11 @@ void CResourceMgr::UITextureLoad()
 	CreateNewTexture(L"UI_Inventory", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/panel_inventory.png", 1, bDefault);
 
+	//MouseCursor
+
+	CreateNewTexture(L"UI_MouseCursor_Main", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/cursors/arrow.png", 1, bDefault);
+
 	//InventoryUI
 	CreateNewTexture(L"Item_UI_Antivenom", TEX_NORMAL, 
 		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1, bDefault); // ÇØµ¶Á¦

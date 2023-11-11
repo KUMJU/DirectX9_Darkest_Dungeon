@@ -52,48 +52,92 @@ void CPlayerHand::LateUpdateGameObject()
 	if (!m_bEnable)
 		return;
 
-	_matrix matWorld;
-	_vec3 vPos, vItemPos;
-	_vec3 vLook, vRight , vUp;
-	_matrix mat1;
+	//보스 전투 모드 X , 일반 아이템 사용 : Player 기준으로 Pos 변환
+	if (!m_bPlrSpellHand) {
+		_matrix matWorld;
+		_vec3 vPos, vItemPos;
+		_vec3 vLook, vRight, vUp;
+		_matrix mat1;
 
-	_matrix matParent;
+		_matrix matParent;
 
-	matWorld = *m_pPlrTransmCom->GetWorld();
-	_vec3 vAngle = *m_pPlrTransmCom->GetAngles();
-	m_pPlrTransmCom->GetInfo(INFO_LOOK, &vLook);
-	m_pPlrTransmCom->GetInfo(INFO_POS, &vPos);
-	m_pPlrTransmCom->GetInfo(INFO_RIGHT, &vRight);
-	m_pPlrTransmCom->GetInfo(INFO_UP, &vUp);
+		matWorld = *m_pPlrTransmCom->GetWorld();
+		_vec3 vAngle = *m_pPlrTransmCom->GetAngles();
+		m_pPlrTransmCom->GetInfo(INFO_LOOK, &vLook);
+		m_pPlrTransmCom->GetInfo(INFO_POS, &vPos);
+		m_pPlrTransmCom->GetInfo(INFO_RIGHT, &vRight);
+		m_pPlrTransmCom->GetInfo(INFO_UP, &vUp);
 
-	m_pItemTransmCom->GetInfo(INFO_POS, &vItemPos);
+		m_pItemTransmCom->GetInfo(INFO_POS, &vItemPos);
 
-	D3DXVec3Normalize(&vLook, &vLook);
-	D3DXVec3Normalize(&vRight, &vRight);
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&vRight, &vRight);
 
-	vPos = vPos + ((vLook* 4.5f + vUp*1.f + vRight * -3.f));
-	//anti venom : 4.2f 
+		vPos = vPos + ((vLook * 4.5f + vUp * 1.f + vRight * -3.f));
+		//anti venom : 4.2f 
 
-	if (m_bWalking) {
-		m_fActTime += m_fTime;
-		m_fTotalHeight += 0.3f * m_CurrentDir * m_fTime;
-	
+		if (m_bWalking) {
+			m_fActTime += m_fTime;
+			m_fTotalHeight += 0.3f * m_CurrentDir * m_fTime;
 
-		if (0.4f < m_fTime + m_fActTime) {
-			
-			m_CurrentDir *= -1.f;
-			m_fActTime = 0.f;
+
+			if (0.4f < m_fTime + m_fActTime) {
+
+				m_CurrentDir *= -1.f;
+				m_fActTime = 0.f;
+			}
+
 		}
 
+		_float fYAngle = 0.f;
+
+		fYAngle = CCameraMgr::GetInstance()->GetYAngle();
+
+		m_pItemTransmCom->SetPosition(vPos.x, vPos.y + m_fTotalHeight, vPos.z);
+		m_pItemTransmCom->SetAngle({ D3DXToRadian(fYAngle) , vAngle.y, vAngle.z });
 	}
-	
-	_float fYAngle = 0.f;
+	else { // 보스전 손 세팅 : View 행렬에 맞춰서 변환
+		_matrix matWorld;
+		_vec3 vPos, vItemPos;
+		_vec3 vLook, vRight, vUp;
+		_matrix mat1;
+		_matrix matParent;
 
-	fYAngle= CCameraMgr::GetInstance()->GetYAngle();
 
-	m_pItemTransmCom->SetPosition( vPos.x, vPos.y + m_fTotalHeight, vPos.z);
-	m_pItemTransmCom->SetAngle({ D3DXToRadian(fYAngle) , vAngle.y, vAngle.z });
+		_matrix matView;
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		D3DXMatrixInverse(&matView, 0, &matView);
 
+
+		memcpy(&vUp, &matView.m[1][0], sizeof(_vec3));
+		memcpy(&vLook, &matView.m[2][0], sizeof(_vec3));
+		memcpy(&vRight, &matView.m[0][0], sizeof(_vec3));
+		memcpy(&vPos, &matView.m[3][0], sizeof(_vec3));
+		_vec3 vAngle = *m_pPlrTransmCom->GetAngles();
+
+		_float fYAngle = 0.f;
+		fYAngle = CCameraMgr::GetInstance()->GetYAngle();
+
+		vPos = vPos + ((vLook * 4.5f + vUp * -2.f + vRight * -3.f));
+
+		if (m_bWalking) {
+			m_fActTime += m_fTime;
+			m_fTotalHeight += 0.3f * m_CurrentDir * m_fTime;
+
+
+			if (0.4f < m_fTime + m_fActTime) {
+
+				m_CurrentDir *= -1.f;
+				m_fActTime = 0.f;
+			}
+
+		}
+
+		m_pItemTransmCom->SetPosition(vPos.x, vPos.y + m_fTotalHeight, vPos.z);
+		m_pItemTransmCom->SetAngle({ D3DXToRadian(fYAngle) , vAngle.y, vAngle.z });
+
+
+	}
 
 }
 
@@ -193,8 +237,13 @@ void CPlayerHand::SetCurrentItem(EHandItem _handItem)
 
 void CPlayerHand::CreateProjection()
 {
-	
-	shared_ptr<CGameObject> pProj = make_shared<CPlayerProj>(m_pGraphicDev, L"SpellHand_Proj_Fire", *m_pItemTransmCom->GetPos(), *m_pPlrTransmCom->GetWorld());
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTRANSFORMSTATETYPE::D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0, &matView);
+
+
+	//shared_ptr<CGameObject> pProj = make_shared<CPlayerProj>(m_pGraphicDev, L"SpellHand_Proj_Fire", *m_pItemTransmCom->GetPos(), *m_pPlrTransmCom->GetWorld());
+	shared_ptr<CGameObject> pProj = make_shared<CPlayerProj>(m_pGraphicDev, L"SpellHand_Proj_Fire", *m_pItemTransmCom->GetPos(), matView);
 	pProj->AwakeGameObject();
 	pProj->ReadyGameObject();
 

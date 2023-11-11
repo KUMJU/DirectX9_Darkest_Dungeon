@@ -93,6 +93,7 @@ void CLayer::LateUpdateLayer()
 			{
 				if (ECollideID::PLAYER != (*it)->GetColType())
 					CCollisionMgr::GetInstance()->CheckCollision(*it);
+
 			}
 
 			(*it)->LateUpdateGameObject();

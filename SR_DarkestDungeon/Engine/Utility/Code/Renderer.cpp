@@ -35,6 +35,7 @@ void CRenderer::RenderGameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	// UI À§ÀÇ UI
 	RenderLast(pGraphicDev);
+	RenderMouse(pGraphicDev);
 
 	pGraphicDev->SetTransform(D3DTS_VIEW, &m_MatOrigin);
 
@@ -109,6 +110,9 @@ void CRenderer::RenderFront(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::RenderUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
+
+
+
 	for (auto& iter : m_RenderList[RENDER_UI]) {
 		iter->RenderGameObject();
 	}
@@ -117,6 +121,13 @@ void CRenderer::RenderUI(LPDIRECT3DDEVICE9& pGraphicDev)
 void CRenderer::RenderLast(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	for (auto& iter : m_RenderList[RENDER_LAST]) {
+		iter->RenderGameObject();
+	}
+}
+
+void CRenderer::RenderMouse(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	for (auto& iter : m_RenderList[RENDER_MOUSE]) {
 		iter->RenderGameObject();
 	}
 }

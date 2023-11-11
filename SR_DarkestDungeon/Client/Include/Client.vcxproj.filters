@@ -216,6 +216,7 @@
     <ClCompile Include="..\Code\PlayerProj.cpp">
       <Filter>01. GameObject\10. Projectile\00. PlrProj</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\MouseCursor.cpp" />
     <ClCompile Include="..\Code\Bullet2.cpp">
       <Filter>01. GameObject\10. Projectile</Filter>
     </ClCompile>
@@ -439,6 +440,7 @@
     <ClInclude Include="..\Header\Boss.h">
       <Filter>01. GameObject\10. Boss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MouseCursor.h" />
     <ClInclude Include="..\Header\Bullet2.h">
       <Filter>01. GameObject\10. Projectile</Filter>
     </ClInclude>
@@ -579,6 +581,9 @@
     </Filter>
     <Filter Include="01. GameObject\10. Projectile\00. PlrProj">
       <UniqueIdentifier>{4562ee9a-16e5-467c-8320-75be9da922c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\08. MouseCursor">
+      <UniqueIdentifier>{09e96540-6667-4e01-b3b4-b1d5b98310f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
