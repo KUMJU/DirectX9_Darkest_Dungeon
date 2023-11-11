@@ -719,14 +719,14 @@ HRESULT CRuin_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
 	//shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	//m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 	//
-	//CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
-	//CCameraMgr::GetInstance()->SetFPSMode();
+	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
+	CCameraMgr::GetInstance()->SetFPSMode();
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
