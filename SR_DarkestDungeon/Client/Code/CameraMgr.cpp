@@ -48,6 +48,11 @@ void CCameraMgr::MovingRightVec(_bool _bValue , _float _fDir)
 	m_pMainCam->SetCamMovingStateOnOff(_bValue, _fDir);
 }
 
+_float CCameraMgr::GetYAngle()
+{
+	return m_pMainCam->GetYAngle();
+}
+
 void CCameraMgr::AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude)
 {
 	m_pMainCam->AddCameraEffect(_eEffect, _fTime, _fAmplitude);

@@ -207,6 +207,9 @@
     <ClCompile Include="..\Code\Effect.cpp">
       <Filter>01. GameObject\09. Effect</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\PlayerProj.cpp">
+      <Filter>01. GameObject\10. Projectile\00. PlrProj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -412,6 +415,9 @@
     <ClInclude Include="..\Header\Effect.h">
       <Filter>01. GameObject\09. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerProj.h">
+      <Filter>01. GameObject\10. Projectile\00. PlrProj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -531,6 +537,12 @@
     </Filter>
     <Filter Include="01. GameObject\09. Effect">
       <UniqueIdentifier>{ca7122e8-93bc-43de-919d-47dadc347255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\10. Projectile">
+      <UniqueIdentifier>{540267ba-8f2b-473b-9453-ee15ec635f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\10. Projectile\00. PlrProj">
+      <UniqueIdentifier>{4562ee9a-16e5-467c-8320-75be9da922c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

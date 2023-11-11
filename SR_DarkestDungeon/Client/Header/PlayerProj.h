@@ -1,0 +1,56 @@
+#pragma once
+
+#include"GameObject.h"
+
+
+struct tagProjInfo {
+	_int iDamage;
+	_int iSpeed;
+};
+
+
+BEGIN(Engine)
+
+class CRcTex;
+class CTexture;
+class CTransform;
+class CAnimator;
+
+END
+
+class CPlayerProj : public CGameObject{
+
+public:
+
+	explicit CPlayerProj(LPDIRECT3DDEVICE9 _pGraphicDev , tstring _strKeyName, _vec3 _vInitPos , _matrix _matPlrWorld);
+	virtual ~CPlayerProj();
+
+
+public:
+	virtual HRESULT ReadyGameObject() override;
+	virtual _int UpdateGameObject(const _float& fTimeDelta) override;
+	virtual void LateUpdateGameObject() override;
+	virtual void RenderGameObject() override;
+
+private:
+	virtual void			AddComponent();
+	virtual void			OnCollide(shared_ptr<CGameObject> _pObj);
+
+private:
+	shared_ptr<CTransform> m_pTransmCom = nullptr;
+	shared_ptr<CRcTex> m_pRcTexCom = nullptr;
+	shared_ptr<CTexture> m_pTextureCom = nullptr;
+	shared_ptr<CCollider> m_pColliderCom = nullptr;
+
+
+	tstring m_strAnimKeyName;
+	
+
+	tagProjInfo m_tProjInfo;
+
+	_vec3	m_vStartPos = { 0.f, 0.f, 0.f };
+	_matrix m_matWorld;
+	_vec3	m_vLook;
+
+
+};

@@ -72,13 +72,15 @@ enum class EState
 };
 
 enum class EHandItem {
-	SHOVEL,			// »ð
-	ANTI_VENOM,		// ÇØµ¶Á¦
-	KEYS,			// ¿­¼è
-	BANDAGE,		// ºØ´ë
-	GOLD,			// °ñµå
-	HEIRLOOM,		// °¡º¸
-	FOOD,			// À½½Ä
-	TORCH,			// È¶ºÒ
+	SHOVEL,				// »ð
+	ANTI_VENOM,			// ÇØµ¶Á¦
+	KEYS,				// ¿­¼è
+	BANDAGE,			// ºØ´ë
+	GOLD,				// °ñµå
+	HEIRLOOM,			// °¡º¸
+	FOOD,				// À½½Ä
+	TORCH,				// È¶ºÒ
+	SPELLHAND_FIRE,		//º¸½ºÀü ¸¶¹ý
+	SPELLHAND_STORM ,	//º¸½ºÀü ¸¶¹ý
 	ENUM_END	
 };
