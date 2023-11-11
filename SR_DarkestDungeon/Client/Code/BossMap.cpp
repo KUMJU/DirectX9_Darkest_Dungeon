@@ -21,26 +21,12 @@
 
 #include"Village.h"
 
-#include "RuinDungeonDoor.h"
-#include "Ruin_Trap.h"
-#include "Ruin_Obstacle.h"
-#include "Ruin_Curio_Armor.h"
-#include "Ruin_Curio_Fountain.h"
-#include "Ruin_Curio_Sarcophagus.h"
-#include "Ruin_Curio_Sconce.h"
-
-#include "BrigandCutthroat.h"
-#include "BrigandFusilier.h"
-#include "BrigandBloodletter.h"
-
-#include "BoneCourtier.h"
-#include "BoneDefender.h"
-#include "BoneSoldier.h"
-
 #include "Highwayman.h"
 #include "Jester.h"
 #include "Vestal.h"
 #include "ShieldBreaker.h"
+
+#include "Boss.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -225,14 +211,14 @@ HRESULT CBossMap::Ready_Layer_Environment(tstring pLayerTag)
 
 HRESULT CBossMap::Ready_Layer_SkyBox(tstring pLayerTag)
 {
-	/*shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
+	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 
-	shared_ptr<CGameObject> m_pSkyBox = make_shared<CSkyBox>(m_pGraphicDev, L"Com_Weald_SkyBoxTexture");
-	m_pLayer->CreateGameObject(L"OBJ_Weald_SkyBox", m_pSkyBox);
+	shared_ptr<CGameObject> m_pSkyBox = make_shared<CSkyBox>(m_pGraphicDev, L"Com_BossMap_SkyBoxTexture");
+	m_pLayer->CreateGameObject(L"OBJ_BossMap_SkyBox", m_pSkyBox);
 
-	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();*/
+	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;
 }
@@ -243,14 +229,14 @@ HRESULT CBossMap::Ready_Layer_Camera(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	// Camera
-	shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-
-	//shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	//shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
 	//m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-	//
-	//CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
-	//CCameraMgr::GetInstance()->SetFPSMode();
+
+	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
+	
+	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
+	CCameraMgr::GetInstance()->SetFPSMode();
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
@@ -262,11 +248,23 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
+	// Player
+	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
+	m_pPlayer->SetPos({ 320.f, 0.f, 200.f });
+	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+
+	// Boss
+	shared_ptr<CGameObject> m_pBoss = make_shared<CBoss>(m_pGraphicDev);
+	m_pBoss->SetPos({ 320.f, 35.f, 250.f });
+
+	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
+
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
 
 	// 방에 GameObject 넣기
 	// Room1
 	vector<shared_ptr<CGameObject>> Room1_v1;
-	//Room1_v1.push_back(m_pCurioA1);
+	Room1_v1.push_back(m_pBoss);
 	m_pRoom1->PushGameObjectVector(Room1_v1);
 
 
@@ -282,7 +280,11 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	// Layer에 GameObject 넣기
 
 	//PlayerObj
+	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
+	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
+	m_pLayer->CreateGameObject(L"Obj_Boss", m_pBoss);
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;
@@ -293,6 +295,13 @@ HRESULT CBossMap::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
+	shared_ptr<CGameObject> m_pInventory = make_shared<CInventory>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
+
+	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
+
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
+	
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;

@@ -1157,4 +1157,25 @@ void CResourceMgr::BossMapTextureLoad()
 	CreateNewTexture(L"Com_Boss_ObjectWallTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/BossMap/sewer_wall_broken00%d.png", 4, bDefault);
 
+	// SkyBox
+	CreateNewTexture(L"Com_BossMap_SkyBoxTexture", TEX_CUBE,
+		L"../Bin/Resource/Image/SkyBox/BossSkybox.dds", 1, bDefault);
+
+	// Boss
+	// Phase1
+	CreateNewTexture(L"Boss_Phase1_Idle", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Idle/hellboss_caco_float00%d.png", 9, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Attack", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Attack/hellboss_caco_attack00%d.png", 12, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Laser1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Attack_Laser/hellboss_caco_attack_eyelasers00%d.png", 7, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Laser2", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Attack_Laser/hellboss_caco_attack_eyelasers01%d.png", 4, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Dash", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Attack_Nova/hellboss_caco_attack_nova00%d.png", 11, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Change", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Change/hellboss_caco_morph00%d.png", 43, bDefault);
+
+	// Phase2
+
 }
