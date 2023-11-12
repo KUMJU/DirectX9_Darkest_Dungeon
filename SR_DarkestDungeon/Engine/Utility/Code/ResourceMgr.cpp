@@ -187,7 +187,7 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Player_Item_Bandage", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_bandage.png", 1, bDefault);
 
-	//PlayerHand
+	//PlayerHand + Player FPS Mode-----------------------------------------------------------------
 
 	CreateNewTexture(L"Player_SpellHand_Fire", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerHand/Fire/spellhand_fire_00%d.png", 5, bDefault);
@@ -198,6 +198,13 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"SpellHand_Proj_Fire", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerHand/Fire/Projectile/particle_fire_0000.png", 1, bDefault);
 
+	CreateNewTexture(L"SpellHand_Proj_Effect", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerHand/Fire/Effect/explosion_big2_00%d.png", 8, bDefault);
+
+	CreateNewTexture(L"Player_HUD_bottom_left", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Player/HUD_bottom_right.png", 1, bDefault);
+
+	//--------------------------------------------------------------------------------------------
 
 	// Item
 	CreateNewTexture(L"Item_Torch", TEX_NORMAL,

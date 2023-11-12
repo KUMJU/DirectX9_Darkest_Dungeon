@@ -216,7 +216,6 @@
     <ClCompile Include="..\Code\PlayerProj.cpp">
       <Filter>01. GameObject\10. Projectile\00. PlrProj</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MouseCursor.cpp" />
     <ClCompile Include="..\Code\Bullet2.cpp">
       <Filter>01. GameObject\10. Projectile</Filter>
     </ClCompile>
@@ -225,6 +224,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Laser.cpp">
       <Filter>01. GameObject\10. Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MouseCursor.cpp">
+      <Filter>01. GameObject\03. UI\08. MouseCursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerFPSUI.cpp">
+      <Filter>01. GameObject\03. UI\09. PlayerFPSUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,7 +445,6 @@
     <ClInclude Include="..\Header\Boss.h">
       <Filter>01. GameObject\10. Boss</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MouseCursor.h" />
     <ClInclude Include="..\Header\Bullet2.h">
       <Filter>01. GameObject\10. Projectile</Filter>
     </ClInclude>
@@ -449,6 +453,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\Laser.h">
       <Filter>01. GameObject\10. Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MouseCursor.h">
+      <Filter>01. GameObject\03. UI\08. MouseCursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerFPSUI.h">
+      <Filter>01. GameObject\03. UI\09. PlayerFPSUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -584,6 +594,9 @@
     </Filter>
     <Filter Include="01. GameObject\03. UI\08. MouseCursor">
       <UniqueIdentifier>{09e96540-6667-4e01-b3b4-b1d5b98310f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\09. PlayerFPSUI">
+      <UniqueIdentifier>{da4eb816-3d63-42ec-865f-a5f97d56bab9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

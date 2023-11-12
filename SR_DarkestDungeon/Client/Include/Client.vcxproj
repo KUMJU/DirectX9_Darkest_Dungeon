@@ -197,6 +197,7 @@
     <ClInclude Include="..\Header\Narration.h" />
     <ClInclude Include="..\Header\Outside.h" />
     <ClInclude Include="..\Header\PickingGame.h" />
+    <ClInclude Include="..\Header\PlayerFPSUI.h" />
     <ClInclude Include="..\Header\PlayerProj.h" />
     <ClInclude Include="..\Header\RuinDungeonDoor.h" />
     <ClInclude Include="..\Header\Ruin_Curio_Armor.h" />
@@ -284,6 +285,7 @@
     <ClCompile Include="..\Code\Narration.cpp" />
     <ClCompile Include="..\Code\Outside.cpp" />
     <ClCompile Include="..\Code\PickingGame.cpp" />
+    <ClCompile Include="..\Code\PlayerFPSUI.cpp" />
     <ClCompile Include="..\Code\PlayerProj.cpp" />
     <ClCompile Include="..\Code\RuinDungeonDoor.cpp" />
     <ClCompile Include="..\Code\Ruin_Curio_Armor.cpp" />

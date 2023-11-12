@@ -52,6 +52,8 @@
 
 #include"Narration.h"
 
+#include"PlayerFPSUI.h"
+
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -1067,9 +1069,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Narration", dynamic_pointer_cast<CUIObj>(m_pNarr));
 	m_pLayer->CreateGameObject(L"Obj_Narr", m_pNarr);
 
-	//shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);
-	//CUIMgr::GetInstance()->AddUIObject(L"UI_Mouse", dynamic_pointer_cast<CUIObj>(pMouse));
+	shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_Mouse", dynamic_pointer_cast<CUIObj>(pMouse));
+
+	shared_ptr<CGameObject> pPlayerUI = make_shared<CPlayerFPSUI>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Player_FPSUI", pPlayerUI);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_Player_FPSUI", dynamic_pointer_cast<CUIObj>(pPlayerUI));
 
 
 	// Description UI

@@ -138,3 +138,18 @@ void CUIMgr::SetDescription(tstring _strText, _vec3 _vPos)
 	(*iter).second->SetVisible(true);
 	(*iter).second->ActiveUI(_strText, _vPos);
 }
+
+void CUIMgr::SwitchFPSMode()
+{
+	for (auto& iter : m_UIList) {
+		if (L"UI_Player_FPSUI" == iter.first) {
+			iter.second->SetVisible(true);
+		}
+
+		if (L"UI_Inventory" == iter.first) {
+			iter.second->SetVisible(false);
+		}
+	}
+
+
+}
