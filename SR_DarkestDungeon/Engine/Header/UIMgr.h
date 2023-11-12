@@ -40,6 +40,10 @@ public:
 	void SetDescription(shared_ptr<CGameObject> _pGameObject, _vec3 _vPos);
 	void SetDescription(tstring _strText, _vec3 _vPos);
 
+	//플레이어 FPS(보스전)모드 전환 UI
+
+	void SwitchFPSMode();
+
 private:
 
 	map<tstring, shared_ptr<CUIObj>> m_UIList;

@@ -37,17 +37,33 @@ _int CMouseCursor::UpdateGameObject(const _float& fTimeDelta)
     _int iExit(0);
     iExit = CGameObject::UpdateGameObject(fTimeDelta);
 
-    _float fScreenX = 1260.f;
-    _float fScreenY = 680.f;
+    _float fScreenX = 1280.f;
+    _float fScreenY = 660.f;
 
     POINT	ptMouse{};
     GetCursorPos(&ptMouse);
     ScreenToClient(g_hWnd, &ptMouse);
-    m_pTransCom->SetPosition(ptMouse.x - fScreenX * 0.5f + m_vSize.x, fScreenY * 0.5f + (ptMouse.y * -1.f) - m_vSize.y, 0.8f);
+
+    _float fYPos = (fScreenY * 0.5f + (ptMouse.y * -1.f));
+    _float fXPos = ptMouse.x - fScreenX * 0.5f + m_vSize.x;
+
+    _float fYScale = fYPos / 330.f;
+    _float fXScale = fXPos / 635.f;
+
+
+    printf("%lf \n", fXScale);
+
+    _float fDir = -1.f;
+
+   if (fXPos < 0) {
+       fXScale = 1.f;
+    }
+
+
+    m_pTransCom->SetPosition(ptMouse.x - fScreenX * 0.5f + m_vSize.x , fYPos + (m_vSize.y *(fYScale)), 0.8f);
      
 
-    printf("%d         %d\n", ptMouse.x, ptMouse.y);
-    printf("%lf         %lf\n", ptMouse.x - fScreenX * 0.5f + m_vSize.x, fScreenY * 0.5f + (ptMouse.y * -1.f) - m_vSize.y);
+   
 
 
     AddRenderGroup(RENDER_MOUSE, shared_from_this());

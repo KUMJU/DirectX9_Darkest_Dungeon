@@ -188,6 +188,8 @@ void CPlayer::SetPlayerMode(EPlayerMode _ePlrMode)
 		m_eCurrentItem = EHandItem::SPELLHAND_FIRE;
 		m_ePlayerMode = EPlayerMode::BOSS_FIELD;
 
+		CUIMgr::GetInstance()->SwitchFPSMode();
+
 		if (m_pPlayerHand) {
 			m_pPlayerHand->SetCurrentItem(m_eCurrentItem);
 			m_pPlayerHand->ShakingHand();

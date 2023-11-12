@@ -229,10 +229,10 @@ void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vSc
 
     m_vPos = _vPos;
     m_vPosGap = { 0.f, 1.f, 0.f };
-    m_vScale = { 2.f, 0.7f, 0.5f };
+    m_vScale = { 1.f, 1.f, 1.f };
     m_vScaleGap = { 1.f, 1.f, 1.f };
     m_bLoop = false;
-    m_bAnimation = false;
+    m_bAnimation = true;
     m_fAnimTime = _fAnimTime;
 
     SetMove(true, { 0.f, 1.5f, 0.f }, m_fAnimTime);
@@ -240,6 +240,26 @@ void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vSc
 
 void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime, _bool _bLoop)
 {
+}
+
+void CEffect::SetProjEffect(tstring _strAnimKey, _vec3 _vPos, const _vec3* _vScale, _float _fAnimTime)
+{
+
+    m_strAnimKey = _strAnimKey;
+    m_fAnimTime = _fAnimTime;
+
+    _float _fTest = m_fAnimTime / CResourceMgr::GetInstance()->GetTexture(m_strAnimKey, TEX_NORMAL)->size();
+    m_pAnimatorCom->SetAnimKey(m_strAnimKey, m_fAnimTime / CResourceMgr::GetInstance()->GetTexture(m_strAnimKey, TEX_NORMAL)->size());
+    m_bTwoTexture = false;
+
+    m_vPos = &_vPos;
+    m_vPosGap = { 0.f, 0.f, 0.f };
+    m_vScale = { 10.f , 10.f, 10.f };
+    //  m_vScale = *_vScale;
+    m_vScaleGap = { 1.f, 1.f, 1.f };
+    m_bLoop = false;
+    m_bAnimation = true;
+
 }
 
 void CEffect::SetPos(_vec3* _vPos)

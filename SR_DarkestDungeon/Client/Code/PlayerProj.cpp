@@ -2,6 +2,9 @@
 #include "PlayerProj.h"
 #include"Export_Utility.h"
 
+#include"EffectMgr.h"
+#include"Effect.h"
+
 CPlayerProj::CPlayerProj(LPDIRECT3DDEVICE9 _pGraphicDev, tstring _strKeyName, _vec3 _vInitPos, _matrix _matPlrWorld)
 	:CGameObject(_pGraphicDev), m_strAnimKeyName(_strKeyName)
 {
@@ -24,6 +27,7 @@ HRESULT CPlayerProj::ReadyGameObject()
 	m_tProjInfo.iSpeed = 20.f;
 	m_pColliderCom->SetPos(m_pTransmCom->GetPos());
 
+	m_strEffectAnimKey = L"SpellHand_Proj_Effect";
 
 	m_bColliding = true;
 	m_eCollideID = ECollideID::PLAYER_PROJECTILE;
@@ -33,6 +37,13 @@ HRESULT CPlayerProj::ReadyGameObject()
 
 _int CPlayerProj::UpdateGameObject(const _float& fTimeDelta)
 {
+	if (m_pEffect) {
+		m_pEffect->UpdateGameObject(fTimeDelta);
+	}
+
+
+	if (!m_bTestBool)
+		return 0;
 
 	_int iExit(0);
 	iExit = __super::UpdateGameObject(fTimeDelta);
@@ -66,6 +77,12 @@ void CPlayerProj::LateUpdateGameObject()
 
 void CPlayerProj::RenderGameObject()
 {
+	if (m_pEffect)
+		m_pEffect->RenderGameObject();
+
+	if (!m_bTestBool)
+		return;
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransmCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
@@ -113,9 +130,25 @@ void CPlayerProj::AddComponent()
 
 void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 {
+	if (!m_bTestBool)
+		return;
+
 	if (ECollideID::WALL == _pObj->GetColType() || ECollideID::ENVIRONMENT == _pObj->GetColType())
 	{
-		m_bEnable = false;
+		//Effect Setting
+		
+		m_pEffect = CEffectMgr::GetInstance()->GetEffect();
+		
+		if (m_pEffect) {
+
+			_vec3 testPos = *m_pTransmCom->GetPos();
+			m_pEffect->SetProjEffect(m_strEffectAnimKey, testPos, m_pTransmCom->GetScale(), 10.f);
+			m_pEffect->SetActive(true);
+
+		}
+
+		m_bTestBool = false;
+		//m_bEnable = false;
 
 	}
 

@@ -30,6 +30,8 @@ public:
 	void	SetDamageEffect(_int _iDamage, _bool _bDamage, _vec3* _vPos, _float _fAnimTime);
 	void	SetFontEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime);
 	void	SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime, _bool _bLoop);
+	void	SetProjEffect(tstring _strAnimKey, _vec3 _vPos, const _vec3* _vScale, _float _fAnimTime);
+
 
 	void	SetAnimKey(tstring _strAnimKey) { m_strAnimKey = _strAnimKey; }
 	void	SetTime(_float _fAnimTime) { m_fAnimTime = _fAnimTime; }

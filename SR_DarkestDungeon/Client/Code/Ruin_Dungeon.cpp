@@ -56,6 +56,8 @@
 #include "BossMap.h"
 #include "Weald_Dungeon.h"
 
+#include"MouseCursor.h"
+
 CRuin_Dungeon::CRuin_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -1009,6 +1011,11 @@ HRESULT CRuin_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
 
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
+
+
+	shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_Mouse", dynamic_pointer_cast<CUIObj>(pMouse));
 
 	shared_ptr<CGameObject> m_pNarr = make_shared<CNarration>(m_pGraphicDev);
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Narration", dynamic_pointer_cast<CUIObj>(m_pNarr));

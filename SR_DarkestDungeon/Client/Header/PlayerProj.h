@@ -2,7 +2,6 @@
 
 #include"GameObject.h"
 
-
 struct tagProjInfo {
 	_int iDamage;
 	_int iSpeed;
@@ -17,6 +16,8 @@ class CTransform;
 class CAnimator;
 
 END
+
+class CEffect;
 
 class CPlayerProj : public CGameObject{
 
@@ -40,7 +41,7 @@ public:
 
 private:
 	virtual void			AddComponent();
-	virtual virtual void			OnCollide(shared_ptr<CGameObject> _pObj) override;
+	virtual void			OnCollide(shared_ptr<CGameObject> _pObj) override;
 
 private:
 	shared_ptr<CTransform> m_pTransmCom = nullptr;
@@ -50,7 +51,7 @@ private:
 
 
 	tstring m_strAnimKeyName;
-	
+	tstring m_strEffectAnimKey;
 
 	tagProjInfo m_tProjInfo;
 
@@ -58,5 +59,8 @@ private:
 	_matrix m_matWorld;
 	_vec3	m_vLook;
 
+	_bool	m_bTestBool = true;
+
+	shared_ptr<CEffect> m_pEffect = nullptr;
 
 };

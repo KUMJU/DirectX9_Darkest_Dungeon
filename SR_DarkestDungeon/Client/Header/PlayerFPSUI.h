@@ -9,11 +9,12 @@ class CTexture;
 END
 
 
-class CMouseCursor : public CUIObj
+class CPlayerFPSUI : public CUIObj
 {
 public:
-	explicit CMouseCursor(LPDIRECT3DDEVICE9 _pGraphicDev);
-	virtual ~CMouseCursor();
+
+	explicit CPlayerFPSUI(LPDIRECT3DDEVICE9 _GraphicDev);
+	virtual ~CPlayerFPSUI();
 
 public:
 	virtual HRESULT ReadyGameObject() override;
@@ -25,7 +26,10 @@ private:
 	virtual void			AddComponent();
 
 private:
+
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
+
+
 
 };
 

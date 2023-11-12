@@ -36,6 +36,8 @@
 #include"Export_Utility.h"
 #include"SoundMgr.h"
 
+#include"MouseCursor.h"
+
 CVillage::CVillage(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -415,6 +417,11 @@ HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_DescriptionUI", pDescriptionUI);
 
 	//CUIMgr::GetInstance()->AddUIObject(L"Obj_DescriptionUI", dynamic_pointer_cast<CUIObj>(pDescriptionUI));
+
+	shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_Mouse", dynamic_pointer_cast<CUIObj>(pMouse));
+
 
 
 	//dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
