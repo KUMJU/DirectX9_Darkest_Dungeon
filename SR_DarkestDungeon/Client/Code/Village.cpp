@@ -117,17 +117,29 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 
 	shared_ptr<CGameObject> m_pWall;
 
+	_float _fZGap = VILLAGE_TILESIZE * 2.f;
+
+	// 갈림길
+	{
+		shared_ptr<CGameObject> pRoad = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_CrossRoadTexture");
+		pRoad->SetScale(_vec3(VILLAGE_WALLSIZE, VILLAGE_WALLSIZE * 2.f, 1.f ));
+		pRoad->SetPos(_vec3{ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, _fZGap - VILLAGE_WALLSIZE - VILLAGE_WALLSIZE / 2.f });
+		pRoad->SetAngle({ PI / 2, PI, 0.f });
+		
+		m_pLayer->CreateGameObject(L"OBJ_CrossRoad", pRoad);
+	}
+
 	// 입구 지점 양 옆 건물
 	{
 		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Wall1_Texture", true, false, 1, false);
 		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 2, VILLAGE_WALLSIZE * 1.5f, 1));
-		m_pWall->SetPos(_vec3(50.f, m_pWall->GetScale().y / 6.f * 5.f, m_pWall->GetScale().x));
+		m_pWall->SetPos(_vec3(50.f, m_pWall->GetScale().y / 6.f * 5.f, m_pWall->GetScale().x + _fZGap));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Back", m_pWall);
 
 		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Wall1_Texture", true, false, 1, false);
 		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 2, VILLAGE_WALLSIZE * 1.5f, 1));
-		m_pWall->SetPos(_vec3(65.f, m_pWall->GetScale().y / 6.f * 5.f, m_pWall->GetScale().x));
+		m_pWall->SetPos(_vec3(65.f, m_pWall->GetScale().y / 6.f * 5.f, m_pWall->GetScale().x + _fZGap));
 		m_pWall->SetAngle(_vec3(0.f, PI / 2, 0.f));
 		m_pLayer->CreateGameObject(L"OBJ_Back", m_pWall);
 	}
@@ -146,7 +158,7 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 	{
 		// 오른쪽
 		{
-			_vec3 prevPos = { VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + VILLAGE_TILESIZE, VILLAGE_WALLSIZE * 5.f / 3.f, VILLAGE_TILESIZE * 2.f };
+			_vec3 prevPos = { VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + VILLAGE_TILESIZE / 2.f + 3.f, VILLAGE_WALLSIZE * 5.f / 3.f, VILLAGE_TILESIZE * 2.f };
 
 			for (int i = 0; i < 12; ++i)
 			{
@@ -167,7 +179,7 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 
 		// 왼쪽
 		{
-			_vec3 prevPos = { VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f - 3.f, VILLAGE_WALLSIZE * 5.f / 3.f, VILLAGE_TILESIZE * 2.f };
+			_vec3 prevPos = { VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f - 2.f, VILLAGE_WALLSIZE * 5.f / 3.f, VILLAGE_TILESIZE * 2.f };
 
 			for (int i = 0; i < 12; ++i)
 			{
@@ -193,7 +205,7 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 	{
 		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Entrance_Texture", false, false, 1, false);
 		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 1.5f, VILLAGE_WALLSIZE * 1.5f, 1.f));
-		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, VILLAGE_TILESIZE * 2.f - 0.1f });
+		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, VILLAGE_TILESIZE * 2.f - 0.1f + _fZGap});
 		m_pLayer->CreateGameObject(L"OBJ_Entrance", m_pWall);
 	}
 
@@ -202,7 +214,7 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 	{
 		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Portal_Texture", false, false, 1, false);
 		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE, VILLAGE_WALLSIZE * 1.2f, 1.f));
-		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, 0.f });
+		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, _fZGap + 0.1f});
 		m_pLayer->CreateGameObject(L"OBJ_Portal", m_pWall);
 	}
 
@@ -271,13 +283,15 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	if (m_pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer()))
 	{
 		// 던전에서 시작해서 넘어온 경우
-		m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
+		m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, VILLAGE_TILESIZE * 2.f });
 		dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(m_pPlayer->GetPos().x, m_pPlayer->GetPos().y, m_pPlayer->GetPos().z);
 
 		for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
 		{
 			m_pLayer->CreateGameObject(dynamic_pointer_cast<CHero>(iter)->GetObjKey(), iter);
 		}
+
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInBattle(false);
 	}
 
 	else
@@ -285,7 +299,7 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 		// 마을에서부터 시작한 경우
 		m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
 		CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
-		m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 0.f });
+		m_pPlayer->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, VILLAGE_TILESIZE * 2.f });
 
 
 		//// 테스트 (돈, 가보 초기 세팅)
@@ -347,26 +361,26 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 		// 여관 외부
 		shared_ptr<CGameObject> m_pTervarnOutside = make_shared<COutside>(m_pGraphicDev, EFacilityType::TERVARN);
-		m_pTervarnOutside->SetPos({ 45.f, 0.f, 70.f });
+		m_pTervarnOutside->SetPos({ 45.f, 0.f, 70.f + VILLAGE_TILESIZE * 2.f });
 		m_pTervarnOutside->SetScale({ 20.f, 30.f, 1.f });
 		m_pLayer->CreateGameObject(L"Obj_TervarnOutside", m_pTervarnOutside);
 
 		// 훈련소 외부
 		shared_ptr<CGameObject> m_pGuildOutside = make_shared<COutside>(m_pGraphicDev, EFacilityType::GUILD);
-		m_pGuildOutside->SetPos({ 90.f, 0.f, 85.f });
+		m_pGuildOutside->SetPos({ 90.f, 0.f, 85.f + VILLAGE_TILESIZE });
 		m_pGuildOutside->SetScale({ 20.f, 30.f, 1.f });
 		m_pGuildOutside->SetAngle({ 0.f, 10.f, 0.f });
 		m_pLayer->CreateGameObject(L"Obj_GuildOutside", m_pGuildOutside);
 
 		// 역마차 외부
 		shared_ptr<CGameObject> m_pStageCoachOutside = make_shared<COutside>(m_pGraphicDev, EFacilityType::STAGECOACH);
-		m_pStageCoachOutside->SetPos({ 60.f, 0.f, 55.f });
+		m_pStageCoachOutside->SetPos({ 60.f, 0.f, 55.f + VILLAGE_TILESIZE });
 		m_pStageCoachOutside->SetScale({ 7.f, 5.f, 1.f });
 		m_pLayer->CreateGameObject(L"Obj_StageCoachOutside", m_pStageCoachOutside);
 
 		// 상점 외부
 		shared_ptr<CGameObject> m_pStoreOutside = make_shared<COutside>(m_pGraphicDev, EFacilityType::STORE);
-		m_pStoreOutside->SetPos({ 75.f, 0.f, 33.f });
+		m_pStoreOutside->SetPos({ 75.f, 0.f, 33.f + VILLAGE_TILESIZE * 2.f });
 		m_pStoreOutside->SetScale({ 7.f, 7.f, 1.f });
 		m_pStoreOutside->SetAngle({ 0.f, 50.f, 0.f });
 		m_pLayer->CreateGameObject(L"Obj_StoreOutside", m_pStoreOutside);

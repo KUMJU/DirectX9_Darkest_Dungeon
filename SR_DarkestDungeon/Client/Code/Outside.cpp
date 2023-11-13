@@ -43,8 +43,9 @@ HRESULT COutside::ReadyGameObject()
 	else if (m_eFacilityType == EFacilityType::GUILD)
 	{
 		shared_ptr<CGameObject> pDoor = make_shared<CDoor>(m_pGraphicDev, EFacilityType::GUILD);
-		pDoor->SetPos({ m_vPos.x - 5.5f, m_vPos.y + 5.7f, m_vPos.z - 0.1f });
+		pDoor->SetPos({ m_vPos.x + 3.8f, m_vPos.y + 5.7f, m_vPos.z - 2.8f });
 		pDoor->SetScale({ 3.f, 5.5f, 1.f });
+		pDoor->SetAngle({ 0.f, 10.f, 0.f });
 		m_vecGameObject.push_back(pDoor);
 	}
 

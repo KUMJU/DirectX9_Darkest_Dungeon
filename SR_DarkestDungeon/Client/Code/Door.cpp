@@ -72,10 +72,10 @@ void CDoor::GetInteractionKey(const _float& fTimeDelta)
 	// 키 입력받기
 	if (GetAsyncKeyState('C') & 0x8000)
 	{
-		m_bInteracting = true;
+		//m_bInteracting = true;
 
 		// 텍스처 또는 애니메이션 변경
-		ChangeTexture();
+		//ChangeTexture();
 
 		if (EFacilityType::TERVARN == m_eDoorType)
 		{
@@ -124,16 +124,16 @@ void CDoor::ChangeTexture()
 _bool CDoor::IsFinish()
 {
 	// 키 입력받기
-	if (GetAsyncKeyState('X') & 0x8000)
-	{
-		m_bInteracting = false;
-		m_pTextureCom->SetTextureKey(L"Village_Door_Close", TEX_NORMAL);
+	//if (GetAsyncKeyState('X') & 0x8000)
+	//{
+	//	m_bInteracting = false;
+	//	m_pTextureCom->SetTextureKey(L"Village_Door_Close", TEX_NORMAL);
 
-		// 플레이어 행동 풀기
-		CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
+	//	// 플레이어 행동 풀기
+	//	CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 
-		return true;
-	}
+	//	return true;
+	//}
 
 	return false;
 }

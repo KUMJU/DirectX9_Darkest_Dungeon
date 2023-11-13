@@ -510,6 +510,7 @@ void CPlayer::ShowHeroesBackVillage()
 	for (int i = 0; i < size(m_pVecHero); i++)
 	{
 		dynamic_pointer_cast<CCreature>(m_pVecHero[i])->SetFront(false);
+		m_pVecHero[i]->SetPos({ m_pTransformCom->GetPos()->x + 5.f - 3.f * i, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 2.f * i });
 		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 			m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 		pTransform->SetPosition(m_pTransformCom->GetPos()->x + 5.f - 3.f * i, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 2.f * i);

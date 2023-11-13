@@ -47,6 +47,11 @@ void CInside::LateUpdateGameObject()
 {
     for (auto& iter : m_vecGameObject) {
         iter->LateUpdateGameObject();
+
+        if (iter->IsColliding())
+        {
+            CCollisionMgr::GetInstance()->CheckCollision(iter);
+        }
     }
 }
 

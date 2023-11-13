@@ -29,6 +29,7 @@ HRESULT CJester::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bIsHero = true;
+	m_strName = L"Jester";
 
 	m_eHeroType = EHeroType::JESTER;
 

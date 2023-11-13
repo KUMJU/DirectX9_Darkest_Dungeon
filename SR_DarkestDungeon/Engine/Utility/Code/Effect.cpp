@@ -66,7 +66,10 @@ _int CEffect::UpdateGameObject(const _float& fTimeDelta)
 void CEffect::LateUpdateGameObject()
 {
     printf("Effect %d\n", m_iNum);
-    CRenderer::GetInstance()->AddRenderGroup(RENDER_ALPHA, shared_from_this());
+    if (m_bOrthogonal)
+        CRenderer::GetInstance()->AddRenderGroup(RENDER_UI, shared_from_this());
+    else
+        CRenderer::GetInstance()->AddRenderGroup(RENDER_ALPHA, shared_from_this());
 }
 
 void CEffect::RenderGameObject()
@@ -173,6 +176,29 @@ void CEffect::AddComponent()
     m_mapComponent[ID_STATIC].insert({ L"Com_Texture2", pComponent });
 }
 
+void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _float _fAnimTime, _bool _bOrthogonal)
+{
+    printf("Effect %d\nAnimation\n", m_iNum);
+
+    m_strAnimKey = _strAnimKey;
+    m_fAnimTime = _fAnimTime;
+    m_bLoop = false;
+
+    m_vPos = nullptr;
+    m_vPosOrigin = _vPos;
+    m_vScale = _vScale;
+
+    _float fTest = m_fAnimTime / CResourceMgr::GetInstance()->GetTexture(m_strAnimKey, TEX_NORMAL)->size();
+
+    m_pAnimatorCom->SetAnimKey(m_strAnimKey, m_fAnimTime / CResourceMgr::GetInstance()->GetTexture(m_strAnimKey, TEX_NORMAL)->size());
+
+    m_vScaleGap = { 1.f, 1.f, 1.f };
+    m_vPosGap = { 0.f, 0.f, 0.f };
+
+    m_bAnimation = true;
+    m_bOrthogonal = _bOrthogonal;
+}
+
 void CEffect::SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime)
 {
     printf("Effect %d\nSkill\n", m_iNum);
@@ -193,6 +219,17 @@ void CEffect::SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _
 
     m_vScaleGap = { vSize.x / _vTextureScale.x, vSize.y / _vTextureScale.y, 1.f };
     m_vPosGap = { 0.f, 0.f, 0.f };
+
+    if (m_strAnimKey == L"Pierce_Effect")
+    {
+        m_vPosGap.x = 0.6f;
+        m_vScaleGap.x = 1.6f;
+    }
+
+    else if (m_strAnimKey == L"Puncture_Effect")
+    {
+        m_vScaleGap.x = 2.f;
+    }
 
     m_bAnimation = true;
 }
@@ -251,7 +288,7 @@ void CEffect::SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _f
 
 }
 
-void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime)
+void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime)
 {
     printf("Effect %d\nFont\n", m_iNum);
     m_strAnimKey = _strAnimKey;
@@ -418,4 +455,5 @@ void CEffect::Reset()
     m_bAnimation = false;
     m_bTwoTexture = false;
     m_bActive = false;
+    m_bOrthogonal = false;
 }

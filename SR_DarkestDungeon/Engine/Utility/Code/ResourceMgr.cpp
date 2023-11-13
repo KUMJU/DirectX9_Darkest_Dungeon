@@ -269,10 +269,10 @@ void CResourceMgr::BaseTextureLoad()
 
 		CreateNewTexture(L"ShieldBreaker_Defend", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Defend.png", 1, bDefault);
-		CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
+		/*CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Afflicted.png", 1, bDefault);
 		CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue.png", 1, bDefault);*/
 
 		// 스킬 이미지
 		
@@ -343,10 +343,10 @@ void CResourceMgr::BaseTextureLoad()
 
 		CreateNewTexture(L"Highwayman_Defend", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Defend.png", 1, bDefault);
-		CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
+		/*CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Afflicted.png", 1, bDefault);
 		CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue.png", 1, bDefault);*/
 
 
 		// 스킬 이미지
@@ -412,10 +412,10 @@ void CResourceMgr::BaseTextureLoad()
 
 		CreateNewTexture(L"Vestal_Defend", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Defend.png", 1, bDefault);
-		CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
+		/*CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Afflicted.png", 1, bDefault);
 		CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue.png", 1, bDefault);*/
 
 		// 스킬 이미지
 
@@ -494,10 +494,10 @@ void CResourceMgr::BaseTextureLoad()
 
 		CreateNewTexture(L"Jester_Defend", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Defend.png", 1, bDefault);
-		CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
+		/*CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Afflicted.png", 1, bDefault);
 		CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue.png", 1, bDefault);*/
 
 
 		// 스킬 이미지
@@ -547,6 +547,29 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 20, bDefault);
 		CreateNewTexture(L"Solo_Target_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 20, bDefault);
+
+	}
+
+	// 붕괴, 기상
+	{
+		CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+		CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+		CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+		CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+		
+		
+		CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+		CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+		CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+		CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
 
 	}
 
@@ -997,7 +1020,6 @@ void CResourceMgr::WealdDungeonTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Fusilier/3.png", 1, bDefault);
 	CreateNewTexture(L"Brigand Fusilier_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
-
 }
 
 void CResourceMgr::VillageTextureLoad()
@@ -1015,6 +1037,14 @@ void CResourceMgr::VillageTextureLoad()
 		//바닥
 		CreateNewTexture(L"Village_FloorTexture", TEX_NORMAL,
 			L"../Bin/Resource/Image/Village/Floor/WholeTerrain2.jpg", 1, bDefault);
+
+		// 갈림길
+		CreateNewTexture(L"Village_CrossRoadTexture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Floor/farm_roads_custom_01.png", 1, bDefault);
+
+		// 대각선 길
+		CreateNewTexture(L"Village_ㅇiagonalRoadTexture", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Floor/farm_roads_custom_04.png", 1, bDefault);
 
 		//외곽 나무 그림자
 		CreateNewTexture(L"Com_Village_Wall_Texture", TEX_NORMAL,
@@ -1068,7 +1098,7 @@ void CResourceMgr::VillageTextureLoad()
 				L"../Bin/Resource/Image/Village/Floor/city_gate_floor_tile.png", 1, bDefault);
 
 			CreateNewTexture(L"Inside_CeilingTexture", TEX_NORMAL,
-				L"../Bin/Resource/Image/Village/Floor/white_ceiling.png", 1, bDefault);
+				L"../Bin/Resource/Image/Village/Floor/ceiling_tile.png", 1, bDefault);
 
 			CreateNewTexture(L"Wood_Wall_Texture", TEX_NORMAL,
 				L"../Bin/Resource/Image/Village/Wall/wood_horizontal.jpg", 1, bDefault);

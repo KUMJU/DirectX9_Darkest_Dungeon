@@ -90,22 +90,6 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 		m_pStatInfo->UpdateGameObject(fTimeDelta);
 	}
 
-	//// 스킬 이펙트
-	//if (m_pEffect && m_pEffect->GetIsActive())
-	//	m_pEffect->UpdateGameObject(fTimeDelta);
-
-	//// 데미지 폰트 이펙트
-	//if (m_pDamageEffect && m_pDamageEffect->GetIsActive())
-	//	m_pDamageEffect->UpdateGameObject(fTimeDelta);
-
-	//// 약화, 기절, 치명타 등등 이펙트
-	//if (m_pFontEffect && m_pFontEffect->GetIsActive())
-	//	m_pFontEffect->UpdateGameObject(fTimeDelta);
-
-	//// 머리 이펙트
-	//if (m_pHeadEffect && m_pHeadEffect->GetIsActive())
-	//	m_pHeadEffect->UpdateGameObject(fTimeDelta);
-
 	return iExit;
 }
 
@@ -131,18 +115,6 @@ void CCreature::RenderGameObject()
 	if (m_pStatInfo != nullptr && bStatBarOn)
 		m_pStatInfo->RenderGameObject();
 
-	/*if (m_pEffect && m_pEffect->GetIsActive())
-		m_pEffect->RenderGameObject();
-
-	if (m_pFontEffect && m_pFontEffect->GetIsActive())
-		m_pFontEffect->RenderGameObject();
-
-	if (m_pHeadEffect && m_pHeadEffect->GetIsActive())
-		m_pHeadEffect->RenderGameObject();
-
-	if (m_pDamageEffect && m_pDamageEffect->GetIsActive())
-		m_pDamageEffect->RenderGameObject();*/
-
 }
 
 _bool CCreature::IsAttacking()
@@ -165,13 +137,13 @@ void CCreature::SetStun(_bool _bStun)
 	// 폰트 이펙트
 	{
 		pEffect = CEffectMgr::GetInstance()->GetEffect();
-		pEffect->SetFontEffect(L"UI_Stun", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+		pEffect->SetFontEffect(L"UI_Stun", m_pTransformCom->GetPos(), ATTACKTIME);
 		pEffect->SetActive(true);
 	}
 
 	// 헤드 이펙트
 	{
-		pEffect = CEffectMgr::GetInstance()->GetEffect();
+		m_pLoopEffect = pEffect = CEffectMgr::GetInstance()->GetEffect();
 		pEffect->SetHeadEffect(L"UI_Head_Stun", m_pTransformCom->GetPos(), ATTACKTIME, true);
 		pEffect->SetActive(true);
 	}
@@ -237,7 +209,7 @@ void CCreature::StartCalculate()
 		{
 			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-			pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+			pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), ATTACKTIME);
 			pEffect->SetActive(true);
 		}
 
@@ -245,7 +217,7 @@ void CCreature::StartCalculate()
 		{
 			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-			pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+			pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), ATTACKTIME);
 			pEffect->SetActive(true);
 		}
 
@@ -275,6 +247,14 @@ void CCreature::StartCalculate()
 	if (m_bState[2])
 	{
 		// 기절 이펙트 없애는 타이밍
+		m_pLoopEffect->Reset();
+		m_pLoopEffect->SetActive(false);
+
+		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetFontEffect(L"UI_Stun", m_pTransformCom->GetPos(), ATTACKTIME);
+		pEffect->SetActive(true);
+
 		m_bState[2] = false;
 		m_bMyTurn = false;
 	}
@@ -704,6 +684,11 @@ void CCreature::OffTurnUi()
 
 void CCreature::OnVirtue()
 {
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetAnimEffect(m_strName + L"_Virtue", { 0.f, 0.f, 0.5f }, {400.f, 400.f, 1.f}, STRESSEVENTINTERVEL - 1.f, true);
+	pEffect->SetActive(true);
+
 	m_pStatInfo->SetVirtue(true);
 }
 
@@ -714,6 +699,11 @@ void CCreature::OffVirtue()
 
 void CCreature::OnAffliction()
 {
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetAnimEffect(m_strName + L"_Affliction", { 0.f, 0.f, 0.5f }, { 400.f, 400.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true);
+	pEffect->SetActive(true);
+
 	m_pStatInfo->SetAffliction(true);
 }
 
@@ -741,7 +731,7 @@ void CCreature::Buff1Skill(_int* _iDotBuff)
 {
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetFontEffect(L"UI_Buff", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetFontEffect(L"UI_Buff", m_pTransformCom->GetPos(), ATTACKTIME);
 	pEffect->SetActive(true);
 
 	for (int i = 0; i < _iDotBuff[1]; i++)
@@ -754,7 +744,7 @@ void CCreature::Buff2Skill(_int* _iDotBuff)
 {
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetFontEffect(L"UI_Buff", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetFontEffect(L"UI_Buff", m_pTransformCom->GetPos(), ATTACKTIME);
 	pEffect->SetActive(true);
 
 	for (int i = 0; i < _iDotBuff[1]; i++)
@@ -767,7 +757,7 @@ void CCreature::DeBuffSkill(_int* _iDotDeBuff)
 {
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetFontEffect(L"UI_Debuff", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetFontEffect(L"UI_Debuff", m_pTransformCom->GetPos(), ATTACKTIME);
 	pEffect->SetActive(true);
 
 	for (int i = 0; i < _iDotDeBuff[1]; i++)
@@ -786,7 +776,7 @@ void CCreature::BlightAttack(_int* _iDotDam)
 {
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), ATTACKTIME);
 	pEffect->SetActive(true);
 
 	for (int i = 0; i < _iDotDam[1]; i++)
@@ -799,7 +789,7 @@ void CCreature::BleedAttack(_int* _iDotDam)
 {
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), ATTACKTIME);
 	pEffect->SetActive(true);
 
 	for (int i = 0; i < _iDotDam[1]; i++)
@@ -852,7 +842,7 @@ void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool 
 		else
 		{
 			strEffectAnimKey = L"UI_Dodge";
-			pEffect->SetFontEffect(strEffectAnimKey, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+			pEffect->SetFontEffect(strEffectAnimKey, m_pTransformCom->GetPos(), ATTACKTIME);
 
 			pEffect->SetActive(true);
 		}

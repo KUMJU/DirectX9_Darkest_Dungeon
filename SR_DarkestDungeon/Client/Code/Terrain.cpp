@@ -84,7 +84,7 @@ void CTerrain::AddComponent()
 	switch (m_eTerrainType)
 	{
 	case ETerrainType::VILLAGE:
-		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VILLAGE_TILESIZE * 10, VILLAGE_TILESIZE * 10, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp", VILLAGE_TILECNT, VILLAGE_TILECNT);
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VILLAGE_TILESIZE * 10, VILLAGE_TILESIZE * 12, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp", VILLAGE_TILECNT, VILLAGE_TILECNT);
 		break;
 	case ETerrainType::VILLAGE_INSIDE:
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VILLAGE_TILESIZE * 3, VILLAGE_TILESIZE * 3, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight2.bmp", 5, 5);

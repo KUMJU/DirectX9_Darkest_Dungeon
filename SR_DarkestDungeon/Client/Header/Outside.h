@@ -39,5 +39,8 @@ protected:
 	tstring								m_strKey;
 
 	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};
+
+private:
+	_int	m_iDeleted = 0;
 };
 
