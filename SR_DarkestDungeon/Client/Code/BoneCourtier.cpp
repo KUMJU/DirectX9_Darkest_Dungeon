@@ -74,32 +74,32 @@ _int CBoneCourtier::UpdateGameObject(const _float& fTimeDelta)
 		{
 		case EAnimState::COMBAT:
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Combat", 0.05f);
-			m_pTransformCom->SetScale(2.5f, 2.5f, 1.f);
+			m_pTransformCom->SetScale(2.5f, 2.5f, 2.5f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f, m_vPos.z);
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Hitted", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 181.f / 193.f, 2.5f * 280.f / 289.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 181.f / 193.f, 2.5f * 280.f / 289.f, 2.5f * 181.f / 193.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 280.f / 289.f, m_vPos.z);
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Attack1", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 274.f / 193.f, 2.5f * 261.f / 289.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 274.f / 193.f, 2.5f * 261.f / 289.f, 2.5f * 274.f / 193.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 280.f / 289.f, m_vPos.z);
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Attack2", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 229.f / 193.f, 2.5f * 277.f / 289.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 229.f / 193.f, 2.5f * 277.f / 289.f, 2.5f * 229.f / 193.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 277.f / 289.f, m_vPos.z);
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Dead", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 225.f / 193.f, 2.5f * 134.f / 289.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 225.f / 193.f, 2.5f * 134.f / 289.f, 2.5f * 225.f / 193.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 134.f / 289.f, m_vPos.z);
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Death", 0.02f);
-			m_pTransformCom->SetScale(2.5f, 2.5f, 1.f);
+			m_pTransformCom->SetScale(2.5f, 2.5f, 2.5f);
 			break;
 		}
 	}

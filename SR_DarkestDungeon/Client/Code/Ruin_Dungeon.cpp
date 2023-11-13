@@ -70,8 +70,6 @@ CRuin_Dungeon::~CRuin_Dungeon()
 
 HRESULT CRuin_Dungeon::ReadyScene()
 {
-	CResourceMgr::GetInstance()->RuinDungeonTextureLoad();
-
 	// text
 	lstrcpy(m_szString, L"Ruin Dungeon");
 	// Weald 던전
@@ -88,6 +86,7 @@ HRESULT CRuin_Dungeon::ReadyScene()
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
 	Ready_Layer_GameObject(L"Layer_4_GameObj");
 	Ready_Layer_UI(L"Layer_2_UI");
+	CUIMgr::GetInstance()->SceneUIInitialize();
 	Ready_Layer_Camera(L"Layer_5_Camera");
 
 	for (auto& iter : m_mapLayer) {
@@ -116,6 +115,7 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 		if (pTransform->GetPos()->z > RUIN_WALLSIZEX * 13.5f - 25.f)
 		{
 			_vec3* vPos = pTransform->GetPos();
+			CCameraMgr::GetInstance()->SetState(ECameraMode::BATTLE);
 			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vPos->x , vPos->y + 5.f ,  RUIN_WALLSIZEX * 13.5f - 20.f });
 			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_Inventory");
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
@@ -190,6 +190,7 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 		m_pRoom3->GetBattleSystem()->EndBattle();
 		CCameraMgr::GetInstance()->SetFPSMode();
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
+		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
 		m_pRoom3->SetBattleTrigger(false);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
 	}
@@ -726,9 +727,6 @@ HRESULT CRuin_Dungeon::Ready_Layer_Camera(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
 
-	//shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-	//
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
 	CCameraMgr::GetInstance()->SetFPSMode();
 
@@ -743,13 +741,21 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	//Player
-	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pPlayer;
+
+	m_pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
 	m_pPlayer->SetPos({ 70.f, 0.f, 2.f });
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
-	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
-
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
+	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(m_pPlayer->GetPos().x, m_pPlayer->GetPos().y, m_pPlayer->GetPos().z);
+	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetAngle({0.f, 0.f, 0.f});
+
+
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		m_pLayer->CreateGameObject(dynamic_pointer_cast<CHero>(iter)->GetObjKey(), iter);
+	}
 
 	//// GameObjects
 	// 함정
@@ -864,7 +870,7 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Heroes_v.push_back(m_pHighwayman);
 	Heroes_v.push_back(m_pJester);
 	Heroes_v.push_back(m_pVestal);
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroVec(&Heroes_v);
+	//dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroVec(&Heroes_v);
 
 	// 방에 GameObject 넣기
 	// Room1
@@ -993,9 +999,7 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"OBJ_CurioSarcophagus", m_pCurioT1);
 
 	//PlayerObj
-	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
-	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
+	m_pLayer->CreateGameObject(L"Obj_PlayerHand", dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPlayerHand());
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
@@ -1007,22 +1011,6 @@ HRESULT CRuin_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	shared_ptr<CGameObject> m_pInventory = make_shared<CInventory>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
-
-	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
-
-
-	shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);
-	CUIMgr::GetInstance()->AddUIObject(L"UI_Mouse", dynamic_pointer_cast<CUIObj>(pMouse));
-
-	shared_ptr<CGameObject> m_pNarr = make_shared<CNarration>(m_pGraphicDev);
-	CUIMgr::GetInstance()->AddUIObject(L"UI_Narration", dynamic_pointer_cast<CUIObj>(m_pNarr));
-	m_pLayer->CreateGameObject(L"Obj_Narr", m_pNarr);
-
-
-	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;

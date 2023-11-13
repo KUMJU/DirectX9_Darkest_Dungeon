@@ -55,6 +55,9 @@ protected:
 
 	RECT m_UIRect;
 
+	_bool	m_bReady = false;
+
+
 };
 
 END

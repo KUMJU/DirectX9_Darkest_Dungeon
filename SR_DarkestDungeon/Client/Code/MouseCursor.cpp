@@ -13,6 +13,8 @@ CMouseCursor::~CMouseCursor()
 
 HRESULT CMouseCursor::ReadyGameObject()
 {
+    if (m_bReady) return S_OK;
+
     m_vSize = { 16.f , 16.f ,0.f };
     m_vAngle = { 0.f, 0.f, 0.f };
     m_vPos = {0.f, 0.f, 0.8f };

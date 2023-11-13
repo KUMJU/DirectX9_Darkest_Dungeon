@@ -448,6 +448,6 @@ void CShieldBreaker::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y) / 1.9f;
 	}
 
-	m_pTransformCom->SetScale(2.f * fXpos, 3.f * fYpos, 1.f);
+	m_pTransformCom->SetScale(2.f * fXpos, 3.f * fYpos, 2.f * fXpos);
 
 }

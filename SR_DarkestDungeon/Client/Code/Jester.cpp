@@ -213,7 +213,7 @@ HRESULT CJester::ReadyGameObject()
 		//m_vAngle = { 0.f, PI / 2, 0.f };
 
 		m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-		m_pTransformCom->SetScale(2.f, 3.f, 1.f);
+		m_pTransformCom->SetScale(2.f, 3.f, 3.f);
 
 		m_pTransformCom->SetAngle(m_vAngle);
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
@@ -484,6 +484,6 @@ void CJester::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y) / 1.8f;
 	}
 
-	m_pTransformCom->SetScale(2.f * fXpos, 3.f * fYpos, 1.f);
+	m_pTransformCom->SetScale(2.f * fXpos, 3.f * fYpos, 2.f * fXpos);
 
 }

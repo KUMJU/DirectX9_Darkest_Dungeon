@@ -189,6 +189,8 @@
     <ClInclude Include="..\Header\Jester.h" />
     <ClInclude Include="..\Header\Laser.h" />
     <ClInclude Include="..\Header\Loading.h" />
+    <ClInclude Include="..\Header\LoadingBack.h" />
+    <ClInclude Include="..\Header\LoadingScreen.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MainLogo.h" />
     <ClInclude Include="..\Header\MouseCursor.h" />
@@ -275,6 +277,8 @@
     <ClCompile Include="..\Code\Jester.cpp" />
     <ClCompile Include="..\Code\Laser.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
+    <ClCompile Include="..\Code\LoadingBack.cpp" />
+    <ClCompile Include="..\Code\LoadingScreen.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainLogo.cpp" />
     <ClCompile Include="..\Code\MouseCursor.cpp" />

@@ -67,27 +67,27 @@ _int CBoneSoldier::UpdateGameObject(const _float& fTimeDelta)
 		{
 		case EAnimState::COMBAT:
 			m_pTextureCom->SetAnimKey(L"Bone Soldier_Combat", 0.05f);
-			m_pTransformCom->SetScale(2.5f, 2.5f, 1.f);
+			m_pTransformCom->SetScale(2.5f, 2.5f, 2.5f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f, m_vPos.z);
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Bone Soldier_Hitted", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 171.f / 205.f, 2.5f * 269.f / 310.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 171.f / 205.f, 2.5f * 269.f / 310.f, 2.5f * 171.f / 205.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 269.f / 310.f, m_vPos.z);
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Bone Soldier_Attack1", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 323.f / 205.f, 2.5f * 300.f / 310.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 323.f / 205.f, 2.5f * 300.f / 310.f, 2.5f * 323.f / 205.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 269.f / 310.f, m_vPos.z);
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Bone Soldier_Dead", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 215.f / 205.f, 2.5f * 146.f / 310.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 215.f / 205.f, 2.5f * 146.f / 310.f, 2.5f * 215.f / 205.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 146.f / 310.f, m_vPos.z);
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Bone Soldier_Death", 0.02f);
-			m_pTransformCom->SetScale(2.5f, 2.5f, 1.f);
+			m_pTransformCom->SetScale(2.5f, 2.5f, 2.5f);
 			break;
 		}
 	}

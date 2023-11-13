@@ -9,7 +9,6 @@
 CInventory::CInventory(LPDIRECT3DDEVICE9 _pGraphicDev)
     :Engine::CUIObj(_pGraphicDev)
 {
-    m_bReady = false;
 }
 
 CInventory::~CInventory()

@@ -15,11 +15,13 @@ CPlayerHand::~CPlayerHand()
 
 HRESULT CPlayerHand::ReadyGameObject()
 {
+	if (m_bReady) return S_OK;
+
 	m_bWalking = false;
 	m_bEnable = false;
 
 	m_pPlrTransmCom = dynamic_pointer_cast<CTransform>(Engine::Get_Component(L"Layer_4_GameObj", L"Obj_Player", L"Com_Transform", COMPONENTID::ID_DYNAMIC));
-	
+	m_bReady = true;
 	return S_OK;
 }
 
@@ -252,6 +254,8 @@ void CPlayerHand::CreateProjection()
 
 void CPlayerHand::AddComponent()
 {
+	if (m_bReady) return;
+
 	shared_ptr<CComponent> pComponent;
 
 	pComponent = m_pItemBufCom = make_shared<CRcTex>(m_pGraphicDev);

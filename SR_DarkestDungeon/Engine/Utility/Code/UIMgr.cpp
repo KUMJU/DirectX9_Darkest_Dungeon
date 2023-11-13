@@ -2,7 +2,9 @@
 #include "UIObj.h"
 #include "GameObject.h"
 
-IMPLEMENT_SINGLETON(CUIMgr)
+#include"SceneMgr.h"
+
+ IMPLEMENT_SINGLETON(CUIMgr)
 
 CUIMgr::CUIMgr()
 {
@@ -25,6 +27,33 @@ shared_ptr<CUIObj> CUIMgr::GetUIObject(tstring _strKeyName)
 	auto iter = m_UIList.find(_strKeyName);
 
 	return iter->second;
+}
+
+void CUIMgr::SceneUIInitialize()
+{
+ 	for (auto& iter : m_UIList) {
+		CSceneMgr::GetInstance()->AddNewObject(L"Layer_2_UI", iter.first, dynamic_pointer_cast<CGameObject>(iter.second));
+		if (L"UI_Inventory" == iter.first) {
+			iter.second->SetVisible(true);
+		}
+	
+	}
+}
+
+void CUIMgr::SceneChange()
+{
+	for (auto iter = m_UIList.begin(); iter != m_UIList.end(); ) {
+		if (L"UI_Inventory" != iter->first && L"UI_Narration" != iter->first &&
+			L"UI_Mouse" != iter->first && L"UI_Player_FPSUI" != iter->first &&
+			L"Obj_DescriptionUI" != iter->first)
+		// && L"Battle_Hero_UI" != iter->first
+		{
+			m_UIList.erase(iter++);
+ 		}
+		else {
+			++iter;
+		}
+	}
 }
 
 void CUIMgr::AllVisibleOn()

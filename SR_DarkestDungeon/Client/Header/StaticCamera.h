@@ -148,6 +148,8 @@ private:
 	_bool m_bCursorLock = true;
 	_bool m_bInVillage = false;
 
+	_bool m_bInteraction = false;
+
 	//회전중 움직임을 위한 state
 	_bool m_bCamMoving = false;
 	_bool m_bCamMovingHorizontal = false;

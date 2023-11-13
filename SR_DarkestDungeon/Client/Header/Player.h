@@ -86,6 +86,8 @@ public:
 	void			InsertItem(shared_ptr<CItem> _pItem);
 	void			DeleteItem(tstring _strItmeName);
 
+	shared_ptr<CGameObject> GetPlayerHand() { return m_pPlayerHand; }
+
 	//¿Á»≠
 	void SetGold(_int _iNum, _bool _bIsEarn);
 	void SetHeirloom(_int _iNum, _bool _bIsEarn);

@@ -15,6 +15,8 @@ CNarration::~CNarration()
 
 HRESULT CNarration::ReadyGameObject()
 {
+	if (m_bReady) return S_OK;
+
 
 	m_vSize = { WINCX * 0.5f, 150.f, 0.f };
 	m_vPos = { 0.f , 280.f, 0.f };

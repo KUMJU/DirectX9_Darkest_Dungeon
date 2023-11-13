@@ -28,7 +28,7 @@ HRESULT CLayer::ReadyLayer()
 	for (auto& iter : m_objectMap) {
 		for (auto& it : iter.second) {
 			//GameComponenet Setting
-			it->ReadyGameObject();
+ 			it->ReadyGameObject();
 		}
 	}
 

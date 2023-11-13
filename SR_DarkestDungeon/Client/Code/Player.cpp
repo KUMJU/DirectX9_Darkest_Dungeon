@@ -27,6 +27,8 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::ReadyGameObject()
 {
+	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
+
 	if (m_bReady)
 		return S_OK;
 
@@ -39,7 +41,7 @@ HRESULT CPlayer::ReadyGameObject()
 	SetGold(1000, true);
 	SetHeirloom(5, true);
 
-	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
+//	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 	//m_pLight2 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 	//m_pLight3 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 

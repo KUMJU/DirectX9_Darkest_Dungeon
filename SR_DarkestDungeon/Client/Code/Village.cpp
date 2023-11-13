@@ -36,7 +36,7 @@
 #include"Export_Utility.h"
 #include"SoundMgr.h"
 
-#include"MouseCursor.h"
+#include"LoadingScreen.h"
 
 CVillage::CVillage(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -49,13 +49,13 @@ CVillage::~CVillage()
 
 HRESULT CVillage::ReadyScene()
 {
-	CResourceMgr::GetInstance()->VillageTextureLoad();
 	CCameraMgr::GetInstance()->RemoveMainCamera();
 
 	Ready_Layer_Environment(L"Layer_3_Environment");
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
 	Ready_Layer_GameObject(L"Layer_4_GameObj");
 	Ready_Layer_UI(L"Layer_2_UI");
+	CUIMgr::GetInstance()->SceneUIInitialize();
 	Ready_Layer_Camera(L"Layer_5_Camera");
 
 	for (auto& iter : m_mapLayer) {
@@ -96,9 +96,14 @@ void CVillage::KeyInput()
 
 	// ÆóÇã·Î ¾À º¯°æ
 	if (GetAsyncKeyState('6') & 0x8000) {
-		shared_ptr<CRuin_Dungeon> pScene = make_shared<CRuin_Dungeon>(m_pGraphicDev);
-		CSceneMgr::GetInstance()->ChangeScene(pScene);
-		pScene->ReadyScene();
+
+		CSoundMgr::GetInstance()->StopAll();
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+		shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::RUIN);
+		CSceneMgr::GetInstance()->SetLoadingState(false);
+		CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
+		pLoadingScreen->ReadyScene();
+
 	}
 }
 
@@ -296,11 +301,13 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
 		}
 
-		shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
-		m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
-		(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
+		//shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
+		//m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
+		//(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
 
 		m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+		m_pLayer->CreateGameObject(L"Obj_PlayerHand", dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPlayerHand());
+
 		dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(false);
 
 	// ¿µ¿õ Å×½ºÆ®
@@ -392,9 +399,9 @@ HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	shared_ptr<CGameObject> m_pInventory = CUIMgr::GetInstance()->GetUIObject(L"UI_Inventory");
-	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
-	dynamic_pointer_cast<CUIObj>(m_pInventory)->SetVisible(true);
+	//shared_ptr<CGameObject> m_pInventory = CUIMgr::GetInstance()->GetUIObject(L"UI_Inventory");
+	//m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
+	//dynamic_pointer_cast<CUIObj>(m_pInventory)->SetVisible(true);
 
 	//CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
 
@@ -413,14 +420,14 @@ HRESULT CVillage::Ready_Layer_UI(tstring pLayerTag)
 	CUIMgr::GetInstance()->AddUIObject(L"Obj_TavernUI", dynamic_pointer_cast<CUIObj>(pTavernUI));
 
 	// Description UI
-	shared_ptr<CGameObject> pDescriptionUI = CUIMgr::GetInstance()->GetUIObject(L"Obj_DescriptionUI");
-	m_pLayer->CreateGameObject(L"Obj_DescriptionUI", pDescriptionUI);
+	//shared_ptr<CGameObject> pDescriptionUI = CUIMgr::GetInstance()->GetUIObject(L"Obj_DescriptionUI");
+	//m_pLayer->CreateGameObject(L"Obj_DescriptionUI", pDescriptionUI);
 
 	//CUIMgr::GetInstance()->AddUIObject(L"Obj_DescriptionUI", dynamic_pointer_cast<CUIObj>(pDescriptionUI));
 
-	shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);
-	CUIMgr::GetInstance()->AddUIObject(L"UI_Mouse", dynamic_pointer_cast<CUIObj>(pMouse));
+	//shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
+	//m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);
+	//CUIMgr::GetInstance()->AddUIObject(L"UI_Mouse", dynamic_pointer_cast<CUIObj>(pMouse));
 
 
 

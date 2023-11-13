@@ -24,6 +24,9 @@ public:
 public:
 	HRESULT				Ready_Loading(LOADINGID eLoading);
 	_uint				Loading_ForStage();
+	_uint				Loading_ForVillage();
+	_uint				Loading_ForRuin();
+
 
 public:
 	static unsigned int CALLBACK		Thread_Main(void* pArg);

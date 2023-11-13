@@ -3,6 +3,8 @@
 #include "PickingMgr.h"
 #include "EffectMgr.h"
 
+#include"LightMgr.h"
+
 CScene::CScene(LPDIRECT3DDEVICE9 _pGraphicDev) : m_pGraphicDev(_pGraphicDev)
 {
 }
@@ -84,6 +86,13 @@ void CScene::KeyInput()
 
 	else if (GetAsyncKeyState(VK_F2) & 0x8000)
 		CCollisionMgr::GetInstance()->SetVisible(false);
+}
+
+void CScene::SetLight()
+{
+
+	shared_ptr<CLight> pLight =  CLightMgr::GetInstance()->InitDirectionLight(m_pGraphicDev);
+
 }
 
 shared_ptr<CComponent> CScene::GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID)
