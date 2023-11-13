@@ -13,6 +13,8 @@
 
 #include "Description.h"
 
+#include"PlayerFPSUI.h"
+
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -37,7 +39,7 @@ HRESULT CPlayer::ReadyGameObject()
 	SetGold(1000, true);
 	SetHeirloom(5, true);
 
-	//m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
+	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 	//m_pLight2 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 	//m_pLight3 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 
@@ -84,8 +86,8 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 	if (m_pTavernUI)
 		m_pTavernUI->UpdateGameObject(fTimeDelta);
 
-	//_vec3* vPos = m_pTransformCom->GetPos();
-	//m_pLight->SetPosition({ vPos ->x, vPos->y + 7.f, vPos->z + 4.f});
+	_vec3* vPos = m_pTransformCom->GetPos();
+	m_pLight->SetPosition({ vPos ->x, vPos->y + 7.f, vPos->z});
 	/*m_pLight2->SetPosition({vPos->x, vPos->y + 7.f, vPos->z + 4.f});
 	m_pLight3->SetPosition({ vPos ->x, vPos->y + 7.f, vPos->z + 4.f});*/
 
@@ -164,6 +166,22 @@ void CPlayer::SetHeirloom(_int _iNum, _bool _bIsEarn)
 	if (nullptr != pGoodsUI) {
 		dynamic_pointer_cast<CGoodsUI>(pGoodsUI)->SetHeirloomNum(m_iHeirlooms);
 	}
+}
+
+void CPlayer::DecreaseHP(_int _iDamage)
+{
+	m_iHP -= _iDamage; 
+
+	if (!m_pPlrFPSUI) {
+
+		m_pPlrFPSUI = dynamic_pointer_cast<CPlayerFPSUI>(CUIMgr::GetInstance()->FindUI(L"UI_Player_FPSUI"));
+		m_pPlrFPSUI->SetHP(m_iHP);
+	}
+	else {
+
+		m_pPlrFPSUI->SetHP(m_iHP);
+	}
+
 }
 
 void CPlayer::SettingLight()
@@ -309,6 +327,10 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	if (GetAsyncKeyState('2') & 0x8000) {
 		SetPlayerMode(EPlayerMode::BOSS_FIELD);
 	//	CCameraMgr::GetInstance()->SetVillageMode();
+	}
+
+	if (GetAsyncKeyState('4') & 0x8000) {
+		DecreaseHP(1);
 	}
 
 }

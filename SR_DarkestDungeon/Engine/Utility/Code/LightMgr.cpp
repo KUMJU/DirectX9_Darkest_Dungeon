@@ -41,10 +41,10 @@ shared_ptr<CLight> CLightMgr::InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev)
 	pLightInfo.Type = D3DLIGHT_POINT;
 	pLightInfo.Range = 30.f;
 	
-	pLightInfo.Diffuse.r = 1.0f;
+	pLightInfo.Diffuse.r = 1.f;
 	pLightInfo.Diffuse.g = 1.f;
 	pLightInfo.Diffuse.b = 1.f;
-	pLightInfo.Ambient.r = 1.0f;
+	pLightInfo.Ambient.r = 1.f;
 	pLightInfo.Ambient.g = 1.f;
 	pLightInfo.Ambient.b = 1.f;
 	pLightInfo.Specular.r = 1.0f;
@@ -55,7 +55,9 @@ shared_ptr<CLight> CLightMgr::InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev)
 	pLightInfo.Position.y = 3.f;
 	pLightInfo.Position.z = 10.f;
 
-	pLightInfo.Attenuation0 = 1.f;
+	//pLightInfo.Attenuation0 = 0.f;
+	//pLightInfo.Attenuation1 = 5.f;
+	//pLightInfo.Attenuation2 = 0.f;
 
 
 	shared_ptr<CLight> pLight = make_shared<CLight>(_pGraphicDev);
@@ -64,4 +66,9 @@ shared_ptr<CLight> CLightMgr::InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev)
 	m_LightList.push_back(pLight);
 
 	return pLight;
+}
+
+shared_ptr<CLight> CLightMgr::InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev)
+{
+	return shared_ptr<CLight>();
 }

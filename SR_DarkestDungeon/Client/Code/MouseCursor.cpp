@@ -51,8 +51,6 @@ _int CMouseCursor::UpdateGameObject(const _float& fTimeDelta)
     _float fXScale = fXPos / 635.f;
 
 
-    printf("%lf \n", fXScale);
-
     _float fDir = -1.f;
 
    if (fXPos < 0) {

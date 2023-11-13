@@ -122,16 +122,19 @@ void CResourceMgr::RemoveAllTexture()
 
 void CResourceMgr::RemoveSceneTexture()
 {
-	for (auto& iter : m_TextureMap) {
-		//bDelete가 true인 요소만 골라서 삭제
-		if (iter.second.front()->bDelete == true) {
-			for (auto& it : iter.second) {
+
+	for (auto iter = m_TextureMap.begin(); iter != m_TextureMap.end(); ) {
+		if (true == iter->second.front()->bDelete) {
+			for (auto& it : iter->second) {
 				it->pTexture->Release();
 			}
-			m_TextureMap.erase(iter.first);
+			m_TextureMap.erase(iter++);
+
+		}
+		else {
+			++iter;
 		}
 	}
-
 }
 
 void CResourceMgr::Free()
@@ -203,6 +206,14 @@ void CResourceMgr::BaseTextureLoad()
 
 	CreateNewTexture(L"Player_HUD_bottom_left", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Player/HUD_bottom_right.png", 1, bDefault);
+
+	CreateNewTexture(L"Player_HP_Empty1", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Player/Player_FPSUI_EmptyBar.png", 1, bDefault);
+	CreateNewTexture(L"Player_HP_Empty2", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Player/Player_FPSUI_EmptyBar2.png", 1, bDefault);
+
+	CreateNewTexture(L"Player_UI_Shield", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Player/spell_shield.png", 1, bDefault);
 
 	//--------------------------------------------------------------------------------------------
 
