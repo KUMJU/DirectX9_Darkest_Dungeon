@@ -27,6 +27,7 @@ HRESULT CShieldBreaker::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bIsHero = true;
+	m_strName = L"ShieldBreaker";
 
 	m_eHeroType = EHeroType::SHILEDBREAKER;
 

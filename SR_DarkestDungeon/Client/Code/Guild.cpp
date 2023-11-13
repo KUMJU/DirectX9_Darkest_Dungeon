@@ -8,6 +8,7 @@
 #include "Wall.h"
 #include "EnvironmentObj.h"
 #include "GuildNPC.h"
+#include "Trigger.h"
 
 CGuild::CGuild(LPDIRECT3DDEVICE9 pGraphicDev) : CInside(pGraphicDev)
 {
@@ -128,6 +129,15 @@ HRESULT CGuild::ReadyGameObject()
 			m_pWallDeco->SetAngle({ 0.f, 0.f, 0.f });
 
 			m_vecGameObject.push_back(m_pWallDeco);
+		}
+
+		// 이동 트리거
+		{
+			shared_ptr<CGameObject> m_pTrigger = make_shared<CTrigger>(m_pGraphicDev, L"Guild", true);
+			m_pTrigger->SetScale({ 3.f, 3.f, 3.f });
+			m_pTrigger->SetPos({ m_vPos.x + VILLAGE_TILESIZE * 2.5f / 5.f * 3.f, m_vPos.y, m_vPos.z - 5.f });
+
+			m_vecGameObject.push_back(m_pTrigger);
 		}
 
 		//	// 창문

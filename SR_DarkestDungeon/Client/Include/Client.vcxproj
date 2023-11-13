@@ -214,6 +214,7 @@
     <ClInclude Include="..\Header\TavernNPC.h" />
     <ClInclude Include="..\Header\TavernUI.h" />
     <ClInclude Include="..\Header\Tervarn.h" />
+    <ClInclude Include="..\Header\Trigger.h" />
     <ClInclude Include="..\Header\WealdDungeonDoor.h" />
     <ClInclude Include="..\Header\Weald_Curio_Chest.h" />
     <ClInclude Include="..\Header\Weald_Curio_Luggage.h" />
@@ -302,6 +303,7 @@
     <ClCompile Include="..\Code\TavernNPC.cpp" />
     <ClCompile Include="..\Code\TavernUI.cpp" />
     <ClCompile Include="..\Code\Tervarn.cpp" />
+    <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />
     <ClCompile Include="..\Code\Weald_Curio_Chest.cpp" />
     <ClCompile Include="..\Code\Weald_Curio_Luggage.cpp" />

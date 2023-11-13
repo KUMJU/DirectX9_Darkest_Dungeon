@@ -30,7 +30,7 @@
 #define BOSS_PATHSIZEX 16.f
 
 // Time
-#define BATTLEINTERVEL 3.5f					// 턴 전투간 시간
+#define BATTLEINTERVEL 5.f					// 턴 전투간 시간
 #define CORPSEINTERVEL 0.f					// 시체 턴 시간
 #define DEATHMOVINGINTERVEL 0.5f			// 죽어서 시체 움직이는 시간
 #define SKILLMOVINGINTERVEL 0.5f			// 상대 스킬 맞아서 움직이는 시간
@@ -39,7 +39,7 @@
 #define WHILEATTACKINTERVEL	2.f				// 멈춰서 공격하는 시간
 #define MOVINGBACKINTERVEL	0.2f			// 돌아가는 시간
 #define ATTACKSKILLMOVINGINTERVEL 0.3f		// 공격 스킬을 사용하며 움직이는 시간
-#define STRESSEVENTINTERVEL		1.f			// 스트레스 이벤트 처음 발생중인 시간
+#define STRESSEVENTINTERVEL		2.f			// 스트레스 이벤트 처음 발생중인 시간
 #define STRESSOUTPUTINTERVEL	1.f			// 스트레스가 터진 영웅 상호작용 발생중인 시간
 #define KEYINPUTINTERVEL 1.f				// key input intervel
 

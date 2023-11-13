@@ -42,28 +42,6 @@ _int CGuildNPC::UpdateGameObject(const _float& fTimeDelta)
 
 	if (!m_pHeroVec)
 	{
-		shared_ptr<CUIObj> pHeroSkillUI;
-		_int	iIdx = 0;
-
-		m_pHeroVec = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
-
-		// 영웅 스킬 UI 생성
-		for (auto& iter :
-			*dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec()
-			)
-		{
-			pHeroSkillUI = make_shared<CHeroSkillUI>(m_pGraphicDev, dynamic_pointer_cast<CHero>(iter), iIdx);
-			pHeroSkillUI->SetVisible(false);
-			CUIMgr::GetInstance()->AddUIObject(L"UI_HeroSkill" + to_wstring(iIdx), pHeroSkillUI);
-
-			pHeroSkillUI->AwakeGameObject();
-			pHeroSkillUI->ReadyGameObject();
-
-			m_pUIVec.push_back(pHeroSkillUI);
-
-			iIdx++;
-		}
-
 		for (auto& iter : m_vecGameObject)
 		{
 			iter->AwakeGameObject();
@@ -130,6 +108,29 @@ void CGuildNPC::GetInteractionKey(const _float& fTimeDelta)
 	// 키 입력받기
 	if (GetAsyncKeyState('C') & 0x8000)
 	{
+
+		shared_ptr<CUIObj> pHeroSkillUI;
+		_int	iIdx = 0;
+
+		m_pHeroVec = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
+
+		// 영웅 스킬 UI 생성
+		for (auto& iter :
+			*dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec()
+			)
+		{
+			pHeroSkillUI = make_shared<CHeroSkillUI>(m_pGraphicDev, dynamic_pointer_cast<CHero>(iter), iIdx);
+			pHeroSkillUI->SetVisible(false);
+			CUIMgr::GetInstance()->AddUIObject(L"UI_HeroSkill" + to_wstring(iIdx), pHeroSkillUI);
+
+			pHeroSkillUI->AwakeGameObject();
+			pHeroSkillUI->ReadyGameObject();
+
+			m_pUIVec.push_back(pHeroSkillUI);
+
+			iIdx++;
+		}
+
 		m_bInteracting = true;
 
 		// 플레이어 움직임 막기
@@ -163,7 +164,7 @@ _bool CGuildNPC::IsFinish()
 		for (auto& iter : m_pUIVec)
 			_iCnt += dynamic_pointer_cast<CHeroSkillUI>(iter)->GetEquippedCnt();
 
-		if (_iCnt < 16)
+		if (_iCnt < 8)
 		{
 			// 팝업 창 하나 종료 막기
 

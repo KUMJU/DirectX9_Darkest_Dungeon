@@ -28,6 +28,7 @@ HRESULT CHighwayman::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bIsHero = true;
+	m_strName = L"Highwayman";
 
 	m_eHeroType = EHeroType::HIGHWAYMAN;
 

@@ -11,6 +11,7 @@ class CRcTex;
 class CTexture;
 class CTransform;
 class CAnimator;
+class CEffect;
 
 END
 
@@ -250,10 +251,7 @@ protected:
 	shared_ptr<CRcTex> m_pEffectBufCom = nullptr;
 	shared_ptr<CAnimator> m_pEffectTextureCom = nullptr;
 
-	/*shared_ptr<CEffect> m_pEffect = nullptr;
-	shared_ptr<CEffect> m_pHeadEffect = nullptr;
-	shared_ptr<CEffect> m_pFontEffect = nullptr;
-	shared_ptr<CEffect> m_pDamageEffect = nullptr;*/
+	shared_ptr<CEffect> m_pLoopEffect = nullptr;
 
 protected:
 	_bool		m_bIsHero = false;
@@ -319,6 +317,8 @@ protected:
 
 	// ÇÇÅ·µÆ´ÂÁö ¾ÈµÆ´ÂÁö
 	_bool		m_bPicked = false;
+
+	tstring		m_strName = L"";
 
 
 protected:

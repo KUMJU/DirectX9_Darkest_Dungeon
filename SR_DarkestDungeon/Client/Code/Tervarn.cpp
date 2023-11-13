@@ -9,6 +9,7 @@
 #include "Gambling.h"
 #include "TavernNPC.h"
 #include "EnvironmentObj.h"
+#include "Trigger.h"
 
 CTervarn::CTervarn(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInside(pGraphicDev)
@@ -146,6 +147,13 @@ HRESULT CTervarn::ReadyGameObject()
 		m_pBarBack->SetPos({ m_vPos.x + VILLAGE_TILESIZE / 2.f + 4.f, m_vPos.y + m_pBarBack->GetScale().y / 2.f + m_pBarBack->GetScale().y / 3.f, m_vPos.z + VILLAGE_TILESIZE * 3 - 1.1f });
 
 		m_vecGameObject.push_back(m_pBarBack);
+
+		// 이동 트리거
+		shared_ptr<CGameObject> m_pTrigger = make_shared<CTrigger>(m_pGraphicDev, L"Tavern", true);
+		m_pTrigger->SetScale({ 3.f, 3.f, 3.f });
+		m_pTrigger->SetPos({ m_vPos.x + VILLAGE_TILESIZE * 2.5f / 5.f * 3.f, m_vPos.y, m_vPos.z - 5.f });
+
+		m_vecGameObject.push_back(m_pTrigger);
 	}
 
 	return __super::ReadyGameObject();

@@ -125,6 +125,9 @@ public:
 	EAffliction	GetAffliction() { return m_eAffliction; }
 	EVirtue		GetVirtue() { return m_eVirtue; }
 
+	void		SetCheck(_bool	_bCheck) { m_bCheck = _bCheck; }
+	_bool		GetCheck() { return m_bCheck; }
+
 protected:
 
 	_int				m_iStress = 0;		// 스트레스
@@ -175,6 +178,8 @@ protected:
 
 	// 장착되지 않거나 잠금해제 되지 않은 스킬도 가지고 있는 변수
 	vector<shared_ptr<CSkill>>	m_pVecSkillAll;
+
+	_bool		m_bCheck = false;
 
 protected:
 	_bool		m_bReady = false;

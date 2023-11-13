@@ -233,6 +233,9 @@
     <ClCompile Include="..\Code\LoadingBack.cpp">
       <Filter>00. Scene\05. LoadingScreen\LoadingBackGround</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Trigger.cpp">
+      <Filter>01. GameObject\04. Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -467,6 +470,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\GuildNPC.h">
       <Filter>01. GameObject\02 InteractionObj\01. Village</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Trigger.h">
+      <Filter>01. GameObject\04. Environment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

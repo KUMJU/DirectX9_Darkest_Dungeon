@@ -31,7 +31,7 @@ public:
 private:
 	virtual void			AddComponent();
 
-private:
+protected:
 	shared_ptr<CRcTex> m_pBufferCom = nullptr;
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
 	shared_ptr<CTransform> m_pTransformCom = nullptr;

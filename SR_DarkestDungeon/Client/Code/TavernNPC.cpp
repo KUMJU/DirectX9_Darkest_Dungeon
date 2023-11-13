@@ -33,12 +33,18 @@ _int CTavernNPC::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
+	/*for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+		iter->UpdateGameObject(fTimeDelta);*/
+
 	return iExit;
 }
 
 void CTavernNPC::LateUpdateGameObject()
 {
 	__super::LateUpdateGameObject();
+
+	/*for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+		iter->LateUpdateGameObject();*/
 }
 
 void CTavernNPC::RenderGameObject()

@@ -139,8 +139,12 @@ _int CHeroStat::UpdateGameObject(const _float& fTimeDelta)
 
 				// 영웅 추가 코드
 				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->AddHero(m_pHero.lock());
+				CSceneMgr::GetInstance()->AddNewObject(L"Layer_4_GameObj", m_pHero.lock()->GetObjKey(), m_pHero.lock());
 
 				m_bVisible = false;
+				
+				m_pHero.lock()->SetPos({ -100.f, 100.f, -100.f });
+				dynamic_pointer_cast<CTransform>(m_pHero.lock()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(-100.f, 100.f, -100.f);
 
 				// 역마차에서 영웅 삭제
 				m_pHero.lock()->SetHired(true);

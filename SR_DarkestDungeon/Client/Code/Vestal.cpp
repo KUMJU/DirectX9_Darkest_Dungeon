@@ -31,6 +31,7 @@ HRESULT CVestal::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bIsHero = true;
+	m_strName = L"Vestal";
 
 	m_eHeroType = EHeroType::VESTAL;
 
