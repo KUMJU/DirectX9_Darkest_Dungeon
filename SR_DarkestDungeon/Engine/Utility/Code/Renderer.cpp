@@ -110,9 +110,6 @@ void CRenderer::RenderFront(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::RenderUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-
-
-
 	for (auto& iter : m_RenderList[RENDER_UI]) {
 		iter->RenderGameObject();
 	}

@@ -87,11 +87,7 @@ public:
 	_int		GetStress() { return m_iStress; }
 	void		SetStress(_int _iValue) { m_iStress = _iValue; }
 	void		IncreaseStress(_int _iValue);
-	void		DecreaseStress(_int _iValue)
-	{
-		m_iStress -= _iValue;
-		if (m_iStress < 0) m_iStress = 0;
-	}
+	void		DecreaseStress(_int _iValue);
 
 	_float		GetCritical() { return m_fCritical; }
 	void		SetCritical(_float _fValue) { m_fCritical = _fValue; }

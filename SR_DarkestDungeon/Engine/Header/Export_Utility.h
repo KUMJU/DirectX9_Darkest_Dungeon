@@ -17,6 +17,9 @@
 #include"Light.h"
 #include"LightMgr.h"
 
+#include "Effect.h"
+#include "EffectMgr.h"
+
 
 BEGIN(Engine)
 

@@ -1,21 +1,23 @@
 #pragma once
+
 #include "Engine_Define.h"
+#include "Effect.h"
 
-#include "Transform.h"
-#include "RcTex.h"
-#include "Animator.h"
+#define	POOLSIZE 50
 
-class CEffect;
+BEGIN(Engine)
 
-#define	POOLSIZE 20
-
-class CEffectMgr
+class ENGINE_DLL CEffectMgr
 {
 	DECLARE_SINGLETON(CEffectMgr)
-
 public:
 	explicit CEffectMgr();
 	virtual ~CEffectMgr();
+
+public:
+	int		Update(const float& _fDeltaTime);
+	void	LateUpdate();
+	void	Render(LPDIRECT3DDEVICE9 _pGraphicDev);
 
 public:
 	void	SetEffectMgr(LPDIRECT3DDEVICE9 _pGraphicDev);
@@ -28,3 +30,5 @@ private:
 	vector<shared_ptr<CEffect>> m_pEffectList;
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 };
+
+END

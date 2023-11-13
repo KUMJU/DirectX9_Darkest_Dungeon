@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "CollisionMgr.h"
 #include "PickingMgr.h"
+#include "EffectMgr.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 _pGraphicDev) : m_pGraphicDev(_pGraphicDev)
 {
@@ -29,6 +30,8 @@ _int CScene::UpdateScene(const _float& _fTimeDelta)
 			return iResult;
 	}
 
+	CEffectMgr::GetInstance()->Update(_fTimeDelta);
+
 	return _int();
 }
 
@@ -44,6 +47,8 @@ void CScene::LateUpdateScene()
 	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_PROJECTILE, ECollideID::PLAYER);
 
 	CCollisionMgr::GetInstance()->ClearCollisionGroup();
+
+	CEffectMgr::GetInstance()->LateUpdate();
 
 	CPickingMgr::GetInstance()->RemoveList();
 

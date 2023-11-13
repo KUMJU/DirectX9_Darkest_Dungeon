@@ -1,16 +1,15 @@
 #pragma once
+#include "Engine_Define.h"
 #include "GameObject.h"
+
+#include "Animator.h"
+#include "Transform.h"
+#include "RcTex.h"
+#include "Texture.h"
 
 BEGIN(Engine)
 
-class CAnimator;
-class CTransform;
-class CRcTex;
-class CTexture;
-
-END
-
-class CEffect : public CGameObject
+class ENGINE_DLL CEffect : public CGameObject
 {
 public:
 	explicit CEffect(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -25,12 +24,14 @@ public:
 public:
 	virtual void	AddComponent();
 
+	void	SetNum(_int _iNum) { m_iNum = _iNum; }
+
 	// 애니메이션 설정
 	void	SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime);
-	void	SetDamageEffect(_int _iDamage, _bool _bDamage, _vec3* _vPos, _float _fAnimTime);
+	void	SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _float _fAnimTime);
 	void	SetFontEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime);
-	void	SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime, _bool _bLoop);
-	void	SetProjEffect(tstring _strAnimKey, _vec3 _vPos, const _vec3* _vScale, _float _fAnimTime);
+	void	SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime, _bool _bLoop);
+	void	SetProjEffect(tstring _strAnimKey, _vec3 _vPos, _float _fAnimTime);
 
 
 	void	SetAnimKey(tstring _strAnimKey) { m_strAnimKey = _strAnimKey; }
@@ -38,7 +39,7 @@ public:
 	void	SetLoop(_bool _bLoop) { m_bLoop = _bLoop; }
 
 	// Transform 설정
-	void	SetPos(_vec3* _vPos); 
+	void	SetPos(_vec3* _vPos);
 	void	SetScale(const _vec3* _vScale);
 
 public:
@@ -61,12 +62,17 @@ private:
 	shared_ptr<CTexture>	m_pTextureCom2;
 
 private:
+	// 이펙트 식별 번호
+	_int	m_iNum;
+
 	_float	m_fDeltaTime;
 
 	// 이펙트를 호출한 객체의 포지션
-	_vec3*	m_vPos;
+	_vec3* m_vPos;
 	// 이펙트를 호출한 객체의 스케일
 	//const _vec3*	m_vScale;
+	// 객체와 상관없이 사용할 포지션
+	_vec3	m_vPosOrigin;
 	// 객체와 상관없이 사용할 스케일
 	_vec3	m_vScale;
 
@@ -106,3 +112,5 @@ private:
 	// 텍스처 1개 or 2개
 	_bool	m_bTwoTexture;
 };
+
+END

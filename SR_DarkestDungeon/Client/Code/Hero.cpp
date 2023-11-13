@@ -6,6 +6,8 @@
 #include "UIMgr.h"
 #include "Player.h"
 
+#include "EffectMgr.h"
+
 CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
 {
@@ -128,9 +130,27 @@ void CHero::PickingObj()
 
 void CHero::IncreaseStress(_int _iValue)
 {
+	if (_iValue == 0) return;
+
 	m_iStress += _iValue;
 
+	shared_ptr<CEffect> pEffect;
+
 	// 이펙트 넣을 시점
+	// 헤드 이펙트
+	{
+		pEffect = CEffectMgr::GetInstance()->GetEffect();
+		pEffect->SetHeadEffect(L"UI_Head_StressUp", m_pTransformCom->GetPos(), ATTACKTIME, false);
+		pEffect->SetActive(true);
+	}
+
+	// 폰트 이펙트
+	{
+		if (_iValue >= 100) _iValue = 99;
+		pEffect = CEffectMgr::GetInstance()->GetEffect();
+		pEffect->SetDamageEffect(2, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+		pEffect->SetActive(true);
+	}
 
 	if (m_iStress >= 100 && !m_bVirtue && !m_bAffliction)
 	{
@@ -168,6 +188,30 @@ void CHero::IncreaseStress(_int _iValue)
 	{
 		m_iStress = 200;
 	}
+}
+
+void CHero::DecreaseStress(_int _iValue)
+{
+	m_iStress -= _iValue;
+	if (m_iStress < 0) m_iStress = 0;
+
+	//shared_ptr<CEffect> pEffect;
+
+	//// 이펙트 넣을 시점
+	//// 헤드 이펙트
+	//{
+	//	pEffect = CEffectMgr::GetInstance()->GetEffect();
+	//	pEffect->SetHeadEffect(L"UI_Head_StressDown", m_pTransformCom->GetPos(), ATTACKTIME, false);
+	//	pEffect->SetActive(true);
+	//}
+
+	//// 폰트 이펙트
+	//{
+	//	if (_iValue >= 100) _iValue = 99;
+	//	pEffect = CEffectMgr::GetInstance()->GetEffect();
+	//	pEffect->SetDamageEffect(2, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+	//	pEffect->SetActive(true);
+	//}
 }
 
 shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)
@@ -250,7 +294,7 @@ void CHero::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({3.f, 3.f, 1.f});
+	m_pColliderCom->SetScale({ 3.f, 3.f, 1.f });
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 }
 
@@ -341,13 +385,13 @@ void CHero::StressEvent()
 	{
 		switch (m_eAffliction)
 		{
-		// 스트레스
+			// 스트레스
 		case EAffliction::SELFISH:
 			m_iStress += 5;
 			m_bDelay = true;
 			// 이펙트 넣어주기
 			break;
-		// 자해
+			// 자해
 		case EAffliction::IRRATIONAL:
 			m_tCommonStat.iHp -= 3;
 			m_bHitted = true;

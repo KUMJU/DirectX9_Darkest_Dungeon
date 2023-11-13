@@ -1,9 +1,11 @@
-#include"pch.h"
+#include "pch.h"
 #include "PlayerProj.h"
-#include"Export_Utility.h"
+#include "Export_System.h"
+#include "Export_Utility.h"
 
-#include"EffectMgr.h"
-#include"Effect.h"
+#include "EffectMgr.h"
+#include "Effect.h"
+
 
 CPlayerProj::CPlayerProj(LPDIRECT3DDEVICE9 _pGraphicDev, tstring _strKeyName, _vec3 _vInitPos, _matrix _matPlrWorld)
 	:CGameObject(_pGraphicDev), m_strAnimKeyName(_strKeyName)
@@ -37,11 +39,6 @@ HRESULT CPlayerProj::ReadyGameObject()
 
 _int CPlayerProj::UpdateGameObject(const _float& fTimeDelta)
 {
-	if (m_pEffect) {
-		m_pEffect->UpdateGameObject(fTimeDelta);
-	}
-
-
 	if (!m_bTestBool)
 		return 0;
 
@@ -77,9 +74,6 @@ void CPlayerProj::LateUpdateGameObject()
 
 void CPlayerProj::RenderGameObject()
 {
-	if (m_pEffect)
-		m_pEffect->RenderGameObject();
-
 	if (!m_bTestBool)
 		return;
 
@@ -136,20 +130,12 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 	if (ECollideID::WALL == _pObj->GetColType() || ECollideID::ENVIRONMENT == _pObj->GetColType())
 	{
 		//Effect Setting
+		shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 		
-		m_pEffect = CEffectMgr::GetInstance()->GetEffect();
-		
-		if (m_pEffect) {
-
-			_vec3 testPos = *m_pTransmCom->GetPos();
-			m_pEffect->SetProjEffect(m_strEffectAnimKey, testPos, m_pTransmCom->GetScale(), 10.f);
-			m_pEffect->SetActive(true);
-
-		}
+		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransmCom->GetPos(), 0.5f);
+		pEffect->SetActive(true);
 
 		m_bTestBool = false;
 		//m_bEnable = false;
-
 	}
-
 }

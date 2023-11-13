@@ -90,21 +90,21 @@ _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 		m_pStatInfo->UpdateGameObject(fTimeDelta);
 	}
 
-	// 스킬 이펙트
-	if (m_pEffect && m_pEffect->GetIsActive())
-		m_pEffect->UpdateGameObject(fTimeDelta);
+	//// 스킬 이펙트
+	//if (m_pEffect && m_pEffect->GetIsActive())
+	//	m_pEffect->UpdateGameObject(fTimeDelta);
 
-	// 데미지 폰트 이펙트
-	if (m_pDamageEffect && m_pDamageEffect->GetIsActive())
-		m_pDamageEffect->UpdateGameObject(fTimeDelta);
+	//// 데미지 폰트 이펙트
+	//if (m_pDamageEffect && m_pDamageEffect->GetIsActive())
+	//	m_pDamageEffect->UpdateGameObject(fTimeDelta);
 
-	// 약화, 기절, 치명타 등등 이펙트
-	if (m_pFontEffect && m_pFontEffect->GetIsActive())
-		m_pFontEffect->UpdateGameObject(fTimeDelta);
+	//// 약화, 기절, 치명타 등등 이펙트
+	//if (m_pFontEffect && m_pFontEffect->GetIsActive())
+	//	m_pFontEffect->UpdateGameObject(fTimeDelta);
 
-	// 머리 이펙트
-	if (m_pHeadEffect && m_pHeadEffect->GetIsActive())
-		m_pHeadEffect->UpdateGameObject(fTimeDelta);
+	//// 머리 이펙트
+	//if (m_pHeadEffect && m_pHeadEffect->GetIsActive())
+	//	m_pHeadEffect->UpdateGameObject(fTimeDelta);
 
 	return iExit;
 }
@@ -131,7 +131,7 @@ void CCreature::RenderGameObject()
 	if (m_pStatInfo != nullptr && bStatBarOn)
 		m_pStatInfo->RenderGameObject();
 
-	if (m_pEffect && m_pEffect->GetIsActive())
+	/*if (m_pEffect && m_pEffect->GetIsActive())
 		m_pEffect->RenderGameObject();
 
 	if (m_pFontEffect && m_pFontEffect->GetIsActive())
@@ -141,7 +141,7 @@ void CCreature::RenderGameObject()
 		m_pHeadEffect->RenderGameObject();
 
 	if (m_pDamageEffect && m_pDamageEffect->GetIsActive())
-		m_pDamageEffect->RenderGameObject();
+		m_pDamageEffect->RenderGameObject();*/
 
 }
 
@@ -155,6 +155,26 @@ _bool CCreature::IsAttacking()
 		}
 	}
 	return false;
+}
+
+void CCreature::SetStun(_bool _bStun)
+{
+	m_bState[2] = true;
+
+	shared_ptr<CEffect> pEffect;
+	// 폰트 이펙트
+	{
+		pEffect = CEffectMgr::GetInstance()->GetEffect();
+		pEffect->SetFontEffect(L"UI_Stun", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+		pEffect->SetActive(true);
+	}
+
+	// 헤드 이펙트
+	{
+		pEffect = CEffectMgr::GetInstance()->GetEffect();
+		pEffect->SetHeadEffect(L"UI_Head_Stun", m_pTransformCom->GetPos(), ATTACKTIME, true);
+		pEffect->SetActive(true);
+	}
 }
 
 //shared_ptr<CSkill> CCreature::GetSkill(tstring _strSkillName)
@@ -178,12 +198,28 @@ _bool CCreature::IsAttacking()
 //	return S_OK;
 //}
 
+void CCreature::IncreaseHP(_int _iValue)
+{
+	if (_iValue == 0) return;
+
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetDamageEffect(1, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+	pEffect->SetActive(true);
+
+	m_tCommonStat.iHp += _iValue;
+	if (m_tCommonStat.iHp >= m_tCommonStat.iMaxHp)
+		m_tCommonStat.iHp = m_tCommonStat.iMaxHp;
+}
+
 void CCreature::DecreaseHP(_int _iValue)
 {
-	m_pFontEffect = CEffectMgr::GetInstance()->GetEffect();
+	if (_iValue == 0) return;
 
-	m_pFontEffect->SetDamageEffect(_iValue, true, m_pTransformCom->GetPos(), ATTACKTIME);
-	m_pFontEffect->SetActive(true);
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetDamageEffect(0, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+	pEffect->SetActive(true);
 
 	m_tCommonStat.iHp -= _iValue;
 	if (m_tCommonStat.iHp < 0)
@@ -197,6 +233,22 @@ void CCreature::StartCalculate()
 	// 출혈이나 중독 상태라면
 	if (m_bState[0] || m_bState[1])
 	{
+		if (m_bState[0])
+		{
+			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+			pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+			pEffect->SetActive(true);
+		}
+
+		if (m_bState[1])
+		{
+			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+			pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+			pEffect->SetActive(true);
+		}
+
 		// 도트뎀 계산
 		m_tCommonStat.iHp -= (m_iBlightDot[0] + m_iBleedDot[0]);
 		// 사망하지 않았을때는 피가 0아래로 안닳게 하기
@@ -222,6 +274,7 @@ void CCreature::StartCalculate()
 	// 기절
 	if (m_bState[2])
 	{
+		// 기절 이펙트 없애는 타이밍
 		m_bState[2] = false;
 		m_bMyTurn = false;
 	}
@@ -686,6 +739,11 @@ void CCreature::EndAttack(shared_ptr<CGameObject> _pCreature)
 
 void CCreature::Buff1Skill(_int* _iDotBuff)
 {
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetFontEffect(L"UI_Buff", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetActive(true);
+
 	for (int i = 0; i < _iDotBuff[1]; i++)
 	{
 		m_iBuff1Dot[i] += _iDotBuff[0];
@@ -694,6 +752,11 @@ void CCreature::Buff1Skill(_int* _iDotBuff)
 
 void CCreature::Buff2Skill(_int* _iDotBuff)
 {
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetFontEffect(L"UI_Buff", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetActive(true);
+
 	for (int i = 0; i < _iDotBuff[1]; i++)
 	{
 		m_iBuff2Dot[i] += _iDotBuff[0];
@@ -702,6 +765,11 @@ void CCreature::Buff2Skill(_int* _iDotBuff)
 
 void CCreature::DeBuffSkill(_int* _iDotDeBuff)
 {
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetFontEffect(L"UI_Debuff", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetActive(true);
+
 	for (int i = 0; i < _iDotDeBuff[1]; i++)
 	{
 		m_iDeBuff1Dot[i] += _iDotDeBuff[0];
@@ -716,6 +784,11 @@ void CCreature::Buff1Reset()
 
 void CCreature::BlightAttack(_int* _iDotDam)
 {
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetActive(true);
+
 	for (int i = 0; i < _iDotDam[1]; i++)
 	{
 		m_iBlightDot[i] += _iDotDam[0];
@@ -724,6 +797,11 @@ void CCreature::BlightAttack(_int* _iDotDam)
 
 void CCreature::BleedAttack(_int* _iDotDam)
 {
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+	pEffect->SetActive(true);
+
 	for (int i = 0; i < _iDotDam[1]; i++)
 	{
 		m_iBleedDot[i] += _iDotDam[0];
@@ -748,11 +826,12 @@ void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool 
 {
 	if (_bTarget)
 	{
+		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
 		tstring strEffectAnimKey;
 
 		if (!_bDodge)
 		{
-			m_pEffect = CEffectMgr::GetInstance()->GetEffect();
 
 			if (_pSkill->GetTargetEffectAnimKey() != L"")
 			{
@@ -764,20 +843,18 @@ void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool 
 				strEffectAnimKey = L"Effect_Blood";
 			}
 
-			m_pEffect->SetSkillEffect(strEffectAnimKey, m_pTextureCom->GetTextureSize(), m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+			pEffect->SetSkillEffect(strEffectAnimKey, m_pTextureCom->GetTextureSize(), m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
 
-			m_pEffect->SetActive(true);
+			pEffect->SetActive(true);
 		}
 
 		// 회피했을 경우
 		else
 		{
-			m_pFontEffect = CEffectMgr::GetInstance()->GetEffect();
-
 			strEffectAnimKey = L"UI_Dodge";
-			m_pFontEffect->SetFontEffect(strEffectAnimKey, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+			pEffect->SetFontEffect(strEffectAnimKey, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
 
-			m_pFontEffect->SetActive(true);
+			pEffect->SetActive(true);
 		}
 	}
 
@@ -785,12 +862,12 @@ void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool 
 	{
 		if (_pSkill->GetEffectAnimKey() != L"")
 		{
-			m_pEffect = CEffectMgr::GetInstance()->GetEffect();
+			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
 			shared_ptr< tagTextureInfo> textureInfo = *CResourceMgr::GetInstance()->GetTexture(_pSkill->GetAnimKey(), TEX_NORMAL)->begin();
 
-			m_pEffect->SetSkillEffect(_pSkill->GetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
-			m_pEffect->SetActive(true);
+			pEffect->SetSkillEffect(_pSkill->GetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+			pEffect->SetActive(true);
 		}
 	}
 }
