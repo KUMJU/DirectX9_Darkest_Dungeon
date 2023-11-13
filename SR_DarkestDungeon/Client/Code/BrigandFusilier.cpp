@@ -67,30 +67,30 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 		{
 		case EAnimState::COMBAT:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Combat", 0.05f);
-			m_pTransformCom->SetScale(2.5f, 2.5f, 1.f);
+			m_pTransformCom->SetScale(2.5f, 2.5f, 2.5f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f, m_vPos.z);
 
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Hitted", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 207.f / 230.f, 2.5f * 291.f / 291.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 207.f / 230.f, 2.5f * 291.f / 291.f, 2.5f * 207.f / 230.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 291.f / 291.f, m_vPos.z);
 
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Attack1", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 207.f / 230.f, 2.5f * 291.f / 291.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 207.f / 230.f, 2.5f * 291.f / 291.f, 2.5f * 207.f / 230.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 291.f / 291.f, m_vPos.z);
 			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_pointblank.wav", CHANNELID::MONSTER, 1.f);
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Dead", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 215 / 230.f, 2.5f * 137 / 291.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 215 / 230.f, 2.5f * 137 / 291.f, 2.5f * 215 / 230.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 137 / 291.f, m_vPos.z);
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Death", 0.02f);
-			m_pTransformCom->SetScale(2.5f * 232.f / 230.f, 2.5f * 311.f / 291.f, 1.f);
+			m_pTransformCom->SetScale(2.5f * 232.f / 230.f, 2.5f * 311.f / 291.f, 2.5f * 232.f / 230.f);
 
 			break;
 		}

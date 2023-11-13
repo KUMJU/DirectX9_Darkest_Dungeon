@@ -17,6 +17,9 @@ CBattleHeroUI::~CBattleHeroUI()
 
 HRESULT CBattleHeroUI::ReadyGameObject()
 {
+    if (m_bReady) return S_OK;
+
+
     m_vSize = { 256.5f, 51.f , 0.f};
     m_vAngle = { 0.f, 0.f, 0.f };
     m_vPos = { -250.f, -250.f, 0.f };

@@ -266,11 +266,13 @@ void CStaticCamera::ChangeCamEyePos()
 	//Rotation
 	if (m_fActTime >= m_fTotalTime && m_eCurrentState == ECameraMode::ROTATION) {
 
-		if (m_bInVillage) {
+		if (m_bInteraction) {
 			if (m_bIsLookBack) {
 				m_eCurrentState = ECameraMode::VILLAGE;
+				m_bInVillage = true;
 				m_fYAngle = 0.f;
 				m_bIsLookBack = false;
+				m_bInteraction = false;
 
 			}
 			else {
@@ -614,6 +616,7 @@ void CStaticCamera::Mouse_Fix()
 
 void CStaticCamera::InteractionTervarn()
 {
+	m_bInteraction = true;
 	_vec3 vCamLook;
 	_vec3 vLook = { 0.f , 0.f ,1.f };
 
@@ -644,10 +647,11 @@ void CStaticCamera::InteractionTervarn()
 	}
 
 	m_fActTime += m_deltaTime;
+
 	if (m_fActTime > 0.5f) {
 		ChangeCameraWithDegree(ECameraMode::ROTATION, 180.f);
 	}
-
+	
 }
 
 void CStaticCamera::KeyInput()

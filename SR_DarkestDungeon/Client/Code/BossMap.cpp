@@ -68,11 +68,14 @@ HRESULT CBossMap::ReadyScene()
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
 	Ready_Layer_GameObject(L"Layer_4_GameObj");
 	Ready_Layer_UI(L"Layer_2_UI");
+	CUIMgr::GetInstance()->SceneUIInitialize();
 	Ready_Layer_Camera(L"Layer_5_Camera");
 
 	for (auto& iter : m_mapLayer) { 
 		iter.second->ReadyLayer();
 	}
+
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetPlayerMode(EPlayerMode::BOSS_FIELD);
 
  	return __super::ReadyScene();
 }
@@ -253,11 +256,18 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	// Player
-	shared_ptr<CGameObject> m_pPlayer = make_shared<CPlayer>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pPlayer;
+
+	m_pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
 	m_pPlayer->SetPos({ 320.f, 0.f, 200.f });
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
-	CGameMgr::GetInstance()->SetPlayer(m_pPlayer);
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
+	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(320.f, 0.f, 200.f);
+	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetAngle({ 0.f, 0.f, 0.f });
+
+	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+	m_pLayer->CreateGameObject(L"Obj_PlayerHand", dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPlayerHand());
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
 
 	// Boss
@@ -335,10 +345,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 
 	// Layer¿¡ GameObject ³Ö±â
 
-	//PlayerObj
-	shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);
-	(dynamic_pointer_cast<CPlayer>(m_pPlayer))->SetPlayerHand(dynamic_pointer_cast<CPlayerHand>(m_pPlayerHand));
+	m_pLayer->CreateGameObject(L"Obj_PlayerHand", dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPlayerHand());
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
@@ -350,13 +357,7 @@ HRESULT CBossMap::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	shared_ptr<CGameObject> m_pInventory = make_shared<CInventory>(m_pGraphicDev);
-	m_pLayer->CreateGameObject(L"Obj_UI", m_pInventory);
 
-	CUIMgr::GetInstance()->AddUIObject(L"UI_Inventory", dynamic_pointer_cast<CUIObj>(m_pInventory));
-
-	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
-	
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;

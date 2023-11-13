@@ -21,6 +21,8 @@ public:
 	HRESULT AddNewObject(const tstring& _strLayerName, const tstring& _strObjKey, shared_ptr<CGameObject> _pObj);
 	void KeyInput();
 
+	void SetLight();
+
 public:
 	shared_ptr<CComponent> GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID);
 

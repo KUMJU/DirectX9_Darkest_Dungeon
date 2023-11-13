@@ -4,6 +4,7 @@
 #include"Weald_Dungeon.h"
 #include"SceneMgr.h"
 #include"Village.h"
+#include"Ruin_Dungeon.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -44,6 +45,30 @@ _uint CLoading::Loading_ForStage()
 
 }
 
+_uint CLoading::Loading_ForVillage()
+{
+	CResourceMgr::GetInstance()->VillageTextureLoad();
+
+	m_pNextScene = make_shared<CVillage>(m_pGraphicDev);
+	CSceneMgr::GetInstance()->SetReadyScene(m_pNextScene);
+	m_pNextScene->ReadyScene();
+	m_bFinish = true;
+
+	return 0;
+}
+
+_uint CLoading::Loading_ForRuin()
+{
+	CResourceMgr::GetInstance()->RuinDungeonTextureLoad();
+
+	m_pNextScene = make_shared<CRuin_Dungeon>(m_pGraphicDev);
+	CSceneMgr::GetInstance()->SetReadyScene(m_pNextScene);
+	m_pNextScene->ReadyScene();
+	m_bFinish = true;
+
+	return 0;
+}
+
 unsigned int CLoading::Thread_Main(void* pArg)
 {
 	CLoading* pLoading = reinterpret_cast<CLoading*>(pArg);
@@ -56,10 +81,12 @@ unsigned int CLoading::Thread_Main(void* pArg)
 	case LOADING_STAGE:
 		iFlag = pLoading->Loading_ForStage();
 		break;
-
 	case LOADING_VILLAGE:
+		iFlag = pLoading->Loading_ForVillage();
 		break;
 	case LOADING_RUIN:
+		iFlag = pLoading->Loading_ForRuin();
+
 		break;
 	case LOADING_BOSSMAP:
 		break;

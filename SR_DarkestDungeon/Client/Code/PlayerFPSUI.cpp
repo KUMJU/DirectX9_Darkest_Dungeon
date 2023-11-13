@@ -14,6 +14,8 @@ CPlayerFPSUI::~CPlayerFPSUI()
 
 HRESULT CPlayerFPSUI::ReadyGameObject()
 {
+    if (m_bReady) return S_OK;
+
     m_vSize = { 180.f , 118.f ,0.f };
     m_vAngle = { 0.f, 0.f, 0.f };
     m_vPos = { 640.f - m_vSize.x, -240.f, 0.5f };

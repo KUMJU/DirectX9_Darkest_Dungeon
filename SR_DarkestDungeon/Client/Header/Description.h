@@ -84,8 +84,6 @@ protected:
 	TCHAR m_buf[64];
 	_vec2 m_vTextPos;
 
-	_bool	m_bReady = false;
-
 	// 스킬에 사용되는 컴포넌트들
 	shared_ptr<CTexture> m_pEmptyPosTexture = nullptr;
 	shared_ptr<CTexture> m_pFillPosTexture = nullptr;

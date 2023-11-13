@@ -114,7 +114,7 @@ void CWeald_Curio_Tent::AddComponent()
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
+	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.x);
 
 	//pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	//m_pTextureCom->SetTextureKey(L"Weald_Traps_Remains", TEX_NORMAL);

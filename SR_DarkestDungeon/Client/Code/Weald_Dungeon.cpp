@@ -54,6 +54,8 @@
 
 #include"PlayerFPSUI.h"
 
+#include"LoadingScreen.h"
+
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -84,6 +86,9 @@ HRESULT CWeald_Dungeon::ReadyScene()
 	Ready_Layer_GameObject(L"Layer_4_GameObj");
 	Ready_Layer_UI(L"Layer_2_UI");
 	Ready_Layer_Camera(L"Layer_5_Camera");
+
+
+	CScene::SetLight();
 
 	for (auto& iter : m_mapLayer) {
 		//GameComponenet Setting
@@ -281,6 +286,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		m_pRoom3->GetBattleSystem()->EndBattle();
 		CCameraMgr::GetInstance()->SetFPSMode();
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
+		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
 		m_pRoom3->SetBattleTrigger(false);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
 	}
@@ -290,11 +296,14 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 
 	// 마을로 씬 변경
 	if (GetAsyncKeyState('6') & 0x8000) {
+
+		//로딩 스레드 적용
 		CSoundMgr::GetInstance()->StopAll();
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
-		shared_ptr<CVillage> pScene = make_shared<CVillage>(m_pGraphicDev);
-		CSceneMgr::GetInstance()->ChangeScene(pScene);
-		pScene->ReadyScene();
+		shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::VILLAGE);
+		CSceneMgr::GetInstance()->SetLoadingState(false);
+		CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
+		pLoadingScreen->ReadyScene();
 	}
 
 	// 끝에 도달하면 마을로 씬전환
@@ -304,9 +313,12 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 
 		if (pTransform->GetPos()->z > WEALD_WALLSIZEX * 30.f)
 		{
-			shared_ptr<CVillage> pScene = make_shared<CVillage>(m_pGraphicDev);
-			CSceneMgr::GetInstance()->ChangeScene(pScene);
-			pScene->ReadyScene();
+			CSoundMgr::GetInstance()->StopAll();
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+			shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::VILLAGE);
+			CSceneMgr::GetInstance()->SetLoadingState(false);
+			CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
+			pLoadingScreen->ReadyScene();
 		}
 	}
 

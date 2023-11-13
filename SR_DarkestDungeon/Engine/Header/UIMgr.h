@@ -20,6 +20,15 @@ public:
 	void AddUIObject(tstring _strKeyName, shared_ptr<CUIObj> _pObj);
 	shared_ptr<CUIObj> GetUIObject(tstring _strKeyName);
 	
+public:
+
+	void SceneUIInitialize();
+	void SceneChange();
+
+	
+public:
+
+
 	void AllVisibleOn();
 	void AllVisibleOff();
 	

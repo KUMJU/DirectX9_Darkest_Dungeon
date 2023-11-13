@@ -67,6 +67,8 @@ private:
 
 	_bool m_bPlrSpellHand = false;
 
+	_bool m_bReady = false;
+
 };
 
 

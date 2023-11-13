@@ -70,5 +70,21 @@ shared_ptr<CLight> CLightMgr::InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev)
 
 shared_ptr<CLight> CLightMgr::InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev)
 {
-	return shared_ptr<CLight>();
+	D3DLIGHT9 pLightInfo;
+
+	ZeroMemory(&pLightInfo, sizeof(D3DLIGHT9));
+
+	pLightInfo.Type = D3DLIGHT_DIRECTIONAL;
+
+	pLightInfo.Diffuse = { 0.5f, 0.5f, 0.5f, 1.f };
+	pLightInfo.Specular = { 0.5f, 0.5f, 0.5f, 1.f };
+	pLightInfo.Ambient = { 0.5f, 0.5f, 0.5f, 1.f };
+	pLightInfo.Direction = { 1.f, -1.f, 1.f };
+
+	shared_ptr<CLight> pLight = make_shared<CLight>(_pGraphicDev);
+	pLight->ReadyLight(&pLightInfo, (_uint)m_LightList.size());
+
+	m_LightList.push_back(pLight);
+
+	return pLight;
 }

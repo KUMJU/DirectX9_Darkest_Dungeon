@@ -12,6 +12,8 @@ CUIObj::~CUIObj()
 HRESULT CUIObj::ReadyGameObject()
 {
 	CalculateUIRect();
+	m_bReady = true;
+
 	return S_OK;
 }
 
@@ -32,6 +34,8 @@ void CUIObj::RenderGameObject()
 
 void CUIObj::AddComponent()
 {
+	if (m_bReady) return;
+
 	shared_ptr<CComponent> pComponent;
 
 	pComponent = m_pRcTexCom = make_shared<CRcTex>(m_pGraphicDev);

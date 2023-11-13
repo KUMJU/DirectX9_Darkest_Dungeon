@@ -52,6 +52,4 @@ private:
 
 	weak_ptr<CPlayer> m_pPlayer;
 
-	_bool			m_bReady = false;
-
 };
