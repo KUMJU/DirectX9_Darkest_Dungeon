@@ -43,6 +43,7 @@ inline void ClearRenderGroup()
 
 inline void Release_Utility()
 {
+    CEffectMgr::GetInstance()->DestroyInstance();
     CRenderer::GetInstance()->DestroyInstance();
     CSceneMgr::GetInstance()->DestroyInstance();
     CGameMgr::GetInstance()->DestroyInstance();

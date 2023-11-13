@@ -155,6 +155,8 @@
     <ClInclude Include="..\..\Header\CollisionMgr.h" />
     <ClInclude Include="..\..\Header\Component.h" />
     <ClInclude Include="..\..\Header\CubeTex.h" />
+    <ClInclude Include="..\..\Header\Effect.h" />
+    <ClInclude Include="..\..\Header\EffectMgr.h" />
     <ClInclude Include="..\..\Header\EngineUtil.h" />
     <ClInclude Include="..\..\Header\Export_Utility.h" />
     <ClInclude Include="..\..\Header\GameMgr.h" />
@@ -183,6 +185,8 @@
     <ClCompile Include="..\Code\CollisionMgr.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />
     <ClCompile Include="..\Code\CubeTex.cpp" />
+    <ClCompile Include="..\Code\Effect.cpp" />
+    <ClCompile Include="..\Code\EffectMgr.cpp" />
     <ClCompile Include="..\Code\EngineUtil.cpp" />
     <ClCompile Include="..\Code\GameMgr.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />

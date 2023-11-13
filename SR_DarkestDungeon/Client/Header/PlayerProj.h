@@ -61,6 +61,4 @@ private:
 
 	_bool	m_bTestBool = true;
 
-	shared_ptr<CEffect> m_pEffect = nullptr;
-
 };

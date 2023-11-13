@@ -968,6 +968,16 @@ void CResourceMgr::WealdDungeonTextureLoad()
 			CreateNewTexture(L"UI_Stun", TEX_NORMAL,
 				L"../Bin/Resource/Image/UI/Battle/Letter/Stun.png", 1, bDefault);
 		}
+
+		// Head Effect
+		{
+			CreateNewTexture(L"UI_Head_StressUp", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_afflicted_%d.png", 55, bDefault);
+			CreateNewTexture(L"UI_Head_StressDown", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_heroic_%d.png", 52, bDefault);
+			CreateNewTexture(L"UI_Head_Stun", TEX_NORMAL,
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_stun_loop_%d.png", 31, bDefault);
+		}
 	}
 }
 

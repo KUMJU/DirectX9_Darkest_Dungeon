@@ -2,7 +2,6 @@
 
 #include"GameObject.h"
 #include "Skill.h"
-#include "Effect.h"
 
 #include"SoundMgr.h"
 
@@ -135,7 +134,7 @@ public:
 	void	SetBeforeDeath(_bool _bBeforeDeath) { m_bBeforeDeath = _bBeforeDeath; }
 	void	SetBlight(_bool _bBlight) { m_bState[0] = true; }
 	void	SetBleed(_bool _bBleed) { m_bState[1] = true; }
-	void	SetStun(_bool _bStun) { m_bState[2] = true; }
+	void	SetStun(_bool _bStun);
 	void	SetBuff(_bool _bBuff) { m_bState3[0] = true; }
 	void	SetDeBuff(_bool _bDeBuff) { m_bState3[1] = true; }
 	void	SetStartBarOn(_bool _bStatBarOn) { bStatBarOn = _bStatBarOn; }
@@ -145,11 +144,7 @@ public:
 
 	_int	GetHp() { return m_tCommonStat.iHp; }
 	void	SetHp(_int _iValue) { m_tCommonStat.iHp = _iValue; }
-	void	IncreaseHP(_int _iValue) {
-		m_tCommonStat.iHp += _iValue;
-		if (m_tCommonStat.iHp >= m_tCommonStat.iMaxHp)
-			m_tCommonStat.iHp = m_tCommonStat.iMaxHp;
-	}
+	void	IncreaseHP(_int _iValue);
 	void	DecreaseHP(_int _iValue);
 
 	_int	GetCurrentBleed() { return m_iBleedDot[0]; }
@@ -234,8 +229,6 @@ public:
 	virtual void	BleedCure();
 
 	// ¿Ã∆Â∆Æ
-	shared_ptr<CEffect> GetEffect() { return m_pEffect; }
-	void				SetEffect(shared_ptr<CEffect> _pEffect) { m_pEffect = _pEffect; }
 	void				SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool _bDodge);
 
 protected:
@@ -257,10 +250,10 @@ protected:
 	shared_ptr<CRcTex> m_pEffectBufCom = nullptr;
 	shared_ptr<CAnimator> m_pEffectTextureCom = nullptr;
 
-	shared_ptr<CEffect> m_pEffect = nullptr;
+	/*shared_ptr<CEffect> m_pEffect = nullptr;
 	shared_ptr<CEffect> m_pHeadEffect = nullptr;
 	shared_ptr<CEffect> m_pFontEffect = nullptr;
-	shared_ptr<CEffect> m_pDamageEffect = nullptr;
+	shared_ptr<CEffect> m_pDamageEffect = nullptr;*/
 
 protected:
 	_bool		m_bIsHero = false;
