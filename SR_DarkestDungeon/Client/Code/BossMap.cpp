@@ -272,7 +272,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 
 	// Boss
 	shared_ptr<CGameObject> m_pBoss = make_shared<CBoss>(m_pGraphicDev);
-	m_pBoss->SetPos({ 320.f, 35.f, 250.f });
+	m_pBoss->SetPos({ 320.f, 30.f, 250.f });
 	m_pLayer->CreateGameObject(L"Obj_Boss", m_pBoss);
 
 	// BossBullet

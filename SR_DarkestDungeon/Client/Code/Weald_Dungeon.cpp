@@ -922,15 +922,11 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pBrigandFusilier_1 = make_shared<CBrigandFusilier>(m_pGraphicDev);
 
 	// heroes
-	shared_ptr<CGameObject> m_pSheldBreaker1 = make_shared<CShieldBreaker>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
 
 	vector<shared_ptr<CGameObject>> Heroes_v;
-	Heroes_v.push_back(m_pSheldBreaker1);
 	Heroes_v.push_back(m_pHighwayman);
-	Heroes_v.push_back(m_pJester);
 	Heroes_v.push_back(m_pVestal);
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroVec(&Heroes_v);
 
@@ -976,17 +972,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room3_v4.push_back(m_pBrigandCutthroat_2);
 	Room3_v4.push_back(m_pBrigandFusilier_1);
 
-	Room3_v4.push_back(m_pSheldBreaker1);
 	Room3_v4.push_back(m_pHighwayman);
-	Room3_v4.push_back(m_pJester);
 	Room3_v4.push_back(m_pVestal);
 
 	// heroes
 	vector<shared_ptr<CGameObject>> Room3_v2;
-	Room3_v2.push_back(m_pSheldBreaker1);
 	Room3_v2.push_back(m_pHighwayman);
 	Room3_v2.push_back(m_pVestal);
-	Room3_v2.push_back(m_pJester);
 	m_pRoom3->PushHeroesVector(Room3_v2);
 
 	// monsters
@@ -1041,12 +1033,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBrigandCutthroat_2);
 	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBrigandBloodletter1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_1);
-	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker1);
-	dynamic_pointer_cast<CHero>(m_pSheldBreaker1)->SetObjKey(L"Obj_ShieldBreaker");
 	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
 	dynamic_pointer_cast<CHero>(m_pHighwayman)->SetObjKey(L"Obj_Highwayman");
-	m_pLayer->CreateGameObject(L"Obj_Jester", m_pJester);
-	dynamic_pointer_cast<CHero>(m_pJester)->SetObjKey(L"Obj_Jester");
 	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
 	dynamic_pointer_cast<CHero>(m_pVestal)->SetObjKey(L"Obj_Vestal");
 	m_pLayer->CreateGameObject(L"OBJ_Trap", m_pTrap1);
