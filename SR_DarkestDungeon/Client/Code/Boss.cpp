@@ -54,9 +54,16 @@ HRESULT CBoss::ReadyGameObject()
 
 _int CBoss::UpdateGameObject(const _float& fTimeDelta)
 {
-	_int	iExit = __super::UpdateGameObject(fTimeDelta);
+	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 
 	m_vPos = *m_pTransformCom->GetPos();
+
+	//ºôº¸µå ½ÃÀÛ
+	_matrix matWorld;
+
+	matWorld = *m_pTransformCom->GetWorld();
+	SetBillBoard(matWorld);
+	m_pTransformCom->SetWorld(&matWorld);
 
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
@@ -225,7 +232,7 @@ void CBoss::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y);
 	}
 
-	m_pTransformCom->SetScale(40.f * fXpos, 35.f * fYpos, 1.f);
+	m_pTransformCom->SetScale(40.f * 0.9f * fXpos, 35.f * 0.9f * fYpos, 40.f * 0.9f * fXpos);
 
 }
 

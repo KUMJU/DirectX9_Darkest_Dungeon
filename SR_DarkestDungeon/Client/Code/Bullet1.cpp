@@ -57,6 +57,13 @@ _int CBullet1::UpdateGameObject(const _float& fTimeDelta)
 
 	m_vPos = *m_pTransformCom->GetPos();
 
+	//빌보드 시작
+	_matrix matWorld;
+
+	matWorld = *m_pTransformCom->GetWorld();
+	SetBillBoard(matWorld);
+	m_pTransformCom->SetWorld(&matWorld);
+
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
 	// FSM 조건
@@ -170,7 +177,7 @@ void CBullet1::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y);
 	}
 
-	m_pTransformCom->SetScale(5.f * fXpos, 5.f * fYpos, 1.f);
+	m_pTransformCom->SetScale(5.f * fXpos, 5.f * fYpos, 5.f * fXpos);
 
 }
 
