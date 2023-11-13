@@ -102,7 +102,7 @@ protected:
 	virtual void AddComponent();
 
 protected:
-	void	SetMaterial();
+	D3DMATERIAL9	SetMaterial();
 
 protected:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;

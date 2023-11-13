@@ -25,7 +25,7 @@ public:
 public:
 
 	shared_ptr<CLight> InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev);
-	//shared_ptr<CLight> InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev);
+	shared_ptr<CLight> InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev);
 	//shared_ptr<CLight> InitDirectionLight(const _uint& _index);
 
 private:

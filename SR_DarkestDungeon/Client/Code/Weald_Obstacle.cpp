@@ -102,14 +102,16 @@ void CWeald_Obstacle::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(
-	// , FALSE);
+	D3DMATERIAL9 tMtrl = SetMaterial();
+	m_pGraphicDev->SetMaterial(&tMtrl);
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

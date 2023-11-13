@@ -31,13 +31,6 @@ _int CEffect::UpdateGameObject(const _float& fTimeDelta)
 
     _int iExit = __super::UpdateGameObject(fTimeDelta);
 
-    if (m_bAnimation)
-        printf("%ls\n", m_strAnimKey.c_str());
-    else
-        printf("Damage Effect\n");
-    printf("DeltaTime : %f\n", m_fDeltaTime);
-    printf("m_fAnimTime : %f\n\n", m_fAnimTime);
-
     if (!m_bLoop)
     {
         if (m_bAnimation)

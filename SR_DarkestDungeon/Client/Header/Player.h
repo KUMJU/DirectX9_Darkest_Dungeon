@@ -21,6 +21,7 @@ class CTavernUI;
 class CItem;
 class CHero;
 class CDescription;
+class CPlayerFPSUI;
 
 enum class EPlayerMove
 {
@@ -108,6 +109,9 @@ public:
 	_bool	GetEvent3Trigger() { return m_bEvent3Trigger; }
 	void	SetEvent3Trigger(_bool _bEventTrigger) { m_bEvent3Trigger = _bEventTrigger; }
 
+	void	SetHP(_int _iHP) { m_iHP = _iHP; }
+	void	DecreaseHP(_int _iDamage);
+
 public:
 	void SettingLight();
 	void SetPlayerMode(EPlayerMode _ePlrMode);
@@ -135,6 +139,7 @@ public:
 	void ShowHeroesBack();	// 뒤의 영웅들 보여주기
 	void ShowHeroesBackVillage(); // 마을에서 뒤의 영웅들 보여주기
 	void HideHeroesBackVillage(); // 마을에서 뒤의 영웅들 숨기기
+
 
 private:
 	_float		m_fSpeed = 10.f;
@@ -189,13 +194,16 @@ private:
 	shared_ptr<CLight> m_pLight2 = nullptr;
 	shared_ptr<CLight> m_pLight3 = nullptr;
 
-
 	EPlayerMode m_ePlayerMode = EPlayerMode::DEFAULT;
 
 	//------------------------------------FPS BOSS ----------------------------------------------------
 
+private:
 
+	_int m_iHP = 100;
+	_int m_iMaxHP = 100;
 
+	shared_ptr<CPlayerFPSUI> m_pPlrFPSUI = nullptr;
 
 
 private:

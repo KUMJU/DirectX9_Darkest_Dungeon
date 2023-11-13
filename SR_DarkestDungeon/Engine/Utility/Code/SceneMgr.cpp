@@ -36,13 +36,23 @@ void CSceneMgr::Render(LPDIRECT3DDEVICE9 _pGraphicDev)
 
 HRESULT CSceneMgr::ChangeScene(shared_ptr<CScene> _newScene)
 {
+
+	if (!m_bIsLoadingScene && m_pCurrentScene) {
+		CResourceMgr::GetInstance()->RemoveSceneTexture();
+	}
+
+
 	if (m_pCurrentScene)
 	{
 		m_pCurrentScene.reset();
 	}
 	
+
 	Engine::ClearRenderGroup();
+
 	m_pCurrentScene = _newScene;
+	m_bIsLoadingScene = false;
+
 
 	return S_OK;
 }
