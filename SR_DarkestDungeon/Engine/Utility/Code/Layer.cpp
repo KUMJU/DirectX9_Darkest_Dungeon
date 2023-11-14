@@ -108,12 +108,14 @@ void CLayer::LateUpdateLayer()
 				case Engine::ECollideID::BOSS_PROJECTILE:
 					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::BOSS_PROJECTILE, *it);
 					break;
+				case Engine::ECollideID::SCENE_CHANGE_TRIGGER:
+					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::SCENE_CHANGE_TRIGGER, *it);
 				default:
 					break;
 				}
 
 				// 플레이어 이동 충돌 검사
-				if (ECollideID::PLAYER != (*it)->GetColType())
+				if (ECollideID::PLAYER != (*it)->GetColType() && ECollideID::SCENE_CHANGE_TRIGGER != (*it)->GetColType())
 					CCollisionMgr::GetInstance()->CheckCollision(*it);
 
 			}

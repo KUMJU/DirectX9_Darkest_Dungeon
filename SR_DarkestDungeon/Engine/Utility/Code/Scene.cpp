@@ -48,11 +48,13 @@ void CScene::LateUpdateScene()
 	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_PROJECTILE, ECollideID::WALL);
 	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_PROJECTILE, ECollideID::PLAYER);
 
-	CCollisionMgr::GetInstance()->ClearCollisionGroup();
-
 	CEffectMgr::GetInstance()->LateUpdate();
 
 	CPickingMgr::GetInstance()->RemoveList();
+
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::PLAYER, ECollideID::SCENE_CHANGE_TRIGGER);
+
+	CCollisionMgr::GetInstance()->ClearCollisionGroup();
 
 }
 
