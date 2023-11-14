@@ -38,6 +38,17 @@ HRESULT CGuild::ReadyGameObject()
 		{
 			shared_ptr<CGameObject> m_pWall;
 
+			// 앞쪽
+			for (int i = 0; i < 5; ++i)
+			{
+				m_pWall = make_shared<CWall>(m_pGraphicDev, L"Wood_Wall_Texture", 1, false);
+				m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 3 / 5, VILLAGE_WALLSIZE * 3 / 2, 1));
+				m_pWall->SetPos(_vec3(m_vPos.x + VILLAGE_TILESIZE * i / 5 * 3 + VILLAGE_TILESIZE / 10 * 3, m_vPos.y + m_pWall->GetScale().y - 1, m_vPos.z));
+				m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+
+				m_vecGameObject.push_back(m_pWall);
+			}
+
 			// 뒷쪽
 			for (int i = 0; i < 5; ++i)
 			{
@@ -92,6 +103,15 @@ HRESULT CGuild::ReadyGameObject()
 			m_vecGameObject.push_back(m_pNPC);
 		}
 
+		// 문
+		{
+			shared_ptr<CGameObject> m_pDoor = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Door_Open", false);
+			m_pDoor->SetScale({ 3.f, 7.f, 1.f });
+			m_pDoor->SetPos({ m_vPos.x + VILLAGE_TILESIZE * 1.5f, m_vPos.y + m_pDoor->GetScale().y / 2.f + 1, m_vPos.z + 0.1f });
+
+			m_vecGameObject.push_back(m_pDoor);
+		}
+
 		// 테이블
 		{
 			shared_ptr<CGameObject> m_pTable = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Tavern_Bar_Table_Texture", true, false, 1, false);
@@ -135,7 +155,7 @@ HRESULT CGuild::ReadyGameObject()
 		{
 			shared_ptr<CGameObject> m_pTrigger = make_shared<CTrigger>(m_pGraphicDev, L"Guild", true);
 			m_pTrigger->SetScale({ 3.f, 3.f, 3.f });
-			m_pTrigger->SetPos({ m_vPos.x + VILLAGE_TILESIZE * 2.5f / 5.f * 3.f, m_vPos.y, m_vPos.z - 5.f });
+			m_pTrigger->SetPos({ m_vPos.x + VILLAGE_TILESIZE * 2.5f / 5.f * 3.f, m_vPos.y, m_vPos.z });
 
 			m_vecGameObject.push_back(m_pTrigger);
 		}

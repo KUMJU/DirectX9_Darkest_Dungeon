@@ -5,6 +5,7 @@
 #include "SoundMgr.h"
 #include "Weald_Dungeon.h"
 #include "Ruin_Dungeon.h"
+#include "LoadingScreen.h"
 
 CTrigger::CTrigger(LPDIRECT3DDEVICE9 pGraphicDev, const tstring& _KeyName, _bool _bColliding, _bool _bBillBoard, _int _iCnt, _bool _bRandom)
 	: CEnvironmentObj(pGraphicDev, _KeyName, _bColliding, _bBillBoard, _iCnt, _bRandom)
@@ -25,6 +26,11 @@ HRESULT CTrigger::ReadyGameObject()
 	if (m_bColliding)
 	{
 		m_eCollideID = ECollideID::TRIGGER;
+
+		if (m_strKeyName == L"RuinDungeon")
+		{
+			m_eCollideID = ECollideID::SCENE_CHANGE_TRIGGER;
+		}
 
 		if (PI / 2.f == m_vAngle.y)
 		{
@@ -82,6 +88,7 @@ void CTrigger::OnCollide(shared_ptr<CGameObject> _pObj)
 
 		else if (m_strKeyName == L"WealdDungeon")
 		{
+			m_eCollideID = ECollideID::SCENE_CHANGE_TRIGGER;
 			CSoundMgr::GetInstance()->StopAll();
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
 			shared_ptr<CWeald_Dungeon> pScene = make_shared<CWeald_Dungeon>(m_pGraphicDev);
@@ -90,11 +97,13 @@ void CTrigger::OnCollide(shared_ptr<CGameObject> _pObj)
 		}
 		else if (m_strKeyName == L"RuinDungeon")
 		{
+			m_eCollideID = ECollideID::SCENE_CHANGE_TRIGGER;
 			CSoundMgr::GetInstance()->StopAll();
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
-			shared_ptr<CRuin_Dungeon> pScene = make_shared<CRuin_Dungeon>(m_pGraphicDev);
-			CSceneMgr::GetInstance()->ChangeScene(pScene);
-			pScene->ReadyScene();
+			shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::RUIN);
+			CSceneMgr::GetInstance()->SetLoadingState(false);
+			CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
+			pLoadingScreen->ReadyScene();
 		}
 	}
 }

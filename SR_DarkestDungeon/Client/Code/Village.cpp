@@ -25,6 +25,7 @@
 #include"GoodsUI.h"
 #include "TavernUI.h"
 #include "Description.h"
+#include "Trigger.h"
 
 #include "Vestal.h"
 #include "Jester.h"
@@ -154,6 +155,15 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 		m_pLayer->CreateGameObject(L"OBJ_Back", m_pWall);
 	}
 
+	// 던전 입구 쪽 거대 벽
+	for (int i = 0; i < 6; i++)
+	{
+		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Wall2_Texture", true);
+		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 1.58f, VILLAGE_WALLSIZE * 4, 1));
+		m_pWall->SetPos(_vec3(VILLAGE_TILESIZE * i + VILLAGE_TILESIZE + (VILLAGE_TILESIZE - 5) * i, m_pWall->GetScale().y / 2 + 3, -0.1f ));
+		m_pLayer->CreateGameObject(L"OBJ_Front", m_pWall);
+	}
+
 	// 성벽
 	{
 		// 오른쪽
@@ -201,21 +211,38 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 		}
 	}
 
-	// 마을 입구
+	// 마을 입구 (바깥쪽)
 	{
 		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Entrance_Texture", false, false, 1, false);
 		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 1.5f, VILLAGE_WALLSIZE * 1.5f, 1.f));
-		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, VILLAGE_TILESIZE * 2.f - 0.1f + _fZGap});
+		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, _fZGap + 0.1f });
 		m_pLayer->CreateGameObject(L"OBJ_Entrance", m_pWall);
 	}
 
+	// 마을 입구 (안쪽)
+	{
+		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Entrance4_Texture", false, false, 1, false);
+		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE * 1.5f, VILLAGE_WALLSIZE * 3.f, 1.f));
+		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, VILLAGE_TILESIZE * 2.f - 0.1f + _fZGap });
+		m_pLayer->CreateGameObject(L"OBJ_EntranceOut", m_pWall);
+	}
 
-	// 던전 입구
+
+	// 던전 입구 (삼림지대)
+	{
+		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Portal2_Texture", false, false, 1, false);
+		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE, VILLAGE_WALLSIZE * 1.2f, 1.f));
+		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT + 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, 0.f});
+		m_pLayer->CreateGameObject(L"OBJ_Portal1", m_pWall);
+	}
+
+
+	// 던전 입구 (폐허)
 	{
 		m_pWall = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_Portal_Texture", false, false, 1, false);
 		m_pWall->SetScale(_vec3(VILLAGE_WALLSIZE, VILLAGE_WALLSIZE * 1.2f, 1.f));
-		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, _fZGap + 0.1f});
-		m_pLayer->CreateGameObject(L"OBJ_Portal", m_pWall);
+		m_pWall->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 3) / 2.f + 3.5f, m_pWall->GetScale().y / 2 + m_pWall->GetScale().y / 3, 0.f });
+		m_pLayer->CreateGameObject(L"OBJ_Portal2", m_pWall);
 	}
 
 	// 마을 건물 내부
@@ -380,25 +407,27 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 
 		// 상점 외부
 		shared_ptr<CGameObject> m_pStoreOutside = make_shared<COutside>(m_pGraphicDev, EFacilityType::STORE);
-		m_pStoreOutside->SetPos({ 75.f, 0.f, 33.f + VILLAGE_TILESIZE * 2.f });
+		m_pStoreOutside->SetPos({ 75.f, 0.f, 33.f + VILLAGE_TILESIZE * 1.5f });
 		m_pStoreOutside->SetScale({ 7.f, 7.f, 1.f });
 		m_pStoreOutside->SetAngle({ 0.f, 50.f, 0.f });
 		m_pLayer->CreateGameObject(L"Obj_StoreOutside", m_pStoreOutside);
 	}
 
-	// 훈련소
+	// 이동 트리거
 	{
+		// 삼립지대
+		shared_ptr<CGameObject> m_pTrigger1 = make_shared<CTrigger>(m_pGraphicDev, L"WealdDungeon", true);
+		m_pTrigger1->SetScale({ 3.f, 3.f, 3.f });
+		m_pTrigger1->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT + 1) / 2.f + 3.5f, m_pTrigger1->GetScale().y / 2 + m_pTrigger1->GetScale().y / 3, 0.f });
 
-	}
+		m_pLayer->CreateGameObject(L"Obj_Trigger1", m_pTrigger1);
 
-	// 상점
-	{
+		// 폐허
+		shared_ptr<CGameObject> m_pTrigger2 = make_shared<CTrigger>(m_pGraphicDev, L"RuinDungeon", true);
+		m_pTrigger2->SetScale({ 3.f, 3.f, 3.f });
+		m_pTrigger2->SetPos({ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 3) / 2.f + 3.5f, m_pTrigger2->GetScale().y / 2 + m_pTrigger2->GetScale().y / 3, 0.f });
 
-	}
-
-	// 역마차
-	{
-
+		m_pLayer->CreateGameObject(L"Obj_Trigger1", m_pTrigger2);
 	}
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
