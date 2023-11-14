@@ -78,15 +78,6 @@ _int CBullet1::UpdateGameObject(const _float& fTimeDelta)
 	KeyInput();
 
 
-
-
-	//ºôº¸µå ½ÃÀÛ
-	/*_matrix matWorld;
-
-	matWorld = *m_pTransformCom->GetWorld();
-	SetBillBoard(matWorld);
-	m_pTransformCom->SetWorld(&matWorld);*/
-
 	return iExit;
 }
 
@@ -165,7 +156,7 @@ void CBullet1::ChangeAnim()
 		m_ePrevAnimState = m_eCurAnimState;
 
 	}
-
+	
 	_vec2 vcurPos = m_pTextureCom->GetTextureSize();
 
 	if (m_eCurAnimState == EBullet1State::IDLE) {

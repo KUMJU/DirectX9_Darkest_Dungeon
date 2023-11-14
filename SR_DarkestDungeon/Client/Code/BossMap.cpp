@@ -26,10 +26,13 @@
 #include "Vestal.h"
 #include "ShieldBreaker.h"
 
-#include "Boss.h"
+#include "Boss2.h"
 #include "Bullet1.h"
 #include "Bullet2.h"
+#include "Bullet3.h"
+#include "Mob_Bullet.h"
 #include "Laser.h"
+#include "Mob.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -202,11 +205,11 @@ HRESULT CBossMap::Ready_Layer_Environment(tstring pLayerTag)
 	}
 
 	// 장애물 배치
-	SetWall(_pWall, m_pLayer, 100.f, 100.f, 20.f, L"Wall1");
-	SetWall(_pWall, m_pLayer, 300.f, 300.f, 20.f, L"Wall2");
-	SetWall(_pWall, m_pLayer, 500.f, 500.f, 20.f, L"Wall3");
-	SetWall(_pWall, m_pLayer, 100.f, 500.f, 20.f, L"Wall4");
-	SetWall(_pWall, m_pLayer, 500.f, 100.f, 20.f, L"Wall5");
+	SetWall(_pWall, m_pLayer, 200.f, 200.f, 20.f, L"Wall1");
+	//SetWall(_pWall, m_pLayer, 300.f, 300.f, 20.f, L"Wall2");
+	SetWall(_pWall, m_pLayer, 400.f, 400.f, 20.f, L"Wall3");
+	SetWall(_pWall, m_pLayer, 200.f, 400.f, 20.f, L"Wall4");
+	SetWall(_pWall, m_pLayer, 400.f, 200.f, 20.f, L"Wall5");
 
 
 	//가장 최하위 순서에 돌려줄 것
@@ -271,16 +274,46 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
 
 	// Boss
-	shared_ptr<CGameObject> m_pBoss = make_shared<CBoss>(m_pGraphicDev);
-	m_pBoss->SetPos({ 320.f, 30.f, 250.f });
+	shared_ptr<CGameObject> m_pBoss = make_shared<CBoss2>(m_pGraphicDev);
+	m_pBoss->SetPos({ 300.f, 30.f, 300.f });
 	m_pLayer->CreateGameObject(L"Obj_Boss", m_pBoss);
+
+	// Mob
+	// 우
+	shared_ptr<CGameObject> m_pMob1 = make_shared<CMob>(m_pGraphicDev);
+	m_pMob1->SetPos({ 360.f, 5.f, 300.f });
+	m_pLayer->CreateGameObject(L"Obj_Mob", m_pMob1);
+	//좌
+	shared_ptr<CGameObject> m_pMob2 = make_shared<CMob>(m_pGraphicDev);
+	m_pMob2->SetPos({ 240.f, 5.f, 300.f });
+	m_pLayer->CreateGameObject(L"Obj_Mob", m_pMob2);
+	//우상
+	shared_ptr<CGameObject> m_pMob3 = make_shared<CMob>(m_pGraphicDev);
+	m_pMob3->SetPos({ 330.f, 5.f, 360.f });
+	m_pLayer->CreateGameObject(L"Obj_Mob", m_pMob3);
+	//좌상
+	shared_ptr<CGameObject> m_pMob4 = make_shared<CMob>(m_pGraphicDev);
+	m_pMob4->SetPos({ 270.f, 5.f, 360.f });
+	m_pLayer->CreateGameObject(L"Obj_Mob", m_pMob4);
+
+	shared_ptr<CGameObject> m_pMob5 = make_shared<CMob>(m_pGraphicDev);
+	m_pMob5->SetPos({ 330.f, 5.f, 240.f });
+	m_pLayer->CreateGameObject(L"Obj_Mob", m_pMob5);
+
+	shared_ptr<CGameObject> m_pMob6 = make_shared<CMob>(m_pGraphicDev);
+	m_pMob6->SetPos({ 270.f, 5.f, 240.f });
+	m_pLayer->CreateGameObject(L"Obj_Mob", m_pMob6);
+
 
 	// BossBullet
 	vector<shared_ptr<CBullet1>> pVecProjectile1;
 	vector<shared_ptr<CBullet2>> pVecProjectile2;
+	vector<shared_ptr<CBullet3>> pVecProjectile3;
 	vector<shared_ptr<CLaser>> pVecLaser;
 	shared_ptr<CBullet1> pBullet1;
 	shared_ptr<CBullet2> pBullet2;
+	shared_ptr<CBullet3> pBullet3;
+	shared_ptr<CMobBullet> pMobBullet;
 	shared_ptr<CLaser> pLaser;
 	for (int i = 0; i < 50; i++)
 	{
@@ -290,13 +323,21 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 		pVecProjectile1.push_back(pBullet1);
 		m_pLayer->CreateGameObject(L"Obj_Boss_P1_Bullet1", pVecProjectile1[i]);
 	}
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 800; i++)
 	{
 		pBullet2 = nullptr;
 		pBullet2 = make_shared<CBullet2>(m_pGraphicDev);
 		pBullet2->SetPos({ -100.f, -200.f, -100.f });
 		pVecProjectile2.push_back(pBullet2);
 		m_pLayer->CreateGameObject(L"Obj_Boss_P1_Bullet2", pVecProjectile2[i]);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		pBullet3 = nullptr;
+		pBullet3 = make_shared<CBullet3>(m_pGraphicDev);
+		pBullet3->SetPos({ -100.f, -100.f, -100.f });
+		pVecProjectile3.push_back(pBullet3);
+		m_pLayer->CreateGameObject(L"Obj_Boss_P1_Bullet1", pVecProjectile3[i]);
 	}
 	for (int i = 0; i < 3; i++)
 	{
@@ -306,21 +347,65 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 		pVecLaser.push_back(pLaser);
 		m_pLayer->CreateGameObject(L"Obj_Boss_P1_Bullet2", pVecLaser[i]);
 	}
-	dynamic_pointer_cast<CBoss>(m_pBoss)->SetBullet1(pVecProjectile1);
-	dynamic_pointer_cast<CBoss>(m_pBoss)->SetBullet2(pVecProjectile2);
-	dynamic_pointer_cast<CBoss>(m_pBoss)->SetLaser(pVecLaser);
+	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetBullet1(pVecProjectile1);
+	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetBullet2(pVecProjectile2);
+	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetBullet3(pVecProjectile3);
+	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetLaser(pVecLaser);
+
+	// MobBullet
+	vector<shared_ptr<CMobBullet>> pVecProjectile_Mob;
+	shared_ptr<CMobBullet> pBullet_Mob;
+	for (int i = 0; i < 100; i++)
+	{
+		pMobBullet = nullptr;
+		pMobBullet = make_shared<CMobBullet>(m_pGraphicDev);
+		pMobBullet->SetPos({ -100.f, -100.f, -100.f });
+		pVecProjectile_Mob.push_back(pMobBullet);
+		m_pLayer->CreateGameObject(L"Obj_Mob_Bullet1", pVecProjectile_Mob[i]);
+	}
+	dynamic_pointer_cast<CMob>(m_pMob1)->SetBullet1(pVecProjectile_Mob);
+	dynamic_pointer_cast<CMob>(m_pMob2)->SetBullet1(pVecProjectile_Mob);
+	dynamic_pointer_cast<CMob>(m_pMob3)->SetBullet1(pVecProjectile_Mob);
+	dynamic_pointer_cast<CMob>(m_pMob4)->SetBullet1(pVecProjectile_Mob);
+	dynamic_pointer_cast<CMob>(m_pMob5)->SetBullet1(pVecProjectile_Mob);
+	dynamic_pointer_cast<CMob>(m_pMob6)->SetBullet1(pVecProjectile_Mob);
+
+	// Mob 넣기
+	vector<shared_ptr<CMob>> pVecMob;
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob1));
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob2));
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob3));
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob4));
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob5));
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob6));
+	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetMob(pVecMob);
 
 	// 방에 GameObject 넣기
 	// Room1
 	vector<shared_ptr<CGameObject>> Room1_v1;
 	Room1_v1.push_back(m_pBoss);
+	Room1_v1.push_back(m_pMob1);
+	Room1_v1.push_back(m_pMob2);
+	Room1_v1.push_back(m_pMob3);
+	Room1_v1.push_back(m_pMob4);
+	Room1_v1.push_back(m_pMob5);
+	Room1_v1.push_back(m_pMob6);
+	
 	for (int i = 0; i < 50; i++)
 	{
 		Room1_v1.push_back(pVecProjectile1[i]);
 	}
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 800; i++)
 	{
 		Room1_v1.push_back(pVecProjectile2[i]);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		Room1_v1.push_back(pVecProjectile3[i]);
+	}
+	for (int i = 0; i < 100; i++)
+	{
+		Room1_v1.push_back(pVecProjectile_Mob[i]);
 	}
 	m_pRoom1->PushGameObjectVector(Room1_v1);
 
