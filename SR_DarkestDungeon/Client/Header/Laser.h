@@ -55,10 +55,11 @@ public:
 
 protected:
 	_vec3	m_vTargetPos;
+	_vec3	m_vStartPos;
 
 	_float	m_fShootSpeed = 30.f;
 
-	float	m_fAttackTime = 0.06f * 5;
+	float	m_fAttackTime = 2.f;
 
 	ELaserState m_eAnimState = ELaserState::IDLE;	// 애니메이션 변경을 위한 상태값
 	ELaserState m_eCurAnimState = ELaserState::IDLE;	// 애니메이션 변경을 위한 상태값

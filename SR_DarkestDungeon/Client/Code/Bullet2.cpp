@@ -36,7 +36,6 @@ HRESULT CBullet2::ReadyGameObject()
 	{
 		m_eAnimState = EBullet2State::IDLE;
 		m_vAngle = { 0.f, PI / 2, 0.f };
-
 		m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 
 		m_pTransformCom->SetAngle(m_vAngle);
@@ -57,6 +56,14 @@ _int CBullet2::UpdateGameObject(const _float& fTimeDelta)
 
 	m_vPos = *m_pTransformCom->GetPos();
 
+
+	//빌보드 시작
+	_matrix matWorld;
+
+	matWorld = *m_pTransformCom->GetWorld();
+	SetBillBoard(matWorld);
+	m_pTransformCom->SetWorld(&matWorld);
+
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
 	// FSM 조건
@@ -73,12 +80,6 @@ _int CBullet2::UpdateGameObject(const _float& fTimeDelta)
 
 
 
-	//빌보드 시작
-	/*_matrix matWorld;
-
-	matWorld = *m_pTransformCom->GetWorld();
-	SetBillBoard(matWorld);
-	m_pTransformCom->SetWorld(&matWorld);*/
 
 	return iExit;
 }
@@ -109,6 +110,8 @@ void CBullet2::AddComponent()
 	pComponent = m_pTransformCom = make_shared<CTransform>();
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
+	m_pTransformCom->SetAngle({ 0.f, 0.f, 0.f });
+	m_pTransformCom->SetScale(0.5f, 0.5f, 1.f);
 
 	pComponent = m_pBufCom = make_shared <CRcTex>(m_pGraphicDev);
 	m_pBufCom->ReadyBuffer();
@@ -136,7 +139,7 @@ void CBullet2::FSM(const _float& fTimeDelta)
 	}
 
 	// 업데이트 해제
-	if (CalcDistance(m_vTargetPos) < 2.f)
+	if (OutArea())
 	{
 		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
 		SetEnable(false);
@@ -170,7 +173,7 @@ void CBullet2::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y);
 	}
 
-	m_pTransformCom->SetScale(2.f * fXpos, 2.f * fYpos, 1.f);
+	m_pTransformCom->SetScale(2.f * fXpos, 2.f * fYpos, 2.f * fXpos);
 
 }
 
@@ -217,4 +220,34 @@ void CBullet2::FireToPosition(const _float& fTimeDelta, float _fSpeed, _vec3 _Po
 	vDir = CalcDirection(_Pos);
 	D3DXVec3Normalize(&vDir, &vDir);
 	m_pTransformCom->MoveForward(&vDir, fTimeDelta, _fSpeed);
+}
+
+_bool CBullet2::OutArea()
+{
+	if (m_pTransformCom->GetPos()->x > 640.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->x < 0.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->z > 640.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->z < 0.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->y < 0.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->y > 300.f)
+	{
+		return true;
+	}
+
+	return false;
 }

@@ -141,7 +141,7 @@ void CLaser::FSM(const _float& fTimeDelta)
 		m_fAttackTime -= fTimeDelta;
 		if (m_fAttackTime < 0.f)
 		{
-			m_fAttackTime = 0.06f * 5;
+			m_fAttackTime = 2.f;
 			m_bEnable = false;
 		}
 	}

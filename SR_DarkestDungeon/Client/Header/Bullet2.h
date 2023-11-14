@@ -49,6 +49,7 @@ protected:
 	// 특정 위치와 Object의 거리차 벡터를 구하는 함수
 	_vec3	CalcDirection(_vec3 _Pos);
 	void	FireToPosition(const _float& fTimeDelta, float _fSpeed, _vec3 _Pos);
+	_bool	OutArea();
 
 public:
 
@@ -56,7 +57,7 @@ public:
 protected:
 	_vec3	m_vTargetPos;
 
-	_float	m_fShootSpeed = 30.f;
+	_float	m_fShootSpeed = 50.f;
 
 	float	m_fAttackTime = 0.06f * 9;
 

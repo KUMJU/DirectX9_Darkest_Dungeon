@@ -553,23 +553,23 @@ void CResourceMgr::BaseTextureLoad()
 	// ºØ±«, ±â»ó
 	{
 		CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 1, bDefault);
 		CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 1, bDefault);
 		CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 1, bDefault);
 		CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 1, bDefault);
 		
 		
 		CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 1, bDefault);
 		CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 1, bDefault);
 		CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 1, bDefault);
 		CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 1, bDefault);
 
 	}
 
@@ -1350,6 +1350,20 @@ void CResourceMgr::BossMapTextureLoad()
 	CreateNewTexture(L"Com_BossMap_SkyBoxTexture", TEX_CUBE,
 		L"../Bin/Resource/Image/SkyBox/BossSkybox.dds", 1, bDefault);
 
+	// Mob
+	CreateNewTexture(L"Mob_Idle", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Idle/cthulhu_tentacle_Idle.png", 1, bDefault);
+	CreateNewTexture(L"Mob_Out", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Mob/In/cthulhu_tentacle_in00%d.png", 7, bDefault);
+	CreateNewTexture(L"Mob_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Death/cthulhu_tentacle_death00%d.png", 11, bDefault);
+	CreateNewTexture(L"Mob_In", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Out/cthulhu_tentacle_out00%d.png", 9, bDefault);
+	CreateNewTexture(L"Mob_Shoot", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Shoot/cthulhu_tentacle_shoot00%d.png", 11, bDefault);
+
+
+
 	// Boss
 	// Phase1
 	CreateNewTexture(L"Boss_Phase1_Idle", TEX_NORMAL,
@@ -1364,9 +1378,19 @@ void CResourceMgr::BossMapTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Attack_Nova/hellboss_caco_attack_nova00%d.png", 11, bDefault);
 	CreateNewTexture(L"Boss_Phase1_Change", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Change/hellboss_caco_morph00%d.png", 43, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Dash_Ready", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Dash_Ready/hellboss_caco_attack_nova00%d.png", 4, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Dash_Charge", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Dash_Charge/hellboss_caco_attack_nova00%d.png", 4, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Dashes", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Dash/hellboss_caco_attack_nova00%d.png", 3, bDefault);
+
 
 	// Phase2
-
+	CreateNewTexture(L"Boss_Phase2_Idle", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase2/Idle/hellboss_final_idle00%d.png", 21, bDefault);
+	CreateNewTexture(L"Boss_Phase2_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase2/Death/hellboss_final_death00%d.png", 26, bDefault);
 
 	// Projectile
 	CreateNewTexture(L"Boss_Projectile1", TEX_NORMAL,
@@ -1377,4 +1401,12 @@ void CResourceMgr::BossMapTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Bullet3/stormball00%d.png", 8, bDefault);
 	CreateNewTexture(L"Boss_Laser", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Laser/Laser.png", 1, bDefault);
+	CreateNewTexture(L"Mob_Missile", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Missile/cthulhu_tentacle_missile00%d.png", 15, bDefault);
+
+	// Spike
+	CreateNewTexture(L"Sunken", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Final_Spike1/hellboss_final_spike_02_00%d.png", 13, bDefault);
+	CreateNewTexture(L"Spike", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Final_Spike2/hellboss_final_tentacle00%d.png", 17, bDefault);
 }
