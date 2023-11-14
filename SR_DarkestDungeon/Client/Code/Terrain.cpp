@@ -81,6 +81,10 @@ void CTerrain::AddComponent()
 
 	pComponent = m_pBufferCom = make_shared<CTerrainTex>(m_pGraphicDev);
 
+	pComponent = m_pTransformCom = make_shared<CTransform>(m_vPos, _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
+	//m_pTransformCom->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
+
 	switch (m_eTerrainType)
 	{
 	case ETerrainType::VILLAGE:
@@ -95,6 +99,10 @@ void CTerrain::AddComponent()
 	case ETerrainType::DUNGEON2:
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(640.f, 640.f, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
 		break;
+	case ETerrainType::DUNGEON2_ROOF:
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(640.f, 640.f, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
+		m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y + 16.f, m_vPos.z);
+		break;
 	case ETerrainType::ENUM_END:
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
 		break;
@@ -107,10 +115,6 @@ void CTerrain::AddComponent()
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
-
-	pComponent = m_pTransformCom = make_shared<CTransform>(m_vPos, _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
-	//m_pTransformCom->ReadyTransform();
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 }
 
 void CTerrain::KeyInput(const _float& fTimeDelta)
