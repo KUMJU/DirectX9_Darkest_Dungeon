@@ -56,7 +56,7 @@ public:
 protected:
 	_vec3	m_vTargetPos;
 
-	_float	m_fShootSpeed = 30.f;
+	_float	m_fShootSpeed = 200.f;
 
 	float	m_fAttackTime = 0.06f * 9;
 

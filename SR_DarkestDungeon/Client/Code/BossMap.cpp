@@ -33,6 +33,8 @@
 #include "Mob_Bullet.h"
 #include "Laser.h"
 #include "Mob.h"
+#include "Spike.h"
+#include "Sunken.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -304,17 +306,40 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pMob6->SetPos({ 270.f, 5.f, 240.f });
 	m_pLayer->CreateGameObject(L"Obj_Mob", m_pMob6);
 
-
 	// BossBullet
 	vector<shared_ptr<CBullet1>> pVecProjectile1;
 	vector<shared_ptr<CBullet2>> pVecProjectile2;
 	vector<shared_ptr<CBullet3>> pVecProjectile3;
 	vector<shared_ptr<CLaser>> pVecLaser;
+	vector<shared_ptr<CSpike>> pVecSpike;
+	vector<shared_ptr<CSunken>> pVecSunken;
 	shared_ptr<CBullet1> pBullet1;
 	shared_ptr<CBullet2> pBullet2;
 	shared_ptr<CBullet3> pBullet3;
 	shared_ptr<CMobBullet> pMobBullet;
 	shared_ptr<CLaser> pLaser;
+	shared_ptr<CSpike> pSpike;
+	shared_ptr<CSunken> pSunken;
+
+	// 스파이크
+	for (int i = 0; i < 100; i++)
+	{
+		pSpike = nullptr;
+		pSpike = make_shared<CSpike>(m_pGraphicDev);
+		pSpike->SetPos({ 300.f, -500.f, 300.f });
+		pVecSpike.push_back(pSpike);
+		m_pLayer->CreateGameObject(L"Obj_Spike", pVecSpike[i]);
+	}
+	// 성큰
+	for (int i = 0; i < 200; i++)
+	{
+		pSunken = nullptr;
+		pSunken = make_shared<CSunken>(m_pGraphicDev);
+		pSunken->SetPos({ 200.f, -500.f, 300.f });
+		pVecSunken.push_back(pSunken);
+		m_pLayer->CreateGameObject(L"Obj_Sunken", pVecSunken[i]);
+	}
+
 	for (int i = 0; i < 50; i++)
 	{
 		pBullet1 = nullptr;
@@ -331,7 +356,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 		pVecProjectile2.push_back(pBullet2);
 		m_pLayer->CreateGameObject(L"Obj_Boss_P1_Bullet2", pVecProjectile2[i]);
 	}
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		pBullet3 = nullptr;
 		pBullet3 = make_shared<CBullet3>(m_pGraphicDev);
@@ -351,6 +376,8 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetBullet2(pVecProjectile2);
 	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetBullet3(pVecProjectile3);
 	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetLaser(pVecLaser);
+	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetSpike(pVecSpike);
+	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetSunken(pVecSunken);
 
 	// MobBullet
 	vector<shared_ptr<CMobBullet>> pVecProjectile_Mob;
@@ -372,24 +399,24 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 
 	// Mob 넣기
 	vector<shared_ptr<CMob>> pVecMob;
-	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob1));
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob4));
 	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob2));
 	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob3));
-	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob4));
-	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob5));
 	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob6));
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob1));
+	pVecMob.push_back(dynamic_pointer_cast<CMob>(m_pMob5));
 	dynamic_pointer_cast<CBoss2>(m_pBoss)->SetMob(pVecMob);
 
 	// 방에 GameObject 넣기
 	// Room1
 	vector<shared_ptr<CGameObject>> Room1_v1;
 	Room1_v1.push_back(m_pBoss);
-	Room1_v1.push_back(m_pMob1);
-	Room1_v1.push_back(m_pMob2);
 	Room1_v1.push_back(m_pMob3);
-	Room1_v1.push_back(m_pMob4);
+	Room1_v1.push_back(m_pMob1);
 	Room1_v1.push_back(m_pMob5);
+	Room1_v1.push_back(m_pMob2);
 	Room1_v1.push_back(m_pMob6);
+	Room1_v1.push_back(m_pMob4);
 	
 	for (int i = 0; i < 50; i++)
 	{
@@ -399,13 +426,21 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	{
 		Room1_v1.push_back(pVecProjectile2[i]);
 	}
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		Room1_v1.push_back(pVecProjectile3[i]);
 	}
 	for (int i = 0; i < 100; i++)
 	{
 		Room1_v1.push_back(pVecProjectile_Mob[i]);
+	}
+	for (int i = 0; i < 100; i++)
+	{
+		Room1_v1.push_back(pVecSpike[i]);
+	}
+	for (int i = 0; i < 200; i++)
+	{
+		Room1_v1.push_back(pVecSunken[i]);
 	}
 	m_pRoom1->PushGameObjectVector(Room1_v1);
 

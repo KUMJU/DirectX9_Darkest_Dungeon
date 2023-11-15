@@ -34,6 +34,7 @@ public:
 
 public:
 	void	SetTarget(_vec3 _vPos) { m_vTargetPos = _vPos; }
+	void	SetStart(_vec3 _vPos) { m_vStartPos = _vPos; }
 
 protected:
 	virtual void			AddComponent();

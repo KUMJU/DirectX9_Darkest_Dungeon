@@ -15,6 +15,8 @@ class CBullet2;
 class CBullet3;
 class CLaser;
 class CMob;
+class CSpike;
+class CSunken;
 
 enum class EBossState
 {
@@ -34,12 +36,14 @@ enum class EBossState
 	P1_LASER2,
 	P1_DASH,
 	P1_CHANGE,
+	P1_GROGGY,
 
 	// Phase2
 	P2_IDLE,
 	P2_SUMMON,
 	P2_SPIKE,
 	P2_SUNKEN,
+	P2_SUNKENALL,
 	P2_DEATH,
 
 	ENUM_END
@@ -74,6 +78,7 @@ public:
 
 protected:
 	virtual void			AddComponent();
+	virtual void			OnCollide(shared_ptr<CGameObject> _pObj) override;
 
 	virtual void			FSM(const _float& fTimeDelta);
 	virtual void			ChangeAnim();
@@ -93,14 +98,18 @@ protected:
 	// 플레이어와 Object의 거리차 벡터를 구하는 함수
 	_vec3	CalcDirection();
 	void	ChasePlayer(const _float& fTimeDelta, float _fSpeed);
+	// 특정 방향으로 돌진
+	void	DashTarget(const _float& fTimeDelta, float _fSpeed, _vec3& _vDir);
 	// 플레이어한테 유도탄 쏘기
 	void	ShootBullet1();
 	// 플레이어한테 쏘기
 	void	ShootBullet2();
 	// 사방으로 쏘기
 	void	ShootBullet3();
-	// 특정 위치로 쏘기
+	// 1페이즈 특정 위치로 쏘기
 	void	ShootBullet4();
+	// 2페이즈 특정 위치로 쏘기
+	void	ShootBullet5();
 
 	void	ShootLaser();
 
@@ -130,6 +139,16 @@ public:
 		m_pVecMob = _vVec;
 	}
 
+	void	SetSpike(vector<shared_ptr<CSpike>>& _vVec)
+	{
+		m_pVecSpike = _vVec;
+	}
+
+	void	SetSunken(vector<shared_ptr<CSunken>>& _vVec)
+	{
+		m_pVecSunken = _vVec;
+	}
+
 protected:
 	vector<shared_ptr<CBullet1>> m_pVecBullet1;
 	vector<shared_ptr<CBullet2>> m_pVecBullet2;
@@ -137,6 +156,11 @@ protected:
 	vector<shared_ptr<CLaser>> m_pVecLaser;
 	// 몹
 	vector<shared_ptr<CMob>> m_pVecMob;
+	// 스파이크
+	vector<shared_ptr<CSpike>> m_pVecSpike;
+	// 성큰
+	vector<shared_ptr<CSunken>> m_pVecSunken;
+
 
 	// 가운데
 	_vec3	MiddleTop = _vec3(300.f, 110.f, 300.f);
@@ -148,6 +172,8 @@ protected:
 	_vec3	Left = _vec3(100.f, 110.f, 300.f);
 	_vec3	Top = _vec3(300.f, 110.f, 500.f);
 	_vec3	Bottom = _vec3(300.f, 110.f, 100.f);
+
+	_vec3	DashDir;
 
 	_int	m_iHp = 200;
 	_float	m_fP1_IdleSpeed = 10.f;
@@ -164,6 +190,7 @@ protected:
 	_bool	m_bPattern1Before = false;
 	_bool	m_bPattern1Start = false;
 	_bool	m_bPattern1Ready = false;
+	_bool	m_bGroggy = false;
 
 	_bool	m_bPattern2 = false;
 	_bool	m_bPattern2DashReady = false;
@@ -178,30 +205,56 @@ protected:
 
 	_bool	m_bPhase2Idle = false;
 	_bool	m_bPhase2Summon = false;
-	_bool	m_bPhase2Sunken = false;
 	_bool	m_bPhase2Spike = false;
+	_bool	m_bPhase2Spike2 = false;
+	_bool	m_bPahse2SunkenReady = false;
+	_bool	m_bPhase2Sunken = false;
+	_bool	m_bPhase2SunkenAll = false;
+	
+	_bool	m_bPhase2FireCool = false;
+	_bool	m_bPhase2FireReady = false;
+	_bool	m_bPhase2Fire = false;
 	
 
 	_int	m_iBullet1TotalNum = 50;
 	_int	m_iBullet2TotalNum = 50;
 	_int	m_iLaserTotalNum = 3;
 	_int	m_iMobTotalNum = 6;
+	_int	m_iSpikeTotalNum = 100;
+	_int	m_iSunkenTotalNum = 200;
 
-	float	m_fIdleTime = 5.f;
+	_int	m_iSunkenAttackNum = 0;
+	_int	m_iSunkenAttackAllNum = 0;
+	_int	m_iSummonNum = 3;
+
+	float	m_iSunkentIntervel = 5.f;
+	float	m_fIdleTime = 2.f;
 	float	m_fPattern1BeforeTime = 1.f;
 	float	m_fPattern1ReadyTime = 4.f;
 	float	m_fPattern1FireTime = 3.f;
-	float	m_fPattern1FireIntervel = 0.03f;
+	float	m_fPattern1FireIntervel = 0.15f;
 	float	m_fDashReadyTime = 0.25f * 4;
 	float	m_fDashChargeTime = 3.f;
-	float	m_fDashTime = 0.06f * 11;
+	float	m_fDashTime = 0.12f * 11;
 	float	m_fPattern3LaserReadyTime = 1.f;
 	float	m_fPattern3LaserTime = 0.12 * 25;
 
-	float	m_fP2IdleTime = 3.f;
-	float	m_fP2SummonTime = 3.f;
+	float	m_fGroggyTime = 3.f;
+
+	float	m_fP2IdleTime = 2.f;
+	float	m_fP2SummonTime = 1.f;
+	float	m_fP2SpikeTime = 1.5f;
+	float	m_fP2SpikeTime2 = 1.f;
+	float	m_fP2SunkenReadyTime = 1.f;
 	float	m_fP2SunkenTime = 3.f;
-	float	m_fP2SpikeTime = 3.f;
+	float	m_fP2SunkenIntervel = 0.1f;
+	float	m_fP2SunkenAllIntervel = 0.15f;
+	float	m_fP2SunkenAllTime = 3.f;
+	
+	float	m_fP2FireCoolTime = 10.f;
+	float	m_fP2FireReadyTime = 3.f;
+	float	m_fP2FireShootTime = 3.f;
+	float	m_fP2FireIntervel = 0.15f;
 
 	float	m_fP1AttackTime = 0.06f * 12;
 	float	m_fP1Laser1Time = 0.06f * 7;
@@ -222,5 +275,8 @@ protected:
 	// 플레이어의 위치를 받아오기 위한 플레이어 오브젝트
 	shared_ptr<CGameObject>	m_pPlayer = nullptr;
 	shared_ptr<CTransform>	m_pPlayerTransformCom = nullptr;
+
+	_bool	m_bCollsion = false;
+	_bool	m_bWallCollision = false;
 };
 

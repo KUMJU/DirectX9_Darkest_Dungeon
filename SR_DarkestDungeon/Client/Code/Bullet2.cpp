@@ -41,9 +41,16 @@ HRESULT CBullet2::ReadyGameObject()
 		m_pTransformCom->SetAngle(m_vAngle);
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
 
-		m_pTextureCom->SetAnimKey(L"Boss_Projectile1", 0.06f);
+		m_pTextureCom->SetAnimKey(L"Boss_Projectile2", 0.06f);
 		m_vOriginSize = m_pTextureCom->GetTextureSize();
 	}
+
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
+	m_bColliding = true;
+	m_eCollideID = ECollideID::BOSS_PROJECTILE;
+
+	m_strEffectAnimKey = L"Bullet_Hitted";
 
 	SetEnable(false);
 
@@ -111,7 +118,7 @@ void CBullet2::AddComponent()
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransformCom->SetAngle({ 0.f, 0.f, 0.f });
-	m_pTransformCom->SetScale(0.5f, 0.5f, 1.f);
+	m_pTransformCom->SetScale(0.5f, 0.5f, 0.5f);
 
 	pComponent = m_pBufCom = make_shared <CRcTex>(m_pGraphicDev);
 	m_pBufCom->ReadyBuffer();
@@ -127,8 +134,29 @@ void CBullet2::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 30.f, 30.f, 1.f });
+	m_pColliderCom->SetScale({ 1.f, 1.f, 1.f });
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+}
+
+void CBullet2::OnCollide(shared_ptr<CGameObject> _pObj)
+{
+	if (m_bCollsion)
+	{
+		return;
+	}
+
+	if (ECollideID::WALL == _pObj->GetColType() || ECollideID::ENVIRONMENT == _pObj->GetColType())
+	{
+		//Effect Setting
+		/*shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransformCom->GetPos(), 0.5f);
+		pEffect->SetActive(true);*/
+
+		//m_pTransformCom->SetPosition(400.f, -300.f, 300.f);
+		m_bCollsion = true;
+		//SetEnable(false);
+	}
 }
 
 void CBullet2::FSM(const _float& fTimeDelta)
@@ -155,7 +183,7 @@ void CBullet2::ChangeAnim()
 		switch (m_eCurAnimState)
 		{
 		case EBullet2State::IDLE:
-			m_pTextureCom->SetAnimKey(L"Boss_Projectile1", 0.06f);
+			m_pTextureCom->SetAnimKey(L"Boss_Projectile2", 0.06f);
 			break;
 		}
 		m_ePrevAnimState = m_eCurAnimState;
@@ -173,7 +201,8 @@ void CBullet2::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y);
 	}
 
-	m_pTransformCom->SetScale(2.f * fXpos, 2.f * fYpos, 2.f * fXpos);
+	m_pTransformCom->SetScale(6.f * fXpos, 6.f * fYpos, 6.f * fXpos);
+	m_pColliderCom->SetScale({ 12.f * fXpos, 12.f * fYpos, 12.f * fXpos });
 
 }
 

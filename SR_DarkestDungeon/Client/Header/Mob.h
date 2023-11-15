@@ -89,7 +89,7 @@ protected:
 	
 	_int	m_iBullet1TotalNum = 50;
 
-	float	m_fIdleTime = 5.f;
+	float	m_fIdleTime = 1.f;
 	float	m_fAttackTime = 0.12f * 11;
 	float	m_fInTime = 0.12f * 9;
 	float	m_fOutTime = 0.12f * 7;
@@ -97,7 +97,7 @@ protected:
 
 	float	m_fAttackIntervel = 0.12f * 8;
 
-	_int	m_iAttackCount = 3;
+	_int	m_iAttackCount = 5;
 
 	EMobState m_eAnimState = EMobState::GO_OUT;	// 애니메이션 변경을 위한 상태값
 	EMobState m_eCurAnimState = EMobState::GO_OUT;	// 애니메이션 변경을 위한 상태값

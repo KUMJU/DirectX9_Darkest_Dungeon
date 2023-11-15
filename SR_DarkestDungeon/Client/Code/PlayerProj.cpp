@@ -26,10 +26,10 @@ HRESULT CPlayerProj::ReadyGameObject()
 	memcpy(&m_vLook, &m_matWorld.m[2][0], sizeof(_vec3));
 	m_pTransmCom->SetPosition(m_vStartPos.x, m_vStartPos.y + 1.f, m_vStartPos.z);
 	
-	m_tProjInfo.iSpeed = 20.f;
+	m_tProjInfo.iSpeed = 200.f;
+	m_strEffectAnimKey = L"SpellHand_Proj_Effect";
 	m_pColliderCom->SetPos(m_pTransmCom->GetPos());
 
-	m_strEffectAnimKey = L"SpellHand_Proj_Effect";
 
 	m_bColliding = true;
 	m_eCollideID = ECollideID::PLAYER_PROJECTILE;

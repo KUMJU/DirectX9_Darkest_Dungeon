@@ -133,12 +133,17 @@ void CBullet3::FSM(const _float& fTimeDelta)
 	if (m_eCurAnimState == EBullet3State::IDLE)
 	{
 		FireToPosition(fTimeDelta, m_fShootSpeed, m_vTargetPos);
+		if (CalcDistance(m_vTargetPos) < 0.1f)
+		{
+			m_eCurAnimState = EBullet3State::SHOOT;
+		}
 	}
 
 	// 업데이트 해제
 	m_fAliveTime -= fTimeDelta;
 	if (m_fAliveTime < 0.f)
 	{
+		m_eCurAnimState = EBullet3State::IDLE;
 		m_fAliveTime = 6.f;
 		SetEnable(false);
 	}

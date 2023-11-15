@@ -272,6 +272,9 @@ protected:
 	_int		m_iBuff2Dot[4] = { 0 };		// 회피 버프
 	_int		m_iDeBuff1Dot[4] = { 0 };	// 회피 디버프
 
+	_vec3		PrevTeleportPos = _vec3(0.f,0.f,0.f);
+	_vec3		CurrentTeleportPos = _vec3(0.f, 0.f, 0.f);
+
 	_bool		m_bHitted = false;			// 자신의 피격상태 여부
 	_bool		m_bEffectOn = false;		// 이펙트 여부
 	// m_bHitted && m_bEffectOn -> 피격 애니메이션 on

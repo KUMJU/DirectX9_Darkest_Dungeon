@@ -166,14 +166,14 @@ void CMob::FSM(const _float& fTimeDelta)
 		// »ç¸Á
 		if (m_iHp <= 0)
 		{
-			m_fIdleTime = 5.f;
+			m_fIdleTime = 1.f;
 			m_bIdle = false;
 			m_eCurAnimState = EMobState::DEATH;
 			m_bDeath = true;
 		}
 		if (m_fIdleTime < 0.f)
 		{
-			m_fIdleTime = 5.f;
+			m_fIdleTime = 1.f;
 			// ÅºÈ¯ ¹ß»ç
 			if (m_iAttackCount > 0)
 			{
@@ -285,7 +285,7 @@ void CMob::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y);
 	}
 	
-	m_pTransformCom->SetScale(8.f * fXpos, 8.f * fYpos, 8.f * fXpos);
+	m_pTransformCom->SetScale(8.f * 0.8f * fXpos, 8.f * 0.8f * fYpos, 8.f * 0.8f * fXpos);
 
 }
 
