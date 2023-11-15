@@ -8,6 +8,8 @@
 #include "Bullet3.h"
 #include "Laser.h"
 #include "Mob.h"
+#include "Spike.h"
+#include "Sunken.h"
 #include "Player.h"
 
 CBoss2::CBoss2(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -65,6 +67,11 @@ HRESULT CBoss2::ReadyGameObject()
 		m_vOriginSize = m_pTextureCom->GetTextureSize();
 	}
 
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
+	m_bColliding = true;
+	m_eCollideID = ECollideID::BOSS_PROJECTILE;
+
 	return S_OK;
 }
 
@@ -89,10 +96,11 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 	// 영역 밖으로 벗어나면 가운데로 텔레포트
 	if (OutArea())
 	{
-		Teleport(MiddleTop);
-		m_eCurAnimState = EBossState::P1_IDLE;
+		m_eCurAnimState = EBossState::P1_TELEPORT;
 		m_bPattern2Dash = false;
 		m_bIdle = true;
+		m_fDashTime = 0.12f * 11;
+		m_bPattern2 = false;
 	}
 
 	// FSM 조건
@@ -102,6 +110,17 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 	ChangeAnim();
 	// 시간에 따른 애니메이션 끝내기
 	AnimDuration(fTimeDelta);
+
+	// 벽에 충돌
+	if (m_bWallCollision)
+	{
+		m_bPattern2Dash = false;
+		m_bWallCollision = false;
+		m_fDashTime = 0.12f * 11;
+		m_bPattern2 = false;
+		m_bGroggy = true;
+		m_eCurAnimState = EBossState::P1_TELEPORT;
+	}
 
 	// 키 입력
 	KeyInput();
@@ -154,6 +173,28 @@ void CBoss2::AddComponent()
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 }
 
+void CBoss2::OnCollide(shared_ptr<CGameObject> _pObj)
+{
+	if (m_bCollsion)
+	{
+		return;
+	}
+
+	if (ECollideID::WALL == _pObj->GetColType())
+	{
+		//Effect Setting
+		/*shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransformCom->GetPos(), 0.5f);
+		pEffect->SetActive(true);*/
+
+		//m_pTransformCom->SetPosition(400.f, -300.f, 300.f);
+		m_bWallCollision = true;
+		m_bCollsion = true;
+		//SetEnable(false);
+	}
+}
+
 void CBoss2::FSM(const _float& fTimeDelta)
 {
 	// Idle상태
@@ -164,18 +205,15 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			m_fIdleTime -= fTimeDelta;
 			if (m_iHp <= 100)
 			{
-				m_fIdleTime = 5.f;
+				m_fIdleTime = 2.f;
 				m_bIdle = false;
 				m_bChange = true;
-				m_eCurAnimState = EBossState::P1_CHANGE;
+				m_eCurAnimState = EBossState::P1_TELEPORT;
 				m_iHp = 100;
-
-				// 위치 이동
-				Teleport(_vec3(300.f, 30.f, 300.f));
 			}
 			if (m_fIdleTime < 0.f)
 			{
-				m_fIdleTime = 5.f;
+				m_fIdleTime = 2.f;
 				m_bIdle = false;
 			}
 		}
@@ -213,16 +251,16 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			switch (rand() % 4)
 			{
 			case 0:
-				Teleport(MiddleTop);
+				Teleport(Left);
 				break;
 			case 1:
-				Teleport(RightTop);
+				Teleport(Top);
 				break;
 			case 2:
-				Teleport(LeftTop);
+				Teleport(Bottom);
 				break;
 			case 3:
-				Teleport(LeftBottom);
+				Teleport(Right);
 				break;
 			}
 			m_bPattern2DashReady = true;
@@ -230,8 +268,32 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		else if (m_bPattern3)
 		{
 			m_eCurAnimState = EBossState::P1_PATTERN3LASERREADY;
-			Teleport(MiddleTop);
+			switch (rand() % 4)
+			{
+			case 0:
+				Teleport(Left);
+				break;
+			case 1:
+				Teleport(Top);
+				break;
+			case 2:
+				Teleport(Bottom);
+				break;
+			case 3:
+				Teleport(Right);
+				break;
+			}
 			m_bPattern3LaserReady = true;
+		}
+		else if (m_bChange)
+		{
+			m_eCurAnimState = EBossState::P1_CHANGE;
+			Teleport(_vec3(300.f, 30.f, 300.f));
+		}
+		else if (m_bGroggy)
+		{
+			m_eCurAnimState = EBossState::P1_GROGGY;
+			Teleport(_vec3(300.f, 30.f, 300.f));
 		}
 		else
 		{
@@ -239,19 +301,33 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			switch (rand() % 4)
 			{
 			case 0:
-				Teleport(Right);
-				break;
-			case 1:
 				Teleport(Left);
 				break;
-			case 2:
+			case 1:
 				Teleport(Top);
 				break;
-			case 3:
+			case 2:
 				Teleport(Bottom);
+				break;
+			case 3:
+				Teleport(Right);
 				break;
 			}
 			m_bIdle = true;
+		}
+	}
+
+	// Groggy 상태
+	if (m_eCurAnimState == EBossState::P1_GROGGY)
+	{
+		m_fGroggyTime -= fTimeDelta;
+		if (m_fGroggyTime < 0.f)
+		{
+			// 충돌 다시 되게 원래대로
+			m_fGroggyTime = 3.f;
+			m_bGroggy = false;
+			m_bCollsion = false;
+			m_eCurAnimState = EBossState::P1_TELEPORT;
 		}
 	}
 
@@ -300,7 +376,7 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		m_fPattern1FireIntervel -= fTimeDelta;
 		if (m_fPattern1FireIntervel < 0.f)
 		{
-			m_fPattern1FireIntervel = 0.03f;
+			m_fPattern1FireIntervel = 0.15f;
 			ShootBullet3();
 		}
 		// 발사완료
@@ -324,7 +400,6 @@ void CBoss2::FSM(const _float& fTimeDelta)
 				m_bPattern2DashReady = false;
 				m_eCurAnimState = EBossState::P1_PATTERN2CHARGE;
 				m_bPattern2DashCharge = true;
-				
 			}
 		}
 	}
@@ -339,6 +414,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 				m_bPattern2DashCharge = false;
 				m_eCurAnimState = EBossState::P1_PATTERN2DASH;
 				m_bPattern2Dash = true;
+
+				DashDir = CalcDirection();
+				D3DXVec3Normalize(&DashDir, &DashDir);
 			}
 		}
 	}
@@ -347,10 +425,12 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		if (m_bPattern2Dash)
 		{
 			m_fDashTime -= fTimeDelta;
-			ChasePlayer(fTimeDelta, m_fP1_DashSpeed);
+
+			DashTarget(fTimeDelta, m_fP1_DashSpeed, DashDir);
+			//ChasePlayer(fTimeDelta, m_fP1_DashSpeed);
 			if (m_fDashTime < 0.f)
 			{
-				m_fDashTime = 0.06f * 11;
+				m_fDashTime = 0.12f * 11;
 				m_bPattern2Dash = false;
 				m_eCurAnimState = EBossState::P1_TELEPORT;
 				m_bPattern2 = false;
@@ -412,21 +492,25 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		m_fP2IdleTime -= fTimeDelta;
 		if (m_fP2IdleTime < 0.f)
 		{
-			m_fP2IdleTime = 3.f;
+			m_fP2IdleTime = 2.f;
 			m_bPhase2Idle = false;
-			switch (rand() % 1)
+			switch (rand() % 4)
 			{
 			case 0:
+				m_eCurAnimState = EBossState::P2_SPIKE;
+				m_bPhase2Spike = true;
+				break;
+			case 1:
 				m_eCurAnimState = EBossState::P2_SUMMON;
 				m_bPhase2Summon = true;
 				break;
-			case 1:
-				m_eCurAnimState = EBossState::P2_SUNKEN;
-				m_bPhase2Sunken = true;
-				break;
 			case 2:
-				m_eCurAnimState = EBossState::P2_SPIKE;
-				m_bPhase2Spike = true;
+				m_eCurAnimState = EBossState::P2_SUNKEN;
+				m_bPahse2SunkenReady = true;
+				break;
+			case 3:
+				m_eCurAnimState = EBossState::P2_SUNKENALL;
+				m_bPhase2SunkenAll = true;
 				break;
 			}
 		}
@@ -439,43 +523,294 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		if (m_fP2SummonTime < 0.f)
 		{
 			// 소환
-			for (int i = 0; i < m_iMobTotalNum; i++)
+			if (m_iSummonNum > 0)
 			{
-				if (!dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->GetIsEnable())
+				for (int i = 0; i < m_iMobTotalNum; i++)
 				{
-					dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->SetEnable(true);
-					break;
+					if (!dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->GetIsEnable())
+					{
+						dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->SetEnable(true);
+						m_iSummonNum--;
+					}
 				}
 			}
-			m_fP2SummonTime = 3.f;
+			m_iSummonNum = 3;
+			m_fP2SummonTime = 1.f;
 			m_bPhase2Summon = false;
 			m_eCurAnimState = EBossState::P2_IDLE;
 			m_bPhase2Idle = true;
 		}
 	}
 
-	// 페이즈2 Sunken
-	//if (m_eCurAnimState == EBossState::P2_SUMMON)
-	//{
-	//	m_fP2SummonTime -= fTimeDelta;
-	//	if (m_fP2SummonTime < 0.f)
-	//	{
-	//		m_fP2SummonTime = 3.f;
-	//		// 소환
-	//		for (int i = 0; i < m_iMobTotalNum; i++)
-	//		{
-	//			if (!dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->GetIsEnable())
-	//			{
-	//				dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->SetEnable(true);
-	//				break;
-	//			}
-	//		}
-	//		m_bPhase2Summon = false;
-	//		m_eCurAnimState = EBossState::P2_IDLE;
-	//		m_bPhase2Idle = true;
-	//	}
-	//}
+	// 페이즈2 Spike
+	if (m_eCurAnimState == EBossState::P2_SPIKE)
+	{
+		if (m_bPhase2Spike)
+		{
+			m_fP2SpikeTime -= fTimeDelta;
+			if (m_fP2SpikeTime < 0.f)
+			{
+				m_fP2SpikeTime = 1.5f;
+				// 스파이크 소환
+				for (int i = 0; i < 50; i++)
+				{
+					if (!dynamic_pointer_cast<CGameObject>(m_pVecSpike[i])->GetIsEnable())
+					{
+						dynamic_pointer_cast<CGameObject>(m_pVecSpike[i])->SetEnable(true);
+						dynamic_pointer_cast<CTransform>(m_pVecSpike[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+							SetPosition(m_vPos.x - 330.f + (rand() % 10 + 1) * 60.f, 20.f, m_vPos.z - 330.f + (rand() % 10 + 1) * 60.f);
+						m_pVecSpike[i]->SetAnimState(ESpikeState::READY);
+					}
+				}
+				m_bPhase2Spike = false;
+				m_bPhase2Spike2 = true;
+			}
+		}
+		if (m_bPhase2Spike2)
+		{
+			m_fP2SpikeTime2 -= fTimeDelta;
+			if (m_fP2SpikeTime2 < 0.f)
+			{
+				m_fP2SpikeTime2 = 1.f;
+				// 스파이크 소환
+				for (int i = 50; i < m_iSpikeTotalNum; i++)
+				{
+					if (!dynamic_pointer_cast<CGameObject>(m_pVecSpike[i])->GetIsEnable())
+					{
+						dynamic_pointer_cast<CGameObject>(m_pVecSpike[i])->SetEnable(true);
+						dynamic_pointer_cast<CTransform>(m_pVecSpike[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+							SetPosition(m_vPos.x - 385.f + (rand() % 10 + 1) * 70.f, 20.f, m_vPos.z - 385.f + (rand() % 10 + 1) * 70.f);
+						m_pVecSpike[i]->SetAnimState(ESpikeState::READY);
+					}
+				}
+				m_bPhase2Spike2 = false;
+				m_eCurAnimState = EBossState::P2_IDLE;
+				m_bPhase2Idle = true;
+			}
+		}
+	}
 
+	// 페이즈2 Sunken
+	if (m_eCurAnimState == EBossState::P2_SUNKEN)
+	{
+		if (m_bPahse2SunkenReady)
+		{
+			m_fP2SunkenReadyTime -= fTimeDelta;
+			if (m_fP2SunkenReadyTime < 0.f)
+			{
+				m_fP2SunkenReadyTime = 1.f;
+				m_bPahse2SunkenReady = false;
+				m_bPhase2Sunken = true;
+			}
+		}
+
+		if (m_bPhase2Sunken)
+		{
+			m_fP2SunkenIntervel -= fTimeDelta;
+			if (m_fP2SunkenIntervel < 0.f)
+			{
+				// 플레이어로 향하는 방향 벡터
+				_vec3 PlayerDir;
+				PlayerDir = CalcDirection();
+				D3DXVec3Normalize(&PlayerDir, &PlayerDir);
+
+				m_fP2SunkenIntervel = 0.1f;
+				// 성큰 소환
+				for (int i = 0; i < m_iSunkenTotalNum; i++)
+				{
+					if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+					{
+						dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+						dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+							SetPosition(m_vPos.x + PlayerDir.x * m_iSunkentIntervel * (m_iSunkenAttackNum + 1), 12.f, m_vPos.z + PlayerDir.z * m_iSunkentIntervel * (m_iSunkenAttackNum + 1));
+						m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+						m_iSunkenAttackNum++;
+						break;
+					}
+				}
+			}
+
+			m_fP2SunkenTime -= fTimeDelta;
+
+			if (m_fP2SunkenTime < 0.f)
+			{
+				m_iSunkenAttackNum = 0;
+				m_fP2SunkenIntervel = 0.1f;
+
+				m_fP2SunkenTime = 3.f;
+
+				m_bPhase2Sunken = false;
+				m_eCurAnimState = EBossState::P2_IDLE;
+				m_bPhase2Idle = true;
+			}
+		}
+	}
+
+	// 페이즈2 SunkenAll
+	if (m_eCurAnimState == EBossState::P2_SUNKENALL)
+	{
+		_vec3 vPos;
+		_vec3 vTargetPos;
+		_vec3 vDir;
+		m_pTransformCom->GetInfo(INFO_POS, &vPos);
+
+		m_fP2SunkenAllIntervel -= fTimeDelta;
+		if (m_fP2SunkenAllIntervel < 0.f)
+		{
+			m_fP2SunkenAllIntervel = 0.15f;
+			// 성큰 소환
+			// 위
+			vTargetPos = _vec3(300.f, 5.f, 360.f);
+			vDir = vTargetPos - vPos;
+			D3DXVec3Normalize(&vDir, &vDir);
+			for (int i = 0; i < m_iSunkenTotalNum; i++)
+			{
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
+					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+					break;
+				}
+			}
+			//아래
+			vTargetPos = _vec3(300.f, 5.f, 240.f);
+			vDir = vTargetPos - vPos;
+			D3DXVec3Normalize(&vDir, &vDir);
+			for (int i = 0; i < m_iSunkenTotalNum; i++)
+			{
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
+					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+					break;
+				}
+			}
+			//우상
+			vTargetPos = _vec3(360.f, 5.f, 360.f);
+			vDir = vTargetPos - vPos;
+			D3DXVec3Normalize(&vDir, &vDir);
+			for (int i = 0; i < m_iSunkenTotalNum; i++)
+			{
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
+					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+					break;
+				}
+			}
+			//좌상
+			vTargetPos = _vec3(240.f, 5.f, 360.f);
+			vDir = vTargetPos - vPos;
+			D3DXVec3Normalize(&vDir, &vDir);
+			for (int i = 0; i < m_iSunkenTotalNum; i++)
+			{
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
+					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+					m_iSunkenAttackAllNum++;
+					break;
+				}
+			}
+			//우하
+			vTargetPos = _vec3(360.f, 5.f, 240.f);
+			vDir = vTargetPos - vPos;
+			D3DXVec3Normalize(&vDir, &vDir);
+			for (int i = 0; i < m_iSunkenTotalNum; i++)
+			{
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
+					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+					break;
+				}
+			}
+			//좌하
+			vTargetPos = _vec3(240.f, 5.f, 240.f);
+			vDir = vTargetPos - vPos;
+			D3DXVec3Normalize(&vDir, &vDir);
+			for (int i = 0; i < m_iSunkenTotalNum; i++)
+			{
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
+					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+					m_iSunkenAttackAllNum++;
+					break;
+				}
+			}
+		}
+
+		m_fP2SunkenAllTime -= fTimeDelta;
+
+		if (m_fP2SunkenAllTime < 0.f)
+		{
+			m_iSunkenAttackAllNum = 0;
+			m_fP2SunkenAllIntervel = 0.15f;
+
+			m_fP2SunkenAllTime = 3.f;
+
+			m_bPhase2SunkenAll = false;
+			m_eCurAnimState = EBossState::P2_IDLE;
+			m_bPhase2Idle = true;
+		}
+	}
+
+	// 페이즈2 Bullet(그냥 일정시간마다 계속)
+	if (m_bPhase2)
+	{
+		if (!m_bPhase2FireCool)
+		{
+			m_fP2FireCoolTime -= fTimeDelta;
+		}
+		if (m_fP2FireCoolTime < 0.f)
+		{
+			m_bPhase2FireCool = true;
+			// 구체 4개 쏘기
+			m_fP2FireCoolTime = 10.f;
+			ShootBullet4();
+			m_bPhase2FireReady = true;
+		}
+		if (m_bPhase2FireReady)
+		{
+			m_fP2FireReadyTime -= fTimeDelta;
+			if (m_fP2FireReadyTime < 0.f)
+			{
+				m_fP2FireReadyTime = 3.f;
+				m_bPhase2FireReady = false;
+				m_bPhase2Fire = true;
+			}
+		}
+		if (m_bPhase2Fire)
+		{
+			m_fP2FireShootTime -= fTimeDelta;
+			m_fP2FireIntervel -= fTimeDelta;
+			if (m_fP2FireIntervel < 0.f)
+			{
+				m_fP2FireIntervel = 0.15f;
+				ShootBullet3();
+			}
+			// 발사완료
+			if (m_fP2FireShootTime < 0.f)
+			{
+				m_fP2FireShootTime = 3.f;
+				m_bPhase2Fire = false;
+				m_bPhase2FireCool = false;
+			}
+		}
+	}
 
 	// 원형탄
 	if (m_eCurAnimState == EBossState::P1_ATTACK)
@@ -554,7 +889,7 @@ void CBoss2::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Attack", 0.06f);
 			break;
 		case EBossState::P1_PATTERN2DASHREADY:
-			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Dash_Ready", 0.06f);
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Dash_Ready", 0.25f);
 			break;
 		case EBossState::P1_PATTERN2CHARGE:
 			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Dash_Charge", 0.06f);
@@ -578,10 +913,13 @@ void CBoss2::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Laser2", 0.06f);
 			break;
 		case EBossState::P1_DASH:
-			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Dash", 0.06f);
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Dash", 0.12f);
 			break;
 		case EBossState::P1_CHANGE:
 			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Change", 0.06f);
+			break;
+		case EBossState::P1_GROGGY:
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Groggy", 0.12f);
 			break;
 		case EBossState::P2_IDLE:
 			m_pTextureCom->SetAnimKey(L"Boss_Phase2_Idle", 0.06f);
@@ -606,6 +944,7 @@ void CBoss2::ChangeAnim()
 	}
 
 	m_pTransformCom->SetScale(40.f * 0.9f * fXpos, 35.f * 0.9f * fYpos, 40.f * 0.9f * fXpos);
+	m_pColliderCom->SetScale({ 40.f * 0.9f * fXpos, 35.f * 0.9f * fYpos, 40.f * 0.9f * fXpos });
 
 }
 
@@ -657,9 +996,9 @@ void CBoss2::KeyInput()
 	//if (GetAsyncKeyState('2') & 0x8000) {
 	//	m_eCurAnimState = EBossState::P1_ATTACK;
 	//}
-	//if (GetAsyncKeyState('3') & 0x8000) {
-	//	m_eCurAnimState = EBossState::P1_LASER1;
-	//}
+	if (GetAsyncKeyState('3') & 0x8000) {
+		m_eCurAnimState = EBossState::P1_LASER1;
+	}
 	if (GetAsyncKeyState('4') & 0x8000) {
 		m_iHp = 100;
 	}
@@ -686,8 +1025,26 @@ void CBoss2::OnFloor(_float _fHeight)
 
 void CBoss2::Teleport(_vec3 vPos)
 {
+	PrevTeleportPos = CurrentTeleportPos;
+	CurrentTeleportPos = vPos;
+	if (PrevTeleportPos != CurrentTeleportPos)
+	{
+		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetAnimEffect(L"Teleport_Effect", m_vPos, _vec3(33.f, 33.f, 33.f), 1.f, false);
+		pEffect->SetActive(true);
+	}
+
 	m_pTransformCom->SetPosition(vPos.x, vPos.y, vPos.z);
 	m_vPos = vPos;
+
+	if (PrevTeleportPos != CurrentTeleportPos)
+	{
+		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetAnimEffect(L"Teleport_Effect", m_vPos, _vec3(33.f, 33.f, 33.f), 1.f, false);
+		pEffect->SetActive(true);
+	}
 }
 
 _bool CBoss2::OutArea()
@@ -755,6 +1112,13 @@ void CBoss2::ChasePlayer(const _float& fTimeDelta, float _fSpeed)
 	m_pTransformCom->MoveForward(&vDir, fTimeDelta, _fSpeed);
 }
 
+void CBoss2::DashTarget(const _float& fTimeDelta, float _fSpeed, _vec3& _vDir)
+{
+	D3DXVec3Normalize(&_vDir, &_vDir);
+	
+	m_pTransformCom->MoveForward(&_vDir, fTimeDelta, _fSpeed);
+}
+
 void CBoss2::ShootBullet1()
 {
 	for (int i = 0; i < m_iBullet1TotalNum; i++)
@@ -796,11 +1160,12 @@ void CBoss2::ShootBullet3()
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->GetIsEnable())
 		{
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->SetEnable(true);
+			m_pVecBullet2[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 			_vec3 vTarget;
-			vTarget = _vec3(m_vPos.x + (-10.f + (rand() % 10) * 2.f) * 1280.f, m_vPos.y + (-10.f + (rand() % 10) * 2.f) * 1280.f, m_vPos.z + (-10.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = m_vPos + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -810,11 +1175,12 @@ void CBoss2::ShootBullet3()
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->GetIsEnable())
 		{
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->SetEnable(true);
+			m_pVecBullet2[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(Right.x, Right.y, Right.z);
 			_vec3 vTarget;
-			vTarget = Right + _vec3((-10.f + (rand() % 10) * 2.f) * 1280.f,(-10.f + (rand() % 10) * 2.f) * 1280.f,(-10.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = Right + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -824,11 +1190,12 @@ void CBoss2::ShootBullet3()
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->GetIsEnable())
 		{
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->SetEnable(true);
+			m_pVecBullet2[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(Left.x, Left.y, Left.z);
 			_vec3 vTarget;
-			vTarget = Left + _vec3((-10.f + (rand() % 10) * 2.f) * 1280.f, (-10.f + (rand() % 10) * 2.f) * 1280.f, (-10.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = Left + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -838,11 +1205,12 @@ void CBoss2::ShootBullet3()
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->GetIsEnable())
 		{
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->SetEnable(true);
+			m_pVecBullet2[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(Top.x, Top.y, Top.z);
 			_vec3 vTarget;
-			vTarget = Top + _vec3((-10.f + (rand() % 10) * 2.f) * 1280.f, (-10.f + (rand() % 10) * 2.f) * 1280.f, (-10.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = Top + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -852,11 +1220,12 @@ void CBoss2::ShootBullet3()
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->GetIsEnable())
 		{
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->SetEnable(true);
+			m_pVecBullet2[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(Bottom.x, Bottom.y, Bottom.z);
 			_vec3 vTarget;
-			vTarget = Bottom + _vec3((-10.f + (rand() % 10) * 2.f) * 1280.f, (-10.f + (rand() % 10) * 2.f) * 1280.f, (-10.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = Bottom + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -894,6 +1263,40 @@ void CBoss2::ShootBullet4()
 	}
 }
 
+void CBoss2::ShootBullet5()
+{
+	for (int i = 0; i < 5; i++)
+	{
+		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet3[i])->GetIsEnable())
+		{
+			dynamic_pointer_cast<CGameObject>(m_pVecBullet3[i])->SetEnable(true);
+			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
+				m_pVecBullet3[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			pTransform->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+			_vec3 vTarget;
+			switch (i)
+			{
+			case 0:
+				vTarget = Right;
+				break;
+			case 1:
+				vTarget = Left;
+				break;
+			case 2:
+				vTarget = Top;
+				break;
+			case 3:
+				vTarget = Bottom;
+				break;
+			case 4:
+				vTarget = MiddleTop;
+				break;
+			}
+			m_pVecBullet3[i]->SetTarget(vTarget);
+		}
+	}
+}
+
 void CBoss2::ShootLaser()
 {
 	for (int i = 0; i < m_iLaserTotalNum; i++)
@@ -914,26 +1317,22 @@ void CBoss2::ShootLaser()
 			{
 				// 윗 눈
 			case 0:
-				vPosition += vDirY * 7.f;
-				pTransform->SetPosition(vPosition.x, vPosition.y, vPosition.z);
-				pTransform->SetAngle(_vec3(PI * 0.3f, 0.f, 0.f));
+				vPosition += vDirY * 14.f;
 				break;
 				// 아래 왼 눈
 			case 1:
-				vPosition -= vDirX * 8.f;
-				pTransform->SetPosition(vPosition.x, vPosition.y, vPosition.z);
-				pTransform->SetAngle(_vec3(PI * 0.3f, 0.f, 0.f));
+				vPosition -= vDirX * 16.f;
 				break;
 				// 아래 오른 눈
 			case 2:
-				vPosition += vDirX * 8.f;
-				pTransform->SetPosition(vPosition.x, vPosition.y, vPosition.z);
-				pTransform->SetAngle(_vec3(PI * 0.3f, 0.f, 0.f));
+				vPosition += vDirX * 16.f;
 				break;
 			}
+			m_pVecLaser[i]->SetStart(vPosition);
+
 			_vec3 vPosPlayer;
 			m_pPlayerTransformCom->GetInfo(INFO_POS, &vPosPlayer);
-			vPosPlayer = _vec3(vPosPlayer.x - 10.f + (rand() % 10) * 2.f, vPosPlayer.y - 10.f + (rand() % 10) * 2.f, vPosPlayer.z);
+			vPosPlayer = _vec3(vPosPlayer.x, vPosPlayer.y, vPosPlayer.z);
 			m_pVecLaser[i]->SetTarget(vPosPlayer);
 		}
 	}

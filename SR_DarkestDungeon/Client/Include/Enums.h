@@ -27,6 +27,7 @@ enum class ETerrainType
 	VILLAGE_INSIDE,
 	DUNGEON,
 	DUNGEON2,
+	DUNGEON2_ROOF,
 
 	ENUM_END
 };

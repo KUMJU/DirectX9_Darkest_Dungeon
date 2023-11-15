@@ -1384,6 +1384,8 @@ void CResourceMgr::BossMapTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Dash_Charge/hellboss_caco_attack_nova00%d.png", 4, bDefault);
 	CreateNewTexture(L"Boss_Phase1_Dashes", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Dash/hellboss_caco_attack_nova00%d.png", 3, bDefault);
+	CreateNewTexture(L"Boss_Phase1_Groggy", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Groggy/hellboss_caco_morph00%d.png", 6, bDefault);
 
 
 	// Phase2
@@ -1407,6 +1409,14 @@ void CResourceMgr::BossMapTextureLoad()
 	// Spike
 	CreateNewTexture(L"Sunken", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Final_Spike1/hellboss_final_spike_02_00%d.png", 13, bDefault);
-	CreateNewTexture(L"Spike", TEX_NORMAL,
-		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Final_Spike2/hellboss_final_tentacle00%d.png", 17, bDefault);
+	CreateNewTexture(L"Spike_Attack", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Final_Spike2/Attack/hellboss_final_tentacle00%d.png", 17, bDefault);
+	CreateNewTexture(L"Spike_Ready", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Projectile/Final_Spike2/Ready/hellboss_final_tentacle0000.png", 1, bDefault);
+
+	// Effect
+	CreateNewTexture(L"Teleport_Effect", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Effect/Teleport/death_magic00%d.png", 10, bDefault);
+	CreateNewTexture(L"Bullet_Hitted", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Effect/Bullet_Hitted/bullet_hit_blue00%d.png", 9, bDefault);
 }
