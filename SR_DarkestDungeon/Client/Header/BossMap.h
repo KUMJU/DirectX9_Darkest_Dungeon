@@ -46,6 +46,8 @@ private:
 
 	_bool				m_bTestBattle = false; 
 
+	_bool				m_b3DBattleStart = true;
+
 	_tchar				m_szString[128];
 };
 

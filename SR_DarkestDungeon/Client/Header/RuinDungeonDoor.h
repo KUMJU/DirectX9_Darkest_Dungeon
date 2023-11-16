@@ -35,10 +35,21 @@ protected:
 	virtual void	ChangeTexture();
 
 protected:
+	shared_ptr<CRcTex> m_pBufferCom2 = nullptr;
+	shared_ptr<CTexture> m_pTextureCom2 = nullptr;
+	shared_ptr <CTransform> m_pTransformCom2 = nullptr;
+
+	shared_ptr<CRcTex> m_pBufferCom3 = nullptr;
+	shared_ptr<CTexture> m_pTextureCom3 = nullptr;
+	shared_ptr <CTransform> m_pTransformCom3 = nullptr;
+
 	ERuinDungeonDoorType m_eDoorType;
 
 private:
 	_int	m_iCurrent = 10;
+
+	_bool	m_bOpenStart = false;
+	float	m_fOpenTime = 1.f;
 
 };
 

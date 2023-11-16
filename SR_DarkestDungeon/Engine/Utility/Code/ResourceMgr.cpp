@@ -968,6 +968,9 @@ void CResourceMgr::WealdDungeonTextureLoad()
 	CreateNewTexture(L"Weald_Door_Opened", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_door.Opened.png", 1, bDefault);
 
+	CreateNewTexture(L"Weald_Door", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Doors/Weald/closed.png", 1, bDefault);
+
 	// °ñµ¿Ç°
 	CreateNewTexture(L"Weald_Spiderweb", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/Curios/Weald/cosmic_spiderweb/idle/armatureName_idle_0.png", 1, bDefault);
@@ -1297,9 +1300,15 @@ void CResourceMgr::RuinDungeonTextureLoad()
 
 	// ¹®
 	CreateNewTexture(L"Ruin_Door_Closed", TEX_NORMAL,
-		L"../Bin/Resource/Image/Dungeons/BackGround/Weald/weald.corridor_door.basic.png", 1, bDefault);
+		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.corridor_door.Closed.png", 1, bDefault);
 	CreateNewTexture(L"Ruin_Door_Opened", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.corridor_door.Opened.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Door_Right", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Doors/Ruins/Right.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Door_Left", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Doors/Ruins/Left.png", 1, bDefault);
 
 	// °ñµ¿Ç°
 	CreateNewTexture(L"Ruin_Armor", TEX_NORMAL,
