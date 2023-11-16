@@ -190,6 +190,7 @@ void CCreature::DecreaseHP(_int _iValue)
 
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
+
 	pEffect->SetDamageEffect(0, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
 	pEffect->SetActive(true);
 
@@ -490,11 +491,11 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	{
 		if (iCritical < CRIRATE)
 		{
-			_pCreature->IncreaseHP(_pSkill->GetHeal() * _pSkill->GetCriticalRatio());
+			_pCreature->IncreaseHP(static_cast<_int>(_pSkill->GetHeal() * _pSkill->GetCriticalRatio()));
 			dynamic_pointer_cast<CHero>(_pCreature)->DecreaseStress(5);
 		}
 		else
-			_pCreature->IncreaseHP(_pSkill->GetHeal() * _pSkill->GetDamageRatio());
+			_pCreature->IncreaseHP(static_cast<_int>(_pSkill->GetHeal() * _pSkill->GetDamageRatio()));
 
 		// 죽음의 저항 삭제
 		if (_pCreature->GetIsBeforeDeath()) _pCreature->SetBeforeDeath(false);
@@ -707,7 +708,7 @@ void CCreature::OnVirtue()
 {
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 150, true);
+	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 150, true , false);
 	pEffect->SetActive(true);
 
 	pEffect = CEffectMgr::GetInstance()->GetEffect();
@@ -733,7 +734,7 @@ void CCreature::OnAffliction()
 
 	pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetAnimEffect(m_strName + L"_Affliction", { 0.f, 0.f, 0.5f }, { 450.f, 420.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true);
+	pEffect->SetAnimEffect(m_strName + L"_Affliction", { 0.f, 0.f, 0.5f }, { 450.f, 420.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true , false);
 	pEffect->SetActive(true);
 
 	m_pStatInfo->SetAffliction(true);

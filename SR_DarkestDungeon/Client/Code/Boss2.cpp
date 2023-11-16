@@ -12,6 +12,8 @@
 #include "Sunken.h"
 #include "Player.h"
 
+#include "CameraMgr.h"
+
 CBoss2::CBoss2(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CCreature(pGraphicDev)
 {
@@ -121,6 +123,7 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 	// 벽에 충돌
 	if (m_bWallCollision)
 	{
+		CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.04f, 0.7f);
 		m_bPattern2Dash = false;
 		m_bWallCollision = false;
 		m_fDashTime = 0.12f * 11;

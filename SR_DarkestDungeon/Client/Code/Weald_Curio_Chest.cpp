@@ -24,6 +24,9 @@ HRESULT CWeald_Curio_Chest::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"상자 열기";
+
 	return S_OK;
 }
 

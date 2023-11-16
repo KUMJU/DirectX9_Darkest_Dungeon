@@ -198,7 +198,6 @@ void CPlayerFPSUI::SetHP(_int _iHP)
     m_iHP = _iHP;
     m_iHPGap = static_cast<_int>((m_iMaxHP - m_iHP) / 10);
 
-    printf("%d \n", m_iHPGap);
     m_pHPTransCom[1]->SetScale(11.f * static_cast<_float>(m_iHPGap), 16.f, 0.f);
     m_pHPTransCom[1]->SetPosition(398.f + m_pHPTransCom[1]->GetScale()->x, -321.f, 0.f);
 

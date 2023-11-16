@@ -266,6 +266,12 @@
     <ClCompile Include="..\Code\Spike.cpp">
       <Filter>01. GameObject\10. Projectile</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ScreenEffect.cpp">
+      <Filter>01. GameObject\03. UI\07. ScreenEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DungeonStatus.cpp">
+      <Filter>01. GameObject\03. UI\14. DungeonStatus</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\ExplosionParticle.cpp">
       <Filter>01. GameObject\11. Particle\ExplosionParticle</Filter>
     </ClCompile>
@@ -279,7 +285,6 @@
     <ClInclude Include="..\Header\pch.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -542,6 +547,13 @@
     <ClInclude Include="..\Header\Boss2.h">
       <Filter>01. GameObject\10. Boss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ScreenEffect.h">
+      <Filter>01. GameObject\03. UI\07. ScreenEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Enums.h" />
+    <ClInclude Include="..\Header\DungeonStatus.h">
+      <Filter>01. GameObject\03. UI\14. DungeonStatus</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\ExplosionParticle.h">
       <Filter>01. GameObject\11. Particle\ExplosionParticle</Filter>
     </ClInclude>
@@ -703,6 +715,9 @@
     </Filter>
     <Filter Include="01. GameObject\07. Minigame\00. CardGame\Card">
       <UniqueIdentifier>{5c48c758-e397-4a9d-b56d-4a028a9cc227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\14. DungeonStatus">
+      <UniqueIdentifier>{b2d518ec-3fb3-458c-b6bc-d606fae3133d}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. GameObject\11. Particle">
       <UniqueIdentifier>{07e1280b-a4bf-4c25-8ca5-6273dc9aad49}</UniqueIdentifier>

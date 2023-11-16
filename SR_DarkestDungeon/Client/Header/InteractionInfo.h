@@ -31,6 +31,8 @@ public:
 		m_bCheckObj = true;
 	}
 
+	void SetIsBattle(_bool _bValue) { m_bIsBattle = _bValue; }
+
 private:
 	void			AddComponent();
 
@@ -41,6 +43,7 @@ private:
 	tstring m_strMainKey = L"";
 
 	_bool m_bCheckObj = false;
+	_bool m_bIsBattle = false;
 
 
 };

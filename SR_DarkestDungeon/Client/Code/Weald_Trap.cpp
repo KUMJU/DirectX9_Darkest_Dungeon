@@ -6,6 +6,11 @@
 #include "Creature.h"
 #include "Hero.h"
 
+#include "CameraMgr.h"
+
+#include "UIMgr.h"
+#include "ScreenEffect.h"
+
 CWeald_Trap::CWeald_Trap(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
 {
@@ -52,6 +57,12 @@ _int CWeald_Trap::UpdateGameObject(const _float& fTimeDelta)
 			// 해제 실패
 			else
 			{
+				shared_ptr<CUIObj> pScreenEffect = CUIMgr::GetInstance()->FindUI(L"UI_ScreenEffect");
+
+				if (pScreenEffect) {
+					dynamic_pointer_cast<CScreenEffect>(pScreenEffect)->SetScreenEffect(EScreenEffect::ATTACKED);
+				}
+
 				vector<shared_ptr<CGameObject>>* pHeroVec =
 					dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
 				for (int i = 0; i < size(*pHeroVec); i++)

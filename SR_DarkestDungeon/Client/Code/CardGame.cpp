@@ -262,7 +262,7 @@ void CCardGame::RandomCardShuffle()
 		}
 		else {
 
-			_int iSize = numberList.size();
+			_int iSize = (_int)numberList.size();
 			_int iSelect = (rand() % (iSize - 1)) + 1;
 
 			if (iSize > iSelect) {

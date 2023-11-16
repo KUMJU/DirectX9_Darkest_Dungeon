@@ -26,7 +26,7 @@ HRESULT CMainApp::Ready_MainApp()
 {
 	ShowCursor(false);
 	AllocConsole();
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	if (FAILED(SetUp_DefaultSetting(&m_pGraphicDev))) {
 		return E_FAIL;
 	}

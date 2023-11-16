@@ -29,7 +29,7 @@ HRESULT CWealdDungeonDoor::ReadyGameObject()
 
 
 	m_bInteractionKey = L"C";
-	m_bInteractionInfo = L"문열기";
+	m_bInteractionInfo = L"문 열기";
 	return S_OK;
 }
 

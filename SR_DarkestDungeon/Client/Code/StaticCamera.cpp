@@ -36,6 +36,9 @@ _int CStaticCamera::UpdateGameObject(const _float& fTimeDelta)
 	if (m_bInVillage)
 		KeyInput();
 
+	_vec3 pos = *m_pPlrTransCom->GetPos();
+	pos;
+
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	m_deltaTime = fTimeDelta;
 	return 0;
@@ -43,6 +46,10 @@ _int CStaticCamera::UpdateGameObject(const _float& fTimeDelta)
 
 void CStaticCamera::LateUpdateGameObject(){
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+
+
+	_vec3 pos = *m_pPlrTransCom->GetPos();
+	pos;
 
 	m_vUp = _vec3(0.f, 1.f, 0.f);
 	_vec3 vLook, vPos;
@@ -125,6 +132,12 @@ void CStaticCamera::LateUpdateGameObject(){
 
 	if (!m_qEffectQueue.empty())
 		CameraEffectProcess();
+
+
+	pos = *m_pPlrTransCom->GetPos();
+	pos;
+
+	int a = 0;
 
 }
 
@@ -505,15 +518,19 @@ void CStaticCamera::CameraEffectProcess()
 //방향 Vertical 고정
 void CStaticCamera::ShakingCamera()
 {
-	_vec3 vCurrentPos;
+	_vec3 vCurrentPos;                                                                                                                                                                                            
 	_matrix matView;
 
 	_float fDir = m_qEffectQueue.front()->fDir;
 
 	//이동거리 구하기
-	_float fDistance = fDir * 10.f * m_deltaTime;
+	_float fDistance = fDir *10.f * m_deltaTime;
 
 	//한 방향으로 진폭만큼 이동했을시 방향 전환
+
+	printf("%f\n", m_qEffectQueue.front()->MoveDistance + fDistance);
+	printf("%f\n", fDir);
+
 	if (fabsf(m_qEffectQueue.front()->MoveDistance + fDistance) >= m_qEffectQueue.front()->fAmplitude) {
 		fDistance = m_qEffectQueue.front()->fAmplitude * fDir - m_qEffectQueue.front()->MoveDistance;
 		m_qEffectQueue.front()->MoveDistance = m_qEffectQueue.front()->fAmplitude * fDir;
@@ -526,8 +543,19 @@ void CStaticCamera::ShakingCamera()
 	//현재 카메라 position에 더해주기
 	memcpy(&vCurrentPos, &m_matView.m[3][0], sizeof(_vec3));
 
-	vCurrentPos.y += fDistance;
-	vCurrentPos.x += fDistance;
+
+	if (m_eCurrentState == ECameraMode::FPS || m_eCurrentState == ECameraMode::VILLAGE) {
+		vCurrentPos.y += m_qEffectQueue.front()->MoveDistance * fDir;
+		vCurrentPos.x += m_qEffectQueue.front()->MoveDistance * fDir;
+
+		/*printf("%f\n", fDir);
+		printf("%f\n", m_qEffectQueue.front()->MoveDistance * fDir);*/
+
+	}
+	else {
+		vCurrentPos.y += fDistance;
+		vCurrentPos.x += fDistance;
+	}
 
 	memcpy(&m_matView.m[3][0], &vCurrentPos, sizeof(_vec3));
 

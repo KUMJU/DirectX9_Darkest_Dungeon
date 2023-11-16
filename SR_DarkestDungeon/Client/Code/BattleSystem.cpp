@@ -512,7 +512,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 스트레스 이벤트 발생중인 시간
 	if (m_bWhileStressEvent)
 	{
-		printf("스트레스 이벤트 발생 시간\m_fStressEventTime : %f\n", m_fStressEventTime);
+		//printf("스트레스 이벤트 발생 시간\m_fStressEventTime : %f\n", m_fStressEventTime);
 
 		m_fStressEventTime -= fTimeDelta;
 
@@ -673,7 +673,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 						}
 						for (int j = 0; j < size(m_vMonsters); j++)
 						{
-							printf("%d", j);
 							dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetPicked(false);
 						}
 					}
@@ -1076,7 +1075,7 @@ _bool CBattleSystem::EndBattle()
 	{
 		for (auto& iter : m_vHeroes)
 		{
-			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100.f);
+			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100);
 		}
 		return true;
 	}
@@ -1084,7 +1083,7 @@ _bool CBattleSystem::EndBattle()
 	{
 		for (auto& iter : m_vMonsters)
 		{
-			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100.f);
+			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100);
 		}
 		return true;
 	}
@@ -1135,7 +1134,7 @@ _bool CBattleSystem::MonstersAllDead()
 void CBattleSystem::DeadCheck()
 {
 	// 죽은애 있으면 앞으로 당겨주기
-	for (int i = size(m_vHeroes) - 2; i >= 0; i--)
+	for (int i = (_int)size(m_vHeroes) - 2; i >= 0; i--)
 	{
 		if (dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
 		{
@@ -1158,7 +1157,7 @@ void CBattleSystem::DeadCheck()
 		}
 	}
 
-	for (int i = size(m_vMonsters) - 2; i >= 0; i--)
+	for (int i = (_int)size(m_vMonsters) - 2; i >= 0; i--)
 	{
 		if (dynamic_pointer_cast<CCreature>(m_vMonsters[i])->GetIsDeath())
 		{
@@ -1363,7 +1362,7 @@ void CBattleSystem::SwitchPosition(int _iCurrentIndex, int _iMoveCnt, _bool _bHe
 
 void CBattleSystem::CmpBySpeed(vector<shared_ptr<CGameObject>>& _vCreatures)
 {
-	int size = _vCreatures.size();
+	int size = (_int)_vCreatures.size();
 	for (int i = 0; i < size; i++) {
 		for (int j = 1; j < size - i; j++) {
 			if (dynamic_pointer_cast<CCreature>(_vCreatures[j])->GetCommonStat().iSpeed >
@@ -1475,8 +1474,8 @@ void CBattleSystem::Battle(int _iNum)
 			iDeathMonsters++;
 		}
 	}
-	iLiveMonsters = size(m_vMonsters) - iDeathMonsters;
-	iLiveHeroes = size(m_vHeroes) - iDeathHeroes;
+	iLiveMonsters = (_int)size(m_vMonsters) - iDeathMonsters;
+	iLiveHeroes = (_int)size(m_vHeroes) - iDeathHeroes;
 
 	// 자동전투가 아닐때
 	if (!m_bAutoBattle)

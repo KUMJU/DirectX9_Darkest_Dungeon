@@ -68,6 +68,7 @@ public:
 	// 선택한 두 스킬의 순서를 스왑하는 함수
 	virtual void			SwapSkill(_int _iIdx1, _int _iIdx2);
 
+	void					GetHeroStatusEvent(_bool _bHpEvent);
 
 protected:
 	virtual void		AddComponent();
@@ -89,6 +90,8 @@ public:
 	void		IncreaseStress(_int _iValue);
 	void		DecreaseStress(_int _iValue);
 
+	virtual void DecreaseHP(_int _iValue);
+
 	_float		GetCritical() { return m_fCritical; }
 	void		SetCritical(_float _fValue) { m_fCritical = _fValue; }
 	void		ChangeCritical(_float _fValue) { m_fCritical *= _fValue; }
@@ -97,7 +100,7 @@ public:
 	void		SetDeathDoor(_bool _bDeathDoor) { m_bDeathDoor = _bDeathDoor; }
 
 	_bool		GetStressEvent() { return m_bStressEvent; }
-	void		SetStressEvent(_bool _bStressEvent) { m_bStressEvent = _bStressEvent; }
+	void		SetStressEvent(_bool _bStressEvent) { m_bStressEvent = _bStressEvent;}
 
 	_bool		IsAffliction() { return m_bAffliction; }
 	void		SetAffliction(_bool _bAffliction) { m_bAffliction = _bAffliction; }

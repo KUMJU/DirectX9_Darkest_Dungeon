@@ -24,6 +24,9 @@ HRESULT CDoor::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"¹® ¿­±â";
+
 	return S_OK;
 }
 

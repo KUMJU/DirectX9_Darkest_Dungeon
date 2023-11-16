@@ -28,7 +28,6 @@ HRESULT CEffect::ReadyGameObject()
 
 _int CEffect::UpdateGameObject(const _float& fTimeDelta)
 {
-    // printf("Effect %d\n", m_iNum);
     m_fDeltaTime = fTimeDelta;
 
     _int iExit = __super::UpdateGameObject(m_fDeltaTime);
@@ -78,7 +77,6 @@ _int CEffect::UpdateGameObject(const _float& fTimeDelta)
 
 void CEffect::LateUpdateGameObject()
 {
-    // printf("Effect %d\n", m_iNum);
     if (m_bOrthogonal)
         CRenderer::GetInstance()->AddRenderGroup(RENDER_UI, shared_from_this());
     else
@@ -87,8 +85,6 @@ void CEffect::LateUpdateGameObject()
 
 void CEffect::RenderGameObject()
 {
-
-    // printf("Effect %d\n", m_iNum);
     if (!m_bActive) return;
      
     if(m_vPos)
@@ -205,7 +201,6 @@ void CEffect::AddComponent()
 
 void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _float _fAnimTime, _bool _bOrthogonal, _bool _bZEnable)
 {
-    // printf("Effect %d\nAnimation\n", m_iNum);
 
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
@@ -257,7 +252,6 @@ void CEffect::SetTextureEffect(tstring _strTextureKey, _vec3 _vPos, _vec3 _vScal
 
 void CEffect::SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime)
 {
-    // printf("Effect %d\nSkill\n", m_iNum);
 
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
@@ -294,7 +288,6 @@ void CEffect::SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _
 
 void CEffect::SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _float _fAnimTime)
 {
-    // printf("Effect %d\nDamage\n", m_iNum);
     tstring strType;
 
     switch (_iDamageType)
@@ -350,7 +343,6 @@ void CEffect::SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _f
 
 void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime)
 {
-    // printf("Effect %d\nFont\n", m_iNum);
     m_strAnimKey = _strAnimKey;
 
     m_pTextureCom1->SetTextureKey(m_strAnimKey, TEX_NORMAL);
@@ -372,7 +364,6 @@ void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime
 
 void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime, _bool _bLoop)
 {
-    // printf("Effect %d\nHead\n", m_iNum);
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
     m_bLoop = _bLoop;
@@ -394,7 +385,6 @@ void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime
 
 void CEffect::SetProjEffect(tstring _strAnimKey, _vec3 _vPos, _float _fAnimTime)
 {
-    // printf("Effect %d\nProj\n", m_iNum);
 
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;

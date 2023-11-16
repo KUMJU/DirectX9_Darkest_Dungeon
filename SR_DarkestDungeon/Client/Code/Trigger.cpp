@@ -74,7 +74,7 @@ void CTrigger::OnCollide(shared_ptr<CGameObject> _pObj)
 	{
 		if (m_strKeyName == L"Tavern")
 		{
-			_pObj->SetPos({ 51.16f, 0.0f, 68.27f + VILLAGE_TILESIZE * 2.f });
+			_pObj->SetPos({ 51.16f, 0.0f, 68.27f + VILLAGE_TILESIZE * 2.f - 2.f });
 			dynamic_pointer_cast<CTransform>(_pObj->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(_pObj->GetPos().x, _pObj->GetPos().y, _pObj->GetPos().z);
 			_pObj->SetAngle({0.f, 3.22f, 0.f});
 		}

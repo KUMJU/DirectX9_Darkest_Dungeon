@@ -305,7 +305,6 @@ void CMob::ChangeAnim()
 
 void CMob::AnimDuration(const _float& fTimeDelta)
 {
-	int a;
 }
 
 void CMob::KeyInput()

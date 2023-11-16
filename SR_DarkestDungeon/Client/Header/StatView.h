@@ -82,7 +82,7 @@ private:
 	_float m_fHpBarRange = 1.f;
 	//체력 차감 바 비율
 	_float m_fHpGapRange = 0.f;
-	_int m_iGapHp = 0.f;
+	_int m_iGapHp = 0;
 
 	_bool m_bHero = true;
 	_int m_iHeroType = 0;				// 1: 방패파괴자, 2: 노상강도, 3: 성녀, 4: 광대

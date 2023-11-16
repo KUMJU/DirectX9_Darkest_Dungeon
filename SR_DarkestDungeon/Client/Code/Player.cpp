@@ -157,6 +157,10 @@ void CPlayer::LateUpdateGameObject()
 {
 	MouseInput();
 	m_bPrevMouse = m_bCurMouse;
+	_vec3 pPos = *m_pTransformCom->GetPos();
+	pPos;
+
+	int a = 3;
 
 	CGameObject::LateUpdateGameObject();
 }
@@ -230,6 +234,8 @@ void CPlayer::DecreaseHP(_int _iDamage)
 {
 	if (!m_bHitted)
 	{
+		CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.2f, 0.5f);
+
 		m_iHP -= _iDamage;
 
 		if (!m_pPlrFPSUI) {
