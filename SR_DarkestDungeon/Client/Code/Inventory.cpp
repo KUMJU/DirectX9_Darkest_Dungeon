@@ -144,6 +144,14 @@ void CInventory::DeleteItem(tstring _strItmeName)
             else {
                 m_itemList.erase(it);
                 --m_iTotalItemNum;
+
+                _int iCount = 0;
+                for (auto& iter : m_itemList) {
+
+                    iter->pItem->UpdateInventory({ -182.f + (iCount * 42.f) , -320.f ,0.f });
+                    ++iCount;
+                }
+
                 break;
             }
         }

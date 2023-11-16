@@ -45,6 +45,8 @@
 #include"BattleHeroUI.h"
 #include"SoundMgr.h"
 
+
+#include"LightMgr.h"
 #include"Narration.h"
 
 CBossMap::CBossMap(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -79,7 +81,6 @@ HRESULT CBossMap::ReadyScene()
 	for (auto& iter : m_mapLayer) { 
 		iter.second->ReadyLayer();
 	}
-
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetPlayerMode(EPlayerMode::BOSS_FIELD);
 
  	return __super::ReadyScene();
@@ -102,6 +103,20 @@ void CBossMap::LateUpdateScene()
 
 void CBossMap::RenderScene()
 {
+}
+
+void CBossMap::SetLight()
+{
+	D3DLIGHT9 _pLightInfo1;
+
+	_pLightInfo1.Diffuse = { 0.8f , 0.8f , 0.8f , 1.f };
+	_pLightInfo1.Specular = { 0.8f , 0.8f , 0.8f , 1.f };
+	_pLightInfo1.Ambient = { 0.8f , 0.8f , 0.8f , 1.f };
+	_pLightInfo1.Direction = { 1.f, -1.f, 1.f };
+
+	CLightMgr::GetInstance()->InitDirectionLight(m_pGraphicDev, _pLightInfo1);
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 void CBossMap::SetWall(shared_ptr<CWall> _pWall, shared_ptr<CLayer> _pLayer,
@@ -240,15 +255,9 @@ HRESULT CBossMap::Ready_Layer_Camera(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
-	// Camera
-	//shared_ptr<CGameObject> m_pCamera = make_shared<CDynamicCamera>(m_pGraphicDev);
-	//m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-
 	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-	
 	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
-	CCameraMgr::GetInstance()->SetFPSMode();
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

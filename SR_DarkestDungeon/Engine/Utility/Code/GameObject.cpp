@@ -108,6 +108,31 @@ void CGameObject::SetBillBoard(_matrix& _matWorld)
 	_matWorld = (matBill * _matWorld);
 }
 
+void CGameObject::SetFullScreenBillBoard(_matrix& _matWorld)
+{
+
+	_matrix matBill, matView;
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixIdentity(&matBill);
+
+	matBill._11 = matView._11;
+	matBill._12= matView._12;
+	matBill._13 = matView._13;
+
+	matBill._21 = matView._21;
+	matBill._22 = matView._22;
+	matBill._23 = matView._23;
+
+	matBill._31 = matView._31;
+	matBill._32 = matView._32;
+	matBill._33 = matView._33;
+
+	D3DXMatrixInverse(&matBill, 0, &matBill);
+
+	_matWorld = (matBill * _matWorld);
+}
+
 std::shared_ptr<CComponent> CGameObject::GetComponent(const tstring& _strKeyName, COMPONENTID _eComID)
 {
 	auto iter = m_mapComponent->find(_strKeyName);

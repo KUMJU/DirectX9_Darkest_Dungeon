@@ -22,6 +22,11 @@ HRESULT CItem::ReadyGameObject()
 		m_pTransCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 	}
 
+	if (m_bOnField) {
+
+		m_pTransCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.x);
+
+	}
 	return S_OK;
 }
 
@@ -34,6 +39,8 @@ _int CItem::UpdateGameObject(const _float& fTimeDelta)
 
 	if (m_bOnField) {
 		AddRenderGroup(RENDERID::RENDER_ALPHA, shared_from_this());
+
+
 	}
 
 	if(m_bOnStore)
@@ -43,6 +50,7 @@ _int CItem::UpdateGameObject(const _float& fTimeDelta)
 	_int iExit(0);
 
 	iExit = __super::UpdateGameObject(fTimeDelta);
+
 
 	return iExit;
 }
@@ -54,6 +62,16 @@ void CItem::LateUpdateGameObject()
 		FloatingOnField();
 
 	__super::LateUpdateGameObject();
+
+	if (m_bOnField) {
+		_matrix matWorld;
+
+		matWorld = *m_pTransCom->GetWorld();
+		SetBillBoard(matWorld);
+		m_pTransCom->SetWorld(&matWorld);
+
+	}
+
 }
 
 void CItem::RenderGameObject()
@@ -83,7 +101,19 @@ void CItem::SetDropItemInfo(_vec3 _vPos, const tstring& _strName, _int _iAmount)
 
 void CItem::SetScale(_vec3 _vScale)
 {
-	m_pTransCom->SetScale(_vScale.x, _vScale.y, _vScale.z);
+	if (m_bOnField) {
+		m_pTransCom->SetScale(_vScale.x, _vScale.y, _vScale.x);
+	}
+	else {
+		m_pTransCom->SetScale(_vScale.x, _vScale.y, _vScale.z);
+	}
+}
+
+void CItem::UpdateInventory(_vec3 _vPos)
+{
+	m_pTransCom->SetPosition(_vPos.x , _vPos.y, _vPos.z);
+
+
 }
 
 void CItem::GetUITextureKeyName(const tstring& _strOriginName)
@@ -167,6 +197,40 @@ void CItem::GetUITextureKeyName(const tstring& _strOriginName)
 		m_tDescription->m_strTitle = L"돈";
 		m_tDescription->m_strMainContent = L"돈";
 	}
+	else if (L"Player_Item_RedGem" == _strOriginName) {
+		strKey = L"Item_UI_RedGem";
+		m_eItemState = EHandItem::RED_GEM;
+
+		m_tDescription->m_strTitle = L"루비";
+		m_tDescription->m_strMainContent = L"붉은 빛이 도는 보석";
+
+	}
+	else if (L"Player_Item_GreenGem" == _strOriginName) {
+		strKey = L"Item_UI_GreenGem";
+		m_eItemState = EHandItem::GREEN_GEM;
+
+		m_tDescription->m_strTitle = L"에메랄드";
+		m_tDescription->m_strMainContent = L"초록빛이 도는 보석";
+
+	}
+	else if (L"Player_Item_BlueGem" == _strOriginName) {
+		strKey = L"Item_UI_BlueGem";
+		m_eItemState = EHandItem::BLUE_GEM;
+
+		m_tDescription->m_strTitle = L"사파이어";
+		m_tDescription->m_strMainContent = L"푸른빛이 도는 보석";
+
+	}
+	else if (L"Item_MagicRing" == _strOriginName) {
+		strKey = L"Item_UI_MagicRing";
+		m_eItemState = EHandItem::ENUM_END;
+
+		m_tDescription->m_strTitle = L"???";
+		m_tDescription->m_strMainContent = L"신비한 힘이 느껴진다...";
+
+	}
+
+
 
  	m_strItemKey = strKey;
 }

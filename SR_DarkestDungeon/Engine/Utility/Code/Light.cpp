@@ -31,6 +31,17 @@ void CLight::SetPosition(_vec3 _vPos)
 
 }
 
+void CLight::LightOn()
+{
+	m_pGraphicDev->LightEnable(m_iIndex, TRUE);
+
+}
+
+void CLight::LightOff()
+{
+	m_pGraphicDev->LightEnable(m_iIndex, FALSE);
+}
+
 
 
 void CLight::Free()

@@ -49,6 +49,8 @@ public:
 	void SetMoney(_int _iMoney) { m_iMoney = _iMoney; }
 	_int GetMoney() { return m_iMoney; }
 
+	void UpdateInventory(_vec3 _vPos);
+
 	//플로팅 아이템 텍스쳐 키값을 통해 UI 텍스쳐 키값을 반환받음
 	void GetUITextureKeyName(const tstring& _strOriginName);
 	tstring GetItemKeyName() { return m_strItemKey; }

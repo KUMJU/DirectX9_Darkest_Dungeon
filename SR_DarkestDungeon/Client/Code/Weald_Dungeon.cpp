@@ -55,6 +55,7 @@
 #include"PlayerFPSUI.h"
 
 #include"LoadingScreen.h"
+#include"InteractionInfo.h"
 
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -87,13 +88,12 @@ HRESULT CWeald_Dungeon::ReadyScene()
 	Ready_Layer_UI(L"Layer_2_UI");
 	Ready_Layer_Camera(L"Layer_5_Camera");
 
-
-	CScene::SetLight();
-
 	for (auto& iter : m_mapLayer) {
 		//GameComponenet Setting
 		iter.second->ReadyLayer();
 	}
+
+	SetLight();
 
 	return __super::ReadyScene();
 }
@@ -379,6 +379,22 @@ void CWeald_Dungeon::RenderScene()
 			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetMonstersVector())[i])->Get_String3(),
 			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	}*/
+}
+
+void CWeald_Dungeon::SetLight()
+{
+
+	D3DLIGHT9 _pLightInfo1;
+	
+	_pLightInfo1.Diffuse = { 0.4f , 0.4f , 0.4f , 1.f };
+	_pLightInfo1.Specular = { 0.4f , 0.4f , 0.4f , 1.f };
+	_pLightInfo1.Ambient = { 0.4f , 0.4f , 0.4f , 1.f };
+	_pLightInfo1.Direction = { 1.f, -1.f, 1.f };
+
+	CLightMgr::GetInstance()->InitDirectionLight(m_pGraphicDev, _pLightInfo1);
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 }
 
 HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
@@ -1077,6 +1093,9 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_Player_FPSUI", pPlayerUI);
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Player_FPSUI", dynamic_pointer_cast<CUIObj>(pPlayerUI));
 
+	shared_ptr<CGameObject> pInteractionInfo = make_shared<CInteractionInfo>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_InteractionInfo", pInteractionInfo);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_InteractionInfo", dynamic_pointer_cast<CUIObj>(pInteractionInfo));
 
 	// Description UI
 	shared_ptr<CGameObject> pDescriptionUI = make_shared<CDescription>(m_pGraphicDev);

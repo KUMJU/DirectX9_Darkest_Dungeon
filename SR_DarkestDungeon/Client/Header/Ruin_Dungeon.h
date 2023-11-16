@@ -20,6 +20,7 @@ public:
 
 public:
 	const _tchar* Get_String() const { return m_szString; }
+	virtual void SetLight();
 
 private:
 

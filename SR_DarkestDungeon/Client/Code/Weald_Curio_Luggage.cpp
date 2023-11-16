@@ -24,6 +24,9 @@ HRESULT CWeald_Curio_Luggage::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"독 제거하기";
+
 	return S_OK;
 }
 
@@ -155,7 +158,7 @@ void CWeald_Curio_Luggage::GetInteractionKey(const _float& fTimeDelta)
 	{
 		//m_bInteracting = true;
 		m_bActive = true;
-
+		m_bTabInteractionKey = true;
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 

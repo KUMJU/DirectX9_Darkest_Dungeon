@@ -23,6 +23,9 @@ public:
 	const _tchar* Get_String() const { return m_szString; }
 
 public:
+	virtual void SetLight();
+
+public:
 	void SetWall(shared_ptr<CWall> _pWall, shared_ptr<CLayer> _pLayer,
 		_float _fX, _float _fZ, _float _fSize, tstring _tKeyName);
 

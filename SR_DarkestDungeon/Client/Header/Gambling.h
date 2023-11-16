@@ -15,6 +15,9 @@ public:
 	virtual void			LateUpdateGameObject();
 	virtual void			RenderGameObject();
 
+public:
+	void SetCardMinigame(shared_ptr<CCardGame> pMinigame) { m_pCardGame = pMinigame; }
+
 protected:
 	virtual void			AddComponent();
 	virtual void			GetInteractionKey(const _float& fTimeDelta);
@@ -36,6 +39,9 @@ protected:
 	void			GetReward();
 
 private:
+	_float m_fDebounceTime = 0.f;
+	_bool m_bDebounce = false;
+
 	shared_ptr<CCardGame> m_pCardGame = nullptr;
 
 };

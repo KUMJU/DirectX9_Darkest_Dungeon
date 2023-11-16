@@ -190,6 +190,13 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Player_Item_Bandage", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/supply_bandage.png", 1, bDefault);
 
+	CreateNewTexture(L"Player_Item_RedGem", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/item_RedGem.png", 1, bDefault);
+	CreateNewTexture(L"Player_Item_GreenGem", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/item_GreenGem.png", 1, bDefault);
+	CreateNewTexture(L"Player_Item_BlueGem", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/item_BlueGem.png", 1, bDefault);
+	
 	//PlayerHand + Player FPS Mode-----------------------------------------------------------------
 
 	CreateNewTexture(L"Player_SpellHand_Fire", TEX_NORMAL,
@@ -229,6 +236,9 @@ void CResourceMgr::BaseTextureLoad()
 
 	CreateNewTexture(L"Item_Heirlooms", TEX_NORMAL,
 		L"../Bin/Resource/Image/PlayerItem/item_Heirlooms.png", 1, bDefault);
+
+	CreateNewTexture(L"Item_MagicRing", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerItem/Item_MagicRing.png", 1, bDefault);
 	 
 	// Gold
 	CreateNewTexture(L"Item_Gold1", TEX_NORMAL,
@@ -530,13 +540,14 @@ void CResourceMgr::BaseTextureLoad()
 
 
 		// 스킬 이펙트 (본인에게)
+		//여기 바꾸기
 
 		CreateNewTexture(L"BattleBallad_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad/armatureName_battle_ballad_%d.png", 28, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad/armatureName_battle_ballad_%d.png", 2, bDefault);
 		CreateNewTexture(L"Finale_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale/armatureName_finale_%d.png", 20, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale/armatureName_finale_%d.png", 2, bDefault);
 		CreateNewTexture(L"Solo_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo/armatureName_solo_%d.png", 28, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo/armatureName_solo_%d.png", 2, bDefault);
 
 
 		// 스킬 이펙트 (타겟)
@@ -544,32 +555,52 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"BattleBallad_Target_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad_target/armatureName_battle_ballad_target_%d.png", 20, bDefault);
 		CreateNewTexture(L"Finale_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 20, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 2, bDefault);
 		CreateNewTexture(L"Solo_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 20, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 2, bDefault);
 
 	}
 
 	// 붕괴, 기상
 	{
-		CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 1, bDefault);
+		/*CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
 		CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
 		CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
 		CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
 		
 		
 		CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 1, bDefault);
+				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
 		CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
 		CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
 		CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 1, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);*/
+
+
+			CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
+			CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
+			CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
+			CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
+
+
+			CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
+			CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
+			CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
+			CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
+				L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
 
 	}
 
@@ -720,6 +751,7 @@ void CResourceMgr::UITextureLoad()
 	CreateNewTexture(L"UI_MouseCursor_Main", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/cursors/arrow.png", 1, bDefault);
 
+
 	//InventoryUI
 	CreateNewTexture(L"Item_UI_Antivenom", TEX_NORMAL, 
 		L"../Bin/Resource/Image/UI/Item/supply/inv_supply+antivenom.png", 1, bDefault); // 해독제
@@ -730,6 +762,16 @@ void CResourceMgr::UITextureLoad()
 
 	CreateNewTexture(L"Item_UI_Heirloom", TEX_NORMAL, 
 		L"../Bin/Resource/Image/UI/Item/heirloom/inv_heirloom+crest.png", 1, bDefault); //가보
+
+	CreateNewTexture(L"Item_UI_RedGem", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/gem/inv_gem+ruby.png", 1, bDefault);
+	CreateNewTexture(L"Item_UI_BlueGem", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/gem/inv_gem+sapphire.png", 1, bDefault);
+	CreateNewTexture(L"Item_UI_GreenGem", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/gem/inv_gem+emerald.png", 1, bDefault);
+
+	CreateNewTexture(L"Item_UI_MagicRing", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Item/quest_item/Item_MagicRing_inven.png", 1, bDefault);
 
 	//재화 ----------------------------------------------------------------------
 	CreateNewTexture(L"Item_UI_Gold0", TEX_NORMAL,
@@ -874,12 +916,13 @@ void CResourceMgr::UITextureLoad()
 
 		// Head Effect
 		{
+			//여기 바꾸기
 			CreateNewTexture(L"UI_Head_StressUp", TEX_NORMAL,
-				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_afflicted_%d.png", 55, bDefault);
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_afflicted_%d.png", 2, bDefault);
 			CreateNewTexture(L"UI_Head_StressDown", TEX_NORMAL,
-				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_heroic_%d.png", 52, bDefault);
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_heroic_%d.png", 2, bDefault);
 			CreateNewTexture(L"UI_Head_Stun", TEX_NORMAL,
-				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_stun_loop_%d.png", 31, bDefault);
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_stun_loop_%d.png", 2, bDefault);
 		}
 	}
 
@@ -898,7 +941,10 @@ void CResourceMgr::UITextureLoad()
 	CreateNewTexture(L"UI_Loading_TitleOverlay", TEX_NORMAL,
 		L"../Bin/Resource/Image/Loading_Screen/loading_screen_titleoverlay.png", 1, bDefault);
 
-	//Torch
+	//Interaction Info
+
+	CreateNewTexture(L"UI_Interaction", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/UI_InteractionInfo.png", 1, bDefault);
 
 }
 
@@ -1215,6 +1261,20 @@ void CResourceMgr::VillageTextureLoad()
 				L"../Bin/Resource/Image/UI/UI/currency.crest.icon_1.png", 1, bDefault);
 		}
 	}
+
+
+	//미니게임
+
+	{
+
+		CreateNewTexture(L"Minigame_Card", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Minigame/Minigame_Card%d.png", 5, bDefault);
+
+		CreateNewTexture(L"Minigame_CardBack", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Minigame/Minigame_CardBack.png", 1, bDefault);
+
+	}
+
 }
 
 void CResourceMgr::RuinDungeonTextureLoad()
@@ -1224,6 +1284,8 @@ void CResourceMgr::RuinDungeonTextureLoad()
 	// Environment
 	CreateNewTexture(L"Com_Ruin_FloorTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/bricks.png", 1, bDefault);
+
+
 
 	CreateNewTexture(L"Com_Ruin_WallTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.corridor_wall.%d.png", 7, bDefault);
@@ -1261,6 +1323,10 @@ void CResourceMgr::RuinDungeonTextureLoad()
 
 	CreateNewTexture(L"Ruin_Sconce_Finish", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/sconce/investigate/armatureName_investigate_0.png", 1, bDefault);
+
+	//퍼즐방 스태츄
+	CreateNewTexture(L"Ruin_OldOne_Statue", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/Old_One_Statue/oldone_statue_%d.png", 4, bDefault);
 
 	// 함정
 	CreateNewTexture(L"Ruin_Traps_Remains", TEX_NORMAL,
@@ -1323,6 +1389,16 @@ void CResourceMgr::RuinDungeonTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Ruin/Bone Courtier/4.png", 1, bDefault);
 	CreateNewTexture(L"Bone Courtier_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
+
+	//Puzzle Hint
+
+	CreateNewTexture(L"UI_Puzzle_Hint", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/UI_Puzzle_Hint.png", 1, bDefault);
+
+	CreateNewTexture(L"Door_BossRoom", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Doors/BossRoom/armatureName_closed_%d.png", 25, bDefault);
+
+
 }
 
 void CResourceMgr::BossMapTextureLoad()

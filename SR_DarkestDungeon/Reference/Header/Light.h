@@ -15,6 +15,10 @@ public:
 	void			SetPosition(_vec3 _vPos);
 	_uint			GetLightNum() { return m_iIndex; }
 
+public:
+
+	void			LightOn();
+	void			LightOff();
 
 private:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;

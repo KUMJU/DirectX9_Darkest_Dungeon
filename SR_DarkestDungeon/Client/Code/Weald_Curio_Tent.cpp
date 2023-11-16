@@ -4,6 +4,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include "SoundMgr.h"
+#include"UIMgr.h"
 
 CWeald_Curio_Tent::CWeald_Curio_Tent(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
@@ -22,6 +23,9 @@ CWeald_Curio_Tent::~CWeald_Curio_Tent()
 HRESULT CWeald_Curio_Tent::ReadyGameObject()
 {
 	__super::ReadyGameObject();
+
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"텐트 내부 살펴보기";
 
 	return S_OK;
 }
@@ -62,6 +66,10 @@ _int CWeald_Curio_Tent::UpdateGameObject(const _float& fTimeDelta)
 			//m_pTransformCom->SetScale(WEALD_PATHSIZEX / 3.f, WEALD_PATHSIZEX / 3.f, 1.f);
 			break;
 		}
+	}
+
+	if (m_bActive) {
+		CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_InteractionInfo");
 	}
 
 	//빌보드 시작
@@ -135,7 +143,7 @@ void CWeald_Curio_Tent::GetInteractionKey(const _float& fTimeDelta)
 	{	
 		//m_bInteracting = true;
 		m_bActive = true;
-
+		m_bTabInteractionKey = true;
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 

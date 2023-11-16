@@ -57,13 +57,6 @@ _int CBullet3::UpdateGameObject(const _float& fTimeDelta)
 
 	m_vPos = *m_pTransformCom->GetPos();
 
-	//빌보드 시작
-	_matrix matWorld;
-
-	matWorld = *m_pTransformCom->GetWorld();
-	SetBillBoard(matWorld);
-	m_pTransformCom->SetWorld(&matWorld);
-
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
 	// FSM 조건
@@ -78,14 +71,19 @@ _int CBullet3::UpdateGameObject(const _float& fTimeDelta)
 	KeyInput();
 
 
-
-
 	return iExit;
 }
 
 void CBullet3::LateUpdateGameObject()
 {
 	__super::LateUpdateGameObject();
+
+	//빌보드 시작
+	_matrix matWorld;
+
+	matWorld = *m_pTransformCom->GetWorld();
+	SetBillBoard(matWorld);
+	m_pTransformCom->SetWorld(&matWorld);
 }
 
 void CBullet3::RenderGameObject()
@@ -108,6 +106,7 @@ void CBullet3::AddComponent()
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();
 	m_pTransformCom->ReadyTransform();
+	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.x);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 
 	pComponent = m_pBufCom = make_shared <CRcTex>(m_pGraphicDev);
@@ -176,7 +175,7 @@ void CBullet3::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y);
 	}
 
-	m_pTransformCom->SetScale(10.f * fXpos, 10.f * fYpos, 10.f * fXpos);
+	m_pTransformCom->SetScale(10.f * fXpos, 10.f * fXpos, 10.f * fXpos);
 
 }
 

@@ -21,7 +21,8 @@ CWealdDungeonDoor::~CWealdDungeonDoor()
 HRESULT CWealdDungeonDoor::ReadyGameObject()
 {
 	__super::ReadyGameObject();
-
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"문열기";
 	return S_OK;
 }
 
@@ -74,6 +75,7 @@ void CWealdDungeonDoor::GetInteractionKey(const _float& fTimeDelta)
 	if (GetAsyncKeyState('C') & 0x8000)
 	{
 		m_bInteracting = true;
+		m_bTabInteractionKey = true;
 
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);

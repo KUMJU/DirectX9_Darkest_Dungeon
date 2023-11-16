@@ -209,6 +209,7 @@ void CStaticCamera::ChangeCameraWithPoint(ECameraMode _eCamType, _vec3 _vDst, _v
 
 void CStaticCamera::MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float _fTime)
 {
+	
 	//m_eCurrentState = _eCamType;
 	m_bCamMoving = true;
 

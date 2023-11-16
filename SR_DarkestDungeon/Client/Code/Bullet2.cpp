@@ -59,17 +59,9 @@ HRESULT CBullet2::ReadyGameObject()
 
 _int CBullet2::UpdateGameObject(const _float& fTimeDelta)
 {
+
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
-
 	m_vPos = *m_pTransformCom->GetPos();
-
-
-	//ºôº¸µå ½ÃÀÛ
-	_matrix matWorld;
-
-	matWorld = *m_pTransformCom->GetWorld();
-	SetBillBoard(matWorld);
-	m_pTransformCom->SetWorld(&matWorld);
 
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
@@ -86,14 +78,19 @@ _int CBullet2::UpdateGameObject(const _float& fTimeDelta)
 
 
 
-
-
 	return iExit;
 }
 
 void CBullet2::LateUpdateGameObject()
 {
 	__super::LateUpdateGameObject();
+
+	//ºôº¸µå ½ÃÀÛ
+	_matrix matWorld;
+
+	matWorld = *m_pTransformCom->GetWorld();
+	SetBillBoard(matWorld);
+	m_pTransformCom->SetWorld(&matWorld);
 }
 
 void CBullet2::RenderGameObject()

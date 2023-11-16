@@ -24,6 +24,9 @@ HRESULT CRuin_Curio_Armor::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"∞©ø  »Æ¿Œ";
+
 	return S_OK;
 }
 

@@ -90,12 +90,6 @@ void CScene::KeyInput()
 		CCollisionMgr::GetInstance()->SetVisible(false);
 }
 
-void CScene::SetLight()
-{
-
-	shared_ptr<CLight> pLight =  CLightMgr::GetInstance()->InitDirectionLight(m_pGraphicDev);
-
-}
 
 shared_ptr<CComponent> CScene::GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID)
 {
