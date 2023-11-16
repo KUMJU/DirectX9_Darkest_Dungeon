@@ -29,7 +29,8 @@ public:
 
 	// 시스템 내의 모든 파티클 속성을 리셋하는 함수
 	virtual void	Reset();
-	virtual void	Setting(_vec3* _vOrigin, _int _iNumParticles);
+	virtual void	SettingOrigin(_vec3* _vOrigin, _int _iNumParticles);
+	virtual void	SettingBounding(BOUNDING_BOX* _tBoundingBox, _vec3* _vPos, _int _iNumParticles);
 	
 	// 한 파티클의 속성을 리셋하는 함수
 	virtual void	ResetParticle(PARTICLE_ATTRIBUTE* attribute);

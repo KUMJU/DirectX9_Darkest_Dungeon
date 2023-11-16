@@ -5,6 +5,8 @@
 #include"Export_System.h"
 #include"PickingMgr.h"
 
+#include "GlowParticle.h"
+
 CItem::CItem(LPDIRECT3DDEVICE9 _pGraphicDev)
 	:CGameObject(_pGraphicDev)
 {
@@ -46,6 +48,9 @@ _int CItem::UpdateGameObject(const _float& fTimeDelta)
 	if(m_bOnStore)
 		CPickingMgr::GetInstance()->AddList(shared_from_this());
 
+	if (m_pParticle && m_pParticle->GetIsActive())
+		m_pParticle->UpdateGameObject(fTimeDelta);
+
 
 	_int iExit(0);
 
@@ -72,6 +77,9 @@ void CItem::LateUpdateGameObject()
 
 	}
 
+	if (m_pParticle && m_pParticle->GetIsActive())
+		m_pParticle->LateUpdateGameObject();
+
 }
 
 void CItem::RenderGameObject()
@@ -88,8 +96,9 @@ void CItem::RenderGameObject()
 
 void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
 {
-
-
+	m_pParticle->Reset();
+	m_pParticle->SetActive(false);
+	m_pParticle = nullptr;
 }
 
 void CItem::SetDropItemInfo(_vec3 _vPos, const tstring& _strName, _int _iAmount)
@@ -289,4 +298,19 @@ void CItem::FloatingOnField()
 	}
 
 	m_pTransCom->SetPosition(vPos.x, vPos.y + m_fTotalHeight, vPos.z);
+}
+
+void CItem::StartParticle()
+{
+	m_pParticle = make_shared<CGlowParticle>();
+	m_pParticle->AddComponent();
+	m_pParticle->Reset();
+	m_pParticle->Init(m_pGraphicDev, L"../Bin/Resource/Image/Particle/snowball.bmp");
+
+	BOUNDING_BOX boundingBox;
+	boundingBox._min = D3DXVECTOR3(m_pTransCom->GetPos()->x - 1.0f, m_pTransCom->GetPos()->y, m_pTransCom->GetPos()->z - 1.0f);
+	boundingBox._max = D3DXVECTOR3(m_pTransCom->GetPos()->x + 1.0f, m_pTransCom->GetPos()->y + 2.f, m_pTransCom->GetPos()->z + 1.0f);
+	
+	m_pParticle->SettingBounding(&boundingBox, m_pTransCom->GetPos(), 20);
+	m_pParticle->SetActive(true);
 }

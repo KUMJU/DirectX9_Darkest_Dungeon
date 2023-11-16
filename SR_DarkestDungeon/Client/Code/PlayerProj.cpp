@@ -212,7 +212,7 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 
 		if (pParticle)
 		{
-			pParticle->Setting(m_pTransmCom->GetPos(), 50);
+			pParticle->SettingOrigin(m_pTransmCom->GetPos(), 50);
 			pParticle->SetActive(true);
 		}
 	}

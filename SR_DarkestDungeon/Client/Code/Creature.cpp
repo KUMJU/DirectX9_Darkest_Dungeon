@@ -728,7 +728,7 @@ void CCreature::OnAffliction()
 
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 150, true);
+	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 50, true);
 	pEffect->SetActive(true);
 
 	pEffect = CEffectMgr::GetInstance()->GetEffect();

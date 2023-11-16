@@ -56,16 +56,6 @@ void CParticleSystem::Init(LPDIRECT3DDEVICE9 _pGraphicDev, tstring strTexFileNam
     m_bActive = false;
 }
 
-void CParticleSystem::Setting(_vec3* _vOrigin, _int _iNumParticles)
-{
-    m_vOrigin = *_vOrigin;
-    m_pTransformCom->SetPosition(m_vOrigin.x, m_vOrigin.y, m_vOrigin.z);
-    m_pTransformCom->SetScale(1.f, 1.f, 1.f);
-
-    for (int i = 0; i < _iNumParticles; ++i)
-        AddParticle();
-}
-
 _int CParticleSystem::UpdateGameObject(const _float& fTimeDelta)
 {
     return _int();
@@ -112,12 +102,8 @@ void CParticleSystem::PreRender()
 void CParticleSystem::RenderGameObject()
 {
     D3DXMATRIX matTriangleWorld;
+    matTriangleWorld = *m_pTransformCom->GetWorld();
 
-    _vec3* pPlayerPos = dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos();
-
-
-    D3DXMatrixIdentity(&matTriangleWorld);
-    D3DXMatrixTranslation(&matTriangleWorld, m_vOrigin.x, m_vOrigin.y, m_vOrigin.z);
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 
         if (!m_listParticles.empty())
@@ -240,6 +226,27 @@ void CParticleSystem::Reset()
     {
         ResetParticle(&(*i));
     }
+}
+
+void CParticleSystem::SettingOrigin(_vec3* _vOrigin, _int _iNumParticles)
+{
+    m_vOrigin = *_vOrigin;
+    m_pTransformCom->SetPosition(m_vOrigin.x, m_vOrigin.y, m_vOrigin.z);
+    m_pTransformCom->SetScale(1.f, 1.f, 1.f);
+
+    for (int i = 0; i < _iNumParticles; ++i)
+        AddParticle();
+}
+
+void CParticleSystem::SettingBounding(BOUNDING_BOX* _tBoundingBox, _vec3* _vPos, _int _iNumParticles)
+{
+    m_tBoundingBox = *_tBoundingBox;
+    
+    m_pTransformCom->SetPosition(_vPos->x, _vPos->y, _vPos->z);
+    m_pTransformCom->SetScale(10.f, 10.f, 10.f);
+
+    for (int i = 0; i < _iNumParticles; ++i)
+        AddParticle();
 }
 
 // 한 파티클의 속성을 리셋하는 함수

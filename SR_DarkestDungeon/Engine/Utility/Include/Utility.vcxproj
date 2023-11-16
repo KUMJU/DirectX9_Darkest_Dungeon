@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\Header\Export_Utility.h" />
     <ClInclude Include="..\..\Header\GameMgr.h" />
     <ClInclude Include="..\..\Header\GameObject.h" />
+    <ClInclude Include="..\..\Header\GlowParticle.h" />
     <ClInclude Include="..\..\Header\Layer.h" />
     <ClInclude Include="..\..\Header\Light.h" />
     <ClInclude Include="..\..\Header\LightMgr.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="..\Code\ExplosionParticle.cpp" />
     <ClCompile Include="..\Code\GameMgr.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
+    <ClCompile Include="..\Code\GlowParticle.cpp" />
     <ClCompile Include="..\Code\Layer.cpp" />
     <ClCompile Include="..\Code\Light.cpp" />
     <ClCompile Include="..\Code\LightMgr.cpp" />

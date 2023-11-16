@@ -179,6 +179,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom1->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 					pTransform->SetPosition(56.f + fNum - 0.5f, 1.f, 16.f - 0.01f - 0.01f*i);
+					dynamic_pointer_cast<CItem>(m_pRoom1->GetGameObjectVector()[i])->StartParticle();
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
