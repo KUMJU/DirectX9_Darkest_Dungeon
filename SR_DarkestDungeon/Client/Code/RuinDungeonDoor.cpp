@@ -22,12 +22,51 @@ HRESULT CRuinDungeonDoor::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_pTransformCom2->SetScale(0.305f * m_pTransformCom->GetScale()->x,
+		0.595f * m_pTransformCom->GetScale()->y,
+		0.305f * m_pTransformCom->GetScale()->z);
+	m_pTransformCom2->SetPosition(m_vPos.x + 0.01f, m_vPos.y - 0.9f, m_vPos.z+0.01f);
+	m_pTransformCom2->SetAngle(*m_pTransformCom->GetAngles());
+	m_pTransformCom3->SetScale(0.305f * m_pTransformCom->GetScale()->x,
+		0.595f * m_pTransformCom->GetScale()->y,
+		0.305f * m_pTransformCom->GetScale()->z);
+	m_pTransformCom3->SetPosition(m_vPos.x + 0.01f, m_vPos.y - 0.9f, m_vPos.z + 0.01f);
+	m_pTransformCom3->SetAngle(*m_pTransformCom->GetAngles());
+
 	return S_OK;
 }
 
 _int CRuinDungeonDoor::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
+
+	if (m_bOpenStart)
+	{
+		m_fOpenTime -= fTimeDelta;
+
+		_vec3 DirR = _vec3(1.f, 0.f, 0.f);
+		_vec3 DirL = _vec3(-1.f, 0.f, 0.f);
+
+		_vec3 DirU = _vec3(0.f, 0.f, 1.f);
+		_vec3 DirD = _vec3(0.f, 0.f, -1.f);
+
+		if (m_pTransformCom2->GetAngles()->y != 0.f)
+		{
+			m_pTransformCom2->MoveForward(&DirU, fTimeDelta, 2.f);
+			m_pTransformCom3->MoveForward(&DirD, fTimeDelta, 2.f);
+		}
+		else
+		{
+			m_pTransformCom2->MoveForward(&DirL, fTimeDelta, 2.f);
+			m_pTransformCom3->MoveForward(&DirR, fTimeDelta, 2.f);
+		}
+
+		if (m_fOpenTime < 0.f)
+		{
+			m_fOpenTime = 1.f;
+			m_bOpenStart = false;
+		}
+	}
 
 	return iExit;
 }
@@ -40,6 +79,48 @@ void CRuinDungeonDoor::LateUpdateGameObject()
 void CRuinDungeonDoor::RenderGameObject()
 {
 	__super::RenderGameObject();
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom2->GetWorld());
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+
+	D3DMATERIAL9			tMtrl;
+	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
+
+	tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
+	tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
+	tMtrl.Ambient = { 0.2f, 0.2f, 0.2f, 1.f };
+	tMtrl.Emissive = { 0.f, 0.f, 0.f, 0.f };
+	tMtrl.Power = 0.f;
+	
+	m_pGraphicDev->SetMaterial(&tMtrl);
+	m_pTextureCom2->SetTexture(0);
+	m_pBufferCom2->RenderBuffer();
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom3->GetWorld());
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+
+	D3DMATERIAL9			tMtrl2;
+	ZeroMemory(&tMtrl2, sizeof(D3DMATERIAL9));
+
+	tMtrl2.Diffuse = { 1.f, 1.f, 1.f, 1.f };
+	tMtrl2.Specular = { 1.f, 1.f, 1.f, 1.f };
+	tMtrl2.Ambient = { 0.2f, 0.2f, 0.2f, 1.f };
+	tMtrl2.Emissive = { 0.f, 0.f, 0.f, 0.f };
+	tMtrl2.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&tMtrl2);
+	m_pTextureCom3->SetTexture(0);
+	m_pBufferCom3->RenderBuffer();
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CRuinDungeonDoor::AddComponent()
@@ -61,8 +142,46 @@ void CRuinDungeonDoor::AddComponent()
 	m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
 
 	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
-	m_pTextureCom->SetTextureKey(L"Ruin_Door_Opened", TEX_NORMAL);
+	m_pTextureCom->SetTextureKey(L"Ruin_Door_Closed", TEX_NORMAL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Texture",pComponent });
+
+
+
+	pComponent = m_pBufferCom2 = make_shared<CRcTex>(m_pGraphicDev);
+	dynamic_pointer_cast<CRcTex>(m_pBufferCom2)->ReadyBuffer();
+	m_mapComponent[ID_STATIC].insert({ L"Com_RcTex2", pComponent });
+
+	pComponent = m_pTextureCom2 = make_shared<CTexture>(m_pGraphicDev);
+	m_mapComponent[ID_STATIC].insert({ L"Com_Texture2", pComponent });
+
+	pComponent = m_pTransformCom2 = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
+	m_pTransformCom2->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform2", pComponent });
+	m_pTransformCom2->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+	m_pTransformCom2->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
+
+	pComponent = m_pTextureCom2 = make_shared<CTexture>(m_pGraphicDev);
+	m_pTextureCom2->SetTextureKey(L"Ruin_Door_Left", TEX_NORMAL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Texture2",pComponent });
+
+
+
+	pComponent = m_pBufferCom3 = make_shared<CRcTex>(m_pGraphicDev);
+	dynamic_pointer_cast<CRcTex>(m_pBufferCom3)->ReadyBuffer();
+	m_mapComponent[ID_STATIC].insert({ L"Com_RcTex3", pComponent });
+
+	pComponent = m_pTextureCom3 = make_shared<CTexture>(m_pGraphicDev);
+	m_mapComponent[ID_STATIC].insert({ L"Com_Texture3", pComponent });
+
+	pComponent = m_pTransformCom3 = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
+	m_pTransformCom3->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform3", pComponent });
+	m_pTransformCom3->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+	m_pTransformCom3->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
+
+	pComponent = m_pTextureCom3 = make_shared<CTexture>(m_pGraphicDev);
+	m_pTextureCom3->SetTextureKey(L"Ruin_Door_Right", TEX_NORMAL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Texture3",pComponent });
 }
 
 void CRuinDungeonDoor::GetInteractionKey(const _float& fTimeDelta)
@@ -80,6 +199,7 @@ void CRuinDungeonDoor::GetInteractionKey(const _float& fTimeDelta)
 
 		// 텍스처 또는 애니메이션 변경
 		ChangeTexture();
+		m_bOpenStart = true;
 
 		switch (m_eDoorType)
 		{
@@ -114,7 +234,7 @@ void CRuinDungeonDoor::FinishInteraction()
 {
 	m_bInteracting = false;
 
-	m_pTextureCom->SetTextureKey(L"Ruin_Door_Opened", TEX_NORMAL);
+	m_pTextureCom->SetTextureKey(L"Ruin_Door_Closed", TEX_NORMAL);
 }
 
 void CRuinDungeonDoor::ChangeTexture()
@@ -129,7 +249,7 @@ _bool CRuinDungeonDoor::IsFinish()
 	{
 		m_bInteracting = false;
 		m_iCurrent = 10;
-		m_pTextureCom->SetTextureKey(L"Ruin_Door_Opened", TEX_NORMAL);
+		m_pTextureCom->SetTextureKey(L"Ruin_Door_Closed", TEX_NORMAL);
 
 		// 플레이어 행동 풀기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);

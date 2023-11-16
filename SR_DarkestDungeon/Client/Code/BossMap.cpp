@@ -90,10 +90,16 @@ HRESULT CBossMap::ReadyScene()
 
 _int CBossMap::UpdateScene(const _float& fTimeDelta)
 {
+	if (!m_b3DBattleStart)
+	{
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetSpeed(20.f);
+		m_b3DBattleStart = true;
+	}
+
 
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
-
+	
 	return iExit;
 }
 

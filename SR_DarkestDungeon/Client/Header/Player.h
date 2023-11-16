@@ -114,6 +114,8 @@ public:
 	void	SetHP(_int _iHP) { m_iHP = _iHP; }
 	void	DecreaseHP(_int _iDamage);
 
+	void	SetSpeed(_float _fSpeed) { m_fSpeed = _fSpeed; }
+
 public:
 	void SettingLight();
 	void SetPlayerMode(EPlayerMode _ePlrMode);
@@ -144,7 +146,7 @@ public:
 
 
 private:
-	_float		m_fSpeed = 20.f;
+	_float		m_fSpeed = 10.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
 
