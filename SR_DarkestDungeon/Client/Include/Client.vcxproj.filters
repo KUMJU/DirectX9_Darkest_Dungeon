@@ -96,9 +96,6 @@
     <ClCompile Include="..\Code\CameraMgr.cpp">
       <Filter>02. Manager\00. CameraMgr</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CardGame.cpp">
-      <Filter>01. GameObject\07. Minigame</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Door.cpp">
       <Filter>01. GameObject\02 InteractionObj</Filter>
     </ClCompile>
@@ -233,6 +230,24 @@
     <ClCompile Include="..\Code\Trigger.cpp">
       <Filter>01. GameObject\04. Environment</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\InteractionInfo.cpp">
+      <Filter>01. GameObject\03. UI\12. InteractionInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ruin_Curio_Statue.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PuzzleHint.cpp">
+      <Filter>01. GameObject\03. UI\13. PuzzleHint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossRoomDoor.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CardGame.cpp">
+      <Filter>01. GameObject\07. Minigame\00. CardGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Card.cpp">
+      <Filter>01. GameObject\07. Minigame\00. CardGame\Card</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\Boss2.cpp">
       <Filter>01. GameObject\10. Boss</Filter>
     </ClCompile>
@@ -353,9 +368,6 @@
     <ClInclude Include="..\Header\CameraMgr.h">
       <Filter>02. Manager\00. CameraMgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CardGame.h">
-      <Filter>01. GameObject\07. Minigame</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Door.h">
       <Filter>01. GameObject\02 InteractionObj</Filter>
     </ClInclude>
@@ -388,7 +400,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Tervarn.h" />
     <ClInclude Include="..\Header\TavernUI.h" />
-    <ClInclude Include="..\Header\Gambling.h" />
     <ClInclude Include="..\Header\Guild.h" />
     <ClInclude Include="..\Header\BattleHeroUI.h">
       <Filter>01. GameObject\03. UI\00. BattleHeroUI</Filter>
@@ -486,8 +497,26 @@
     <ClInclude Include="..\Header\Trigger.h">
       <Filter>01. GameObject\04. Environment</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Boss2.h">
-      <Filter>01. GameObject\10. Boss</Filter>
+    <ClInclude Include="..\Header\InteractionInfo.h">
+      <Filter>01. GameObject\03. UI\12. InteractionInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ruin_Curio_Statue.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PuzzleHint.h">
+      <Filter>01. GameObject\03. UI\13. PuzzleHint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossRoomDoor.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CardGame.h">
+      <Filter>01. GameObject\07. Minigame\00. CardGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Card.h">
+      <Filter>01. GameObject\07. Minigame\00. CardGame\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Gambling.h">
+      <Filter>01. GameObject\02 InteractionObj\01. Village</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Mob.h">
       <Filter>01. GameObject\10. Boss</Filter>
@@ -503,6 +532,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\Spike.h">
       <Filter>01. GameObject\10. Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Boss2.h">
+      <Filter>01. GameObject\10. Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -647,6 +679,18 @@
     </Filter>
     <Filter Include="01. GameObject\03. UI\11. PlayerFPSUI">
       <UniqueIdentifier>{0ace0080-6773-4652-a16e-df2b6f7c3dcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\12. InteractionInfo">
+      <UniqueIdentifier>{b561b11a-63f5-4e4e-a261-9b8fe53c47b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\13. PuzzleHint">
+      <UniqueIdentifier>{26db4c70-bce6-4e69-8e21-d2006b6cf978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\07. Minigame\00. CardGame">
+      <UniqueIdentifier>{c05f430f-0fd8-4140-9514-10900915e449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\07. Minigame\00. CardGame\Card">
+      <UniqueIdentifier>{5c48c758-e397-4a9d-b56d-4a028a9cc227}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

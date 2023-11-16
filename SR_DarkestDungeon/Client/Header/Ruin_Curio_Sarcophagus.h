@@ -1,6 +1,8 @@
 #pragma once
 #include "InteractionObj.h"
 
+class CRuin_Curio_Statue;
+
 class CRuin_Curio_Sarcophagus : public CInteractionObj
 {
 public:
@@ -14,6 +16,14 @@ public:
 	virtual void			LateUpdateGameObject();
 	virtual void			RenderGameObject();
 
+public:
+
+	void InsertStatue(shared_ptr<CRuin_Curio_Statue> pStatue) {
+		if (m_StatueVec.size() < 3) {
+			m_StatueVec.push_back(pStatue);
+		}
+	}
+	
 protected:
 	virtual void			AddComponent();
 	virtual void			GetInteractionKey(const _float& fTimeDelta);
@@ -42,6 +52,20 @@ private:
 	tstring		m_strAnimKey = L"";				// 애니메이션 키
 	tstring		m_strEffectKey = L"";				// 이펙트 키
 
+
+	_bool m_bPuzzleDone = false;
+	_bool m_bAnimComplete = false;
+	_bool m_bEffectDone = false;
+	_bool m_bEffectDone2 = false;
+
+	_bool m_bIsUION = false;
+
+	_float m_fSceneTime = 0.f;
+
+	_float m_fDebTime = 0.f;
+	_bool m_bDebounce = false;
+
+	vector<shared_ptr<CRuin_Curio_Statue>> m_StatueVec;
 
 };
 

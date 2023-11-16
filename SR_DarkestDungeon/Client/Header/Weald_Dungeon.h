@@ -21,6 +21,9 @@ public:
 public:
 	const _tchar* Get_String() const { return m_szString; }
 
+public:
+	virtual void SetLight();
+
 private:
 
 	HRESULT				Ready_Layer_Environment(tstring pLayerTag);

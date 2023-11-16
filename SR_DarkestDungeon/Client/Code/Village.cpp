@@ -39,6 +39,8 @@
 
 #include"LoadingScreen.h"
 
+#include"CardGame.h"
+
 CVillage::CVillage(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -64,6 +66,7 @@ HRESULT CVillage::ReadyScene()
 		iter.second->ReadyLayer();
 	}
 
+	SetLight();
 	CSoundMgr::GetInstance()->PlayBGM(L"Mus_Town_Base.wav", 1.f);
 
 	return __super::ReadyScene();
@@ -87,6 +90,21 @@ void CVillage::LateUpdateScene()
 
 void CVillage::RenderScene()
 {
+}
+
+void CVillage::SetLight()
+{
+	D3DLIGHT9 _pLightInfo1;
+
+	_pLightInfo1.Diffuse = { 0.7f , 0.7f ,0.7f , 1.f };
+	_pLightInfo1.Specular = { 0.7f , 0.7f ,0.7f , 1.f };
+	_pLightInfo1.Ambient = { 0.7f , 0.7f , 0.7f , 1.f };
+	_pLightInfo1.Direction = { 1.f, -1.f, 1.f };
+
+	CLightMgr::GetInstance()->InitDirectionLight(m_pGraphicDev, _pLightInfo1);
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
 }
 
 void CVillage::KeyInput()
@@ -260,6 +278,7 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 		//m_pTervarnInside->SetScale({ 20.f, 30.f, 1.f });
 		m_pLayer->CreateGameObject(L"Obj_GuildInside", m_pGuildInside);
 	}
+
 
 	//가장 최하위 순서에 돌려줄 것
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

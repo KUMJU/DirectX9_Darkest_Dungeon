@@ -67,4 +67,10 @@ protected:
 
 	// 상호작용 상태를 저장하는 변수
 	_bool	m_bInteracting = false;
+
+	tstring m_bInteractionKey = L"";
+	tstring m_bInteractionInfo = L"";
+
+	_bool	m_bTabInteractionKey = false;
+
 };

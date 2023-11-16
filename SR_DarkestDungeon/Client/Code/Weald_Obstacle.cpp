@@ -24,7 +24,10 @@ HRESULT CWeald_Obstacle::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 	
-	return S_OK;
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"장애물 제거하기";
+
+	return S_OK; 
 }
 
 _int CWeald_Obstacle::UpdateGameObject(const _float& fTimeDelta)
@@ -153,6 +156,7 @@ void CWeald_Obstacle::GetInteractionKey(const _float& fTimeDelta)
 	{
 		//m_bInteracting = true;
 		m_bActive = true;
+		m_bTabInteractionKey = true;
 
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);

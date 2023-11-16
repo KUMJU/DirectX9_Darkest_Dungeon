@@ -9,6 +9,7 @@
 #include "Gambling.h"
 #include "TavernNPC.h"
 #include "EnvironmentObj.h"
+#include "CardGame.h"
 #include "Trigger.h"
 
 CTervarn::CTervarn(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -120,6 +121,7 @@ HRESULT CTervarn::ReadyGameObject()
 		m_pGambling->SetScale({ 6.f, 5.f, 1.f });
 		m_pGambling->SetPos({ m_vPos.x + VILLAGE_TILESIZE * 2 + 3.f, m_vPos.y + m_pGambling->GetScale().y / 2 + 1, m_vPos.z + VILLAGE_TILESIZE * 2 + 5.f });
 
+		
 		m_vecGameObject.push_back(m_pGambling);
 
 		// Ã¢¹®

@@ -84,5 +84,8 @@ enum class EHandItem {
 	TORCH,				// 횃불
 	SPELLHAND_FIRE,		//보스전 마법
 	SPELLHAND_STORM ,	//보스전 마법
+	RED_GEM,			//퍼즐방 보석
+	BLUE_GEM,
+	GREEN_GEM,
 	ENUM_END	
 };

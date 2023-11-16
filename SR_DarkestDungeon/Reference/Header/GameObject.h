@@ -83,6 +83,7 @@ public:
 public:
 	void SetLock(_bool _bLock) { m_bLock = _bLock; }
 	void	SetBillBoard(_matrix& _matWorld);
+	void	SetFullScreenBillBoard(_matrix& _matWorld);
 	std::shared_ptr<CComponent> GetComponent(const tstring& _strKeyName, COMPONENTID _eComID);
 
 public:

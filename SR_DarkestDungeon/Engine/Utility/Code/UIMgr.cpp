@@ -45,8 +45,7 @@ void CUIMgr::SceneChange()
 	for (auto iter = m_UIList.begin(); iter != m_UIList.end(); ) {
 		if (L"UI_Inventory" != iter->first && L"UI_Narration" != iter->first &&
 			L"UI_Mouse" != iter->first && L"UI_Player_FPSUI" != iter->first &&
-			L"Obj_DescriptionUI" != iter->first)
-		// && L"Battle_Hero_UI" != iter->first
+			L"Obj_DescriptionUI" != iter->first && L"UI_InteractionInfo" != iter->first)
 		{
 			m_UIList.erase(iter++);
  		}

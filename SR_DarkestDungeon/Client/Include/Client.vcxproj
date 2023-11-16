@@ -158,6 +158,7 @@
     <ClInclude Include="..\Header\BoneDefender.h" />
     <ClInclude Include="..\Header\BoneSoldier.h" />
     <ClInclude Include="..\Header\Boss2.h" />
+    <ClInclude Include="..\Header\BossRoomDoor.h" />
     <ClInclude Include="..\Header\BrigandBloodletter.h" />
     <ClInclude Include="..\Header\BrigandCutthroat.h" />
     <ClInclude Include="..\Header\Bullet1.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="..\Header\Bullet3.h" />
     <ClInclude Include="..\Header\CameraMgr.h" />
     <ClInclude Include="..\Header\BrigandFusilier.h" />
+    <ClInclude Include="..\Header\Card.h" />
     <ClInclude Include="..\Header\CardGame.h" />
     <ClInclude Include="..\Header\BossMap.h" />
     <ClInclude Include="..\Header\Description.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="..\Header\HeroStat.h" />
     <ClInclude Include="..\Header\Highwayman.h" />
     <ClInclude Include="..\Header\Inside.h" />
+    <ClInclude Include="..\Header\InteractionInfo.h" />
     <ClInclude Include="..\Header\InteractionObj.h" />
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
@@ -202,11 +205,13 @@
     <ClInclude Include="..\Header\PickingGame.h" />
     <ClInclude Include="..\Header\PlayerFPSUI.h" />
     <ClInclude Include="..\Header\PlayerProj.h" />
+    <ClInclude Include="..\Header\PuzzleHint.h" />
     <ClInclude Include="..\Header\RuinDungeonDoor.h" />
     <ClInclude Include="..\Header\Ruin_Curio_Armor.h" />
     <ClInclude Include="..\Header\Ruin_Curio_Fountain.h" />
     <ClInclude Include="..\Header\Ruin_Curio_Sarcophagus.h" />
     <ClInclude Include="..\Header\Ruin_Curio_Sconce.h" />
+    <ClInclude Include="..\Header\Ruin_Curio_Statue.h" />
     <ClInclude Include="..\Header\Ruin_Dungeon.h" />
     <ClInclude Include="..\Header\Ruin_Obstacle.h" />
     <ClInclude Include="..\Header\Ruin_Trap.h" />
@@ -253,6 +258,7 @@
     <ClCompile Include="..\Code\BoneDefender.cpp" />
     <ClCompile Include="..\Code\BoneSoldier.cpp" />
     <ClCompile Include="..\Code\Boss2.cpp" />
+    <ClCompile Include="..\Code\BossRoomDoor.cpp" />
     <ClCompile Include="..\Code\BrigandBloodletter.cpp" />
     <ClCompile Include="..\Code\BrigandCutthroat.cpp" />
     <ClCompile Include="..\Code\BrigandFusilier.cpp" />
@@ -260,6 +266,7 @@
     <ClCompile Include="..\Code\Bullet2.cpp" />
     <ClCompile Include="..\Code\Bullet3.cpp" />
     <ClCompile Include="..\Code\CameraMgr.cpp" />
+    <ClCompile Include="..\Code\Card.cpp" />
     <ClCompile Include="..\Code\CardGame.cpp" />
     <ClCompile Include="..\Code\BossMap.cpp" />
     <ClCompile Include="..\Code\Creature.cpp" />
@@ -278,6 +285,7 @@
     <ClCompile Include="..\Code\HeroStat.cpp" />
     <ClCompile Include="..\Code\Highwayman.cpp" />
     <ClCompile Include="..\Code\Inside.cpp" />
+    <ClCompile Include="..\Code\InteractionInfo.cpp" />
     <ClCompile Include="..\Code\InteractionObj.cpp" />
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
@@ -296,11 +304,13 @@
     <ClCompile Include="..\Code\PickingGame.cpp" />
     <ClCompile Include="..\Code\PlayerFPSUI.cpp" />
     <ClCompile Include="..\Code\PlayerProj.cpp" />
+    <ClCompile Include="..\Code\PuzzleHint.cpp" />
     <ClCompile Include="..\Code\RuinDungeonDoor.cpp" />
     <ClCompile Include="..\Code\Ruin_Curio_Armor.cpp" />
     <ClCompile Include="..\Code\Ruin_Curio_Fountain.cpp" />
     <ClCompile Include="..\Code\Ruin_Curio_Sarcophagus.cpp" />
     <ClCompile Include="..\Code\Ruin_Curio_Sconce.cpp" />
+    <ClCompile Include="..\Code\Ruin_Curio_Statue.cpp" />
     <ClCompile Include="..\Code\Ruin_Dungeon.cpp" />
     <ClCompile Include="..\Code\Ruin_Obstacle.cpp" />
     <ClCompile Include="..\Code\Ruin_Trap.cpp" />

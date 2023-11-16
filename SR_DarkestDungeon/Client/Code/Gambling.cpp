@@ -5,6 +5,8 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+#include"CameraMgr.h"
+
 #include"Player.h"
 
 CGambling::CGambling(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -24,6 +26,10 @@ CGambling::~CGambling()
 HRESULT CGambling::ReadyGameObject()
 {
 	m_pCardGame = make_shared<CCardGame>(m_pGraphicDev);
+	m_pCardGame->SetPos({ 30.f, 50.f,50.f });
+	m_pCardGame->AwakeGameObject();
+	m_pCardGame->ReadyGameObject();
+
 
     __super::ReadyGameObject();
 
@@ -32,6 +38,17 @@ HRESULT CGambling::ReadyGameObject()
 
 _int CGambling::UpdateGameObject(const _float& fTimeDelta)
 {
+	if (m_bDebounce) {
+
+		m_fDebounceTime += fTimeDelta;
+		if (m_fDebounceTime > 0.5f) {
+			m_bDebounce = true;
+		}
+
+	}
+
+	m_pCardGame->UpdateGameObject(fTimeDelta);
+
     _int	iExit = __super::UpdateGameObject(fTimeDelta);
 
     return iExit;
@@ -40,11 +57,13 @@ _int CGambling::UpdateGameObject(const _float& fTimeDelta)
 void CGambling::LateUpdateGameObject()
 {
     __super::LateUpdateGameObject();
+	m_pCardGame->LateUpdateGameObject();
 }
 
 void CGambling::RenderGameObject()
 {
     __super::RenderGameObject();
+	m_pCardGame->RenderGameObject();
 }
 
 void CGambling::AddComponent()
@@ -77,21 +96,27 @@ void CGambling::GetInteractionKey(const _float& fTimeDelta)
 	// 키 입력받기
 	if (GetAsyncKeyState('C') & 0x8000)
 	{
+		if (m_bDebounce)
+			return;
+
 		m_bInteracting = true;
 
 		// 플레이어 움직임 막기
 		CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 
 		// 카메라 이동
-
+		CCameraMgr::GetInstance()->SetState(ECameraMode::IDLE);
+		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { 35.f, 7.5f , 50.f - 7.5f });
 
 		Interaction();
+		m_bDebounce = true;
+
 	}
 }
 
 void CGambling::Interaction()
 {
-	// m_pCardGame->Start();
+	m_pCardGame->GameStart();
 }
 
 _bool CGambling::IsFinish()

@@ -28,6 +28,7 @@
 #include "Ruin_Curio_Fountain.h"
 #include "Ruin_Curio_Sarcophagus.h"
 #include "Ruin_Curio_Sconce.h"
+#include "Ruin_Curio_Statue.h"
 
 #include "BrigandCutthroat.h"
 #include "BrigandFusilier.h"
@@ -57,6 +58,10 @@
 #include "Weald_Dungeon.h"
 
 #include"MouseCursor.h"
+
+#include"PuzzleHint.h"
+#include"Player.h"
+#include"LightMgr.h"
 
 CRuin_Dungeon::CRuin_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -93,6 +98,26 @@ HRESULT CRuin_Dungeon::ReadyScene()
 		//GameComponenet Setting
 		iter.second->ReadyLayer();
 	}
+
+	CSoundMgr::GetInstance()->PlayBGM(L"Amb_Ruin_Base.wav", 1.f);
+
+	shared_ptr<CItem> pItem = make_shared<CItem>(m_pGraphicDev);
+	pItem->GetUITextureKeyName(L"Player_Item_RedGem");
+	pItem->SetOnField(false);
+
+	shared_ptr<CItem> pItem2 = make_shared<CItem>(m_pGraphicDev);
+	pItem2->GetUITextureKeyName(L"Player_Item_BlueGem");
+	pItem2->SetOnField(false);
+
+	shared_ptr<CItem> pItem3 = make_shared<CItem>(m_pGraphicDev);
+	pItem3->GetUITextureKeyName(L"Player_Item_GreenGem");
+	pItem3->SetOnField(false);
+
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->InsertItem(pItem);
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->InsertItem(pItem2);
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->InsertItem(pItem3);
+
+	SetLight();
 
 	return __super::ReadyScene();
 }
@@ -264,6 +289,22 @@ void CRuin_Dungeon::RenderScene()
 			dynamic_pointer_cast<CCreature>((m_pRoom3->GetBattleSystem()->GetMonstersVector())[i])->Get_String3(),
 			&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	}*/
+}
+
+void CRuin_Dungeon::SetLight()
+{
+	D3DLIGHT9 _pLightInfo1;
+
+	_pLightInfo1.Diffuse = { 0.3f , 0.3f , 0.3f , 1.f };
+	_pLightInfo1.Specular = { 0.3f , 0.3f , 0.3f , 1.f };
+	_pLightInfo1.Ambient = { 0.3f , 0.3f , 0.3f , 1.f };
+	_pLightInfo1.Direction = { 1.f, -1.f, 1.f };
+
+	CLightMgr::GetInstance()->InitDirectionLight(m_pGraphicDev, _pLightInfo1);
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+
 }
 
 HRESULT CRuin_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
@@ -801,6 +842,28 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pCurioT1->SetAngle(_vec3(0.f, 0.f, 0.f));
 	m_pCurioT1->SetScale(_vec3(RUIN_WALLSIZEX / 5.f, (RUIN_WALLSIZEX / 5.f) / 381.f * 265.f, 1.f));
 
+	_vec3 vT1Pos = _vec3(RUIN_WALLSIZEX * 17.5f, RUIN_WALLSIZEUPY - 3.f, RUIN_WALLSIZEX * 13.5f);
+
+	//스태츄
+	shared_ptr<CGameObject>m_pCurioSt1 = make_shared<CRuin_Curio_Statue>(m_pGraphicDev , StatueState::STATUE_BLUE);
+	m_pCurioSt1->SetPos(_vec3(vT1Pos.x , ((RUIN_WALLSIZEX / 5.f) / 500.f * 670.f) * 0.5f + 1.5f, vT1Pos.z + 15.f));
+	m_pCurioSt1->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pCurioSt1->SetScale(_vec3(RUIN_WALLSIZEX / 5.f, (RUIN_WALLSIZEX / 5.f) / 500.f * 670.f, 1.f));
+
+	shared_ptr<CGameObject>m_pCurioSt2 = make_shared<CRuin_Curio_Statue>(m_pGraphicDev, StatueState::STATUE_RED);
+	m_pCurioSt2->SetPos(_vec3(vT1Pos.x + 15.f, ((RUIN_WALLSIZEX / 5.f) / 500.f * 670.f) * 0.5f + 1.5f, vT1Pos.z));
+	m_pCurioSt2->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pCurioSt2->SetScale(_vec3(RUIN_WALLSIZEX / 5.f, (RUIN_WALLSIZEX / 5.f) / 500.f * 670.f, 1.f));
+
+	shared_ptr<CGameObject>m_pCurioSt3 = make_shared<CRuin_Curio_Statue>(m_pGraphicDev, StatueState::STATUE_GREEN);
+	m_pCurioSt3->SetPos(_vec3(vT1Pos.x,( (RUIN_WALLSIZEX / 5.f) / 500.f * 670.f ) *0.5f + 1.5f, vT1Pos.z - 15.f));
+	m_pCurioSt3->SetAngle(_vec3(0.f, 0.f, 0.f));
+	m_pCurioSt3->SetScale(_vec3(RUIN_WALLSIZEX / 5.f, (RUIN_WALLSIZEX / 5.f) / 500.f * 670.f, 1.f));
+
+	dynamic_pointer_cast<CRuin_Curio_Sarcophagus>(m_pCurioT1)->InsertStatue(dynamic_pointer_cast<CRuin_Curio_Statue>(m_pCurioSt1));
+	dynamic_pointer_cast<CRuin_Curio_Sarcophagus>(m_pCurioT1)->InsertStatue(dynamic_pointer_cast<CRuin_Curio_Statue>(m_pCurioSt2));
+	dynamic_pointer_cast<CRuin_Curio_Sarcophagus>(m_pCurioT1)->InsertStatue(dynamic_pointer_cast<CRuin_Curio_Statue>(m_pCurioSt3));
+
 	// 횃불
 	shared_ptr<CGameObject>m_pCurioS1 = make_shared<CRuin_Curio_Sconce>(m_pGraphicDev);
 	m_pCurioS1->SetPos(_vec3(RUIN_WALLSIZEX * 9.f, RUIN_WALLSIZEUPY - 1.f, RUIN_WALLSIZEX * 13.5f));
@@ -816,6 +879,8 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pCurioS3->SetPos(_vec3(RUIN_WALLSIZEX * 13.f, RUIN_WALLSIZEUPY - 1.f, RUIN_WALLSIZEX * 13.5f));
 	m_pCurioS3->SetAngle(_vec3(0.f, 0.f, 0.f));
 	m_pCurioS3->SetScale(_vec3(RUIN_WALLSIZEX / 15.f, (RUIN_WALLSIZEX / 15.f) / 116.f * 390.f, 1.f));
+
+
 
 	// items
 	// 4번방
@@ -837,22 +902,22 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	// 5번방
 	shared_ptr<CGameObject> m_pItem1_5 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1_5->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem3_4);
-	dynamic_pointer_cast<CItem>(m_pItem1_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Bandage", 1);
+	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem1_5);
+	dynamic_pointer_cast<CItem>(m_pItem1_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_RedGem", 1);
 
 	shared_ptr<CGameObject> m_pItem2_5 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2_5->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem3_4);
-	dynamic_pointer_cast<CItem>(m_pItem2_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Bandage", 1);
+	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem2_5);
+	dynamic_pointer_cast<CItem>(m_pItem2_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_GreenGem", 1);
 
 	shared_ptr<CGameObject> m_pItem3_5 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3_5->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem3_4);
-	dynamic_pointer_cast<CItem>(m_pItem3_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Bandage", 1);
+	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem3_5);
+	dynamic_pointer_cast<CItem>(m_pItem3_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_BlueGem", 1);
 
 	shared_ptr<CGameObject> m_pItem4_5 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem4_5->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem3_4);
+	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem4_5);
 	dynamic_pointer_cast<CItem>(m_pItem4_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Bandage", 1);
 
 	// monsters
@@ -960,6 +1025,10 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room5_v1.push_back(m_pItem2_5);
 	Room5_v1.push_back(m_pItem3_5);
 	Room5_v1.push_back(m_pItem4_5);
+	Room5_v1.push_back(m_pCurioSt1);
+	Room5_v1.push_back(m_pCurioSt2);
+	Room5_v1.push_back(m_pCurioSt3);
+
 	m_pRoom5->PushGameObjectVector(Room5_v1);
 
 	// 던전에 방 넣기
@@ -1000,6 +1069,11 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"OBJ_CurioSconce", m_pCurioS3);
 	m_pLayer->CreateGameObject(L"OBJ_CurioSarcophagus", m_pCurioT1);
 
+	m_pLayer->CreateGameObject(L"OBJ_CurioStatue1", m_pCurioSt1);
+	m_pLayer->CreateGameObject(L"OBJ_CurioStatue2", m_pCurioSt2);
+	m_pLayer->CreateGameObject(L"OBJ_CurioStatue3", m_pCurioSt3);
+
+
 	//PlayerObj
 	m_pLayer->CreateGameObject(L"Obj_PlayerHand", dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPlayerHand());
 
@@ -1012,6 +1086,12 @@ HRESULT CRuin_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
+
+
+	shared_ptr<CGameObject> pDescriptionUI = make_shared<CPuzzleHint>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_PuzzleHintUI", pDescriptionUI);
+
+	CUIMgr::GetInstance()->AddUIObject(L"UI_PuzzleHint", dynamic_pointer_cast<CUIObj>(pDescriptionUI));
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

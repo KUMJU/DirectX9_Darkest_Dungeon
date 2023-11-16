@@ -228,6 +228,30 @@ void CPlayerHand::SetCurrentItem(EHandItem _handItem)
 	case EHandItem::SPELLHAND_STORM:
 		break;
 
+	case EHandItem::RED_GEM:
+		m_pTextureCom->SetTextureKey(L"Player_Item_RedGem", TEX_NORMAL);
+		m_pItemTransmCom->SetScale(1.5f, 1.5f, 1.f);
+		m_pItemTransmCom->SetAngle({ 0.f,0.f, 0.f });
+		m_bPlrSpellHand = false;
+		m_bEnable = true;
+		break;
+
+	case EHandItem::BLUE_GEM:
+		m_pTextureCom->SetTextureKey(L"Player_Item_BlueGem", TEX_NORMAL);
+		m_pItemTransmCom->SetScale(1.5f, 1.5f, 1.f);
+		m_pItemTransmCom->SetAngle({ 0.f,0.f, 0.f });
+		m_bPlrSpellHand = false;
+		m_bEnable = true;
+		break;
+
+	case EHandItem::GREEN_GEM:
+		m_pTextureCom->SetTextureKey(L"Player_Item_GreenGem", TEX_NORMAL);
+		m_pItemTransmCom->SetScale(1.5f, 1.5f, 1.f);
+		m_pItemTransmCom->SetAngle({ 0.f,0.f, 0.f });
+		m_bPlrSpellHand = false;
+		m_bEnable = true;
+		break;
+
 	case EHandItem::ENUM_END:
 		m_bEnable = false;
 		break;

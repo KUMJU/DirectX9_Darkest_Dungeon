@@ -15,6 +15,10 @@ public:
 	virtual void RenderScene() override;
 
 public:
+
+	virtual void SetLight();
+
+public:
 	void KeyInput();
 
 private:

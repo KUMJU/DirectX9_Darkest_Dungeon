@@ -24,6 +24,9 @@ HRESULT CWeald_Trap::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"함정 제거";
+
 	return S_OK;
 }
 
@@ -188,7 +191,7 @@ void CWeald_Trap::GetInteractionKey(const _float& fTimeDelta)
 			}
 		}
 
-
+		m_bTabInteractionKey = true;
 
 		Interaction();
 	}

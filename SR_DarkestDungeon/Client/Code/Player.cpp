@@ -27,10 +27,54 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::ReadyGameObject()
 {
-	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
+	D3DLIGHT9 _pLightInfo1;
+
+	_pLightInfo1.Diffuse = { 0.2f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Specular = { 0.2f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Ambient = { 0.2f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Position = { m_vPos.x , m_vPos.y , m_vPos.z };
+	_pLightInfo1.Range = 20.f;
+
+	_pLightInfo1.Attenuation0 = 0.f;
+	_pLightInfo1.Attenuation1 = 0.f;
+	_pLightInfo1.Attenuation2 = 0.f;
+
+	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1);
+
+
+	D3DLIGHT9 _pLightInfo2;
+
+	_pLightInfo2.Diffuse = { 0.2f , 0.2f , 0.2f , 1.f };
+	_pLightInfo2.Specular = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo2.Ambient = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo2.Position = { m_vPos.x , m_vPos.y , m_vPos.z };
+	_pLightInfo2.Range = 20.f;
+
+	_pLightInfo2.Attenuation0 = 0.f;
+	_pLightInfo2.Attenuation1 = 0.f;
+	_pLightInfo2.Attenuation2 = 0.f;
+
+	m_pLight2 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1);
+
+
+	D3DLIGHT9 _pLightInfo3;
+
+	_pLightInfo3.Diffuse = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo3.Specular = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo3.Ambient = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo3.Position = { m_vPos.x , m_vPos.y , m_vPos.z };
+	_pLightInfo3.Range = 20.f;
+
+	_pLightInfo3.Attenuation0 = 0.f;
+	_pLightInfo3.Attenuation1 = 0.f;
+	_pLightInfo3.Attenuation2 = 0.f;
+
+	m_pLight3 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1);
 
 	if (m_bReady)
 		return S_OK;
+	
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	__super::ReadyGameObject();
 
@@ -89,9 +133,9 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 		m_pTavernUI->UpdateGameObject(fTimeDelta);
 
 	_vec3* vPos = m_pTransformCom->GetPos();
-	m_pLight->SetPosition({ vPos ->x, vPos->y + 7.f, vPos->z});
-	/*m_pLight2->SetPosition({vPos->x, vPos->y + 7.f, vPos->z + 4.f});
-	m_pLight3->SetPosition({ vPos ->x, vPos->y + 7.f, vPos->z + 4.f});*/
+	m_pLight->SetPosition({ vPos ->x, vPos->y + 15.f, vPos->z+2.f});
+	m_pLight2->SetPosition({vPos->x, vPos->y + 15.f, vPos->z +2.f});
+	m_pLight3->SetPosition({ vPos ->x, vPos->y + 15.f, vPos->z + 2.f});
 
 
 	return iExit;
@@ -271,6 +315,10 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 
 		if (GetAsyncKeyState('K') & 0x8000) {
 			CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, 90.f);
+		}
+
+		if (GetAsyncKeyState('J') & 0x8000) {
+			CCameraMgr::GetInstance()->CameraRotation(ECameraMode::ROTATION, -90.f);
 		}
 	}
 
