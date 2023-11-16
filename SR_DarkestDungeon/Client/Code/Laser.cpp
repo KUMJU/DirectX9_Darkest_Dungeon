@@ -66,18 +66,20 @@ _int CLaser::UpdateGameObject(const _float& fTimeDelta)
 
 	m_pTransformCom->SetScale(3.f, D3DXVec3Length(&vDir), 0.f);
 
-	/*_vec3 Dir1;
+	_vec3 vBossTransform;
+
+	_vec3 Dir1;
 	_vec3 Dir2;
 	float Dot;
 
 	Dir1 = _vec3(0.f, -1.f, 0.f);
-	Dir2 = _vec3(0.f, vDir.y, vDir.z);
+	Dir2 = _vec3(vDir.x, 0.f, vDir.z);
 	D3DXVec3Normalize(&Dir1, &Dir1);
 	D3DXVec3Normalize(&Dir2, &Dir2);
 	
 	Dot = D3DXVec3Dot(&Dir1, &Dir2);
 	float a = acosf(Dot);
-
+	
 	Dir1 = _vec3(0.f, -1.f, 0.f);
 	Dir2 = _vec3(vDir.x, 0.f, vDir.z);
 	D3DXVec3Normalize(&Dir1, &Dir1);
@@ -86,7 +88,7 @@ _int CLaser::UpdateGameObject(const _float& fTimeDelta)
 	Dot = D3DXVec3Dot(&Dir1, &Dir2);
 	float b = acosf(Dot);
 
-	m_pTransformCom->SetAngle(_vec3(a, b, 0.f));*/
+	m_pTransformCom->SetAngle(_vec3(a, b, 0.f));
 
 	// FSM Á¶°Ç
 	FSM(fTimeDelta);

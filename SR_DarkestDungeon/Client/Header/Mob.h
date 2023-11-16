@@ -56,11 +56,14 @@ public:
 
 protected:
 	virtual void			AddComponent();
+	virtual void			OnCollide(shared_ptr<CGameObject> _pObj) override;
 
 	virtual void			FSM(const _float& fTimeDelta);
 	virtual void			ChangeAnim();
 	virtual void			AnimDuration(const _float& fTimeDelta);
 	virtual void			KeyInput();
+
+	void	DecreaseHp(_int _iHp) { m_iHp -= _iHp; }
 
 protected:
 	// 플레이어와 Object의 거리를 계산하는 함수
@@ -84,7 +87,7 @@ protected:
 	_bool	m_bIdle = true;
 	_bool	m_bIn = false;
 	_bool	m_bOut = false;
-	_bool	m_bDeath = true;
+	_bool	m_bDeathMob = false;
 	_bool	m_bAttack = false;
 	
 	_int	m_iBullet1TotalNum = 50;

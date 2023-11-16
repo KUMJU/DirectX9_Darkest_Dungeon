@@ -1285,6 +1285,8 @@ void CResourceMgr::RuinDungeonTextureLoad()
 	CreateNewTexture(L"Com_Ruin_FloorTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/bricks.png", 1, bDefault);
 
+	CreateNewTexture(L"Com_Ruin_RoofTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/bricks_gradient_02.png", 1, bDefault);
 
 
 	CreateNewTexture(L"Com_Ruin_WallTexture", TEX_NORMAL,
@@ -1495,4 +1497,9 @@ void CResourceMgr::BossMapTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Effect/Teleport/death_magic00%d.png", 10, bDefault);
 	CreateNewTexture(L"Bullet_Hitted", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Effect/Bullet_Hitted/bullet_hit_blue00%d.png", 9, bDefault);
+
+	CreateNewTexture(L"Green_Blood", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Effect/Hitted1/bloodhit_big_green00%d.png", 8, bDefault);
+	CreateNewTexture(L"Yellow_Blood", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Effect/Hitted2/bloodhit_big_yellow00%d.png", 8, bDefault);
 }

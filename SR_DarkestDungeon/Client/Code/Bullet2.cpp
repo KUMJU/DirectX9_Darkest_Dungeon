@@ -115,7 +115,7 @@ void CBullet2::AddComponent()
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	m_pTransformCom->SetAngle({ 0.f, 0.f, 0.f });
-	m_pTransformCom->SetScale(0.5f, 0.5f, 0.5f);
+	m_pTransformCom->SetScale(4.f, 4.f, 4.f);
 
 	pComponent = m_pBufCom = make_shared <CRcTex>(m_pGraphicDev);
 	m_pBufCom->ReadyBuffer();
@@ -131,7 +131,8 @@ void CBullet2::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 1.f, 1.f, 1.f });
+	m_pColliderCom->SetScale({ 4.f, 4.f, 4.f });
+	m_pColliderCom->SetRadius(4.f);
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 }
 
@@ -145,14 +146,26 @@ void CBullet2::OnCollide(shared_ptr<CGameObject> _pObj)
 	if (ECollideID::WALL == _pObj->GetColType() || ECollideID::ENVIRONMENT == _pObj->GetColType())
 	{
 		//Effect Setting
-		/*shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransformCom->GetPos(), 0.5f);
-		pEffect->SetActive(true);*/
+		pEffect->SetAnimEffect(L"Bullet_Hitted", m_vPos, _vec3(4.f, 4.f, 4.f), 1.f, false);
+		pEffect->SetActive(true);
 
-		//m_pTransformCom->SetPosition(400.f, -300.f, 300.f);
+		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
 		m_bCollsion = true;
-		//SetEnable(false);
+		SetEnable(false);
+	}
+
+	if (ECollideID::PLAYER == _pObj->GetColType())
+	{
+		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetAnimEffect(L"Bullet_Hitted", m_vPos, _vec3(4.f, 4.f, 4.f), 1.f, false);
+		pEffect->SetActive(true);
+
+		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
+		m_bCollsion = true;
+		SetEnable(false);
 	}
 }
 
@@ -200,7 +213,7 @@ void CBullet2::ChangeAnim()
 
 	m_pTransformCom->SetScale(6.f * fXpos, 6.f * fYpos, 6.f * fXpos);
 	m_pColliderCom->SetScale({ 12.f * fXpos, 12.f * fYpos, 12.f * fXpos });
-
+	m_pColliderCom->SetRadius(12.f * fXpos);
 }
 
 void CBullet2::AnimDuration(const _float& fTimeDelta)

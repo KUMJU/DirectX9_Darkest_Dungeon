@@ -94,6 +94,18 @@ HRESULT CPlayer::ReadyGameObject()
 
 _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 {
+	// 피격시 일정시간 무적
+	if (m_bHitted)
+	{
+		m_fHittedTime -= fTimeDelta;
+		if (m_fHittedTime < 0.f)
+		{
+			m_fHittedTime = 1.f;
+			m_bHitted = false;
+		}
+	}
+
+
 	m_pPlayerHand->StopShakingHand();
 	if (!m_bLock)
 		KeyInput(fTimeDelta);
@@ -216,18 +228,21 @@ void CPlayer::SetHeirloom(_int _iNum, _bool _bIsEarn)
 
 void CPlayer::DecreaseHP(_int _iDamage)
 {
-	m_iHP -= _iDamage; 
+	if (!m_bHitted)
+	{
+		m_iHP -= _iDamage;
 
-	if (!m_pPlrFPSUI) {
+		if (!m_pPlrFPSUI) {
 
-		m_pPlrFPSUI = dynamic_pointer_cast<CPlayerFPSUI>(CUIMgr::GetInstance()->FindUI(L"UI_Player_FPSUI"));
-		m_pPlrFPSUI->SetHP(m_iHP);
+			m_pPlrFPSUI = dynamic_pointer_cast<CPlayerFPSUI>(CUIMgr::GetInstance()->FindUI(L"UI_Player_FPSUI"));
+			m_pPlrFPSUI->SetHP(m_iHP);
+		}
+		else {
+
+			m_pPlrFPSUI->SetHP(m_iHP);
+		}
+		m_bHitted = true;
 	}
-	else {
-
-		m_pPlrFPSUI->SetHP(m_iHP);
-	}
-
 }
 
 void CPlayer::SettingLight()
@@ -286,7 +301,8 @@ void CPlayer::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 3.f, 3.f, 3.f });
+	m_pColliderCom->SetScale({ 4.f, 4.f, 4.f });
+	m_pColliderCom->SetRadius(4.f);
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 
 }
@@ -481,6 +497,24 @@ void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 			_pObj->SetActive(false);
 		}
 	}
+
+	// 보스랑 충돌
+	if (ECollideID::BOSS == _pObj->GetColType())
+	{
+		DecreaseHP(20);
+	}
+
+	// 보스 탄환이랑 충돌
+	if (ECollideID::BOSS_PROJECTILE == _pObj->GetColType())
+	{
+		DecreaseHP(5);
+	}
+
+	// 보스 sunken이랑 충돌
+	if (ECollideID::BOSS_SUNKEN == _pObj->GetColType())
+	{
+		DecreaseHP(10);
+	}
 }
 
 void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection _eDir)
@@ -543,13 +577,16 @@ void CPlayer::ShowHeroesBack()
 	for (int i = 0; i < size(m_pVecHero); i++)
 	{
 		dynamic_pointer_cast<CCreature>(m_pVecHero[i])->SetFront(false);
+		m_pVecHero[i]->SetPos({ m_pTransformCom->GetPos()->x + 5.f - 3.f * i, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 2.f * i });
 		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 			m_pVecHero[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+		pTransform->SetPosition(m_pTransformCom->GetPos()->x + 5.f - 3.f * i, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 2.f * i);
+		pTransform->SetAngle(_vec3(0.f, 0.f, 0.f));
 
 		const _vec3* vPlrPos = m_pTransformCom->GetPos();
 
-		pTransform->SetPosition(m_pTransformCom->GetPos()->x - 5.f, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 4.f * i);
-		pTransform->SetAngle(_vec3(0.f,0.f,0.f));
+		//pTransform->SetPosition(m_pTransformCom->GetPos()->x - 5.f, m_pTransformCom->GetPos()->y + 3.f, m_pTransformCom->GetPos()->z - 9.f - 4.f * i);
+		//pTransform->SetAngle(_vec3(0.f,0.f,0.f));
 	}
 }
 

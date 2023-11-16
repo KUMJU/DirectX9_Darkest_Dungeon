@@ -63,7 +63,7 @@ void CPlayerFPSUI::RenderGameObject()
     m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-    m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pShieldTransCom->GetWorld());
+    //m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pShieldTransCom->GetWorld());
 
     m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
     m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
@@ -71,8 +71,8 @@ void CPlayerFPSUI::RenderGameObject()
 
     m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(120, 255, 255, 255));
 
-    m_pShieldTextureCom->SetTexture(0);
-    m_pShieldRCTexCom->RenderBuffer();
+    //m_pShieldTextureCom->SetTexture(0);
+    //m_pShieldRCTexCom->RenderBuffer();
 
     m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xffffffff);
 
@@ -159,23 +159,23 @@ void CPlayerFPSUI::AddComponent()
     }
 
 
-    //Shield
-    pComponent = m_pShieldTextureCom = make_shared<CTexture>(m_pGraphicDev);
-    m_pShieldTextureCom->SetTextureKey(L"Player_UI_Shield", TEX_NORMAL);
-    m_mapComponent[ID_STATIC].insert({ L"Com_Shield_Texture_Shield",pComponent});
-
-    pComponent = m_pShieldRCTexCom = make_shared<CRcTex>(m_pGraphicDev);
-    m_pShieldRCTexCom->ReadyBuffer();
-    m_mapComponent[ID_STATIC].insert({ L"Com_Shield_RcTex",pComponent });
-
-
-    pComponent = m_pShieldTransCom = make_shared<CTransform>();
-    m_pShieldTransCom->ReadyTransform();
-    m_pShieldTransCom->SetPosition(0.f, 0.f, 0.f);
-    m_pShieldTransCom->SetAngle({ 0.f, 0.f, 0.f });
-    m_pShieldTransCom->SetScale(WINCX * 0.5f, WINCY * 0.5f, 0.f);
-
-    m_mapComponent[ID_DYNAMIC].insert({ L"Com_Shield_Transform",pComponent });
+   // //Shield
+   // pComponent = m_pShieldTextureCom = make_shared<CTexture>(m_pGraphicDev);
+   // m_pShieldTextureCom->SetTextureKey(L"Player_UI_Shield", TEX_NORMAL);
+   // m_mapComponent[ID_STATIC].insert({ L"Com_Shield_Texture_Shield",pComponent});
+   //
+   // pComponent = m_pShieldRCTexCom = make_shared<CRcTex>(m_pGraphicDev);
+   // m_pShieldRCTexCom->ReadyBuffer();
+   // m_mapComponent[ID_STATIC].insert({ L"Com_Shield_RcTex",pComponent });
+   //
+   //
+   // pComponent = m_pShieldTransCom = make_shared<CTransform>();
+   // m_pShieldTransCom->ReadyTransform();
+   // m_pShieldTransCom->SetPosition(0.f, 0.f, 0.f);
+   // m_pShieldTransCom->SetAngle({ 0.f, 0.f, 0.f });
+   // m_pShieldTransCom->SetScale(WINCX * 0.5f, WINCY * 0.5f, 0.f);
+   //
+   // m_mapComponent[ID_DYNAMIC].insert({ L"Com_Shield_Transform",pComponent });
 
     //
     m_pHPTextureCom[0]->SetTextureKey(L"Player_HP_Empty2", TEX_NORMAL);

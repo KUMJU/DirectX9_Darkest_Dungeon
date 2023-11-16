@@ -64,6 +64,11 @@ HRESULT CSpike::ReadyGameObject()
 		m_vOriginSize = m_pTextureCom->GetTextureSize();
 	}
 
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
+	m_bColliding = true;
+	m_eCollideID = ECollideID::BOSS_SUNKEN;
+
 	SetEnable(false);
 
 	return S_OK;
@@ -139,8 +144,12 @@ void CSpike::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 30.f, 30.f, 1.f });
+	m_pColliderCom->SetScale({ 4.f, 14.f, 4.f });
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+}
+
+void CSpike::OnCollide(shared_ptr<CGameObject> _pObj)
+{
 }
 
 void CSpike::FSM(const _float& fTimeDelta)
@@ -203,7 +212,7 @@ void CSpike::ChangeAnim()
 	}
 
 	m_pTransformCom->SetScale(8.f * 3.f * fXpos, 7.f * 3.f * fYpos, 8.f * 3.f * fXpos);
-
+	m_pColliderCom->SetScale({ 4.f * 3.f * fXpos, 14.f * 3.f * fYpos, 4.f * 3.f * fXpos });
 }
 
 void CSpike::AnimDuration(const _float& fTimeDelta)

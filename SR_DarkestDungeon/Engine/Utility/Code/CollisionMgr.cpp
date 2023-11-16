@@ -13,6 +13,8 @@ CCollisionMgr::CCollisionMgr()
 	list<shared_ptr<CGameObject>> pPlayerProjectileList;
 	list<shared_ptr<CGameObject>> pBossProjectileList;
 	list<shared_ptr<CGameObject>> pSceneChangeTrigger;
+	list<shared_ptr<CGameObject>> pMobList;
+	list<shared_ptr<CGameObject>> pSunkenList;
 
 	m_pCollisionGroupList.emplace(ECollideID::PLAYER, pPlayerList);
 	m_pCollisionGroupList.emplace(ECollideID::BOSS, pBossList);
@@ -20,6 +22,8 @@ CCollisionMgr::CCollisionMgr()
 	m_pCollisionGroupList.emplace(ECollideID::PLAYER_PROJECTILE, pPlayerProjectileList);
 	m_pCollisionGroupList.emplace(ECollideID::BOSS_PROJECTILE, pBossProjectileList);
 	m_pCollisionGroupList.emplace(ECollideID::SCENE_CHANGE_TRIGGER, pSceneChangeTrigger);
+	m_pCollisionGroupList.emplace(ECollideID::MOB, pMobList);
+	m_pCollisionGroupList.emplace(ECollideID::BOSS_SUNKEN, pSunkenList);
 }
 
 CCollisionMgr::~CCollisionMgr()
@@ -59,13 +63,22 @@ void CCollisionMgr::CheckCollisionList(ECollideID _pSrcType, ECollideID _pDstTyp
 		{
 			for (auto& iterDst : m_pCollisionGroupList.find(_pDstType)->second)
 			{
-				// 투사체와 벽 충돌
+				// dst그룹 벽과 충돌
 				if (ECollideID::WALL == _pDstType)
 				{
 					AABB_AABB(iterSrc, iterDst);
 				}
-
-				// 투사체와 (플레이어 or 보스) 충돌
+				// src sunken과 충돌
+				else if (ECollideID::BOSS_SUNKEN == _pSrcType)
+				{
+					AABB_AABB(iterSrc, iterDst);
+				}
+				// src sunken과 충돌
+				else if (ECollideID::MOB == _pSrcType)
+				{
+					AABB_AABB(iterSrc, iterDst);
+				}
+				// 그 외
 				else
 				{
 					Sphere_Sphere(iterSrc, iterDst);

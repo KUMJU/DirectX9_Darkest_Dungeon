@@ -34,9 +34,11 @@ public:
 
 public:
 	void	SetTarget(_vec3 _vPos) { m_vTargetPos = _vPos; }
+	void	SetOnCollision(_bool _bOn) { m_bCollsion = _bOn; }
 
 protected:
 	virtual void			AddComponent();
+	virtual void			OnCollide(shared_ptr<CGameObject> _pObj) override;
 
 	virtual void			FSM(const _float& fTimeDelta);
 	virtual void			ChangeAnim();
@@ -65,6 +67,7 @@ protected:
 	EMobBulletState m_ePrevAnimState = EMobBulletState::IDLE;	// 애니메이션 변경을 위한 상태값
 	tstring		m_strAnimKey = L"";				// 애니메이션 키
 	tstring		m_strEffectKey = L"";				// 이펙트 키
+	tstring m_strEffectAnimKey;
 
 	// 본체 관련 Component
 	shared_ptr<CTransform>	m_pTransformCom = nullptr;
@@ -79,4 +82,6 @@ protected:
 	// 플레이어의 위치를 받아오기 위한 플레이어 오브젝트
 	shared_ptr<CGameObject>	m_pPlayer = nullptr;
 	shared_ptr<CTransform>	m_pPlayerTransformCom = nullptr;
+
+	_bool	m_bCollsion = false;
 };

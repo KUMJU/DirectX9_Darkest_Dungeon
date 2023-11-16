@@ -60,6 +60,10 @@ HRESULT CSunken::ReadyGameObject()
 		m_pTextureCom->SetAnimKey(L"Sunken", 0.12f);
 		m_vOriginSize = m_pTextureCom->GetTextureSize();
 	}
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
+	m_bColliding = true;
+	m_eCollideID = ECollideID::BOSS_SUNKEN;
 
 	SetEnable(false);
 
@@ -136,8 +140,12 @@ void CSunken::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 30.f, 30.f, 1.f });
+	m_pColliderCom->SetScale({ 4.f, 14.f, 4.f });
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+}
+
+void CSunken::OnCollide(shared_ptr<CGameObject> _pObj)
+{
 }
 
 void CSunken::FSM(const _float& fTimeDelta)
@@ -185,6 +193,7 @@ void CSunken::ChangeAnim()
 	}
 
 	m_pTransformCom->SetScale(8.f * 2.f * fXpos, 7.f * 2.f * fYpos, 8.f * 2.f * fXpos);
+	m_pColliderCom->SetScale({ 4.f * 2.f * fXpos, 14.f * 2.f * fYpos, 4.f * 2.f * fXpos });
 
 }
 

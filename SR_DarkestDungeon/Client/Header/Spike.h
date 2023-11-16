@@ -52,6 +52,7 @@ public:
 
 protected:
 	virtual void			AddComponent();
+	virtual void			OnCollide(shared_ptr<CGameObject> _pObj) override;
 
 	virtual void			FSM(const _float& fTimeDelta);
 	virtual void			ChangeAnim();
@@ -81,5 +82,7 @@ protected:
 	// 플레이어의 위치를 받아오기 위한 플레이어 오브젝트
 	shared_ptr<CGameObject>	m_pPlayer = nullptr;
 	shared_ptr<CTransform>	m_pPlayerTransformCom = nullptr;
+
+	_bool	m_bCollsion = false;
 };
 

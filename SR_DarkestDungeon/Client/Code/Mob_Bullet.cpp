@@ -46,6 +46,11 @@ HRESULT CMobBullet::ReadyGameObject()
 		m_vOriginSize = m_pTextureCom->GetTextureSize();
 	}
 
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
+	m_bColliding = true;
+	m_eCollideID = ECollideID::BOSS_PROJECTILE;
+
 	SetEnable(false);
 
 	return S_OK;
@@ -56,13 +61,6 @@ _int CMobBullet::UpdateGameObject(const _float& fTimeDelta)
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
 	m_vPos = *m_pTransformCom->GetPos();
-
-	//ºôº¸µå ½ÃÀÛ
-	_matrix matWorld;
-
-	matWorld = *m_pTransformCom->GetWorld();
-	SetBillBoard(matWorld);
-	m_pTransformCom->SetWorld(&matWorld);
 
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
@@ -85,6 +83,13 @@ _int CMobBullet::UpdateGameObject(const _float& fTimeDelta)
 void CMobBullet::LateUpdateGameObject()
 {
 	__super::LateUpdateGameObject();
+
+	//ºôº¸µå ½ÃÀÛ
+	_matrix matWorld;
+
+	matWorld = *m_pTransformCom->GetWorld();
+	SetBillBoard(matWorld);
+	m_pTransformCom->SetWorld(&matWorld);
 }
 
 void CMobBullet::RenderGameObject()
@@ -125,6 +130,34 @@ void CMobBullet::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
 	m_pColliderCom->SetScale({ 30.f, 30.f, 1.f });
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+}
+
+void CMobBullet::OnCollide(shared_ptr<CGameObject> _pObj)
+{
+	if (m_bCollsion)
+	{
+		return;
+	}
+
+	if (ECollideID::WALL == _pObj->GetColType() || ECollideID::ENVIRONMENT == _pObj->GetColType())
+	{
+		//Effect Setting
+		/*shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransformCom->GetPos(), 0.5f);
+		pEffect->SetActive(true);*/
+
+		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
+		m_bCollsion = true;
+		SetEnable(false);
+	}
+
+	if (ECollideID::PLAYER == _pObj->GetColType())
+	{
+		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
+		m_bCollsion = true;
+		SetEnable(false);
+	}
 }
 
 void CMobBullet::FSM(const _float& fTimeDelta)
@@ -170,7 +203,8 @@ void CMobBullet::ChangeAnim()
 	}
 
 	m_pTransformCom->SetScale(1.5f * fXpos, 1.5f * fYpos, 1.5f * fXpos);
-
+	m_pColliderCom->SetScale({ 3.f * fXpos, 3.f * fYpos, 3.f * fXpos });
+	m_pColliderCom->SetRadius(3.f * fXpos);
 }
 
 void CMobBullet::AnimDuration(const _float& fTimeDelta)

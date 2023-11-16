@@ -313,7 +313,7 @@ HRESULT CRuin_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
 	shared_ptr<CGameObject> m_pTerrain = make_shared<CTerrain>(m_pGraphicDev, L"Com_Ruin_FloorTexture", ETerrainType::DUNGEON2);
-	shared_ptr<CGameObject> m_pTerrain2 = make_shared<CTerrain>(m_pGraphicDev, L"Com_Ruin_FloorTexture", ETerrainType::DUNGEON2_ROOF);
+	shared_ptr<CGameObject> m_pTerrain2 = make_shared<CTerrain>(m_pGraphicDev, L"Com_Ruin_RoofTexture", ETerrainType::DUNGEON2_ROOF);
 	m_pLayer->CreateGameObject(L"OBJ_Terrain", m_pTerrain);
 	m_pLayer->CreateGameObject(L"OBJ_Terrain", m_pTerrain2);
 	//dynamic_pointer_cast<CTransform>(m_pTerrain2->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition( 0.f, 80.f, 0.f );
