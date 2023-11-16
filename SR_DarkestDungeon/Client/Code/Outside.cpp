@@ -60,7 +60,7 @@ HRESULT COutside::ReadyGameObject()
 		CPickingMgr::GetInstance()->AddList(pHero1);
 		m_vecGameObject.push_back(pHero1);
 			
-		shared_ptr<CGameObject> pHero2 = make_shared<CJester>(m_pGraphicDev);
+		shared_ptr<CGameObject> pHero2 = make_shared<CVestal>(m_pGraphicDev);
 		//shared_ptr<CGameObject> pHero2 = make_shared<CStageCoachHero>(m_pGraphicDev, EHeroType::JESTER);
 		pHero2->SetColliding(true);
 		pHero2->SetScale({ 3.f, 5.f, 3.f });

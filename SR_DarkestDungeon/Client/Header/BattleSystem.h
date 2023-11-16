@@ -97,6 +97,9 @@ private:
 	_float	m_fStressEventTime = STRESSEVENTINTERVEL;	// 스트레스 이벤트 시간
 	_float	m_fStressOutputTime = STRESSOUTPUTINTERVEL; // 스트레스 영웅 이벤트 시간
 	_float	m_fKeyInputIntervel = KEYINPUTINTERVEL;
+
+	_float	m_fDotDamageEffectTime = DOTDAMEFFECTTIME;
+	_float	m_fStressEffectTime = STRESSEFFECTTIME * 2.f;
 	
 	_bool	m_bNext = false;
 	_bool	m_bDeathMoving = false;			// 사망으로 인한 이동
@@ -112,6 +115,18 @@ private:
 	_bool	m_bCounting = false;
 	_bool	m_bDeadCheck = false;
 
+	_bool	m_bWhileDotDamEffectRender = false;	// 도트뎀 이펙트가 뜨는 시간
+	_bool	m_bWhileStressEffectRender = false;	// 스트레스 이펙트가 뜨는 시간
+	_bool	m_bStressEffectRender = false;	// 스트레스 이펙트가 출력되었는지
+
+	// 스트레스가 출력될 영웅 목록
+	vector<shared_ptr<CGameObject>> m_vStressTargetHeroes;
+	_int	m_iStressValue = 0;
+
+	_bool	m_bCalcBlight = false;
+	_bool	m_bCalcBleed = false;
+	_bool	m_bCalcStun = false;
+
 	_bool	m_bAutoBattle = false;
 	_bool	m_bSkillInput = false;
 	_bool	m_bPositionInput = false;
@@ -120,6 +135,8 @@ private:
 	_int	m_iSelectPosition = 0;
 	_bool	m_bCalculate = false;
 	_bool	m_bUISetDone = false;
+
+	_bool	m_bBattle = false;
 
 	vector<_vec3> m_vHeroLocation = {};			// hero position
 	vector<_vec3> m_vMonsterLocation = {};		// monster position

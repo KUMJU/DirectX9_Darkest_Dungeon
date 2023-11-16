@@ -56,7 +56,69 @@ namespace Engine
 		_ulong	_2;
 
 	}INDEX32;
+
+	typedef struct tagParticle
+	{
+		_vec3		vPosition;
+		D3DXCOLOR	tColor;
+	} PARTICLE;
+
+	const _ulong	FVF_PARTICLE = D3DFVF_XYZ | D3DFVF_DIFFUSE;
 	
+	typedef struct tagParticleAttribute
+	{
+		_vec3		vPosition;
+		_vec3		vVelocity;
+		_vec3		vAcceleration;
+		_float		fLifeTime;
+		_float		fAge;
+		D3DXCOLOR	tColor;
+		D3DXCOLOR	tColorFade;
+		bool		bIsAlive;
+	} PARTICLE_ATTRIBUTE;
+
+	typedef struct tagBoundingBox
+	{
+		tagBoundingBox()
+		{
+			_min.x = INFINITY;
+			_min.y = INFINITY;
+			_min.z = INFINITY;
+
+			_max.x = -INFINITY;
+			_max.y = -INFINITY;
+			_max.z = -INFINITY;
+		};
+
+		bool isPointInside(_vec3& p)
+		{
+			if (p.x >= _min.x && p.y >= _min.y && p.z >= _min.z &&
+				p.x <= _max.x && p.y <= _max.y && p.z <= _max.z)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		_vec3 _min;
+		_vec3 _max;
+
+	} BOUNDING_BOX;
+
+	typedef struct tagBoundingSphere
+	{
+		tagBoundingSphere()
+		{
+			_radius = 0.0f;
+		};
+
+		D3DXVECTOR3 _center;
+		float       _radius;
+
+	} BOUNDING_SPHERE;
 }
 
 

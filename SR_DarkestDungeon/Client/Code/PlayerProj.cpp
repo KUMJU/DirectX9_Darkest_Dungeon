@@ -6,6 +6,9 @@
 #include "EffectMgr.h"
 #include "Effect.h"
 
+#include "ParticleMgr.h"
+#include "FireworkParticle.h"
+
 
 CPlayerProj::CPlayerProj(LPDIRECT3DDEVICE9 _pGraphicDev, tstring _strKeyName, _vec3 _vInitPos, _matrix _matPlrWorld)
 	:CGameObject(_pGraphicDev), m_strAnimKeyName(_strKeyName)
@@ -25,7 +28,7 @@ HRESULT CPlayerProj::ReadyGameObject()
 	m_pTransmCom->SetWorld(&m_matWorld);
 	memcpy(&m_vLook, &m_matWorld.m[2][0], sizeof(_vec3));
 	m_pTransmCom->SetPosition(m_vStartPos.x, m_vStartPos.y + 1.f, m_vStartPos.z);
-	
+
 	m_tProjInfo.iSpeed = 200.f;
 	m_strEffectAnimKey = L"SpellHand_Proj_Effect";
 	m_pColliderCom->SetPos(m_pTransmCom->GetPos());
@@ -33,7 +36,7 @@ HRESULT CPlayerProj::ReadyGameObject()
 
 	m_bColliding = true;
 	m_eCollideID = ECollideID::PLAYER_PROJECTILE;
- 
+
 	return S_OK;
 }
 
@@ -44,7 +47,7 @@ _int CPlayerProj::UpdateGameObject(const _float& fTimeDelta)
 
 	_int iExit(0);
 	iExit = __super::UpdateGameObject(fTimeDelta);
-	
+
 
 	//MoveForward
 	_vec3 vLook, vPos;
@@ -52,7 +55,7 @@ _int CPlayerProj::UpdateGameObject(const _float& fTimeDelta)
 	m_pTransmCom->GetInfo(INFO::INFO_POS, &vPos);
 
 	vPos += fTimeDelta * m_tProjInfo.iSpeed * m_vLook;
-	
+
 	m_pTransmCom->SetPosition(vPos.x, vPos.y, vPos.z);
 
 	_matrix matWorld;
@@ -133,7 +136,7 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 		// Effect Setting
 		// ≈∫»Ø ¿Ã∆Â∆Æ
 		shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
-		
+
 		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransmCom->GetPos(), 0.5f);
 		pEffect->SetActive(true);
 
@@ -147,7 +150,7 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 		// Effect Setting
 		// ≈∫»Ø ¿Ã∆Â∆Æ
 		shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
-		
+
 		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransmCom->GetPos(), 0.5f);
 		pEffect->SetActive(true);
 
@@ -199,6 +202,19 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 		m_pTransmCom->SetPosition(200.f, -200.f, 200.f);
 
 		m_bTestBool = false;
-		m_bEnable = false;
+		//m_bEnable = false;
+
+		// Particle Setting
+		/*dynamic_pointer_cast<CFireworkParticle>(m_pParticle)->Setting(m_pTransmCom->GetPos(), 6000);
+		m_pParticle->SetActive(true);*/
+
+		shared_ptr<CParticleSystem> pParticle = CParticleMgr::GetInstance()->GetExplosionParticle();
+
+		if (pParticle)
+		{
+			pParticle->Setting(m_pTransmCom->GetPos(), 50);
+			pParticle->SetActive(true);
+		}
 	}
+	m_bEnable = false;
 }

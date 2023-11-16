@@ -20,6 +20,9 @@
 #include "Effect.h"
 #include "EffectMgr.h"
 
+#include "ParticleSystem.h"
+#include "ParticleMgr.h"
+
 
 BEGIN(Engine)
 

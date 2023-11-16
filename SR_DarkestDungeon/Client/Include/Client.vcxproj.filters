@@ -266,6 +266,12 @@
     <ClCompile Include="..\Code\Spike.cpp">
       <Filter>01. GameObject\10. Projectile</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ExplosionParticle.cpp">
+      <Filter>01. GameObject\11. Particle\ExplosionParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FireworkParticle.cpp">
+      <Filter>01. GameObject\11. Particle\FireworkParticle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -536,6 +542,12 @@
     <ClInclude Include="..\Header\Boss2.h">
       <Filter>01. GameObject\10. Boss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ExplosionParticle.h">
+      <Filter>01. GameObject\11. Particle\ExplosionParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FireworkParticle.h">
+      <Filter>01. GameObject\11. Particle\FireworkParticle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -691,6 +703,15 @@
     </Filter>
     <Filter Include="01. GameObject\07. Minigame\00. CardGame\Card">
       <UniqueIdentifier>{5c48c758-e397-4a9d-b56d-4a028a9cc227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\11. Particle">
+      <UniqueIdentifier>{07e1280b-a4bf-4c25-8ca5-6273dc9aad49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\11. Particle\ExplosionParticle">
+      <UniqueIdentifier>{916f2f86-f0ee-47d7-bf0d-0e7c9c0e93ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\11. Particle\FireworkParticle">
+      <UniqueIdentifier>{09fbb5f6-f85b-4474-9b81-9d11f9de4058}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

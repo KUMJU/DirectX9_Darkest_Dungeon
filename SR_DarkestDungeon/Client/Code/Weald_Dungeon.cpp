@@ -449,13 +449,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_WallTexture", 9, true);	
 		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
-		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pWall->SetAngle(_vec3(0.f, -1.f * PI, 0.f));
 		m_pWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX / 2.f, 1.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 
 		m_pBackWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_BackWallTexture", 1, false);
 		m_pBackWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f - 0.1f, WEALD_WALLSIZEUPY + 2.f, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
-		m_pBackWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pBackWall->SetAngle(_vec3(0.f, -1.f * PI, 0.f));
 		m_pBackWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX * 7.f / 10.f, 1));
 		m_pLayer->CreateGameObject(L"OBJ_Back", m_pBackWall);
 	}
@@ -479,13 +479,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_WallTexture", 9, true);
 		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f));
-		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pWall->SetAngle(_vec3(0.f, PI / -2.f, 0.f));
 		m_pWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX / 2.f, 1.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 
 		m_pBackWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_BackWallTexture", 1, false);
 		m_pBackWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY + 2.f, WEALD_WALLSIZEX * 2.f + 0.1f));
-		m_pBackWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pBackWall->SetAngle(_vec3(0.f, PI / -2.f, 0.f));
 		m_pBackWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX * 7.f / 10.f, 1));
 		m_pLayer->CreateGameObject(L"OBJ_Back", m_pBackWall);
 	}
@@ -494,13 +494,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_WallTexture", 9, true);
 		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 1.5f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f + 0.0001f));
-		m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pWall->SetAngle(_vec3(0.f, PI / -2.f, 0.f));
 		m_pWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX / 2.f, 1.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 
 		m_pBackWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_BackWallTexture", 1, false);
 		m_pBackWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX + WEALD_WALLSIZEX * 1.5f + WEALD_WALLSIZEX * i, WEALD_WALLSIZEUPY + 2.f, WEALD_WALLSIZEX * 2.f + 0.1f));
-		m_pBackWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+		m_pBackWall->SetAngle(_vec3(0.f, PI / -2.f, 0.f));
 		m_pBackWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX * 7.f / 10.f, 1));
 		m_pLayer->CreateGameObject(L"OBJ_Back", m_pBackWall);
 	}
@@ -510,13 +510,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_WallTexture", 9, true);
 		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
-		m_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pWall->SetAngle(_vec3(0.f, -1.f * PI, 0.f));
 		m_pWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX / 2.f, 1.f));
 		m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 
 		m_pBackWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_BackWallTexture", 1, false);
 		m_pBackWall->SetPos(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 1.f - 0.1f, WEALD_WALLSIZEUPY + 2.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * i));
-		m_pBackWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+		m_pBackWall->SetAngle(_vec3(0.f, -1.f * PI, 0.f));
 		m_pBackWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX * 7.f / 10.f, 1));
 		m_pLayer->CreateGameObject(L"OBJ_Back", m_pBackWall);
 	}
@@ -935,12 +935,12 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pBrigandFusilier_1 = make_shared<CBrigandFusilier>(m_pGraphicDev);
 
 	// heroes
+	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
 	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
 
 	vector<shared_ptr<CGameObject>> Heroes_v;
+	Heroes_v.push_back(m_pJester);
 	Heroes_v.push_back(m_pHighwayman);
-	Heroes_v.push_back(m_pVestal);
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroVec(&Heroes_v);
 
 	// 방에 GameObject 넣기
@@ -986,12 +986,12 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room3_v4.push_back(m_pBrigandFusilier_1);
 
 	Room3_v4.push_back(m_pHighwayman);
-	Room3_v4.push_back(m_pVestal);
+	Room3_v4.push_back(m_pJester);
 
 	// heroes
 	vector<shared_ptr<CGameObject>> Room3_v2;
 	Room3_v2.push_back(m_pHighwayman);
-	Room3_v2.push_back(m_pVestal);
+	Room3_v2.push_back(m_pJester);
 	m_pRoom3->PushHeroesVector(Room3_v2);
 
 	// monsters
@@ -1048,8 +1048,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBrigandFusilier_1);
 	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
 	dynamic_pointer_cast<CHero>(m_pHighwayman)->SetObjKey(L"Obj_Highwayman");
-	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
-	dynamic_pointer_cast<CHero>(m_pVestal)->SetObjKey(L"Obj_Vestal");
+	m_pLayer->CreateGameObject(L"Obj_Jester", m_pJester);
+	dynamic_pointer_cast<CHero>(m_pJester)->SetObjKey(L"Obj_Jester");
 	m_pLayer->CreateGameObject(L"OBJ_Trap", m_pTrap1);
 	m_pLayer->CreateGameObject(L"OBJ_Obstacle", m_pObstacle1);
 	m_pLayer->CreateGameObject(L"OBJ_Obstacle", m_pObstacle2);

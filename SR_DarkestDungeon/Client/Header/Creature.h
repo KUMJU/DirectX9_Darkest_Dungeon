@@ -128,6 +128,8 @@ public:
 	_bool	IsAttacking();	// 공격하고 있는지
 
 	_bool	GetIsStun() { return m_bState[2]; }
+	_bool	GetIsBlight() { return m_bState[0]; }
+	_bool	GetIsBleed() { return m_bState[1]; }
 	_bool	GetIsCorpse() { return m_bCorpse; }
 	_bool	GetIsDeath() { return m_bDeath; }
 	_bool	GetIsBeforeDeath() { return m_bBeforeDeath; }
@@ -167,7 +169,7 @@ public:
 	const _tchar* Get_String2() const { return m_szString2; }
 	const _tchar* Get_String3() const { return m_szString3; }
 
-	void	StartCalculate();
+	void	StartCalculate(_bool _bAutoEffect, _int& _iValue);
 
 	tstring GetSoundKey() { return m_strSoundKey; }
 	void	SetSoundKey(tstring _strSoundKey) { m_strSoundKey = _strSoundKey; }
@@ -201,6 +203,9 @@ public:
 	void	OffVirtue();				// 기상 끄기
 	void	OnAffliction();				// 붕괴 키기
 	void	OffAffliction();			// 붕괴 끄기
+
+	_bool	IsIncreaseStress() { return m_bGetStress; }
+	void	SetIncreaseStress(_bool _bGetStress) { m_bGetStress = _bGetStress; }
 
 public:
 
@@ -280,6 +285,7 @@ protected:
 	// m_bHitted && m_bEffectOn -> 피격 애니메이션 on
 	// !m_bHitted && m_bEffectOn -> 타격 애니메이션 on
 	// 예시) 내가 공격시 나오는 이펙트 출력, 상대는 피격 이펙트 출력
+	_bool		m_bGetStress = false;		// 스트레스를 받은 경우
 
 	vector<shared_ptr<CSkill>>	m_pVecSkill;	// 스킬
 

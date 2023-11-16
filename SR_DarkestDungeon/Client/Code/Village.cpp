@@ -140,10 +140,10 @@ HRESULT CVillage::Ready_Layer_Environment(tstring pLayerTag)
 
 	// °¥¸²±æ
 	{
-		shared_ptr<CGameObject> pRoad = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_CrossRoadTexture");
+		shared_ptr<CGameObject> pRoad = make_shared<CEnvironmentObj>(m_pGraphicDev, L"Village_CrossSign");
 		pRoad->SetScale(_vec3(VILLAGE_WALLSIZE, VILLAGE_WALLSIZE * 2.f, 1.f ));
-		pRoad->SetPos(_vec3{ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, _fZGap - VILLAGE_WALLSIZE - VILLAGE_WALLSIZE / 2.f });
-		pRoad->SetAngle({ PI / 2, PI, 0.f });
+		pRoad->SetPos(_vec3{ VILLAGE_TILESIZE * (VILLAGE_TILECNT - 1) / 2.f + 3.5f, 0.f, 3.f });
+		pRoad->SetAngle({0.f, PI, 0.f});
 		
 		m_pLayer->CreateGameObject(L"OBJ_CrossRoad", pRoad);
 	}

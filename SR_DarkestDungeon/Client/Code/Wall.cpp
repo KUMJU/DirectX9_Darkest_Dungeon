@@ -23,7 +23,7 @@ HRESULT CWall::ReadyGameObject()
 	
 	m_pTransformCom->SetAngle(m_vAngle);
 
-	if (PI / 2.f == m_vAngle.y)
+	if (PI / 2.f == m_vAngle.y || PI / -2.f == m_vAngle.y)
 	{
 		m_bHorizontal = true;
 		m_pColliderCom->SetScale({ m_vScale.x * 2.f, m_vScale.y * 2.f, m_vScale.z * 2.f });

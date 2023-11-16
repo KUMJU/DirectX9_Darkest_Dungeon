@@ -2,6 +2,7 @@
 #include "CollisionMgr.h"
 #include "PickingMgr.h"
 #include "EffectMgr.h"
+#include "ParticleMgr.h"
 
 #include"LightMgr.h"
 
@@ -33,6 +34,7 @@ _int CScene::UpdateScene(const _float& _fTimeDelta)
 	}
 
 	CEffectMgr::GetInstance()->Update(_fTimeDelta);
+	CParticleMgr::GetInstance()->Update(_fTimeDelta);
 
 	return _int();
 }
@@ -54,6 +56,8 @@ void CScene::LateUpdateScene()
 
 	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_SUNKEN, ECollideID::PLAYER);
 
+
+	CParticleMgr::GetInstance()->LateUpdate();
 
 	CEffectMgr::GetInstance()->LateUpdate();
 
