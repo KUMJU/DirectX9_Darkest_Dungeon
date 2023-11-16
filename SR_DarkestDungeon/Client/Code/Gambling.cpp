@@ -30,6 +30,8 @@ HRESULT CGambling::ReadyGameObject()
 	m_pCardGame->AwakeGameObject();
 	m_pCardGame->ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"미니게임";
 
     __super::ReadyGameObject();
 

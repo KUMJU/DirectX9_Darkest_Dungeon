@@ -33,6 +33,9 @@ HRESULT CGuildNPC::ReadyGameObject()
 
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"스킬 해금";
+
 	return S_OK;
 }
 
@@ -192,7 +195,7 @@ _bool CGuildNPC::IsFinish()
 
 		// 플레이어 행동 풀기
 		CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
-
+		CCameraMgr::GetInstance()->SetVillageMode();
 		return true;
 	}
 

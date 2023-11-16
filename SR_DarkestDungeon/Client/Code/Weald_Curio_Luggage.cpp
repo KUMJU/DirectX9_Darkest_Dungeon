@@ -25,7 +25,7 @@ HRESULT CWeald_Curio_Luggage::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bInteractionKey = L"C";
-	m_bInteractionInfo = L"독 제거하기";
+	m_bInteractionInfo = L"상자 열기";
 
 	return S_OK;
 }

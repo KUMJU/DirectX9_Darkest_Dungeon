@@ -1,7 +1,6 @@
 #pragma once
 
 #include"Engine_Define.h"
-#include"Enums.h"
 #include"Scene.h"
 
 BEGIN(Engine)

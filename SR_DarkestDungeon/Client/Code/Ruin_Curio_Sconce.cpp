@@ -24,6 +24,9 @@ HRESULT CRuin_Curio_Sconce::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"불 붙이기";
+
 	return S_OK;
 }
 

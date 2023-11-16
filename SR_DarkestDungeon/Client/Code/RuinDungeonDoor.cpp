@@ -33,6 +33,9 @@ HRESULT CRuinDungeonDoor::ReadyGameObject()
 	m_pTransformCom3->SetPosition(m_vPos.x + 0.01f, m_vPos.y - 0.9f, m_vPos.z + 0.01f);
 	m_pTransformCom3->SetAngle(*m_pTransformCom->GetAngles());
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"¹® ¿­±â";
+
 	return S_OK;
 }
 

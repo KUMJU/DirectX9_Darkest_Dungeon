@@ -26,6 +26,9 @@ HRESULT CTavernNPC::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"¿µ¿õ È¸º¹";
+
 	return S_OK;
 }
 

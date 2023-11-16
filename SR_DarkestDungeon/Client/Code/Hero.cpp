@@ -8,6 +8,9 @@
 
 #include "EffectMgr.h"
 
+#include "UIMgr.h"
+#include "DungeonStatus.h"
+
 CHero::CHero(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
 {
@@ -136,6 +139,9 @@ void CHero::IncreaseStress(_int _iValue)
 
 	shared_ptr<CEffect> pEffect;
 
+	GetHeroStatusEvent(false);
+
+
 	// 이펙트 넣을 시점
 	// 헤드 이펙트
 	{
@@ -212,6 +218,13 @@ void CHero::DecreaseStress(_int _iValue)
 	//	pEffect->SetDamageEffect(2, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
 	//	pEffect->SetActive(true);
 	//}
+}
+
+void CHero::DecreaseHP(_int _iValue)
+{
+	CCreature::DecreaseHP(_iValue);
+	GetHeroStatusEvent(true);
+
 }
 
 shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)
@@ -301,6 +314,30 @@ void CHero::AddComponent()
 void CHero::SwapSkill(_int _iIdx1, _int _iIdx2)
 {
 	swap(m_pVecSkill[_iIdx1], m_pVecSkill[_iIdx2]);
+}
+
+void CHero::GetHeroStatusEvent(_bool _bHpEvent)
+{	
+	shared_ptr<CUIObj> pFindUI = CUIMgr::GetInstance()->FindUI(L"UI_DungeonStatus");
+
+	if (pFindUI) {
+
+		//체력차감 이벤트
+		if (_bHpEvent) {
+
+			dynamic_pointer_cast<CDungeonStatus>(pFindUI)->GetEvent(true, m_eHeroType);
+
+		}
+		//스트레스 이벤트
+		else {
+
+			dynamic_pointer_cast<CDungeonStatus>(pFindUI)->GetEvent(false, m_eHeroType);
+
+		}
+
+	}
+
+
 }
 
 void CHero::ChangeAnimState()

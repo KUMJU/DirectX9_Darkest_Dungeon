@@ -57,6 +57,9 @@
 #include"LoadingScreen.h"
 #include"InteractionInfo.h"
 
+#include "DungeonStatus.h"
+#include "ScreenEffect.h"
+
 CWeald_Dungeon::CWeald_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -126,11 +129,24 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			CCameraMgr::GetInstance()->SetState(ECameraMode::BATTLE);
 			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vPos->x , vPos->y+5.f , 210.f });
 			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_Inventory");
+			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_DungeonStatus");
+
+
+			//전투 시작 이펙트
+
+			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+			if (pEffect) {
+				pEffect->SetAnimEffect(L"Effect_BattleStart", _vec3(vPos->x, vPos->y +8.f, 220.f), _vec3(3.5f, 3.5f, 3.5f), 1.5f, false);
+				pEffect->SetActive(true);
+			}
+
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
 			pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 210.f);
 			m_pRoom3->SetBattleStart(true);
 			CSoundMgr::GetInstance()->PlayBGM(L"Combat_Level2_Loop2.wav", 0.6f);
 			CUIMgr::GetInstance()->NarrationOn(L"Narr_tut_firstBattle");
+			CSoundMgr::GetInstance()->PlaySound(L"Gen_BattleStart.wav", CHANNELID::EFFECT, 1.f);
+			dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(true);
 			m_pRoom3->SetBattleCameraOriginPos({ vPos->x , vPos->y + 5.f , 210.f });
 		}
 	}
@@ -159,6 +175,8 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			{
 				CCameraMgr::GetInstance()->SetFPSMode();
 				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
+				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
+
 
 				m_pRoom3->SetBattleTrigger(false);
 				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
@@ -291,8 +309,13 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 	if (GetAsyncKeyState('9') & 0x8000) {
 		m_pRoom3->GetBattleSystem()->EndBattle();
 		CCameraMgr::GetInstance()->SetFPSMode();
+		CSoundMgr::GetInstance()->StopAll();
+		CSoundMgr::GetInstance()->PlayBGM(L"Amb_Weald_Base.wav", 1.f);
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
+		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
+		dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+
 		m_pRoom3->SetBattleTrigger(false);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
 	}
@@ -1106,6 +1129,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 
 	CUIMgr::GetInstance()->AddUIObject(L"Obj_DescriptionUI", dynamic_pointer_cast<CUIObj>(pDescriptionUI));
 
+	shared_ptr<CGameObject> pDungeonStatusUI = make_shared<CDungeonStatus>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_DungeonStatus", pDungeonStatusUI);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_DungeonStatus", dynamic_pointer_cast<CUIObj>(pDungeonStatusUI));
+
+	shared_ptr<CGameObject> pScreenEffect = make_shared<CScreenEffect>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_ScreenEffect", pScreenEffect);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_ScreenEffect", dynamic_pointer_cast<CUIObj>(pScreenEffect));
 
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInventory(dynamic_pointer_cast<CInventory>(m_pInventory));
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

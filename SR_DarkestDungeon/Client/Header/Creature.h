@@ -148,7 +148,7 @@ public:
 	_int	GetHp() { return m_tCommonStat.iHp; }
 	void	SetHp(_int _iValue) { m_tCommonStat.iHp = _iValue; }
 	void	IncreaseHP(_int _iValue);
-	void	DecreaseHP(_int _iValue);
+	virtual void	DecreaseHP(_int _iValue);
 
 	_int	GetCurrentBleed() { return m_iBleedDot[0]; }
 	_int	GetCurrentPoision() { return m_iBlightDot[0]; }

@@ -24,6 +24,9 @@ HRESULT CRuin_Curio_Fountain::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"분수 살펴보기";
+
 	return S_OK;
 }
 

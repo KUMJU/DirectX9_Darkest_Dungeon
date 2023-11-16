@@ -34,7 +34,7 @@ HRESULT CRuin_Curio_Sarcophagus::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bInteractionKey = L"C";
-	m_bInteractionInfo = L"상자 윗면을 본다";
+	m_bInteractionInfo = L"상자 윗면 보기";
 
 	m_StatueVec.reserve(3);
 
@@ -77,6 +77,7 @@ _int CRuin_Curio_Sarcophagus::UpdateGameObject(const _float& fTimeDelta)
 			pItem->SetColliding(true);
 			pItem->AwakeGameObject();
 			pItem->ReadyGameObject();
+			dynamic_pointer_cast<CItem>(pItem)->StartParticle();
 			CSceneMgr::GetInstance()->AddNewObject(L"Layer_4_GameObj", L"Obj_Item_Ring", pItem);
 
 			shared_ptr<CBossRoomDoor> pBossDoor = make_shared<CBossRoomDoor>(m_pGraphicDev);

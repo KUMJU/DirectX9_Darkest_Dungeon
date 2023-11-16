@@ -63,6 +63,10 @@
 #include"Player.h"
 #include"LightMgr.h"
 
+#include "DungeonStatus.h"
+#include"InteractionInfo.h"
+
+
 CRuin_Dungeon::CRuin_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -143,9 +147,21 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 			CCameraMgr::GetInstance()->SetState(ECameraMode::BATTLE);
 			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vPos->x , vPos->y + 5.f ,  RUIN_WALLSIZEX * 13.5f - 20.f });
 			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_Inventory");
+			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_DungeonStatus");
+
+			//전투 시작 이펙트
+			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+			if (pEffect) {
+				pEffect->SetAnimEffect(L"Effect_BattleStart", _vec3(vPos->x, vPos->y + 8.f, RUIN_WALLSIZEX * 13.5f -5.f), _vec3(3.5f, 3.5f, 3.5f), 1.5f, false);
+				pEffect->SetActive(true);
+			}
+
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
+			CSoundMgr ::GetInstance()->PlayBGM(L"Combat_Level2_Loop1.wav", 0.6f);
 			pTransform->SetPosition(RUIN_WALLSIZEX*4.5f, 0.f, RUIN_WALLSIZEX * 13.5f - 20.f);
 			m_pRoom3->SetBattleStart(true);
+			dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(true);
+
 			m_pRoom3->SetBattleCameraOriginPos({ vPos->x , vPos->y + 5.f ,  RUIN_WALLSIZEX * 13.5f - 20.f });
 		}
 	}
@@ -174,6 +190,9 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 			{
 				CCameraMgr::GetInstance()->SetFPSMode();
 				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
+				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
+				dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+
 	
 				m_pRoom3->SetBattleTrigger(false);
 				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
@@ -215,9 +234,15 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 	if (GetAsyncKeyState('9') & 0x8000) {
 		m_pRoom3->GetBattleSystem()->EndBattle();
 		CCameraMgr::GetInstance()->SetFPSMode();
+
+		CSoundMgr::GetInstance()->StopAll();
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
+		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
+
 		m_pRoom3->SetBattleTrigger(false);
+		dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
 	}
 
@@ -1093,6 +1118,10 @@ HRESULT CRuin_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_PuzzleHintUI", pDescriptionUI);
 
 	CUIMgr::GetInstance()->AddUIObject(L"UI_PuzzleHint", dynamic_pointer_cast<CUIObj>(pDescriptionUI));
+
+	shared_ptr<CGameObject> pDungeonStatusUI = make_shared<CDungeonStatus>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_DungeonStatus", pDungeonStatusUI);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_DungeonStatus", dynamic_pointer_cast<CUIObj>(pDungeonStatusUI));
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

@@ -739,6 +739,11 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Target_EnemyPlus", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Dungeon/Battle/target/plus.png", 1, bDefault);
 
+
+	//전투시작
+	CreateNewTexture(L"Effect_BattleStart", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Battle/BattleStart/armatureName_start_%d.png", 28, bDefault);
+
 }
 
 void CResourceMgr::UITextureLoad()
@@ -921,7 +926,7 @@ void CResourceMgr::UITextureLoad()
 		{
 			//여기 바꾸기
 			CreateNewTexture(L"UI_Head_StressUp", TEX_NORMAL,
-				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_afflicted_%d.png", 2, bDefault);
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_afflicted_%d.png", 54, bDefault);
 			CreateNewTexture(L"UI_Head_StressDown", TEX_NORMAL,
 				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_heroic_%d.png", 2, bDefault);
 			CreateNewTexture(L"UI_Head_Stun", TEX_NORMAL,
@@ -954,6 +959,17 @@ void CResourceMgr::UITextureLoad()
 
 	CreateNewTexture(L"UI_Interaction", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/UI_InteractionInfo.png", 1, bDefault);
+
+
+	//Hero Portrait
+
+	CreateNewTexture(L"UI_HeroPortrait", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Dungeon/HeroStatus/UI_HeroPortrait_%d.png", 4, bDefault);
+
+	//ScreenEffect
+
+	CreateNewTexture(L"UI_ScreenEffect", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/ScreenEffect/UI_ScreenEffect_%d.png", 2, bDefault);
 
 }
 

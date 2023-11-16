@@ -55,7 +55,7 @@ void CInteractionInfo::LateUpdateGameObject()
 
 void CInteractionInfo::RenderGameObject()
 {
-	if (!m_bVisible) {
+	if (!m_bVisible || m_bIsBattle) {
 		return;
 	}
 
