@@ -183,6 +183,9 @@
     <ClCompile Include="..\Code\ExplosionParticle.cpp">
       <Filter>04. Manager\08. ParticleMgr\ParticleSystem</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\GlowParticle.cpp">
+      <Filter>04. Manager\08. ParticleMgr\ParticleSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\SceneMgr.h">
@@ -274,6 +277,9 @@
       <Filter>04. Manager\08. ParticleMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\ExplosionParticle.h">
+      <Filter>04. Manager\08. ParticleMgr\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\GlowParticle.h">
       <Filter>04. Manager\08. ParticleMgr\ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,7 +28,7 @@ public:
 
 	// 애니메이션 설정
 	void	SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _float _fAnimTime, _bool _bOrthogonal, _bool _bZEnable = true);
-	void	SetTextureEffect(tstring _strTextureKey, _vec3 _vPos, _vec3 _vScale, _float _fShowTime, _int _iAlpha, _bool _bOrthogonal, _bool _bZEnable);
+	void	SetTextureEffect(tstring _strTextureKey, _vec3 _vPos, _vec3 _vScale, _float _fShowTime, _int _iAlpha, _bool _bOrthogonal, _bool _bZEnable = true);
 
 	void	SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime);
 	void	SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _float _fAnimTime);

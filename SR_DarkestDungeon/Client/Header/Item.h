@@ -1,6 +1,7 @@
 #pragma once
 
 #include"GameObject.h"
+#include "GlowParticle.h"
 
 BEGIN(Engine)
 
@@ -38,6 +39,9 @@ public:
 		m_bOnStore = _bValue;
 	}
 	_bool	IsOnStore() { return m_bOnStore; }
+
+	// 필드에 떠있을 때 글로우 파티클 생성
+	void StartParticle();
 
 	//몬스터가 죽고 아이템이 드랍될 때 포지션, 텍스쳐 값을 지정해줄 수 있음(필수로 해줄 것)
 	void SetDropItemInfo(_vec3 _vPos, const tstring& _strName , _int _iAmount = 1);
@@ -87,6 +91,8 @@ private:
 	_float m_CurrentDir = 1.f;
 	_float m_fActTime = 0.f;
 	_float m_fTotalHeight = 0.f;
+
+	shared_ptr<CGlowParticle> m_pParticle = nullptr;
 
 };
 

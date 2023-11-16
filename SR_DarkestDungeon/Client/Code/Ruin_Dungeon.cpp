@@ -144,7 +144,7 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vPos->x , vPos->y + 5.f ,  RUIN_WALLSIZEX * 13.5f - 20.f });
 			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_Inventory");
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
-			pTransform->SetPosition(RUIN_WALLSIZEX*4.5f, 0.f, RUIN_WALLSIZEX * 13.5f);
+			pTransform->SetPosition(RUIN_WALLSIZEX*4.5f, 0.f, RUIN_WALLSIZEX * 13.5f - 20.f);
 			m_pRoom3->SetBattleStart(true);
 			m_pRoom3->SetBattleCameraOriginPos({ vPos->x , vPos->y + 5.f ,  RUIN_WALLSIZEX * 13.5f - 20.f });
 		}
