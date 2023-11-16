@@ -197,6 +197,7 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom5->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 					pTransform->SetPosition(RUIN_WALLSIZEX * 17.5f + fNum - 0.5f, 1.f, RUIN_WALLSIZEX * 13.5f - 0.01f - 0.01f * i);
+					dynamic_pointer_cast<CItem>(m_pRoom5->GetGameObjectVector()[i])->StartParticle();
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);

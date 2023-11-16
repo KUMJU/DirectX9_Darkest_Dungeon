@@ -199,6 +199,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom2->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 					pTransform->SetPosition(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f + fNum - 0.5f, 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 9.f - 0.01f - 0.01f * i);
+					dynamic_pointer_cast<CItem>(m_pRoom2->GetGameObjectVector()[i])->StartParticle();
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
@@ -215,6 +216,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom2->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 					pTransform->SetPosition(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f + fNum - 0.5f, 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 9.f - 0.01f - 0.01f * i);
+					dynamic_pointer_cast<CItem>(m_pRoom2->GetGameObjectVector()[i])->StartParticle();
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent2Trigger(false);
@@ -234,6 +236,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom3->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 					pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 22.f + fNum - 0.5f, 1.f, 230.f - 0.01f - 0.01f * i);
+					dynamic_pointer_cast<CItem>(m_pRoom3->GetGameObjectVector()[i])->StartParticle();
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
@@ -250,6 +253,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom3->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 					pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 22.f + fNum - 0.5f, 1.f, 230.f - 0.01f - 0.01f * i);
+					dynamic_pointer_cast<CItem>(m_pRoom3->GetGameObjectVector()[i])->StartParticle();
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent2Trigger(false);
@@ -268,6 +272,7 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				{
 					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom4->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 					pTransform->SetPosition(WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 1.f + fNum - 0.5f, 1.f, WEALD_WALLSIZEX * 2.f + WEALD_WALLSIZEX * 17.f - 0.01f - 0.01f * i);
+					dynamic_pointer_cast<CItem>(m_pRoom4->GetGameObjectVector()[i])->StartParticle();
 				}
 			}
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
