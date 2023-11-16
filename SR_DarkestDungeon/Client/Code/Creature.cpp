@@ -200,29 +200,43 @@ void CCreature::DecreaseHP(_int _iValue)
 	}
 }
 
-void CCreature::StartCalculate()
+void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 {
 	// 출혈이나 중독 상태라면
 	if (m_bState[0] || m_bState[1])
 	{
-		if (m_bState[0])
+		if (_bAutoEffect)
 		{
-			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+			if (m_bState[0])
+			{
+				shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-			pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), ATTACKTIME);
-			pEffect->SetActive(true);
+				pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), ATTACKTIME);
+				pEffect->SetActive(true);
+			}
+
+			if (m_bState[1])
+			{
+				shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+				pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), ATTACKTIME);
+				pEffect->SetActive(true);
+			}
+
+			// 도트뎀 계산
+			_int _iDamage = m_iBlightDot[0] + m_iBleedDot[0];
+
+			if (_iDamage > 0)
+			{
+				DecreaseHP(_iDamage);
+			}
 		}
 
-		if (m_bState[1])
-		{
-			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+		else
+			m_tCommonStat.iHp -= (m_iBlightDot[0] + m_iBleedDot[0]);
 
-			pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), ATTACKTIME);
-			pEffect->SetActive(true);
-		}
+		_iValue = m_iBlightDot[0] + m_iBleedDot[0];
 
-		// 도트뎀 계산
-		m_tCommonStat.iHp -= (m_iBlightDot[0] + m_iBleedDot[0]);
 		// 사망하지 않았을때는 피가 0아래로 안닳게 하기
 		if (!m_bDeath)
 		{
@@ -250,10 +264,14 @@ void CCreature::StartCalculate()
 		m_pLoopEffect->Reset();
 		m_pLoopEffect->SetActive(false);
 
-		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-		pEffect->SetFontEffect(L"UI_Stun", m_pTransformCom->GetPos(), ATTACKTIME);
-		pEffect->SetActive(true);
+		if (_bAutoEffect)
+		{
+			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+			pEffect->SetFontEffect(L"UI_Stun", m_pTransformCom->GetPos(), ATTACKTIME);
+			pEffect->SetActive(true);
+		}
 
 		m_bState[2] = false;
 		m_bMyTurn = false;
@@ -338,6 +356,8 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 {
 	if (!_pCreature) return;
 	if (!_pSkill) return;
+
+	m_bGetStress = false;
 
 	// 닷지 계산용
 	int iDodgeNum = rand() % 100;
@@ -532,7 +552,8 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	{
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
-			dynamic_pointer_cast<CHero>(_pCreature)->IncreaseStress(_pSkill->GetStress());
+			dynamic_pointer_cast<CHero>(_pCreature)->SetIncreaseStress(true);
+			//dynamic_pointer_cast<CHero>(_pCreature)->IncreaseStress(_pSkill->GetStress());
 
 		}
 	}
@@ -686,6 +707,11 @@ void CCreature::OnVirtue()
 {
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
+	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 150, true);
+	pEffect->SetActive(true);
+
+	pEffect = CEffectMgr::GetInstance()->GetEffect();
+
 	pEffect->SetAnimEffect(m_strName + L"_Virtue", { 0.f, 0.f, 0.5f }, {400.f, 400.f, 1.f}, STRESSEVENTINTERVEL - 1.f, true);
 	pEffect->SetActive(true);
 
@@ -699,9 +725,15 @@ void CCreature::OffVirtue()
 
 void CCreature::OnAffliction()
 {
+
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
-	pEffect->SetAnimEffect(m_strName + L"_Affliction", { 0.f, 0.f, 0.5f }, { 400.f, 400.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true);
+	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 150, true);
+	pEffect->SetActive(true);
+
+	pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetAnimEffect(m_strName + L"_Affliction", { 0.f, 0.f, 0.5f }, { 450.f, 420.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true);
 	pEffect->SetActive(true);
 
 	m_pStatInfo->SetAffliction(true);

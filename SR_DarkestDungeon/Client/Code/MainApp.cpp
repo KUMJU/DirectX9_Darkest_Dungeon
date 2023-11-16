@@ -11,6 +11,7 @@
 #include"MainLogo.h"
 #include"LightMgr.h"
 #include "EffectMgr.h"
+#include "ParticleMgr.h"
 
 CMainApp::CMainApp()
 {
@@ -34,6 +35,7 @@ HRESULT CMainApp::Ready_MainApp()
 	CResourceMgr::GetInstance()->MainTitleTextureLoad();
 
 	CEffectMgr::GetInstance()->SetEffectMgr(m_pGraphicDev);
+	CParticleMgr::GetInstance()->SetParticleMgr(m_pGraphicDev);
 
 	CSoundMgr::GetInstance()->Initialize();
 	CPickingMgr::GetInstance()->ReadyPickingMgr(m_pGraphicDev);
@@ -149,6 +151,7 @@ void CMainApp::Free()
 
 	CLightMgr::DestroyInstance();
 	CEffectMgr::DestroyInstance();
+	CParticleMgr::DestroyInstance();
 	CSoundMgr::DestroyInstance();
 	CPickingMgr::DestroyInstance();
 	CUIMgr::DestroyInstance();

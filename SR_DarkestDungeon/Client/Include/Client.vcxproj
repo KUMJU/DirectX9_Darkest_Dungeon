@@ -177,6 +177,8 @@
     <ClInclude Include="..\Header\DungeonRoom.h" />
     <ClInclude Include="..\Header\DungeonSystem.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\ExplosionParticle.h" />
+    <ClInclude Include="..\Header\FireworkParticle.h" />
     <ClInclude Include="..\Header\Gambling.h" />
     <ClInclude Include="..\Header\GoodsUI.h" />
     <ClInclude Include="..\Header\Guild.h" />
@@ -276,6 +278,8 @@
     <ClCompile Include="..\Code\DungeonSystem.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\EnvironmentObj.cpp" />
+    <ClCompile Include="..\Code\ExplosionParticle.cpp" />
+    <ClCompile Include="..\Code\FireworkParticle.cpp" />
     <ClCompile Include="..\Code\Gambling.cpp" />
     <ClCompile Include="..\Code\GoodsUI.cpp" />
     <ClCompile Include="..\Code\Guild.cpp" />

@@ -1,6 +1,7 @@
 #pragma once
 
 #include"GameObject.h"
+#include "ParticleSystem.h"
 
 struct tagProjInfo {
 	_int iDamage;
@@ -60,5 +61,9 @@ private:
 	_vec3	m_vLook;
 
 	_bool	m_bTestBool = true;
+
+	shared_ptr<CParticleSystem> m_pParticle = nullptr;
+
+	_float	m_fTimeDelta = 0.f;
 
 };

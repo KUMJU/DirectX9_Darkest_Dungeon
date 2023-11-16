@@ -9,6 +9,7 @@
 #include "ResourceMgr.h"
 #include "EffectMgr.h"
 #include "Renderer.h"
+#include "GameMgr.h"
 
 
 CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -27,7 +28,7 @@ HRESULT CEffect::ReadyGameObject()
 
 _int CEffect::UpdateGameObject(const _float& fTimeDelta)
 {
-    printf("Effect %d\n", m_iNum);
+    // printf("Effect %d\n", m_iNum);
     m_fDeltaTime = fTimeDelta;
 
     _int iExit = __super::UpdateGameObject(m_fDeltaTime);
@@ -60,12 +61,24 @@ _int CEffect::UpdateGameObject(const _float& fTimeDelta)
     if (m_bFading)
         Fade();
 
+    //ºôº¸µå ½ÃÀÛ
+    _matrix matWorld;
+
+    matWorld = *m_pTransformCom->GetWorld();
+    SetBillBoard(matWorld);
+    m_pTransformCom->SetWorld(&matWorld);
+
+    _vec3 _fPlayerPos = *dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos();
+
+    if (matWorld.m[3][2] - _fPlayerPos.z < 0.f)
+        m_bChange = true;
+
     return iExit;
 }
 
 void CEffect::LateUpdateGameObject()
 {
-    printf("Effect %d\n", m_iNum);
+    // printf("Effect %d\n", m_iNum);
     if (m_bOrthogonal)
         CRenderer::GetInstance()->AddRenderGroup(RENDER_UI, shared_from_this());
     else
@@ -74,7 +87,8 @@ void CEffect::LateUpdateGameObject()
 
 void CEffect::RenderGameObject()
 {
-    printf("Effect %d\n", m_iNum);
+
+    // printf("Effect %d\n", m_iNum);
     if (!m_bActive) return;
      
     if(m_vPos)
@@ -85,22 +99,25 @@ void CEffect::RenderGameObject()
 
     m_pTransformCom->SetScale(m_vScale.x * m_vScaleGap.x, m_vScale.y * m_vScaleGap.y, m_vScale.z * m_vScaleGap.z);
 
+    D3DXMATRIX mat = *m_pTransformCom->GetWorld();
+
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-    m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-    m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+    m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+    m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, m_bZEnable);
 
-    m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
     m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 
-    /*m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+    m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+    //m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
     m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
     m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-    m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(255, 255, 255, 255));*/
+    m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(m_iAlpha, 255, 255, 255));
 
     if (m_bAnimation)
     {
@@ -112,12 +129,22 @@ void CEffect::RenderGameObject()
     {
         if (m_bTwoTexture)
         {
-            m_pTransformCom->SetPosition(m_vPos->x + m_vPosGap.x - 0.4f, m_vPos->y + m_vPosGap.y, m_vPos->z + m_vPosGap.z);
+            if (m_bChange)
+            {
+                m_pTransformCom->SetPosition(m_vPos->x + m_vPosGap.x + 0.4f, m_vPos->y + m_vPosGap.y, m_vPos->z + m_vPosGap.z);
+                m_pTransformCom2->SetPosition(m_vPos->x + m_vPosGap.x - 0.4f, m_vPos->y + m_vPosGap.y, m_vPos->z + m_vPosGap.z);
+            }
+
+            else
+            {
+                m_pTransformCom->SetPosition(m_vPos->x + m_vPosGap.x - 0.4f, m_vPos->y + m_vPosGap.y, m_vPos->z + m_vPosGap.z);
+                m_pTransformCom2->SetPosition(m_vPos->x + m_vPosGap.x + 0.4f, m_vPos->y + m_vPosGap.y, m_vPos->z + m_vPosGap.z);
+            }
+
             m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
             m_pTextureCom1->SetTexture(0);
             m_pRcTexCom->RenderBuffer();
 
-            m_pTransformCom2->SetPosition(m_vPos->x + m_vPosGap.x + 0.4f, m_vPos->y + m_vPosGap.y, m_vPos->z + m_vPosGap.z);
             m_pTransformCom2->SetScale(m_vScale.x * m_vScaleGap.x, m_vScale.y * m_vScaleGap.y, m_vScale.z * m_vScaleGap.z);
             m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom2->GetWorld());
             m_pTextureCom2->SetTexture(0);
@@ -132,7 +159,7 @@ void CEffect::RenderGameObject()
         }
     }
 
-    //m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xffffffff);
+    m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xffffffff);
 
     m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
     m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
@@ -176,9 +203,9 @@ void CEffect::AddComponent()
     m_mapComponent[ID_STATIC].insert({ L"Com_Texture2", pComponent });
 }
 
-void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _float _fAnimTime, _bool _bOrthogonal)
+void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _float _fAnimTime, _bool _bOrthogonal, _bool _bZEnable)
 {
-    printf("Effect %d\nAnimation\n", m_iNum);
+    // printf("Effect %d\nAnimation\n", m_iNum);
 
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
@@ -197,11 +224,40 @@ void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _fl
 
     m_bAnimation = true;
     m_bOrthogonal = _bOrthogonal;
+    m_bZEnable = _bZEnable;
+
+    if (m_bOrthogonal) m_bZEnable = false;
+}
+
+void CEffect::SetTextureEffect(tstring _strTextureKey, _vec3 _vPos, _vec3 _vScale, _float _fShowTime, _int _iAlpha, _bool _bOrthogonal, _bool _bZEnable)
+{
+    // printf("Effect %d\nTexture\n", m_iNum);
+
+    m_strAnimKey = _strTextureKey;
+    m_fAnimTime = _fShowTime;
+    m_bLoop = false;
+
+    m_vPos = nullptr;
+    m_vPosOrigin = _vPos;
+    m_vScale = _vScale;
+
+    m_pTextureCom1->SetTextureKey(m_strAnimKey, TEX_NORMAL);
+
+
+    m_vScaleGap = { 1.f, 1.f, 1.f };
+    m_vPosGap = { 0.f, 0.f, 0.f };
+
+    m_bAnimation = false;
+    m_iAlpha = _iAlpha;
+    m_bOrthogonal = _bOrthogonal;
+    m_bZEnable = _bZEnable;
+
+    if (m_bOrthogonal) m_bZEnable = false;
 }
 
 void CEffect::SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime)
 {
-    printf("Effect %d\nSkill\n", m_iNum);
+    // printf("Effect %d\nSkill\n", m_iNum);
 
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
@@ -232,11 +288,13 @@ void CEffect::SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _
     }
 
     m_bAnimation = true;
+
+    m_bZEnable = false;
 }
 
 void CEffect::SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _float _fAnimTime)
 {
-    printf("Effect %d\nDamage\n", m_iNum);
+    // printf("Effect %d\nDamage\n", m_iNum);
     tstring strType;
 
     switch (_iDamageType)
@@ -273,6 +331,7 @@ void CEffect::SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _f
         m_pTextureCom2->SetTextureKey(strType + to_wstring(_iDamage % 10), TEX_NORMAL);
 
         m_bTwoTexture = true;
+        m_bChange = false;
     }
 
     m_vPos = _vPos;
@@ -283,6 +342,7 @@ void CEffect::SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _f
     m_bLoop = false;
     m_bAnimation = false;
     m_fAnimTime = _fAnimTime;
+    m_bZEnable = false;
 
     SetMove(true, { 0.f, 1.5f, 0.f }, m_fAnimTime);
 
@@ -290,7 +350,7 @@ void CEffect::SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _f
 
 void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime)
 {
-    printf("Effect %d\nFont\n", m_iNum);
+    // printf("Effect %d\nFont\n", m_iNum);
     m_strAnimKey = _strAnimKey;
 
     m_pTextureCom1->SetTextureKey(m_strAnimKey, TEX_NORMAL);
@@ -305,13 +365,14 @@ void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime
     m_bLoop = false;
     m_bAnimation = false;
     m_fAnimTime = _fAnimTime;
+    m_bZEnable = false;
 
     SetMove(true, { 0.f, 1.5f, 0.f }, m_fAnimTime);
 }
 
 void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime, _bool _bLoop)
 {
-    printf("Effect %d\nHead\n", m_iNum);
+    // printf("Effect %d\nHead\n", m_iNum);
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
     m_bLoop = _bLoop;
@@ -328,11 +389,12 @@ void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime
     m_pAnimatorCom->SetAnimKey(m_strAnimKey, m_fAnimTime / CResourceMgr::GetInstance()->GetTexture(m_strAnimKey, TEX_NORMAL)->size());
 
     m_bAnimation = true;
+    m_bZEnable = false;
 }
 
 void CEffect::SetProjEffect(tstring _strAnimKey, _vec3 _vPos, _float _fAnimTime)
 {
-    printf("Effect %d\nProj\n", m_iNum);
+    // printf("Effect %d\nProj\n", m_iNum);
 
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
@@ -352,6 +414,7 @@ void CEffect::SetProjEffect(tstring _strAnimKey, _vec3 _vPos, _float _fAnimTime)
     m_bLoop = false;
     m_bAnimation = true;
 
+    m_bZEnable = true;
 }
 
 void CEffect::SetPos(_vec3* _vPos)
@@ -456,4 +519,6 @@ void CEffect::Reset()
     m_bTwoTexture = false;
     m_bActive = false;
     m_bOrthogonal = false;
+    m_bZEnable = false;
+    m_bChange = false;
 }

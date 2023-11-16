@@ -31,7 +31,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			m_fTurnResetTime = 0.f;
 			m_bChangeSkillAnim = false;
 			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
-			
+
 			if (m_fAngle != 0.f) {
 				CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, m_fAngle, 0.4f);
 				m_fAngle = 0.f;
@@ -90,8 +90,8 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			{
 				//근거리 공격
 				_vec3 vTargetPos = dynamic_pointer_cast<CCreature>(iter)->GetTargetPos();
-				CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vTargetPos.x+ 2.f , vTargetPos.y , vTargetPos.z - 8.f });
-				dynamic_pointer_cast<CCreature>(iter)->MovePos(vTargetPos,fTimeDelta, dynamic_pointer_cast<CCreature>(iter)->GetMovingSpeed());
+				CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vTargetPos.x + 2.f , vTargetPos.y , vTargetPos.z - 8.f });
+				dynamic_pointer_cast<CCreature>(iter)->MovePos(vTargetPos, fTimeDelta, dynamic_pointer_cast<CCreature>(iter)->GetMovingSpeed());
 			}
 		}
 		for (auto& iter : m_vMonsters)
@@ -153,7 +153,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			}
 
 		}
-		else if(!m_bHero && m_bCamEffectCheck && m_fWhileAttackingTime < 1.5f){
+		else if (!m_bHero && m_bCamEffectCheck && m_fWhileAttackingTime < 1.5f) {
 
 			if (!m_bRotationCheck) {
 				CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, 20.f, m_fWhileAttackingTime);
@@ -512,6 +512,8 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 스트레스 이벤트 발생중인 시간
 	if (m_bWhileStressEvent)
 	{
+		printf("스트레스 이벤트 발생 시간\m_fStressEventTime : %f\n", m_fStressEventTime);
+
 		m_fStressEventTime -= fTimeDelta;
 
 		if (m_fStressEventTime < 0.f)
@@ -531,6 +533,8 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 스트레스 영웅 행동 발생 시간
 	if (m_bWhileStressOutput)
 	{
+		printf("스트레스 영웅 행동 발생 시간 \m_fStressOutputTime : %f\n", m_fStressOutputTime);
+
 		m_fStressOutputTime -= fTimeDelta;
 
 		if (m_fStressOutputTime < 0.f)
@@ -617,7 +621,9 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽음상태로
 			if (!m_bCalculate)
 			{
-				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate();
+				int iDamage;
+
+				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate(true, iDamage);
 				m_bCalculate = true;
 			}
 
@@ -653,7 +659,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 				{
 					// 스킬 받아오기
 					m_iSelectSkill = m_pHeroUI->GetSkill();
-					
+
 					// 활성화 위치여야만 스킬 선택되도록
 					if (m_iSelectSkill != 0 && (m_iSelectSkill != 5) && !dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(m_iSelectSkill - 1)
 						->GetActivatePos()[dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetPosition() - 1])
@@ -786,7 +792,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 						}
 					}
 				}
-			
+
 				if (m_iSelectPosition != 0 && m_iSelectSkill != 0)
 				{
 					//m_bSkillInput = false;
@@ -795,7 +801,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 
 					// 타겟 커서 다 끄기
 					OffTargetCursor();
-					
+
 					Battle(m_iSelectSkill);
 					// 크리처 턴 엔드
 					CreatureTurnEnd();
@@ -813,25 +819,140 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		// 자동전투이면
 		else
 		{
-			// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽음상태로
-			dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate();
-
-			// 종료 조건
-			if (HeroesAllDead() || MonstersAllDead())
+			while (m_bNext && !m_bWhileDotDamEffectRender && !m_bWhileStressEffectRender)
 			{
-				if (EndBattle())
-					return true;
+				// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽음상태로
+				if (!m_bCalculate)
+				{
+					int iDamage;
+
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate(false, iDamage);
+
+					// 출혈, 중독, 기절 상태인 경우 딜레이 주기
+					if (!m_bCalcBlight && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsBlight())
+					{
+						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetFontEffect(L"UI_Blight", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetDamageEffect(0, iDamage, dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						m_bWhileDotDamEffectRender = true;
+						m_bCalcBlight = true;
+						break;
+					}
+
+					if (!m_bCalcBleed && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsBleed())
+					{
+						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetFontEffect(L"UI_Blood", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetDamageEffect(0, iDamage, dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						m_bWhileDotDamEffectRender = true;
+						m_bCalcBleed = true;
+						break;
+					}
+
+					if (!m_bCalcStun && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsStun())
+					{
+						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetFontEffect(L"UI_Stun", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						m_bWhileDotDamEffectRender = true;
+						m_bCalcStun = true;
+						break;
+					}
+
+					else
+						m_bCalculate = true;
+				}
+
+				// 종료 조건
+				if (HeroesAllDead() || MonstersAllDead())
+				{
+					if (EndBattle())
+						return true;
+				}
+
+				if (!m_bBattle)
+				{
+
+					if (!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse() &&
+						!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsDeath() &&
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn())
+					{
+						Battle(0);
+						m_bBattle = true;
+					}
+				}
+
+				// 여기서 스트레스 획득 시간동안 붙잡아야됨
+				if (m_bWhileStressEffectRender)
+					break;
+
+				// 크리처 턴 엔드
+				CreatureTurnEnd();
+				m_bNext = false;
+				m_bBattle = false;
+				m_bCalculate = false;
+				m_bCalcBlight = false;
+				m_bCalcBleed = false;
+				m_bCalcStun = false;
+
+				m_vStressTargetHeroes.clear();
+				m_bStressEffectRender = false;
 			}
 
-			if (!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse() &&
-				!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsDeath() &&
-				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn())
+
+			// 중독, 출혈 데미지 이펙트가 발생중인 시간
+			if (m_bWhileDotDamEffectRender)
 			{
-				Battle(0);
+				printf("중독, 출혈 데미지 이펙트 시간\m_fDotDamageEffectTime : %f\n", m_fDotDamageEffectTime);
+
+				m_fDotDamageEffectTime -= fTimeDelta;
+
+				if (m_fDotDamageEffectTime < 0.f)
+				{
+					m_bWhileDotDamEffectRender = false;
+					m_fDotDamageEffectTime = DOTDAMEFFECTTIME;
+				}
 			}
-			// 크리처 턴 엔드
-			CreatureTurnEnd();
-			m_bNext = false;
+
+			// 스트레스 획득 이펙트가 발생중인 시간
+			if (m_bWhileStressEffectRender)
+			{
+				printf("스트레스 획득 이펙트 발생 시간\m_fStressEffectTime : %f\n", m_fStressEffectTime);
+
+				m_fStressEffectTime -= fTimeDelta;
+
+				if (m_fStressEffectTime <= STRESSEFFECTTIME / 2.f && !m_bStressEffectRender)
+				{
+					for (auto& iter : m_vStressTargetHeroes)
+						dynamic_pointer_cast<CHero>(iter)->IncreaseStress(m_iStressValue);
+
+					m_bStressEffectRender = true;
+				}
+
+				if (m_fStressEffectTime < 0.f)
+				{
+					m_iStressValue = 0;
+					m_vStressTargetHeroes.clear();
+					m_bWhileStressEffectRender = false;
+					m_fStressEffectTime = STRESSEFFECTTIME;
+				}
+			}
 		}
 	}
 
@@ -877,13 +998,13 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 					CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, m_fAngle, 0.5);
 					m_fAngle = 0.f;
 				}*/
-			//	CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);			
+				//	CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);			
 
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTurn(true);
 				m_bHero = true;
 
 				iCurrentHeroIndex = j;
-				
+
 				return m_vHeroes[j];
 			}
 		}
@@ -894,11 +1015,11 @@ shared_ptr<CGameObject> CBattleSystem::NextCreature()
 				&& !(dynamic_pointer_cast<CCreature>(m_vMonsters[j])->GetDone()))
 			{
 
-			/*	if (m_fAngle != 0.f) {
-					CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, m_fAngle, 0.5);
-					m_fAngle = 0.f;
-				}*/
-			//	CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
+				/*	if (m_fAngle != 0.f) {
+						CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, m_fAngle, 0.5);
+						m_fAngle = 0.f;
+					}*/
+					//	CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMOUT, m_vCenterPos);
 
 
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetTurn(true);
@@ -1107,7 +1228,7 @@ void CBattleSystem::FormBattlePosition(vector<shared_ptr<CGameObject>>& _vHeroes
 		case 0:
 			pTransform = dynamic_pointer_cast<CTransform>(
 				_vMonsters[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
-			pTransform->SetPosition(_vOrigin.x + 6.f, _vOrigin.y, _vOrigin.z );
+			pTransform->SetPosition(_vOrigin.x + 6.f, _vOrigin.y, _vOrigin.z);
 			pTransform->SetAngle(_vec3(0.f, _fAngle2, 0.f));
 			m_vMonsterLocation.push_back(_vec3(_vOrigin.x + 6.f, _vOrigin.y, _vOrigin.z));
 			break;
@@ -1157,7 +1278,7 @@ void CBattleSystem::SwitchPosition(int _iCurrentIndex, int _iMoveCnt, _bool _bHe
 				dynamic_pointer_cast<CCreature>(m_vHeroes[i])->SetMovingSpeed(
 					dynamic_pointer_cast<CCreature>(m_vHeroes[i])->MovingSpeed(m_vHeroLocation[i + 1], SKILLMOVEINTERVEL));
 			}
-			
+
 			m_bSkillMove = true;
 			shared_ptr<CGameObject> pObj1 = m_vHeroes[_iCurrentIndex];
 			// swap
@@ -1176,7 +1297,7 @@ void CBattleSystem::SwitchPosition(int _iCurrentIndex, int _iMoveCnt, _bool _bHe
 			dynamic_pointer_cast<CCreature>(m_vHeroes[_iCurrentIndex])->SetTargetPos(m_vHeroLocation[iLiveHeroes - 1]);
 			dynamic_pointer_cast<CCreature>(m_vHeroes[_iCurrentIndex])->SetMovingSpeed(
 				dynamic_pointer_cast<CCreature>(m_vHeroes[_iCurrentIndex])->MovingSpeed(m_vHeroLocation[iLiveHeroes - 1], SKILLMOVEINTERVEL));
-			
+
 			// 앞으로 한칸씩 이동
 			for (int i = iLiveHeroes - 1; i > _iCurrentIndex; i--)
 			{
@@ -1320,7 +1441,7 @@ void CBattleSystem::Battle(int _iNum)
 
 	int iNum = 0;
 	// 위치 변경
-	if(_iNum == 5)
+	if (_iNum == 5)
 	{
 		iNum = 5;
 	}
@@ -1335,7 +1456,7 @@ void CBattleSystem::Battle(int _iNum)
 
 	int iTarget = 0;
 	int iTargetTeam = 0;
-	
+
 
 	// 죽은 애들 빼주기
 	int iDeathHeroes = 0;
@@ -1567,7 +1688,7 @@ void CBattleSystem::Battle(int _iNum)
 					m_bAttackSkillMoving = true;
 				}
 			}
-			
+
 
 			// 다가가는 스킬이 아니고 이동하는 공격일 경우
 			if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetMovingCnt() != 0 &&
@@ -1669,9 +1790,9 @@ void CBattleSystem::Battle(int _iNum)
 						fRevision = 10.f;
 					}
 
-					CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { m_pCurrentCreature->GetPos().x+ 2.f + fRevision , m_pCurrentCreature->GetPos().y , m_pCurrentCreature->GetPos().z - 5.f+ (- 1.f * 5.f * iPos) });
+					CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { m_pCurrentCreature->GetPos().x + 2.f + fRevision , m_pCurrentCreature->GetPos().y , m_pCurrentCreature->GetPos().z - 5.f + (-1.f * 5.f * iPos) });
 					CCameraMgr::GetInstance()->CameraRotation(ECameraMode::BATTLE, 20.f + iPos * -1.f * 5.f, 0.5f);
-					 // 20 degree 
+					// 20 degree 
 					m_bChangeSkillAnim = true;
 					m_bShakingDone = false;
 					m_fAngle -= (20.f + iPos * -1.f * 5.f);
@@ -1717,6 +1838,7 @@ void CBattleSystem::Battle(int _iNum)
 		{
 			for (int i = 0; i < size(m_vHeroes); i++)
 			{
+				m_vStressTargetHeroes.push_back(m_vHeroes[i]);
 				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
 				(dynamic_pointer_cast<CCreature>(m_vHeroes[i]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
 				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
@@ -1725,6 +1847,8 @@ void CBattleSystem::Battle(int _iNum)
 		// 이동시키는 공격일 경우
 		else if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetMoveCnt() != 0)
 		{
+			m_vStressTargetHeroes.push_back(m_vHeroes[iTarget]);
+
 			dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
 			(dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
 			dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
@@ -1755,9 +1879,26 @@ void CBattleSystem::Battle(int _iNum)
 		// 일반 공격일 경우
 		else
 		{
+			m_vStressTargetHeroes.push_back(m_vHeroes[iTarget]);
+
 			dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->AttackCreature
 			(dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget]), dynamic_pointer_cast<CCreature>(m_pCurrentCreature), dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum));
 			dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetAttacking(true, iNum);
+		}
+
+		// 스트레스 공격인 경우
+		if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetStress() != 0)
+		{
+			for (auto& iter : m_vStressTargetHeroes)
+			{
+				if (dynamic_pointer_cast<CCreature>(iter)->IsIncreaseStress())
+				{
+					m_bStressEffectRender = false;
+					m_fStressEffectTime = STRESSEFFECTTIME;
+					m_bWhileStressEffectRender = true;
+					m_iStressValue = dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetStress();
+				}
+			}
 		}
 	}
 }
@@ -1785,7 +1926,7 @@ void CBattleSystem::OnTurnUi()
 {
 	for (int i = 0; i < size(m_vHeroes); i++)
 	{
-		if(!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
+		if (!dynamic_pointer_cast<CCreature>(m_vHeroes[i])->GetIsDeath())
 			dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnTurnUi();
 	}
 	for (int i = 0; i < size(m_vMonsters); i++)

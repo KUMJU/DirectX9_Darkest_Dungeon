@@ -180,11 +180,11 @@ HRESULT CJester::ReadyGameObject()
 		pSkill6->SetUnlocked(false);
 
 		m_pVecSkill.push_back(pSkill1);
-		m_pVecSkill.push_back(pSkill6);
+		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill3);
 		m_pVecSkill.push_back(pSkill4);
-		m_pVecSkill.push_back(pSkill2);
 		m_pVecSkill.push_back(pSkill5);
+		m_pVecSkill.push_back(pSkill6);
 
 
 		m_pVecSkillAll.push_back(pSkill1);
