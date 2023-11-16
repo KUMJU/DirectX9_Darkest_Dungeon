@@ -35,6 +35,7 @@ public:
 public:
 	void	SetTarget(_vec3 _vPos) { m_vTargetPos = _vPos; }
 	void	SetStart(_vec3 _vPos) { m_vStartPos = _vPos; }
+	void	SetBossAngle(_vec3 _vAngle) { m_vBossAngle = _vAngle; }
 
 protected:
 	virtual void			AddComponent();
@@ -57,6 +58,8 @@ public:
 protected:
 	_vec3	m_vTargetPos;
 	_vec3	m_vStartPos;
+
+	_vec3	m_vBossAngle;
 
 	_float	m_fShootSpeed = 30.f;
 

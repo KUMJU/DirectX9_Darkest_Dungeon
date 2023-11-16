@@ -70,7 +70,7 @@ HRESULT CBoss2::ReadyGameObject()
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
 
 	m_bColliding = true;
-	m_eCollideID = ECollideID::BOSS_PROJECTILE;
+	m_eCollideID = ECollideID::BOSS;
 
 	return S_OK;
 }
@@ -91,16 +91,23 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
 
 	// 벽 아래로 못 뚫고 내려가게 하기
-	OnFloor(30.f);
+	if (m_eCurAnimState == EBossState::P1_PATTERN2DASH)
+	{
+		OnFloor(30.f);
+	}
+
 
 	// 영역 밖으로 벗어나면 가운데로 텔레포트
-	if (OutArea())
+	if (m_eCurAnimState == EBossState::P1_PATTERN2DASH)
 	{
-		m_eCurAnimState = EBossState::P1_TELEPORT;
-		m_bPattern2Dash = false;
-		m_bIdle = true;
-		m_fDashTime = 0.12f * 11;
-		m_bPattern2 = false;
+		if (OutArea())
+		{
+			m_eCurAnimState = EBossState::P1_TELEPORT;
+			m_bPattern2Dash = false;
+			m_bIdle = true;
+			m_fDashTime = 0.12f * 11;
+			m_bPattern2 = false;
+		}
 	}
 
 	// FSM 조건
@@ -135,6 +142,17 @@ void CBoss2::LateUpdateGameObject()
 
 void CBoss2::RenderGameObject()
 {
+	// Font
+	_tchar		m_szString[128];
+	TCHAR szBuff[32] = { };
+	_stprintf_s(szBuff, TEXT("%d"),m_iHp);
+	lstrcpy(m_szString, szBuff);
+	_vec2 vFontPos;
+	vFontPos = _vec2(400.f - 100.f, 100.f);
+	Engine::Render_Font(L"Font_Default",
+		m_szString,
+		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
@@ -175,23 +193,21 @@ void CBoss2::AddComponent()
 
 void CBoss2::OnCollide(shared_ptr<CGameObject> _pObj)
 {
-	if (m_bCollsion)
-	{
-		return;
-	}
 
 	if (ECollideID::WALL == _pObj->GetColType())
 	{
-		//Effect Setting
-		/*shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
-
-		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransformCom->GetPos(), 0.5f);
-		pEffect->SetActive(true);*/
-
-		//m_pTransformCom->SetPosition(400.f, -300.f, 300.f);
+		if (m_bAbleWallCollsion)
+		{
+			return;
+		}
+		
 		m_bWallCollision = true;
-		m_bCollsion = true;
-		//SetEnable(false);
+		m_bAbleWallCollsion = true;
+	}
+
+	if (ECollideID::PLAYER_PROJECTILE == _pObj->GetColType())
+	{
+		DecreaseHp(5);
 	}
 }
 
@@ -222,16 +238,21 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			switch (rand() % 3)
 			{
 			case 0:
-				m_bPattern1 = true;
-				m_eCurAnimState = EBossState::P1_TELEPORT;
-				break;
-			case 1:
 				m_bPattern2 = true;
 				m_eCurAnimState = EBossState::P1_TELEPORT;
 				break;
+			case 1:
+				m_bPattern4 = true;
+				m_eCurAnimState = EBossState::P1_TELEPORT;
+				break;
 			case 2:
+				m_bPattern1 = true;
+				m_eCurAnimState = EBossState::P1_TELEPORT;
+				break;
+			case 3:
 				m_bPattern3 = true;
 				m_eCurAnimState = EBossState::P1_TELEPORT;
+				break;
 			}
 		}
 	}
@@ -239,81 +260,133 @@ void CBoss2::FSM(const _float& fTimeDelta)
 	// Teleport상태
 	if (m_eCurAnimState == EBossState::P1_TELEPORT)
 	{
-		if (m_bPattern1)
+		if(!m_bTeleportEffect)
 		{
-			m_eCurAnimState = EBossState::P1_PATTERN1;
-			Teleport(MiddleTop);
-			m_bPattern1Before = true;
+			// Effect
+			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+			pEffect->SetAnimEffect(L"Teleport_Effect", m_vPos, _vec3(33.f, 33.f, 33.f), 1.f, false);
+			pEffect->SetActive(true);
+
+			m_bTeleportEffect = true;
+			m_bWhileTeleport = true;
+
+			m_pTransformCom->SetPosition(300.f, -300.f, 300.f);
 		}
-		else if (m_bPattern2)
+
+		if (m_bWhileTeleport)
 		{
-			m_eCurAnimState = EBossState::P1_PATTERN2DASHREADY;
-			switch (rand() % 4)
+			m_fTeleportWhileTime -= fTimeDelta;
+			if (m_fTeleportWhileTime < 0.f)
 			{
-			case 0:
-				Teleport(Left);
-				break;
-			case 1:
-				Teleport(Top);
-				break;
-			case 2:
-				Teleport(Bottom);
-				break;
-			case 3:
-				Teleport(Right);
-				break;
+				m_fTeleportWhileTime = 1.2f;
+				m_bDoTeleport = true;
+				m_bWhileTeleport = false;
 			}
-			m_bPattern2DashReady = true;
 		}
-		else if (m_bPattern3)
+
+		if (m_bDoTeleport)
 		{
-			m_eCurAnimState = EBossState::P1_PATTERN3LASERREADY;
-			switch (rand() % 4)
+			if (m_bPattern1)
 			{
-			case 0:
-				Teleport(Left);
-				break;
-			case 1:
-				Teleport(Top);
-				break;
-			case 2:
-				Teleport(Bottom);
-				break;
-			case 3:
-				Teleport(Right);
-				break;
+				m_eCurAnimState = EBossState::P1_PATTERN1;
+				Teleport(MiddleTop);
+				m_bPattern1Before = true;
 			}
-			m_bPattern3LaserReady = true;
-		}
-		else if (m_bChange)
-		{
-			m_eCurAnimState = EBossState::P1_CHANGE;
-			Teleport(_vec3(300.f, 30.f, 300.f));
-		}
-		else if (m_bGroggy)
-		{
-			m_eCurAnimState = EBossState::P1_GROGGY;
-			Teleport(_vec3(300.f, 30.f, 300.f));
-		}
-		else
-		{
-			m_eCurAnimState = EBossState::P1_IDLE;
-			switch (rand() % 4)
+			else if (m_bPattern2)
 			{
-			case 0:
-				Teleport(Left);
-				break;
-			case 1:
-				Teleport(Top);
-				break;
-			case 2:
-				Teleport(Bottom);
-				break;
-			case 3:
-				Teleport(Right);
-				break;
+				m_eCurAnimState = EBossState::P1_PATTERN2DASHREADY;
+				switch (rand() % 4)
+				{
+				case 0:
+					Teleport(Left);
+					break;
+				case 1:
+					Teleport(Top);
+					break;
+				case 2:
+					Teleport(Bottom);
+					break;
+				case 3:
+					Teleport(Right);
+					break;
+				}
+				m_bPattern2DashReady = true;
 			}
-			m_bIdle = true;
+			else if (m_bPattern3)
+			{
+				m_eCurAnimState = EBossState::P1_PATTERN3LASERREADY;
+				switch (rand() % 4)
+				{
+				case 0:
+					Teleport(Left);
+					break;
+				case 1:
+					Teleport(Top);
+					break;
+				case 2:
+					Teleport(Bottom);
+					break;
+				case 3:
+					Teleport(Right);
+					break;
+				}
+				m_bPattern3LaserReady = true;
+			}
+			else if (m_bPattern4)
+			{
+				m_eCurAnimState = EBossState::P1_PATTERN4SHOTREADY;
+				switch (rand() % 4)
+				{
+				case 0:
+					Teleport(Left);
+					break;
+				case 1:
+					Teleport(Top);
+					break;
+				case 2:
+					Teleport(Bottom);
+					break;
+				case 3:
+					Teleport(Right);
+					break;
+				}
+				m_bPattern4ShotReady = true;
+			}
+			else if (m_bChange)
+			{
+				m_eCurAnimState = EBossState::P1_CHANGE;
+				Teleport(_vec3(300.f, 30.f, 300.f));
+			}
+			else if (m_bGroggy)
+			{
+				m_eCurAnimState = EBossState::P1_GROGGY;
+				Teleport(_vec3(300.f, 30.f, 300.f));
+			}
+			else
+			{
+				m_eCurAnimState = EBossState::P1_IDLE;
+				switch (rand() % 4)
+				{
+				case 0:
+					Teleport(Left);
+					break;
+				case 1:
+					Teleport(Top);
+					break;
+				case 2:
+					Teleport(Bottom);
+					break;
+				case 3:
+					Teleport(Right);
+					break;
+				}
+				m_bIdle = true;
+			}
+
+			m_bDoTeleport = false;
+			m_bTeleportEffect = false;
+			m_bWhileTeleport = false;
 		}
 	}
 
@@ -324,9 +397,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		if (m_fGroggyTime < 0.f)
 		{
 			// 충돌 다시 되게 원래대로
-			m_fGroggyTime = 3.f;
+			m_fGroggyTime = 5.f;
 			m_bGroggy = false;
-			m_bCollsion = false;
+			m_bAbleWallCollsion = false;
 			m_eCurAnimState = EBossState::P1_TELEPORT;
 		}
 	}
@@ -438,6 +511,40 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		}
 	}
 
+	// Pattern4 상태
+	if (m_eCurAnimState == EBossState::P1_PATTERN4SHOTREADY)
+	{
+		if (m_bPattern4ShotReady)
+		{
+			m_fPattern4ShotReadyTime -= fTimeDelta;
+			if (m_fPattern4ShotReadyTime < 0.f)
+			{
+				m_fPattern4ShotReadyTime = 1.f;
+				m_bPattern4ShotReady = false;
+				m_eCurAnimState = EBossState::P1_PATTERN4SHOT;
+				m_bPattern4Shot = true;
+			}
+		}
+	}
+
+	if (m_eCurAnimState == EBossState::P1_PATTERN4SHOT)
+	{
+		m_fPattern4ShotTime -= fTimeDelta;
+		m_fPattern4FireIntervel -= fTimeDelta;
+		if (m_fPattern4FireIntervel < 0.f)
+		{
+			m_fPattern4FireIntervel = 0.1f;
+			ShootBullet2();
+		}
+		// 발사완료
+		if (m_fPattern4ShotTime < 0.f)
+		{
+			m_fPattern4ShotTime = 3.f;
+			m_eCurAnimState = EBossState::P1_TELEPORT;
+			m_bPattern4 = false;
+		}
+	}
+
 	// Pattern3 상태
 	if (m_eCurAnimState == EBossState::P1_PATTERN3LASERREADY)
 	{
@@ -486,9 +593,32 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		}
 	}
 
+	// 사망
+	if (m_eCurAnimState == EBossState::P2_DEATH)
+	{
+		m_fDeadTime -= fTimeDelta;
+		if (m_fDeadTime < 0.f)
+		{
+			m_eCurAnimState = EBossState::ENUM_END;
+			m_pTransformCom->SetPosition(300.f, -300.f, 300.f);
+			SetEnable(false);
+		}
+	}
+	
 	// 페이즈2 Idle
 	if (m_eCurAnimState == EBossState::P2_IDLE)
 	{
+		// 사망
+		if (m_iHp <= 0)
+		{
+			m_iHp = -100;
+			m_bPhase2Idle = false;
+			m_fP2IdleTime = 2.f;
+
+			m_eCurAnimState = EBossState::P2_DEATH;
+			m_bPhaseDeath = true;
+		}
+		
 		m_fP2IdleTime -= fTimeDelta;
 		if (m_fP2IdleTime < 0.f)
 		{
@@ -523,14 +653,15 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		if (m_fP2SummonTime < 0.f)
 		{
 			// 소환
-			if (m_iSummonNum > 0)
+			for (int i = 0; i < m_iMobTotalNum; i++)
 			{
-				for (int i = 0; i < m_iMobTotalNum; i++)
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->GetIsEnable())
 				{
-					if (!dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->GetIsEnable())
+					dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->SetEnable(true);
+					m_iSummonNum--;
+					if (m_iSummonNum < 0)
 					{
-						dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->SetEnable(true);
-						m_iSummonNum--;
+						break;
 					}
 				}
 			}
@@ -903,6 +1034,12 @@ void CBoss2::ChangeAnim()
 		case EBossState::P1_PATTERN3LASER:
 			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Laser1", 0.12f);
 			break;
+		case EBossState::P1_PATTERN4SHOTREADY:
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Idle", 0.12f);
+			break;
+		case EBossState::P1_PATTERN4SHOT:
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Attack", 0.06f);
+			break;
 		case EBossState::P1_ATTACK:
 			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Attack", 0.06f);
 			break;
@@ -925,7 +1062,7 @@ void CBoss2::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Boss_Phase2_Idle", 0.06f);
 			break;
 		case EBossState::P2_DEATH:
-			m_pTextureCom->SetAnimKey(L"Boss_Phase2_Death", 0.06f);
+			m_pTextureCom->SetAnimKey(L"Boss_Phase2_Death", 0.12f);
 			break;
 		}
 		m_ePrevAnimState = m_eCurAnimState;
@@ -944,7 +1081,8 @@ void CBoss2::ChangeAnim()
 	}
 
 	m_pTransformCom->SetScale(40.f * 0.9f * fXpos, 35.f * 0.9f * fYpos, 40.f * 0.9f * fXpos);
-	m_pColliderCom->SetScale({ 40.f * 0.9f * fXpos, 35.f * 0.9f * fYpos, 40.f * 0.9f * fXpos });
+	m_pColliderCom->SetScale({ 80.f * 0.9f * fXpos, 70.f * 0.9f * fYpos, 80.f * 0.9f * fXpos });
+	m_pColliderCom->SetRadius({ 40.f * 0.9f * fXpos});
 
 }
 
@@ -1029,10 +1167,6 @@ void CBoss2::Teleport(_vec3 vPos)
 	CurrentTeleportPos = vPos;
 	if (PrevTeleportPos != CurrentTeleportPos)
 	{
-		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
-
-		pEffect->SetAnimEffect(L"Teleport_Effect", m_vPos, _vec3(33.f, 33.f, 33.f), 1.f, false);
-		pEffect->SetActive(true);
 	}
 
 	m_pTransformCom->SetPosition(vPos.x, vPos.y, vPos.z);
@@ -1138,16 +1272,19 @@ void CBoss2::ShootBullet2()
 {
 	for (int i = 0; i < m_iBullet2TotalNum; i++)
 	{
-		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->GetIsEnable())
+		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet1[i])->GetIsEnable())
 		{
-			dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->SetEnable(true);
+			dynamic_pointer_cast<CGameObject>(m_pVecBullet1[i])->SetEnable(true);
+			m_pVecBullet1[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
-				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+				m_pVecBullet1[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 			_vec3 vPosPlayer;
 			m_pPlayerTransformCom->GetInfo(INFO_POS, &vPosPlayer);
 			vPosPlayer = _vec3(vPosPlayer.x - 10.f + (rand() % 10) * 2.f, vPosPlayer.y - 10.f + (rand() % 10) * 2.f, vPosPlayer.z);
-			m_pVecBullet2[i]->SetTarget(vPosPlayer);
+			m_pVecBullet1[i]->SetTarget(vPosPlayer);
+			_vec3 vDir = vPosPlayer - m_vPos;
+			m_pVecBullet1[i]->SetTargetDir(vDir);
 			break;
 		}
 	}
@@ -1165,7 +1302,14 @@ void CBoss2::ShootBullet3()
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 			_vec3 vTarget;
-			vTarget = m_vPos + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
+			if (m_bPhase2)
+			{
+				vTarget = m_vPos + _vec3((-6.f + (rand() % 2 + 1) * 4.f) * 1280.f, -2.f, (-6.f + (rand() % 2 + 1) * 4.f) * 1280.f);
+			}
+			else
+			{
+				vTarget = m_vPos + _vec3((-6.f + (rand() % 2 + 1) * 4.f) * 1280.f, -5.f * 1280.f, (-6.f + (rand() % 2 + 1) * 4.f) * 1280.f);
+			}
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -1180,7 +1324,7 @@ void CBoss2::ShootBullet3()
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(Right.x, Right.y, Right.z);
 			_vec3 vTarget;
-			vTarget = Right + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = Right + _vec3((-6.f + (rand() % 2 + 1) * 4.f) * 1280.f, -5.f * 1280.f, (-6.f + (rand() % 2 + 1) * 4.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -1195,7 +1339,7 @@ void CBoss2::ShootBullet3()
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(Left.x, Left.y, Left.z);
 			_vec3 vTarget;
-			vTarget = Left + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = Left + _vec3((-6.f + (rand() % 2 + 1) * 4.f) * 1280.f, -5.f * 1280.f, (-6.f + (rand() % 2 + 1) * 4.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -1210,7 +1354,7 @@ void CBoss2::ShootBullet3()
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(Top.x, Top.y, Top.z);
 			_vec3 vTarget;
-			vTarget = Top + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = Top + _vec3((-6.f + (rand() % 2 + 1) * 4.f) * 1280.f, -5.f * 1280.f, (-6.f + (rand() % 2 + 1) * 4.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}
@@ -1225,7 +1369,7 @@ void CBoss2::ShootBullet3()
 				m_pVecBullet2[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(Bottom.x, Bottom.y, Bottom.z);
 			_vec3 vTarget;
-			vTarget = Bottom + _vec3((-9.f + (rand() % 10) * 2.f) * 1280.f, (-9.f + (rand() % 2 + 1) * 4.f) * 1280.f, (-9.f + (rand() % 10) * 2.f) * 1280.f);
+			vTarget = Bottom + _vec3((-6.f + (rand() % 2 + 1) * 4.f) * 1280.f, -5.f * 1280.f, (-6.f + (rand() % 2 + 1) * 4.f) * 1280.f);
 			m_pVecBullet2[i]->SetTarget(vTarget);
 			break;
 		}

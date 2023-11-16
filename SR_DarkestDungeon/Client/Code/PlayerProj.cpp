@@ -119,6 +119,7 @@ void CPlayerProj::AddComponent()
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
 	m_pColliderCom->SetScale({ 1.f, 1.f, 1.f });
+	m_pColliderCom->SetRadius(1.f);
 
 }
 
@@ -129,13 +130,75 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 
 	if (ECollideID::WALL == _pObj->GetColType() || ECollideID::ENVIRONMENT == _pObj->GetColType())
 	{
-		//Effect Setting
+		// Effect Setting
+		// ≈∫»Ø ¿Ã∆Â∆Æ
 		shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 		
 		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransmCom->GetPos(), 0.5f);
 		pEffect->SetActive(true);
 
+		m_pTransmCom->SetPosition(200.f, -200.f, 200.f);
+
 		m_bTestBool = false;
-		//m_bEnable = false;
+		m_bEnable = false;
+	}
+	else if (ECollideID::BOSS == _pObj->GetColType())
+	{
+		// Effect Setting
+		// ≈∫»Ø ¿Ã∆Â∆Æ
+		shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+		
+		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransmCom->GetPos(), 0.5f);
+		pEffect->SetActive(true);
+
+		shared_ptr<Engine::CEffect> pEffect2 = CEffectMgr::GetInstance()->GetEffect();
+		switch (rand() % 2)
+		{
+		case 0:
+			// Effect
+			pEffect2->SetAnimEffect(L"Green_Blood", *m_pTransmCom->GetPos(), _vec3(3.f, 3.f, 3.f), 1.f, false);
+			pEffect2->SetActive(true);
+			break;
+		case 1:
+			// Effect
+			pEffect2->SetAnimEffect(L"Yellow_Blood", *m_pTransmCom->GetPos(), _vec3(3.f, 3.f, 3.f), 1.f, false);
+			pEffect2->SetActive(true);
+			break;
+		}
+
+		m_pTransmCom->SetPosition(200.f, -200.f, 200.f);
+
+		m_bTestBool = false;
+		m_bEnable = false;
+	}
+	else if (ECollideID::MOB == _pObj->GetColType())
+	{
+		// Effect Setting
+		// ≈∫»Ø ¿Ã∆Â∆Æ
+		shared_ptr<Engine::CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransmCom->GetPos(), 0.5f);
+		pEffect->SetActive(true);
+
+		// Effect
+		shared_ptr<Engine::CEffect> pEffect2 = CEffectMgr::GetInstance()->GetEffect();
+		switch (rand() % 2)
+		{
+		case 0:
+			// Effect
+			pEffect2->SetAnimEffect(L"Green_Blood", *m_pTransmCom->GetPos(), _vec3(3.f, 3.f, 3.f), 1.f, false);
+			pEffect2->SetActive(true);
+			break;
+		case 1:
+			// Effect
+			pEffect2->SetAnimEffect(L"Yellow_Blood", *m_pTransmCom->GetPos(), _vec3(3.f, 3.f, 3.f), 1.f, false);
+			pEffect2->SetActive(true);
+			break;
+		}
+
+		m_pTransmCom->SetPosition(200.f, -200.f, 200.f);
+
+		m_bTestBool = false;
+		m_bEnable = false;
 	}
 }

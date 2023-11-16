@@ -42,9 +42,16 @@ HRESULT CBullet1::ReadyGameObject()
 		m_pTransformCom->SetAngle(m_vAngle);
 		m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
 
-		m_pTextureCom->SetAnimKey(L"Boss_Projectile3", 0.06f);
+		m_pTextureCom->SetAnimKey(L"Boss_Projectile1", 0.06f);
 		m_vOriginSize = m_pTextureCom->GetTextureSize();
 	}
+
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
+	m_bColliding = true;
+	m_eCollideID = ECollideID::BOSS_PROJECTILE;
+
+	m_strEffectAnimKey = L"Bullet_Hitted";
 
 	SetEnable(false);
 
@@ -123,23 +130,76 @@ void CBullet1::AddComponent()
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
-	m_pColliderCom->SetScale({ 10.f, 10.f, 1.f });
+	m_pColliderCom->SetScale({ 4.f, 4.f, 4.f });
+	m_pColliderCom->SetRadius(4.f);
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+}
+
+void CBullet1::OnCollide(shared_ptr<CGameObject> _pObj)
+{
+	if (m_bCollsion)
+	{
+		return;
+	}
+
+	if (ECollideID::WALL == _pObj->GetColType() || ECollideID::ENVIRONMENT == _pObj->GetColType())
+	{
+		//Effect Setting
+		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetAnimEffect(L"Bullet_Hitted", m_vPos, _vec3(4.f, 4.f, 4.f), 1.f, false);
+		pEffect->SetActive(true);
+
+		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
+		m_bCollsion = true;
+		SetEnable(false);
+	}
+
+	if (ECollideID::PLAYER == _pObj->GetColType())
+	{
+		shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		pEffect->SetAnimEffect(L"Bullet_Hitted", m_vPos, _vec3(4.f, 4.f, 4.f), 1.f, false);
+		pEffect->SetActive(true);
+
+		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
+		m_bCollsion = true;
+		SetEnable(false);
+	}
 }
 
 void CBullet1::FSM(const _float& fTimeDelta)
 {
 	if (m_eCurAnimState == EBullet1State::IDLE)
 	{
-		ChasePlayer(fTimeDelta, m_fShootSpeed);
+		//FireToPosition(fTimeDelta, m_fShootSpeed, m_vTargetPos);
+		FireToTarget(fTimeDelta, m_fShootSpeed, m_vTargetDir);
 	}
 
 	// 업데이트 해제
-	if (CalcDistance() < 2.f)
+	if (OutArea())
 	{
-		m_pTransformCom->SetPosition(400.f, -300.f, 300.f);
+		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
 		SetEnable(false);
 	}
+	//if (CalcDistance(m_vTargetPos) < 0.1f)
+	//{
+	//	m_pTransformCom->SetPosition(400.f, -300.f, 300.f);
+	//	SetEnable(false);
+	//}
+
+
+	//if (m_eCurAnimState == EBullet1State::IDLE)
+	//{
+	//	ChasePlayer(fTimeDelta, m_fShootSpeed);
+	//}
+	//
+	//// 업데이트 해제
+	//if (CalcDistance() < 2.f)
+	//{
+	//	m_pTransformCom->SetPosition(400.f, -300.f, 300.f);
+	//	SetEnable(false);
+	//}
 }
 
 void CBullet1::ChangeAnim()
@@ -151,7 +211,7 @@ void CBullet1::ChangeAnim()
 		switch (m_eCurAnimState)
 		{
 		case EBullet1State::IDLE:
-			m_pTextureCom->SetAnimKey(L"Boss_Projectile3", 0.06f);
+			m_pTextureCom->SetAnimKey(L"Boss_Projectile1", 0.06f);
 			break;
 		}
 		m_ePrevAnimState = m_eCurAnimState;
@@ -169,7 +229,9 @@ void CBullet1::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y);
 	}
 
-	m_pTransformCom->SetScale(5.f * fXpos, 5.f * fXpos, 5.f * fXpos);
+	m_pTransformCom->SetScale(6.f * fXpos, 6.f * fYpos, 6.f * fXpos);
+	m_pColliderCom->SetScale({ 12.f * fXpos, 12.f * fYpos, 12.f * fXpos });
+	m_pColliderCom->SetRadius(12.f * fXpos);
 
 }
 
@@ -203,6 +265,16 @@ _float CBullet1::CalcDistance()
 	return D3DXVec3Length(&vDist);
 }
 
+_float CBullet1::CalcDistance(_vec3 _Pos)
+{
+	_vec3 vPos;
+	m_pTransformCom->GetInfo(INFO_POS, &vPos);
+
+	_vec3 vDist = _Pos - vPos;
+
+	return D3DXVec3Length(&vDist);
+}
+
 _vec3 CBullet1::CalcDirection()
 {
 	_vec3 vPos;
@@ -216,10 +288,65 @@ _vec3 CBullet1::CalcDirection()
 	return vDist;
 }
 
+_vec3 CBullet1::CalcDirection(_vec3 _Pos)
+{
+	_vec3 vPos;
+	m_pTransformCom->GetInfo(INFO_POS, &vPos);
+
+	_vec3 vDist = _Pos - vPos;
+
+	return vDist;
+}
+
+void CBullet1::FireToPosition(const _float& fTimeDelta, float _fSpeed, _vec3 _Pos)
+{
+	_vec3		vDir;
+	vDir = CalcDirection(_Pos);
+	D3DXVec3Normalize(&vDir, &vDir);
+	m_pTransformCom->MoveForward(&vDir, fTimeDelta, _fSpeed);
+}
+
+void CBullet1::FireToTarget(const _float& fTimeDelta, float _fSpeed, _vec3& _vDir)
+{
+	D3DXVec3Normalize(&_vDir, &_vDir);
+
+	m_pTransformCom->MoveForward(&_vDir, fTimeDelta, _fSpeed);
+}
+
 void CBullet1::ChasePlayer(const _float& fTimeDelta, float _fSpeed)
 {
 	_vec3		vDir;
 	vDir = CalcDirection();
 	D3DXVec3Normalize(&vDir, &vDir);
 	m_pTransformCom->MoveForward(&vDir, fTimeDelta, _fSpeed);
+}
+
+_bool CBullet1::OutArea()
+{
+	if (m_pTransformCom->GetPos()->x > 640.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->x < 0.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->z > 640.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->z < 0.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->y < 0.f)
+	{
+		return true;
+	}
+	if (m_pTransformCom->GetPos()->y > 300.f)
+	{
+		return true;
+	}
+
+	return false;
 }

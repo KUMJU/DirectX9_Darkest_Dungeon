@@ -175,7 +175,7 @@ void CBullet3::ChangeAnim()
 		fYpos = (vcurPos.y / m_vOriginSize.y);
 	}
 
-	m_pTransformCom->SetScale(10.f * fXpos, 10.f * fXpos, 10.f * fXpos);
+	m_pTransformCom->SetScale(20.f * fXpos, 20.f * fYpos, 20.f * fXpos);
 
 }
 

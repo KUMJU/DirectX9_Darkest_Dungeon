@@ -83,6 +83,8 @@ HRESULT CBossMap::ReadyScene()
 	}
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetPlayerMode(EPlayerMode::BOSS_FIELD);
 
+	SetLight();
+
  	return __super::ReadyScene();
 }
 
@@ -187,39 +189,39 @@ HRESULT CBossMap::Ready_Layer_Environment(tstring pLayerTag)
 	shared_ptr<CWall> _pWall;
 
 
-	//벽
-	for (int i = 0; i < 20; i++)
-	{
-		_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Boss_WallTexture", 6, true);
-		_pWall->SetPos(_vec3(0.f, BOSS_WALLSIZEUPY, BOSS_WALLSIZEX + BOSS_WALLSIZEX * 2.f * i));
-		_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
-		_pWall->SetScale(_vec3(BOSS_WALLSIZEX, BOSS_WALLSIZEX, 1.f));
-		m_pLayer->CreateGameObject(L"OBJ_Wall", _pWall);
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Boss_WallTexture", 6, true);
-		_pWall->SetPos(_vec3(640.f, BOSS_WALLSIZEUPY, BOSS_WALLSIZEX + BOSS_WALLSIZEX * 2.f * i));
-		_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
-		_pWall->SetScale(_vec3(BOSS_WALLSIZEX, BOSS_WALLSIZEX, 1.f));
-		m_pLayer->CreateGameObject(L"OBJ_Wall", _pWall);
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Boss_WallTexture", 6, true);
-		_pWall->SetPos(_vec3(BOSS_WALLSIZEX + BOSS_WALLSIZEX * 2.f * i, BOSS_WALLSIZEUPY, 0.f));
-		_pWall->SetAngle(_vec3(0.f, PI * 0.5f, 0.f));
-		_pWall->SetScale(_vec3(BOSS_WALLSIZEX, BOSS_WALLSIZEX, 1.f));
-		m_pLayer->CreateGameObject(L"OBJ_Wall", _pWall);
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Boss_WallTexture", 6, true);
-		_pWall->SetPos(_vec3(BOSS_WALLSIZEX + BOSS_WALLSIZEX * 2.f * i, BOSS_WALLSIZEUPY, 640.f));
-		_pWall->SetAngle(_vec3(0.f, PI * 0.5f, 0.f));
-		_pWall->SetScale(_vec3(BOSS_WALLSIZEX, BOSS_WALLSIZEX, 1.f));
-		m_pLayer->CreateGameObject(L"OBJ_Wall", _pWall);
-	}
+	////벽
+	//for (int i = 0; i < 20; i++)
+	//{
+	//	_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Boss_WallTexture", 6, true);
+	//	_pWall->SetPos(_vec3(0.f, BOSS_WALLSIZEUPY, BOSS_WALLSIZEX + BOSS_WALLSIZEX * 2.f * i));
+	//	_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+	//	_pWall->SetScale(_vec3(BOSS_WALLSIZEX, BOSS_WALLSIZEX, 1.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", _pWall);
+	//}
+	//for (int i = 0; i < 20; i++)
+	//{
+	//	_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Boss_WallTexture", 6, true);
+	//	_pWall->SetPos(_vec3(640.f, BOSS_WALLSIZEUPY, BOSS_WALLSIZEX + BOSS_WALLSIZEX * 2.f * i));
+	//	_pWall->SetAngle(_vec3(0.f, 0.f, 0.f));
+	//	_pWall->SetScale(_vec3(BOSS_WALLSIZEX, BOSS_WALLSIZEX, 1.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", _pWall);
+	//}
+	//for (int i = 0; i < 20; i++)
+	//{
+	//	_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Boss_WallTexture", 6, true);
+	//	_pWall->SetPos(_vec3(BOSS_WALLSIZEX + BOSS_WALLSIZEX * 2.f * i, BOSS_WALLSIZEUPY, 0.f));
+	//	_pWall->SetAngle(_vec3(0.f, PI * 0.5f, 0.f));
+	//	_pWall->SetScale(_vec3(BOSS_WALLSIZEX, BOSS_WALLSIZEX, 1.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", _pWall);
+	//}
+	//for (int i = 0; i < 20; i++)
+	//{
+	//	_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Boss_WallTexture", 6, true);
+	//	_pWall->SetPos(_vec3(BOSS_WALLSIZEX + BOSS_WALLSIZEX * 2.f * i, BOSS_WALLSIZEUPY, 640.f));
+	//	_pWall->SetAngle(_vec3(0.f, PI * 0.5f, 0.f));
+	//	_pWall->SetScale(_vec3(BOSS_WALLSIZEX, BOSS_WALLSIZEX, 1.f));
+	//	m_pLayer->CreateGameObject(L"OBJ_Wall", _pWall);
+	//}
 
 	// 장애물 배치
 	SetWall(_pWall, m_pLayer, 200.f, 200.f, 20.f, L"Wall1");

@@ -108,6 +108,12 @@ void CLayer::LateUpdateLayer()
 				case Engine::ECollideID::BOSS_PROJECTILE:
 					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::BOSS_PROJECTILE, *it);
 					break;
+				case Engine::ECollideID::BOSS_SUNKEN:
+					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::BOSS_SUNKEN, *it);
+					break;
+				case Engine::ECollideID::MOB:
+					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::MOB, *it);
+					break;
 				case Engine::ECollideID::SCENE_CHANGE_TRIGGER:
 					CCollisionMgr::GetInstance()->AddCollisionGroup(ECollideID::SCENE_CHANGE_TRIGGER, *it);
 				default:

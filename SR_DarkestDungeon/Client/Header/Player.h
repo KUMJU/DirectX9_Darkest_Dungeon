@@ -144,7 +144,7 @@ public:
 
 
 private:
-	_float		m_fSpeed = 10.f;
+	_float		m_fSpeed = 20.f;
 	EHandItem m_eCurrentItem = EHandItem::ENUM_END;
 	shared_ptr<CInventory> m_pInventory = nullptr;
 
@@ -184,6 +184,10 @@ private:
 	_bool		m_bEvent2Trigger = false;
 	_bool		m_bEvent3Trigger = false;
 	_bool		m_bReady = false;
+
+	_bool		m_bHitted = false;
+
+	_float		m_fHittedTime = 1.f;
 
 	// 피킹 오브젝트 벡터 (뒤 돌아볼 때 생성되는 영웅용)
 	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};

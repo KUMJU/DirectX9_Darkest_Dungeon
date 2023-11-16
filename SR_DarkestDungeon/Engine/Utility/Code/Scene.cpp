@@ -44,9 +44,16 @@ void CScene::LateUpdateScene()
 
 	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::PLAYER_PROJECTILE, ECollideID::WALL);
 	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::PLAYER_PROJECTILE, ECollideID::BOSS);
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::PLAYER_PROJECTILE, ECollideID::MOB);
 
 	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_PROJECTILE, ECollideID::WALL);
 	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_PROJECTILE, ECollideID::PLAYER);
+
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS, ECollideID::WALL);
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS, ECollideID::PLAYER);
+
+	CCollisionMgr::GetInstance()->CheckCollisionList(ECollideID::BOSS_SUNKEN, ECollideID::PLAYER);
+
 
 	CEffectMgr::GetInstance()->LateUpdate();
 

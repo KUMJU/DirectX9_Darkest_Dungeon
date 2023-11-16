@@ -30,6 +30,8 @@ enum class EBossState
 	P1_PATTERN2DASH,
 	P1_PATTERN3LASERREADY,
 	P1_PATTERN3LASER,
+	P1_PATTERN4SHOTREADY,
+	P1_PATTERN4SHOT,
 	P1_LASER,
 	P1_ATTACK,
 	P1_LASER1,
@@ -113,6 +115,8 @@ protected:
 
 	void	ShootLaser();
 
+	void	DecreaseHp(_int _iHp) { m_iHp -= _iHp; }
+
 public:
 	void	SetBullet1(vector<shared_ptr<CBullet1>>& _vVec)
 	{
@@ -185,6 +189,10 @@ protected:
 	_bool	m_bBullet2Fire = false;
 	_bool	m_bLaserFire = false;
 
+	_bool	m_bTeleportEffect = false;
+	_bool	m_bWhileTeleport = false;
+	_bool	m_bDoTeleport = false;
+
 	_bool	m_bIdle = true;
 	_bool	m_bPattern1 = false;
 	_bool	m_bPattern1Before = false;
@@ -201,6 +209,10 @@ protected:
 	_bool	m_bPattern3LaserReady = false;
 	_bool	m_bPattern3Laser = false;
 
+	_bool	m_bPattern4 = false;
+	_bool	m_bPattern4ShotReady = false;
+	_bool	m_bPattern4Shot = false;
+
 	_bool	m_bChange = false;
 
 	_bool	m_bPhase2Idle = false;
@@ -214,7 +226,8 @@ protected:
 	_bool	m_bPhase2FireCool = false;
 	_bool	m_bPhase2FireReady = false;
 	_bool	m_bPhase2Fire = false;
-	
+
+	_bool	m_bPhaseDeath = false;
 
 	_int	m_iBullet1TotalNum = 50;
 	_int	m_iBullet2TotalNum = 50;
@@ -239,7 +252,15 @@ protected:
 	float	m_fPattern3LaserReadyTime = 1.f;
 	float	m_fPattern3LaserTime = 0.12 * 25;
 
-	float	m_fGroggyTime = 3.f;
+	float	m_fPattern4ShotReadyTime = 1.f;
+	float	m_fPattern4ShotTime = 3.f;
+	float	m_fPattern4FireIntervel = 0.1f;
+
+	float	m_fTeleportWhileTime = 1.2f;
+
+	float	m_fDeadTime = 0.12f * 26;
+
+	float	m_fGroggyTime = 5.f;
 
 	float	m_fP2IdleTime = 2.f;
 	float	m_fP2SummonTime = 1.f;
@@ -276,7 +297,7 @@ protected:
 	shared_ptr<CGameObject>	m_pPlayer = nullptr;
 	shared_ptr<CTransform>	m_pPlayerTransformCom = nullptr;
 
-	_bool	m_bCollsion = false;
+	_bool	m_bAbleWallCollsion = false;
 	_bool	m_bWallCollision = false;
 };
 

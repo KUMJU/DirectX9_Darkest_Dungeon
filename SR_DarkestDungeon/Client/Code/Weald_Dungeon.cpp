@@ -311,15 +311,12 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 	{
 		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>((CGameMgr::GetInstance()->GetPlayer())->GetComponent(L"Com_Transform", ID_DYNAMIC));
 
-		if (pTransform->GetPos()->z > WEALD_WALLSIZEX * 30.f)
-		{
-			CSoundMgr::GetInstance()->StopAll();
-			CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
-			shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::VILLAGE);
-			CSceneMgr::GetInstance()->SetLoadingState(false);
-			CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
-			pLoadingScreen->ReadyScene();
-		}
+		CSoundMgr::GetInstance()->StopAll();
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+		shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::VILLAGE);
+		CSceneMgr::GetInstance()->SetLoadingState(false);
+		CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
+		pLoadingScreen->ReadyScene();
 	}
 
 	return iExit;
@@ -677,7 +674,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	//}
 
 	// 방 3 벽
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		m_pWall = make_shared<CWall>(m_pGraphicDev, L"Com_Weald_WallTexture", 9, true);
 		m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 1.f, WEALD_WALLSIZEUPY, WEALD_WALLSIZEX / 2.f + WEALD_WALLSIZEX * 26.f + WEALD_WALLSIZEX * i));
@@ -765,7 +762,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 		m_pBackWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
 		m_pBackWall->SetScale(_vec3(WEALD_WALLSIZEX / 2.f, WEALD_WALLSIZEX * 7.f / 10.f, 1));
 		m_pLayer->CreateGameObject(L"OBJ_Back", m_pBackWall);
-	}
+	}*/
 
 	//가장 최하위 순서에 돌려줄 것
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

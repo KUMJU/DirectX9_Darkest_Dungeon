@@ -64,6 +64,11 @@ HRESULT CMob::ReadyGameObject()
 		m_vOriginSize = m_pTextureCom->GetTextureSize();
 	}
 
+	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+
+	m_bColliding = true;
+	m_eCollideID = ECollideID::MOB;
+
 	SetEnable(false);
 
 	return S_OK;
@@ -141,6 +146,14 @@ void CMob::AddComponent()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider",pComponent });
 	m_pColliderCom->SetScale({ 30.f, 30.f, 1.f });
 	m_pColliderCom->SetPos(m_pTransformCom->GetPos());
+}
+
+void CMob::OnCollide(shared_ptr<CGameObject> _pObj)
+{
+	if (ECollideID::PLAYER_PROJECTILE == _pObj->GetColType())
+	{
+		DecreaseHp(5);
+	}
 }
 
 void CMob::FSM(const _float& fTimeDelta)
@@ -286,7 +299,8 @@ void CMob::ChangeAnim()
 	}
 	
 	m_pTransformCom->SetScale(8.f * 0.8f * fXpos, 8.f * 0.8f * fYpos, 8.f * 0.8f * fXpos);
-
+	m_pColliderCom->SetScale({ 16.f * 0.8f * fXpos, 16.f * 0.8f * fYpos, 16.f * 0.8f * fXpos });
+	m_pColliderCom->SetRadius(8.f * 0.8f * fXpos);
 }
 
 void CMob::AnimDuration(const _float& fTimeDelta)
@@ -355,6 +369,7 @@ void CMob::ShootBullet1()
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet1[i])->GetIsEnable())
 		{
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet1[i])->SetEnable(true);
+			m_pVecBullet1[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 				m_pVecBullet1[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
 			pTransform->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
