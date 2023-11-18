@@ -5,6 +5,7 @@
 #include"SceneMgr.h"
 #include"Village.h"
 #include"Ruin_Dungeon.h"
+#include "GameMgr.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -40,6 +41,8 @@ _uint CLoading::Loading_ForStage()
 	m_pNextScene->ReadyScene();
 
 	m_bFinish = true;
+
+	CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 
 	return 0;
 

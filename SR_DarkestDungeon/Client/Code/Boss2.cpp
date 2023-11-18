@@ -11,6 +11,7 @@
 #include "Spike.h"
 #include "Sunken.h"
 #include "Player.h"
+#include "Video.h"
 
 #include "CameraMgr.h"
 
@@ -619,6 +620,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			m_eCurAnimState = EBossState::ENUM_END;
 			m_pTransformCom->SetPosition(300.f, -300.f, 300.f);
 			SetEnable(false);
+
+			m_pVideo = make_shared<CVideo>(m_pGraphicDev);
+			m_pVideo->Ready_Video(CVideo::VIDEOID::VIDEO_ENDING);
 		}
 	}
 	

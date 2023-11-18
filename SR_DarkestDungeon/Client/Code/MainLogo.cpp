@@ -6,6 +6,8 @@
 #include"UIMgr.h"
 #include"BackGround.h"
 #include"Export_System.h"
+#include "Video.h"
+#include "GameMgr.h"
 
 
 CMainLogo::CMainLogo(LPDIRECT3DDEVICE9 _pGraphicDev)
@@ -33,8 +35,14 @@ HRESULT CMainLogo::ReadyScene()
 		iter.second->ReadyLayer();
 	}
 
+	m_pVideo = make_shared<CVideo>(m_pGraphicDev);
+	m_pVideo->Ready_Video(CVideo::VIDEOID::VIDEO_START);
+
+	if (!m_pVideo)
+		return E_FAIL;
+
 	//CSoundMgr::GetInstance()->PlayBGM(L"Main_Loading_loop.wav", 1.f);
-	PlayVideo(L"../Bin/Resource/Video/epilog.wmv", g_hWnd);
+	//PlayVideo(L"../Bin/Resource/Video/old_road.wmv", g_hWnd);
 
 
 	return S_OK;
@@ -76,7 +84,10 @@ void CMainLogo::LateUpdateScene()
 
 			if (m_bIsFirstView) {
 				m_bIsFirstView = false;
-				m_pControl->Stop();
+				if (m_pVideo)
+				{
+					m_pVideo->StopVideo();
+				}
 			}
 
 		}
@@ -106,56 +117,4 @@ HRESULT CMainLogo::Ready_Layer_UI(tstring pLayerTag)
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;
-}
-
-void CMainLogo::PlayVideo(const wchar_t* videoFilename, HWND hwnd) {
-	CoInitialize(NULL);
-
-	shared_ptr<IGraphBuilder> pGraph = NULL;
-	IMediaEventEx* pEvent = NULL;
-
-	CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**)&pGraph);
-	pGraph->QueryInterface(IID_IMediaControl, (void**)&m_pControl);
-	pGraph->QueryInterface(IID_IMediaEventEx, (void**)&pEvent);
-
-	// Add the source filter to the graph
-	IBaseFilter* pSource = NULL;
-	CoCreateInstance(CLSID_AsyncReader, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**)&pSource);
-	pGraph->AddFilter(pSource, L"Source");
-
-	// Load the video file
-	IFileSourceFilter* pFileSourceFilter = NULL;
-	pSource->QueryInterface(IID_IFileSourceFilter, (void**)&pFileSourceFilter);
-	pFileSourceFilter->Load(videoFilename, NULL);
-
-	// Render the file
-	pGraph->RenderFile(videoFilename, NULL);
-
-	// Set the video window
-	shared_ptr<IVideoWindow> pVidWin = NULL;
-	pGraph->QueryInterface(IID_IVideoWindow, (void**)&pVidWin);
-	pVidWin->put_Owner((OAHWND)hwnd);
-	pVidWin->put_WindowStyle(WS_CHILD | WS_CLIPSIBLINGS);
-	pVidWin->put_MessageDrain((OAHWND)hwnd);
-	pVidWin->put_Left(0);
-	pVidWin->put_Top(0);
-	pVidWin->put_Width(1280); // Adjust to your window's width
-	pVidWin->put_Height(720); // Adjust to your window's height
-	pVidWin->put_Visible(OATRUE);
-
-	// Run the graph
-	HRESULT hr = m_pControl->Run();
-
-	// Wait for completion or timeout after 5000 milliseconds (5 seconds)
-	DWORD result = WaitForSingleObject(pEvent, 1000);
-
-	// Cleanup
-	//pVidWin->put_Visible(OAFALSE);  // Hide the video window
-	//m_pControl->Release();
-	//pEvent->Release();
-	//pVidWin->Release();
-	//pGraph->Release();
-	//pFileSourceFilter->Release();
-
-	CoUninitialize();
 }

@@ -10,6 +10,7 @@ enum class EGameState {
 	PRCESS,
 	PAUSE,
 	LOCK,
+	VIDEO,
 	ENUM_END
 };
 
@@ -29,9 +30,15 @@ public:
 	shared_ptr<CGameObject> GetPlayer() { return m_pPlayer; }
 	void SetPlayer(shared_ptr<CGameObject> _player) { m_pPlayer = _player; }
 
+public:
+	_bool IsLoadingComplete() { return m_bLoadingComplete; }
+	void  SetLoadingComplete(_bool _bLoadingComplete) { m_bLoadingComplete = _bLoadingComplete; }
+
 private:
 	shared_ptr<CGameObject> m_pPlayer;
 	EGameState m_eCurrentState;
+
+	_bool		m_bLoadingComplete = false;
 };
 
 END
