@@ -129,6 +129,7 @@ private:
 
 	void			ShakingHand();
 
+
 private:
 	virtual void	OnCollide(shared_ptr<CGameObject> _pObj);
 	virtual void	OnCollide(shared_ptr<CGameObject> _pObj, _float _fGap, EDirection _eDir);

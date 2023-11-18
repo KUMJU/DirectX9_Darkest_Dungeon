@@ -460,18 +460,18 @@ HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
 	m_pDoor->SetScale(_vec3(WEALD_PATHSIZEX / 2.f + 1.5f, WEALD_PATHSIZEX / 2.f + 1.5f, 1.f));
 	m_pLayer->CreateGameObject(L"OBJ_Door", m_pDoor);
 
-	// 배경(데코)
-	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Weald_Image_Wagon", 1, true);
-	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 4.5f, WEALD_WALLSIZEUPY + 8.f, 0.f));
-	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
-	m_pWall->SetScale(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX, (WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX) / 192.f * 72.f, 1.f));
-	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
-
-	m_pWall = make_shared<CWall>(m_pGraphicDev, L"Weald_Image_Village", 1, true);
-	m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 0.5f + WEALD_PATHSIZEX + WEALD_WALLSIZEX, WEALD_WALLSIZEUPY + 30.f, WEALD_WALLSIZEX * 30.f + 60.f));
-	m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
-	m_pWall->SetScale(_vec3((WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX)*6.f, ((WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX) / 192.f * 72.f)*6.f, 1.f));
-	m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//// 배경(데코)
+	//m_pWall = make_shared<CWall>(m_pGraphicDev, L"Weald_Image_Wagon", 1, true);
+	//m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 4.5f, WEALD_WALLSIZEUPY + 8.f, 0.f));
+	//m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	//m_pWall->SetScale(_vec3(WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX, (WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX) / 192.f * 72.f, 1.f));
+	//m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
+	//
+	//m_pWall = make_shared<CWall>(m_pGraphicDev, L"Weald_Image_Village", 1, true);
+	//m_pWall->SetPos(_vec3(WEALD_WALLSIZEX * 0.5f + WEALD_PATHSIZEX + WEALD_WALLSIZEX, WEALD_WALLSIZEUPY + 30.f, WEALD_WALLSIZEX * 30.f + 60.f));
+	//m_pWall->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	//m_pWall->SetScale(_vec3((WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX)*6.f, ((WEALD_WALLSIZEX * 2.f + WEALD_PATHSIZEX) / 192.f * 72.f)*6.f, 1.f));
+	//m_pLayer->CreateGameObject(L"OBJ_Wall", m_pWall);
 
 	// 진입방 벽
 	for (int i = 0; i < 2; i++)
@@ -892,17 +892,17 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pItem1 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem", m_pItem1);
-	dynamic_pointer_cast<CItem>(m_pItem1)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Gold2", 1000);
+	dynamic_pointer_cast<CItem>(m_pItem1)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Player_Item_Bandage", 1);
 
 	shared_ptr<CGameObject> m_pItem2 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem2", m_pItem2);
-	dynamic_pointer_cast<CItem>(m_pItem2)->SetDropItemInfo({ 60.f, -50.f, 14.f }, L"Item_Heirlooms",5);
+	dynamic_pointer_cast<CItem>(m_pItem2)->SetDropItemInfo({ 60.f, -50.f, 14.f }, L"Item_Heirlooms",1);
 
 	shared_ptr<CGameObject> m_pItem3 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem3", m_pItem3);
-	dynamic_pointer_cast<CItem>(m_pItem3)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Bandage",1);
+	dynamic_pointer_cast<CItem>(m_pItem3)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Item_Torch",3);
 
 	// 2번방
 	shared_ptr<CGameObject> m_pItem1_2 = make_shared<CItem>(m_pGraphicDev);
@@ -929,7 +929,7 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pItem1_3 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1_3->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem8", m_pItem1_3);
-	dynamic_pointer_cast<CItem>(m_pItem1_3)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Heirlooms", 5);
+	dynamic_pointer_cast<CItem>(m_pItem1_3)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Heirlooms", 1);
 
 	shared_ptr<CGameObject> m_pItem2_3 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2_3->SetColliding(true);
@@ -939,13 +939,13 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pItem3_3 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3_3->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem10", m_pItem3_3);
-	dynamic_pointer_cast<CItem>(m_pItem3_3)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Item_Gold2", 1000);
+	dynamic_pointer_cast<CItem>(m_pItem3_3)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Antivenom", 1);
 
 	// 4번방
 	shared_ptr<CGameObject> m_pItem1_4 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1_4->SetColliding(true);
 	m_pLayer->CreateGameObject(L"Obj_TestItem11", m_pItem1_4);
-	dynamic_pointer_cast<CItem>(m_pItem1_4)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Heirlooms", 5);
+	dynamic_pointer_cast<CItem>(m_pItem1_4)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Heirlooms", 1);
 
 	shared_ptr<CGameObject> m_pItem2_4 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2_4->SetColliding(true);

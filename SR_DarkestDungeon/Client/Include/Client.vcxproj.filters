@@ -275,6 +275,12 @@
     <ClCompile Include="..\Code\FireworkParticle.cpp">
       <Filter>01. GameObject\11. Particle\FireworkParticle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Alien.cpp">
+      <Filter>01. GameObject\01. Creature\01. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AlienMob.cpp">
+      <Filter>01. GameObject\01. Creature\01. Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -553,6 +559,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\FireworkParticle.h">
       <Filter>01. GameObject\11. Particle\FireworkParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Alien.h">
+      <Filter>01. GameObject\01. Creature\01. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AlienMob.h">
+      <Filter>01. GameObject\01. Creature\01. Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

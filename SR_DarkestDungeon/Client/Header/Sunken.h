@@ -59,6 +59,8 @@ protected:
 public:
 
 protected:
+	_bool	m_bMakeEnable = false;
+
 	_bool	m_bReady = false;
 	_bool	m_bAttack = false;
 

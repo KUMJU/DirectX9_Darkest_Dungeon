@@ -249,7 +249,7 @@ protected:
 	_int	m_iBullet2TotalNum = 50;
 	_int	m_iLaserTotalNum = 3;
 	_int	m_iMobTotalNum = 6;
-	_int	m_iSpikeTotalNum = 100;
+	_int	m_iSpikeTotalNum = 200;
 	_int	m_iSunkenTotalNum = 400;
 
 	_int	m_iSunkenAttackNum = 0;
@@ -303,6 +303,9 @@ protected:
 	float	m_fBullet2Intervel = 0.06f;
 	float	m_fLaserIntervel = 0.5f;
 
+	float	m_fHittedTime = 0.5f;
+	float	m_fHittedIntervel = 0.01f;
+
 	EBossState m_eAnimState = EBossState::P1_IDLE;	// 애니메이션 변경을 위한 상태값
 	EBossState m_eCurAnimState = EBossState::P1_IDLE;	// 애니메이션 변경을 위한 상태값
 	EBossState m_ePrevAnimState = EBossState::P1_IDLE;	// 애니메이션 변경을 위한 상태값
@@ -315,5 +318,12 @@ protected:
 
 	_bool	m_bAbleWallCollsion = false;
 	_bool	m_bWallCollision = false;
+	_bool	m_bHitByPlayer = false;
+	_bool	m_bChangeColor = false;
+
+	_int	m_iAlpha = 255;
+	_int	m_iRed = 255;
+	_int	m_iGreen = 255;
+	_int	m_iBlue = 255;
 };
 

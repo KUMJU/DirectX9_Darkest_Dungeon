@@ -112,6 +112,45 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 		}
 	}
 
+	// 피격시 점멸
+	if (m_bHitByPlayer)
+	{
+		m_fHittedIntervel -= fTimeDelta;
+		if (m_fHittedIntervel < 0.f && !m_bChangeColor)
+		{
+			m_fHittedIntervel = 0.01f;
+			m_iAlpha = 50;
+			m_iRed = 0;
+			m_iGreen = 0;
+			m_iBlue = 0;
+			m_bChangeColor = true;
+		}
+		else if (m_fHittedIntervel < 0.f && m_bChangeColor)
+		{
+			m_fHittedIntervel = 0.01f;
+			m_iAlpha = 255;
+			m_iRed = 255;
+			m_iGreen = 255;
+			m_iBlue = 255;
+			m_bChangeColor = false;
+		}
+
+		m_fHittedTime -= fTimeDelta;
+		if (m_fHittedTime < 0.f)
+		{
+			m_fHittedTime = 0.5f;
+
+			m_fHittedIntervel = 0.01f;
+			m_iAlpha = 255;
+			m_iRed = 255;
+			m_iGreen = 255;
+			m_iBlue = 255;
+			m_bChangeColor = false;
+
+			m_bHitByPlayer = false;
+		}
+	}
+
 	// FSM 조건
 	FSM(fTimeDelta);
 
@@ -157,14 +196,48 @@ void CBoss2::RenderGameObject()
 		m_szString,
 		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	if (m_bHitByPlayer)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	m_pTextureCom->SetAnimTexture();;
-	m_pBufCom->RenderBuffer();
-	m_pEffectBufCom->RenderBuffer();
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+		m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(m_iAlpha, m_iRed, m_iGreen, m_iBlue));
+
+		m_pTextureCom->SetAnimTexture();;
+		m_pBufCom->RenderBuffer();
+		m_pEffectBufCom->RenderBuffer();
+
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xffffffff);
+
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	}
+	else
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+		m_pTextureCom->SetAnimTexture();;
+		m_pBufCom->RenderBuffer();
+		m_pEffectBufCom->RenderBuffer();
+
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	}
 
 	__super::RenderGameObject();
 }
@@ -212,6 +285,8 @@ void CBoss2::OnCollide(shared_ptr<CGameObject> _pObj)
 	if (ECollideID::PLAYER_PROJECTILE == _pObj->GetColType())
 	{
 		DecreaseHp(5);
+		m_bHitByPlayer = true;
+		m_fHittedTime = 0.5f;
 	}
 }
 
@@ -748,13 +823,13 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			{
 				m_fP2SpikeTime = 1.5f;
 				// 스파이크 소환
-				for (int i = 0; i < 50; i++)
+				for (int i = 0; i < 100; i++)
 				{
 					if (!dynamic_pointer_cast<CGameObject>(m_pVecSpike[i])->GetIsEnable())
 					{
 						dynamic_pointer_cast<CGameObject>(m_pVecSpike[i])->SetEnable(true);
 						dynamic_pointer_cast<CTransform>(m_pVecSpike[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
-							SetPosition(m_vPos.x - 330.f + (rand() % 10 + 1) * 60.f, 20.f, m_vPos.z - 330.f + (rand() % 10 + 1) * 60.f);
+							SetPosition(m_vPos.x - 330.f + (rand() % 20 + 1) * 30.f, 20.f, m_vPos.z - 330.f + (rand() % 20 + 1) * 30.f);
 						m_pVecSpike[i]->SetAnimState(ESpikeState::READY);
 					}
 				}
@@ -769,13 +844,13 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			{
 				m_fP2SpikeTime2 = 1.f;
 				// 스파이크 소환
-				for (int i = 50; i < m_iSpikeTotalNum; i++)
+				for (int i = 100; i < m_iSpikeTotalNum; i++)
 				{
 					if (!dynamic_pointer_cast<CGameObject>(m_pVecSpike[i])->GetIsEnable())
 					{
 						dynamic_pointer_cast<CGameObject>(m_pVecSpike[i])->SetEnable(true);
 						dynamic_pointer_cast<CTransform>(m_pVecSpike[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
-							SetPosition(m_vPos.x - 385.f + (rand() % 10 + 1) * 70.f, 20.f, m_vPos.z - 385.f + (rand() % 10 + 1) * 70.f);
+							SetPosition(m_vPos.x - 385.f + (rand() % 20 + 1) * 35.f, 20.f, m_vPos.z - 385.f + (rand() % 20 + 1) * 35.f);
 						m_pVecSpike[i]->SetAnimState(ESpikeState::READY);
 					}
 				}
@@ -1228,14 +1303,14 @@ void CBoss2::KeyInput()
 	//if (GetAsyncKeyState('2') & 0x8000) {
 	//	m_eCurAnimState = EBossState::P1_ATTACK;
 	//}
-	if (GetAsyncKeyState('3') & 0x8000) {
+	/*if (GetAsyncKeyState('3') & 0x8000) {
 		m_eCurAnimState = EBossState::P1_LASER1;
-	}
+	}*/
 	if (GetAsyncKeyState('4') & 0x8000) {
 		m_iHp = 100;
 	}
 
-	if (GetAsyncKeyState('5') & 0x8000) {
+	/*if (GetAsyncKeyState('5') & 0x8000) {
 		for (int i = 0; i < m_iMobTotalNum; i++)
 		{
 			if (!dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->GetIsEnable())
@@ -1244,7 +1319,7 @@ void CBoss2::KeyInput()
 				break;
 			}
 		}
-	}
+	}*/
 }
 
 void CBoss2::OnFloor(_float _fHeight)
@@ -1398,7 +1473,7 @@ void CBoss2::ShootBullet3()
 			_vec3 vTarget;
 			if (m_bPhase2)
 			{
-				vTarget = m_vPos + _vec3((-10.f + (rand() % 4 + 1) * 4.f) * 1280.f, -0.5f * 1280.f, (-10.f + (rand() % 4 + 1) * 4.f) * 1280.f);
+				vTarget = m_vPos + _vec3((-10.f + (rand() % 4 + 1) * 4.f) * 1280.f, -1.f * 1280.f, (-10.f + (rand() % 4 + 1) * 4.f) * 1280.f);
 			}
 			else
 			{

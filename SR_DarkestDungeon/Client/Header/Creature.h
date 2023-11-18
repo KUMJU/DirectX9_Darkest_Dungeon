@@ -219,6 +219,8 @@ public:
 	virtual void	Buff2Skill(_int* _iDotBuff);	// 회피 버프
 	virtual void	DeBuffSkill(_int* _iDotDeBuff);	// 회피 디버프
 
+	virtual void	CurioBuff2();		// 골동품 회피 버프
+
 	// 버프 초기화
 	virtual void	Buff1Reset();					// 대단원 버프 초기화
 	virtual void	BuffReset();					// 버프 초기화

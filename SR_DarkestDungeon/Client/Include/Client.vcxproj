@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Alien.h" />
+    <ClInclude Include="..\Header\AlienMob.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\BattleHeroUI.h" />
     <ClInclude Include="..\Header\BattleSystem.h" />
@@ -255,6 +257,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Alien.cpp" />
+    <ClCompile Include="..\Code\AlienMob.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BattleHeroUI.cpp" />
     <ClCompile Include="..\Code\BattleSystem.cpp" />

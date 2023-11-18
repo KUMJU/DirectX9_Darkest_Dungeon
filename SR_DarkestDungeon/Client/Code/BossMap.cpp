@@ -36,6 +36,10 @@
 #include "Spike.h"
 #include "Sunken.h"
 
+#include "BrigandBloodletter.h"
+#include "Alien.h"
+#include "AlienMob.h"
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -48,6 +52,9 @@
 
 #include"LightMgr.h"
 #include"Narration.h"
+
+#include"InteractionInfo.h"
+#include "DungeonStatus.h"
 
 CBossMap::CBossMap(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -70,6 +77,7 @@ HRESULT CBossMap::ReadyScene()
 	// 방1
 	m_pRoom1 = make_shared<CDungeonRoom>();
 	m_pRoom2 = make_shared<CDungeonRoom>();
+	m_pRoom3 = make_shared<CDungeonRoom>();
 
 	Ready_Layer_Environment(L"Layer_3_Environment");
 	Ready_Layer_SkyBox(L"Layer_1_SkyBox");
@@ -81,7 +89,7 @@ HRESULT CBossMap::ReadyScene()
 	for (auto& iter : m_mapLayer) { 
 		iter.second->ReadyLayer();
 	}
-	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetPlayerMode(EPlayerMode::BOSS_FIELD);
+	//dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetPlayerMode(EPlayerMode::BOSS_FIELD);
 
 	SetLight();
 
@@ -90,10 +98,85 @@ HRESULT CBossMap::ReadyScene()
 
 _int CBossMap::UpdateScene(const _float& fTimeDelta)
 {
-	if (!m_b3DBattleStart)
+	KeyInput();
+
+	// 전투 트리거
+	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 2 && !m_pRoom2->GetBattleStart())
 	{
-		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetSpeed(20.f);
-		m_b3DBattleStart = true;
+		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>((CGameMgr::GetInstance()->GetPlayer())->GetComponent(L"Com_Transform", ID_DYNAMIC));
+
+		if (pTransform->GetPos()->z > m_fBattlePositionZ)
+		{
+			_vec3* vPos = pTransform->GetPos();
+			CCameraMgr::GetInstance()->SetState(ECameraMode::BATTLE);
+			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { vPos->x , vPos->y + 5.f ,  m_fBattlePositionZ - 20.f });
+			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_Inventory");
+			CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_DungeonStatus");
+
+			//전투 시작 이펙트
+			shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+			if (pEffect) {
+				pEffect->SetAnimEffect(L"Effect_BattleStart", _vec3(vPos->x, vPos->y + 8.f, m_fBattlePositionZ - 5.f), _vec3(3.5f, 3.5f, 3.5f), 1.5f, false);
+				pEffect->SetActive(true);
+			}
+
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
+			CSoundMgr::GetInstance()->PlayBGM(L"Combat_Level2_Loop1.wav", 0.6f);
+			pTransform->SetPosition(300.f, 0.f, m_fBattlePositionZ - 20.f);
+			m_pRoom2->SetBattleStart(true);
+			dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(true);
+
+			m_pRoom2->SetBattleCameraOriginPos({ vPos->x , vPos->y + 5.f ,  m_fBattlePositionZ - 20.f });
+		}
+	}
+
+	// 전투시작되는 메커니즘
+	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 2)
+	{
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetBattleTrigger())
+		{
+			m_pRoom2->SetBattleTrigger(true);
+			// 전투준비
+			m_pRoom2->BattleReady();
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(true);
+
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(false);
+		}
+	}
+
+	// 전투
+	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 2)
+	{
+		if (m_pRoom2->GetBattleTrigger())
+		{
+			// 전투가 끝나면
+			if (m_pRoom2->BattleUpdate(fTimeDelta))
+			{
+				CCameraMgr::GetInstance()->SetFPSMode();
+				CSoundMgr::GetInstance()->StopAll();
+				CSoundMgr::GetInstance()->PlayBGM(L"Amb_Weald_Base.wav", 1.f);
+				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
+				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
+				dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+
+				m_pRoom2->SetBattleTrigger(false);
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
+
+				m_b3DBattleStart = true;
+			}
+		}
+	}
+
+	// 전투 시작될때
+	if (m_b3DBattleStart && !m_bBattleReady)
+	{
+		m_pBossMap->DisableAllRoom();
+		m_pBossMap->AbleRoom(1);
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(1);
+
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetSpeed(30.f);
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetPlayerMode(EPlayerMode::BOSS_FIELD);
+		m_bBattleReady = true;
 	}
 
 
@@ -184,6 +267,37 @@ void CBossMap::SetWall(shared_ptr<CWall> _pWall, shared_ptr<CLayer> _pLayer,
 	}
 }
 
+void CBossMap::KeyInput()
+{
+	if (GetAsyncKeyState('7') & 0x8000) {
+		m_b3DBattleStart = true;
+	}
+
+	if (GetAsyncKeyState('8') & 0x8000) {
+		shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>((CGameMgr::GetInstance()->GetPlayer())->GetComponent(L"Com_Transform", ID_DYNAMIC));
+		pTransform->SetPosition(300.f, 0.f, m_fBattlePositionZ - 20.f);
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(2);
+		m_pBossMap->DisableAllRoom();
+		m_pBossMap->AbleRoom(2);
+	}
+
+	// 전투 강제종료
+	if (GetAsyncKeyState('9') & 0x8000) {
+		m_pRoom2->GetBattleSystem()->EndBattle();
+		CSoundMgr::GetInstance()->StopAll();
+		CSoundMgr::GetInstance()->PlayBGM(L"Amb_Weald_Base.wav", 1.f);
+		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
+		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
+		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
+		dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+
+		m_pRoom2->SetBattleTrigger(false);
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
+
+		m_b3DBattleStart = true;
+	}
+}
+
 HRESULT CBossMap::Ready_Layer_Environment(tstring pLayerTag)
 {
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
@@ -265,8 +379,10 @@ HRESULT CBossMap::Ready_Layer_Camera(tstring pLayerTag)
 
 	shared_ptr<CGameObject> m_pCamera = make_shared<CStaticCamera>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"OBJ_Camera", m_pCamera);
-	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
 
+	CCameraMgr::GetInstance()->SetMainCamera(dynamic_pointer_cast<CStaticCamera>(m_pCamera));
+	CCameraMgr::GetInstance()->SetFPSMode();
+	
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 
 	return S_OK;
@@ -281,16 +397,26 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pPlayer;
 
 	m_pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
-	m_pPlayer->SetPos({ 320.f, 0.f, 200.f });
+	m_pPlayer->SetPos({ 300.f, 0.f, 50.f });
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
-	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(320.f, 0.f, 200.f);
+	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(300.f, 0.f, 50.f);
 	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetAngle({ 0.f, 0.f, 0.f });
 
-	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
-	m_pLayer->CreateGameObject(L"Obj_PlayerHand", dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPlayerHand());
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		m_pLayer->CreateGameObject(dynamic_pointer_cast<CHero>(iter)->GetObjKey(), iter);
+	}
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInBattle(false);
+
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		dynamic_pointer_cast<CHero>(iter)->SetInDungeon(true);
+	}
+
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
+
 
 	// Boss
 	shared_ptr<CGameObject> m_pBoss = make_shared<CBoss2>(m_pGraphicDev);
@@ -323,6 +449,18 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pMob6->SetPos({ 270.f, 5.f, 240.f });
 	m_pLayer->CreateGameObject(L"Obj_Mob", m_pMob6);
 
+	// monsters
+	shared_ptr<CGameObject> m_pAlienMob1 = make_shared<CAlienMob>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pAlienMob2 = make_shared<CAlienMob>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pAlien = make_shared<CAlien>(m_pGraphicDev);
+	shared_ptr<CGameObject> m_pAlienMob3 = make_shared<CAlienMob>(m_pGraphicDev);
+
+	vector<shared_ptr<CGameObject>> Heroes_v;
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		Heroes_v.push_back(iter);
+	}
+
 	// BossBullet
 	vector<shared_ptr<CBullet1>> pVecProjectile1;
 	vector<shared_ptr<CBullet2>> pVecProjectile2;
@@ -339,7 +477,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CSunken> pSunken;
 
 	// 스파이크
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		pSpike = nullptr;
 		pSpike = make_shared<CSpike>(m_pGraphicDev);
@@ -451,7 +589,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	{
 		Room1_v1.push_back(pVecProjectile_Mob[i]);
 	}
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		Room1_v1.push_back(pVecSpike[i]);
 	}
@@ -463,25 +601,78 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 
 	// Room2
 	vector<shared_ptr<CGameObject>> Room2_v1;
-	/*for (int i = 0; i < 30; i++)
-	{
-		Room2_v1.push_back(m_pBoss);
-	}*/
+	Room2_v1.push_back(m_pAlienMob1);
+	Room2_v1.push_back(m_pAlienMob2);
+	Room2_v1.push_back(m_pAlien);
+	Room2_v1.push_back(m_pAlienMob3);
+
 	m_pRoom2->PushGameObjectVector(Room2_v1);
+
+	// creatures
+	vector<shared_ptr<CGameObject>> Room2_v4;
+	Room2_v4.push_back(m_pAlienMob1);
+	Room2_v4.push_back(m_pAlienMob2);
+	Room2_v4.push_back(m_pAlien);
+	Room2_v4.push_back(m_pAlienMob3);
+
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		Room2_v4.push_back(iter);
+	}
+
+	// heroes
+	vector<shared_ptr<CGameObject>> Room2_v2;
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		Room2_v2.push_back(iter);
+	}
+	m_pRoom2->PushHeroesVector(Room2_v2);
+
+	// monsters
+	vector<shared_ptr<CGameObject>> Room2_v3;
+	Room2_v3.push_back(m_pAlienMob1);
+	Room2_v3.push_back(m_pAlienMob2);
+	Room2_v3.push_back(m_pAlien);
+	Room2_v3.push_back(m_pAlienMob3);
+	m_pRoom2->PushMonstersVector(Room2_v3);
+
+	// 배틀시스템 넣기
+	shared_ptr<CBattleSystem> pRoom2_Battle = make_shared<CBattleSystem>();
+	pRoom2_Battle->SetBattleType(1);
+	//pRoom3_Battle->Ready();
+	pRoom2_Battle->PushCreaturesVector(Room2_v4);
+	pRoom2_Battle->PushHeroesVector(Room2_v2);
+	pRoom2_Battle->PushMonstersVector(Room2_v3);
+	m_pRoom2->SetBattleSystem(pRoom2_Battle);
+	m_pRoom2->SetBattleCameraPos(_vec3(300.f, 3.f, m_fBattlePositionZ));
+
+	//BattleUI Test
+	shared_ptr<CBattleHeroUI> m_pHeroUI = make_shared<CBattleHeroUI>(m_pGraphicDev);
+	m_pHeroUI->AwakeGameObject();
+	m_pHeroUI->ReadyGameObject();
+	CUIMgr::GetInstance()->AddUIObject(L"Battle_Hero_UI", dynamic_pointer_cast<CUIObj>(m_pHeroUI));
+	pRoom2_Battle->GetHeroPanelUI(m_pHeroUI);
 
 	// 던전에 방 넣기
 	vector<shared_ptr<CDungeonRoom>> Dungeon1_v;
 	Dungeon1_v.push_back(m_pRoom1);
 	Dungeon1_v.push_back(m_pRoom2);
+	Dungeon1_v.push_back(m_pRoom3);
 	m_pBossMap->PushDungeonRoomVector(Dungeon1_v);
 
 	// 현재 active 방
 	m_pBossMap->DisableAllRoom();
-	m_pBossMap->AbleRoom(1);
-	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(1);
+	m_pBossMap->AbleRoom(2);
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(2);
 
 	// Layer에 GameObject 넣기
+	m_pLayer->CreateGameObject(L"Obj_BriB", m_pAlienMob1);
+	m_pLayer->CreateGameObject(L"Obj_BriB", m_pAlienMob2);
+	m_pLayer->CreateGameObject(L"Obj_BriB", m_pAlien);
+	m_pLayer->CreateGameObject(L"Obj_Alien", m_pAlienMob3);
+	
 
+	//m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 	m_pLayer->CreateGameObject(L"Obj_PlayerHand", dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPlayerHand());
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
@@ -494,6 +685,9 @@ HRESULT CBossMap::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CLayer> m_pLayer = make_shared<CLayer>();
 	m_mapLayer.insert({ pLayerTag, m_pLayer });
 
+	shared_ptr<CGameObject> pDungeonStatusUI = make_shared<CDungeonStatus>(m_pGraphicDev);
+	m_pLayer->CreateGameObject(L"Obj_DungeonStatus", pDungeonStatusUI);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_DungeonStatus", dynamic_pointer_cast<CUIObj>(pDungeonStatusUI));
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();
 

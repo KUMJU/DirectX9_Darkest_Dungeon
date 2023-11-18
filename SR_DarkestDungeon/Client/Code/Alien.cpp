@@ -1,57 +1,49 @@
 #include "pch.h"
-#include "BrigandBloodletter.h"
+#include "Alien.h"
 #include"Export_Utility.h"
 #include"StatView.h"
 
-
-CBrigandBloodletter::CBrigandBloodletter(LPDIRECT3DDEVICE9 pGraphicDev)
+CAlien::CAlien(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 {
 }
 
-CBrigandBloodletter::CBrigandBloodletter(const CCreature& rhs)
+CAlien::CAlien(const CCreature& rhs)
 	: CMonster(rhs)
 {
 }
 
-CBrigandBloodletter::~CBrigandBloodletter()
+CAlien::~CAlien()
 {
 }
 
-HRESULT CBrigandBloodletter::ReadyGameObject()
+HRESULT CAlien::ReadyGameObject()
 {
 	__super::ReadyGameObject();
 
 	m_iSize = 1;
 
 	// 스탯 설정
-	m_tCommonStat.iHp = 40;
-	m_tCommonStat.iMaxHp = 40;
+	m_tCommonStat.iHp = 200;
+	m_tCommonStat.iMaxHp = 200;
 	m_tCommonStat.iDodge = 0;
-	m_tCommonStat.iSpeed = 2;
-	m_tCommonStat.iAttackPower = 5;
+	m_tCommonStat.iSpeed = 1;
+	m_tCommonStat.iAttackPower = 50;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
-	int Skill1_Dot[2] = { 1,3 };
-	_bool	m_bArrAttack1[8] = { 0, 0, 1, 0, 0, 0, 0, 0 };
-	_bool	bTargetPos1[4] = { 1,1,1,1 };
-	shared_ptr<CSkill> m_pBrigandBloodletter_1 = make_shared<CSkill>
-		(L"Attack1", L"Brigand Bloodletter_Attack1", bTargetPos1, Skill1_Dot, 4.f, 0.f, 0.2f, 0.3f,
-			m_bArrAttack1, 0, 10, 1, 0, 0);
-	pVecSkill.push_back(m_pBrigandBloodletter_1);
+	int Skill1_Dot[2] = { 0,0 };
+	_bool	bArrAttack1[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
+	_bool	bTargetPos1[4] = { 1,1,0,0 };
+	shared_ptr<CSkill> m_pAlien_1 = make_shared<CSkill>
+		(L"Attack1", L"Boss_Phase1_Ultimate", bTargetPos1, Skill1_Dot, 0.f, 0.f, 1.f, 1.2f,
+			bArrAttack1, 0, 0, true, 0);
+	pVecSkill.push_back(m_pAlien_1);
 
-	int Skill2_Dot[2] = { 0,0 };
-	_bool	bArrAttack2[8] = { 1, 0, 0, 0, 0, 0, 0, 0 };
-	_bool	bTargetPos2[4] = { 1,0,0,0 };
-	shared_ptr<CSkill> m_pBrigandBloodletter_2 = make_shared<CSkill>
-		(L"Attack2", L"Brigand Bloodletter_Attack2", bTargetPos2, Skill2_Dot, 0.f, 0.f, 2.f, 2.2f,
-			bArrAttack2, 1, 30, 0, 1, 0);
-	pVecSkill.push_back(m_pBrigandBloodletter_2);
 	SetSkill(pVecSkill);
 
 	m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
-	m_pTransformCom->SetScale(3.f, 3.f, 1.f);
+	m_pTransformCom->SetScale(7.5f, 7.5f, 1.f);
 
 	m_pTransformCom->SetAngle(m_vAngle);
 	m_pTransformCom->Rotation(ROT_Y, PI / 2.f);
@@ -62,11 +54,13 @@ HRESULT CBrigandBloodletter::ReadyGameObject()
 	return E_NOTIMPL;
 }
 
-_int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
+_int CAlien::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());
+
+	m_pTransformCom->SetPosition(m_vPos.x, 7.5f, m_vPos.z);
 
 	// Animation
 	if (m_eCurAnimState != m_ePrevAnimState)
@@ -74,46 +68,32 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 		switch (m_eCurAnimState)
 		{
 		case EAnimState::COMBAT:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Combat", 0.05f);
-			m_pTransformCom->SetScale(3.f, 3.f, 3.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 3.f, m_vPos.z);
-
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Idle", 0.06f);
+			m_pTransformCom->SetScale(7.5f, 7.5f, 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 7.5f, m_vPos.z);
 			break;
 		case EAnimState::BESHOT:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Hitted", 0.02f);
-			m_pTransformCom->SetScale(3.f * 330.f / 303.f, 3.f * 345.f / 382.f, 3.f * 330.f / 303.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 345.f / 382.f, m_vPos.z);
-
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Groggy", 0.24f);
+			m_pTransformCom->SetScale(7.5f * 1.f / 1.f, 7.5f * 1.f / 1.f, 1.f * 1.f / 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 7.5f * 1.f / 1.f, m_vPos.z);
 			break;
 		case EAnimState::SKILL1:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack1", 0.02f);
-			m_pTransformCom->SetScale(3.f * 482.f / 303.f, 3.f * 383.f / 382.f, 3.f * 482.f / 303.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 383.f / 382.f, m_vPos.z);
-
-			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_whipsingle.wav", CHANNELID::MONSTER, 1.f);
-
-			break;
-		case EAnimState::SKILL2:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack2", 0.02f);
-			m_pTransformCom->SetScale(3.f * 474.f / 303.f, 3.f * 379.f / 382.f, 3.f * 474.f / 303.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 379.f / 382.f, m_vPos.z);
-			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_pointblank.wav", CHANNELID::MONSTER, 1.f);
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Ultimate", 0.06f);
+			m_pTransformCom->SetScale(7.5f * 1.f / 1.f, 7.5f * 1.f / 1.f, 1.f * 1.f / 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 7.5f * 1.f / 1.f, m_vPos.z);
 			break;
 		case EAnimState::CORPSE:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Dead", 0.02f);
-			m_pTransformCom->SetScale(3.f * 375.f / 303.f, 3.f * 167.f / 382.f, 3.f * 375.f / 303.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 167.f / 382.f, m_vPos.z);
-
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Dead", 0.02f);
+			m_pTransformCom->SetScale(7.5f * 1.f / 1.f, 7.5f * 1.f / 1.f, 1.f * 1.f / 1.f);
+			m_pTransformCom->SetPosition(m_vPos.x, 7.5f * 1.f / 1.f, m_vPos.z);
 			break;
 		case EAnimState::DEATH:
-			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Death", 0.02f);
-			m_pTransformCom->SetScale(3.f, 3.f, 3.f);
+			m_pTextureCom->SetAnimKey(L"Bone Soldier_Death", 0.02f);
+			m_pTransformCom->SetScale(7.5f, 7.5f, 1.f);
 			break;
 		}
-		m_ePrevAnimState = m_eCurAnimState;
 	}
 
-	// 임시
 	if ((IsAttacking()) && !m_bCorpse)
 	{
 		for (int i = 0; i < 7; i++)
@@ -176,7 +156,6 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 		BleedCure();
 		BlightCure();
 		m_bCorpse = true;
-
 		m_tCommonStat.iHp = 10;
 		m_tCommonStat.iMaxHp = 10;
 		// 스탯갱신
@@ -217,50 +196,36 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 		}
 	}
 
-	// 공격2 시간
-	if (GetAttacking(1))
-	{
-		m_fAttack2Time -= fTimeDelta;
-		if (m_fAttack2Time < 0.f)
-		{
-			SetAttacking(false, 1);
-			m_fAttack2Time = ATTACKTIME;
-		}
-	}
-
 
 	return iExit;
 }
 
-void CBrigandBloodletter::LateUpdateGameObject()
+void CAlien::LateUpdateGameObject()
 {
 	__super::LateUpdateGameObject();
 }
 
-void CBrigandBloodletter::RenderGameObject()
+void CAlien::RenderGameObject()
 {
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	if (m_bSetAlpha) {
-		
-	}
-	
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->SetAnimTexture();
 	m_pBufCom->RenderBuffer();
 	m_pEffectBufCom->RenderBuffer();
 
-	if (m_bSetAlpha) {
-	
-	}
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	__super::RenderGameObject();
 }
 
-void CBrigandBloodletter::AddComponent()
+void CAlien::AddComponent()
 {
 
 	shared_ptr<CComponent> pComponent;
@@ -268,11 +233,14 @@ void CBrigandBloodletter::AddComponent()
 	_vec3 vPosTemp = { 0.f,0.f,0.f };
 
 	pComponent = m_pTransformCom = make_shared<CTransform>();
+	if (nullptr == pComponent) {
+		//MSG_BOX("Make BoneSoldier TransformCom Failed");
+	}
 	m_pTransformCom->ReadyTransform();
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 
 	pComponent = m_pTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Combat", 0.05f);
+	m_pTextureCom->SetAnimKey(L"Boss_Phase1_Idle", 0.06f);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
 	pComponent = m_pColliderCom = make_shared<CCollider>(m_pGraphicDev);
@@ -286,13 +254,13 @@ void CBrigandBloodletter::AddComponent()
 	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform",pComponent });
 	//
 	//pComponent = m_pEffectTextureCom = make_shared<CAnimator>(m_pGraphicDev);
-	//m_pEffectTextureCom->SetAnimKey(L"Brigand Bloodletter_Combat", 0.05f);
+	//m_pEffectTextureCom->SetAnimKey(L"Bone Soldier_Combat", 0.05f);
 	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
 
 	__super::AddComponent();
 }
 
-void CBrigandBloodletter::Free()
+void CAlien::Free()
 {
 	__super::Free();
 }

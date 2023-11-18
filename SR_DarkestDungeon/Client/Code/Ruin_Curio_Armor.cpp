@@ -45,7 +45,7 @@ _int CRuin_Curio_Armor::UpdateGameObject(const _float& fTimeDelta)
 			for (int i = 0; i < size(*pHeroVec); i++)
 			{
 				// 버프 내용
-				dynamic_pointer_cast<CHero>((*pHeroVec)[i])->DecreaseStress(100);
+				dynamic_pointer_cast<CHero>((*pHeroVec)[i])->CurioBuff2();
 			}
 
 			m_fActiveTime = CURIOACTIVETIME;

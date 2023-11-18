@@ -26,7 +26,7 @@ HRESULT CBrigandCutthroat::ReadyGameObject()
 	// Ω∫≈» º≥¡§
 	m_tCommonStat.iHp = 15;
 	m_tCommonStat.iMaxHp = 15;
-	m_tCommonStat.iDodge = 10;
+	m_tCommonStat.iDodge = 0;
 	m_tCommonStat.iSpeed = 3;
 	m_tCommonStat.iAttackPower = 3;
 
