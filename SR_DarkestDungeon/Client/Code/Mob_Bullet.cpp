@@ -60,6 +60,12 @@ _int CMobBullet::UpdateGameObject(const _float& fTimeDelta)
 {
 	_int	iExit = __super::UpdateGameObject(fTimeDelta);
 
+	// 한번 막기
+	if (m_bEnable && !m_bMakeEnable) {
+		m_bMakeEnable = true;
+		m_bEnable = false;
+	}
+
 	m_vPos = *m_pTransformCom->GetPos();
 
 	Engine::AddRenderGroup(RENDER_ALPHA, shared_from_this());

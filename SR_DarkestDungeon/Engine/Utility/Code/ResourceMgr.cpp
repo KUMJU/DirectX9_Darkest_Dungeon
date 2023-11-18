@@ -1440,6 +1440,20 @@ void CResourceMgr::RuinDungeonTextureLoad()
 void CResourceMgr::BossMapTextureLoad()
 {
 	_bool bDefault = true;
+	
+	//Brigand Bloodletter
+	CreateNewTexture(L"Brigand Bloodletter_Combat", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/Combat/armatureName_combat_%d.png", 36, bDefault);
+	CreateNewTexture(L"Brigand Bloodletter_Attack1", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/1.png", 1, bDefault);
+	CreateNewTexture(L"Brigand Bloodletter_Attack2", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/2.png", 1, bDefault);
+	CreateNewTexture(L"Brigand Bloodletter_Dead", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/3.png", 1, bDefault);
+	CreateNewTexture(L"Brigand Bloodletter_Hitted", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Bloodletter/4.png", 1, bDefault);
+	CreateNewTexture(L"Brigand Bloodletter_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Weald/Brigand Cutthroat/5.png", 1, bDefault);
 
 	// Environment
 	CreateNewTexture(L"Com_Boss_FloorTexture", TEX_NORMAL,
@@ -1475,6 +1489,10 @@ void CResourceMgr::BossMapTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Shoot/cthulhu_tentacle_shoot00%d.png", 11, bDefault);
 
 
+	CreateNewTexture(L"Mob_Shooting", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Shooting/cthulhu_tentacle_shoot0007.png", 1, bDefault);
+
+
 
 	// Boss
 	// Phase1
@@ -1505,6 +1523,10 @@ void CResourceMgr::BossMapTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase2/Idle/hellboss_final_idle00%d.png", 21, bDefault);
 	CreateNewTexture(L"Boss_Phase2_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase2/Death/hellboss_final_death00%d.png", 26, bDefault);
+
+	//
+	CreateNewTexture(L"Boss_Phase1_Ultimate", TEX_NORMAL,
+		L"../Bin/Resource/Image/Creatures/Monsters/Boss/Phase1/Ultimate/hellboss_caco_attack0004.png", 1, bDefault);
 
 	// Projectile
 	CreateNewTexture(L"Boss_Projectile1", TEX_NORMAL,

@@ -29,6 +29,8 @@ public:
 	void SetWall(shared_ptr<CWall> _pWall, shared_ptr<CLayer> _pLayer,
 		_float _fX, _float _fZ, _float _fSize, tstring _tKeyName);
 
+	void KeyInput();
+
 private:
 
 	HRESULT				Ready_Layer_Environment(tstring pLayerTag);
@@ -40,13 +42,18 @@ private:
 
 	shared_ptr<CDungeonSystem>	m_pBossMap = {};			//
 	shared_ptr<CDungeonRoom>	m_pRoom1 = {};				// 规1	
-	shared_ptr<CDungeonRoom>	m_pRoom2 = {};				// 规1	
+	shared_ptr<CDungeonRoom>	m_pRoom2 = {};				// 规2	
+	shared_ptr<CDungeonRoom>	m_pRoom3 = {};				// 规3	
 
 	vector<shared_ptr<CWall>>	m_pVecWallList;		// 寒甸 氦磐
 
 	_bool				m_bTestBattle = false; 
 
-	_bool				m_b3DBattleStart = true;
+	_bool				m_b3DBattleStart = false;
+
+	_bool				m_bBattleReady = false;
+
+	float				m_fBattlePositionZ = 250.f;
 
 	_tchar				m_szString[128];
 };

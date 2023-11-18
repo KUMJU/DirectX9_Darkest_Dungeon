@@ -76,6 +76,12 @@ HRESULT CMob::ReadyGameObject()
 
 _int CMob::UpdateGameObject(const _float& fTimeDelta)
 {
+	// 한번 막기
+	if (m_bEnable && !m_bMakeEnable) {
+		m_bMakeEnable = true;
+		m_bEnable = false;
+	}
+
 	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 
 	m_vPos = *m_pTransformCom->GetPos();

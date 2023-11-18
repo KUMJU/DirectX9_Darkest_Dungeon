@@ -194,10 +194,21 @@ void CCreature::DecreaseHP(_int _iValue)
 	pEffect->SetDamageEffect(0, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
 	pEffect->SetActive(true);
 
-	m_tCommonStat.iHp -= _iValue;
-	if (m_tCommonStat.iHp < 0)
+	// 딜이 일정 기준을 넘으면 영웅 즉사시키기
+	if (_iValue > 40 && m_bIsHero)
 	{
-		m_tCommonStat.iHp = 0;
+		m_bDeath = true;
+		m_tCommonStat.iHp = -100;
+
+		bStatBarOn = false;
+	}
+	else
+	{
+		m_tCommonStat.iHp -= _iValue;
+		if (m_tCommonStat.iHp < 0)
+		{
+			m_tCommonStat.iHp = 0;
+		}
 	}
 }
 
@@ -346,7 +357,7 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 				bStatBarOn = false;
 			}
 		}
-		else if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath)
+		else if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath && !m_bDeath)
 		{
 			m_bBeforeDeath = true;
 		}
@@ -797,6 +808,18 @@ void CCreature::DeBuffSkill(_int* _iDotDeBuff)
 	{
 		m_iDeBuff1Dot[i] += _iDotDeBuff[0];
 	}
+}
+
+void CCreature::CurioBuff2()
+{
+	_int  DotBuff[2] = { 30, 3 };
+	
+	for (int i = 0; i < DotBuff[1]; i++)
+	{
+		m_iBuff2Dot[i] += DotBuff[0];
+	}
+	SetBuff(true);
+	UpdateAttribute();
 }
 
 void CCreature::Buff1Reset()
