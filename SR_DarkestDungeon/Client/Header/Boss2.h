@@ -17,6 +17,7 @@ class CLaser;
 class CMob;
 class CSpike;
 class CSunken;
+class CVideo;
 
 enum class EBossState
 {
@@ -299,5 +300,7 @@ protected:
 
 	_bool	m_bAbleWallCollsion = false;
 	_bool	m_bWallCollision = false;
+
+	shared_ptr<CVideo>	m_pVideo;
 };
 

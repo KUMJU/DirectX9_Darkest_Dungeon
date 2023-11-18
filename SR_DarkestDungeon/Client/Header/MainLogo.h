@@ -2,6 +2,7 @@
 
 #include"Export_Utility.h"
 #include"Loading.h"
+#include "Video.h"
 
 class CBackGround;
 
@@ -23,17 +24,13 @@ public:
 
 	HRESULT				Ready_Layer_UI(tstring pLayerTag);
 
-	void PlayVideo(const wchar_t* videoFilename, HWND hwnd);
-
 private:
 	
 	_bool m_bLoadingFin = false;
 	_bool m_bIsFirstView = true;
 	shared_ptr<CLoading> m_pLoading;
+	shared_ptr<CVideo>	m_pVideo;
 
 	shared_ptr<CBackGround> m_pBackGround;
-
-	shared_ptr<IMediaControl> m_pControl = NULL;
-
 };
 

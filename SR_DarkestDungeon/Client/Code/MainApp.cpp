@@ -12,6 +12,7 @@
 #include"LightMgr.h"
 #include "EffectMgr.h"
 #include "ParticleMgr.h"
+#include "GameMgr.h"
 
 CMainApp::CMainApp()
 {
@@ -63,12 +64,14 @@ void CMainApp::LateUpdate_MainApp()
 
 void CMainApp::Render_MainApp()
 {
-    m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+	if (CGameMgr::GetInstance()->GetGameState() != EGameState::VIDEO)
+	{
+		m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
-    Engine::RenderScene(m_pGraphicDev);
+		Engine::RenderScene(m_pGraphicDev);
 
-    Engine::Render_End();
-
+		Engine::Render_End();
+	}
 }
 
 HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
