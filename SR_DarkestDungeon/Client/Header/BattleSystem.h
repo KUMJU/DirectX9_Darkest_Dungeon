@@ -61,6 +61,7 @@ public:
 
 public:
 	void SetCenterPos(_vec3 _vPos) { m_vCenterPos = _vPos; }
+	void SetBattleType(_int _iType) { m_iBattleType = _iType; }
 
 protected:
 	// 위치 변경
@@ -138,6 +139,8 @@ private:
 
 	_bool	m_bBattle = false;
 
+	_bool	m_bEndBattleStart = false;
+
 	vector<_vec3> m_vHeroLocation = {};			// hero position
 	vector<_vec3> m_vMonsterLocation = {};		// monster position
 	_int iCurrentHeroIndex = 0;
@@ -153,6 +156,9 @@ private:
 	_bool	m_bRotationCheck = false;
 	_float	m_fAngle = 0.f;
 	_float	m_fActTime = 0.f;
+
+	float	m_fEndTime1 = 3.f;
+	float	m_fEndTime2 = 8.f;
 	//공격이후 애니메이션이 풀리고 턴 리셋을 위해 기록하는 시간
 	_float	m_fTurnResetTime = 0.f;
 	//스킬 사용이후 텍스쳐(애니메이션)이 변경했는지 여부
@@ -163,6 +169,8 @@ private:
 
 	// 피킹오브젝트
 	vector<shared_ptr<CGameObject>>		m_vecPickingObject = {};
+
+	_int	m_iBattleType = 0; // 0: 일반 전투  1: 보스 전투
 
 //UI Test
 private:

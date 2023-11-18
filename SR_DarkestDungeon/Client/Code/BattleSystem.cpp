@@ -570,6 +570,40 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		}
 	}
 
+	// 종료조건
+	if (m_bEndBattleStart && m_bNext)
+	{
+		m_bNext = false;
+	}
+	// 일반전투에서 종료
+	if (m_bEndBattleStart && !m_bNext && (m_iBattleType == 0))
+	{
+		m_fEndTime1 -= fTimeDelta;
+		if (m_fEndTime1 < 0.f)
+		{
+			m_fEndTime1 = 3.f;
+			m_bEndBattleStart = false;
+
+			return true;
+		}
+	}
+	// 보스전에서 종료
+	if (m_bEndBattleStart && !m_bNext && (m_iBattleType == 1))
+	{
+		m_fEndTime2 -= fTimeDelta;
+
+		// 여기서 뭔가의 연출
+		
+
+		if (m_fEndTime2 < 0.f)
+		{
+			m_fEndTime2 = 8.f;
+			m_bEndBattleStart = false;
+
+			return true;
+		}
+	}
+
 	// 크리처의 턴일때
 	if (m_bNext && dynamic_pointer_cast<CCreature>(m_pCurrentCreature) &&
 		dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn()
@@ -631,7 +665,9 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			if (HeroesAllDead() || MonstersAllDead())
 			{
 				if (EndBattle())
-					return true;
+				{
+					m_bEndBattleStart = true;
+				}
 			}
 
 			if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse() ||
@@ -882,7 +918,9 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 				if (HeroesAllDead() || MonstersAllDead())
 				{
 					if (EndBattle())
-						return true;
+					{
+						m_bEndBattleStart = true;
+					}
 				}
 
 				if (!m_bBattle)
@@ -959,7 +997,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	if (HeroesAllDead() || MonstersAllDead())
 	{
 		if (EndBattle())
-			return true;
+			m_bEndBattleStart = true;
 	}
 
 	//UI Update
