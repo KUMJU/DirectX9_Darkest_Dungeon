@@ -1070,7 +1070,32 @@ void CBattleSystem::NextTurn()
 _bool CBattleSystem::EndBattle()
 {
 	dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->OffTurnCursor();
+
+	// 영웅들 버프, 출혈, 중독, 디버프 다 초기화
+	for (auto& iter : m_vHeroes)
+	{
+		dynamic_pointer_cast<CCreature>(iter)->BlightCure();
+		dynamic_pointer_cast<CCreature>(iter)->BleedCure();
+		dynamic_pointer_cast<CCreature>(iter)->BuffReset();
+		dynamic_pointer_cast<CCreature>(iter)->UpdateAttribute();
+	}
+
 	// 죽은 진영 시체 전부 없애기
+
+	for (auto& iter : m_vCreatures)
+	{
+		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
+	}
+	for (auto& iter : m_vHeroes)
+	{
+		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
+	}
+	for (auto& iter : m_vMonsters)
+	{
+		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
+	}
+	OnTurnUi();
+
 	if (HeroesAllDead())
 	{
 		for (auto& iter : m_vHeroes)
@@ -1086,19 +1111,6 @@ _bool CBattleSystem::EndBattle()
 			dynamic_pointer_cast<CCreature>(iter)->SetHp(-100);
 		}
 		return true;
-	}
-
-	for (auto& iter : m_vCreatures)
-	{
-		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
-	}
-	for (auto& iter : m_vHeroes)
-	{
-		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
-	}
-	for (auto& iter : m_vMonsters)
-	{
-		dynamic_pointer_cast<CCreature>(iter)->SetDone(false);
 	}
 	m_pCurrentCreature = nullptr;
 

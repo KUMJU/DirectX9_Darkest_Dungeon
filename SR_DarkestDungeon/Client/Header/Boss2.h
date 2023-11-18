@@ -167,15 +167,15 @@ protected:
 
 
 	// 가운데
-	_vec3	MiddleTop = _vec3(300.f, 110.f, 300.f);
-	_vec3	RightTop = _vec3(500.f, 110.f, 500.f);
-	_vec3	LeftTop = _vec3(100.f, 110.f, 500.f);
-	_vec3	LeftBottom = _vec3(100.f, 110.f, 100.f);
-	_vec3	RightBottom = _vec3(500.f, 110.f, 100.f);
-	_vec3	Right = _vec3(500.f, 110.f, 300.f);
-	_vec3	Left = _vec3(100.f, 110.f, 300.f);
-	_vec3	Top = _vec3(300.f, 110.f, 500.f);
-	_vec3	Bottom = _vec3(300.f, 110.f, 100.f);
+	_vec3	MiddleTop = _vec3(300.f, 80.f, 300.f);
+	_vec3	RightTop = _vec3(500.f, 80.f, 500.f);
+	_vec3	LeftTop = _vec3(100.f, 80.f, 500.f);
+	_vec3	LeftBottom = _vec3(100.f, 80.f, 100.f);
+	_vec3	RightBottom = _vec3(500.f, 80.f, 100.f);
+	_vec3	Right = _vec3(500.f, 80.f, 300.f);
+	_vec3	Left = _vec3(100.f, 80.f, 300.f);
+	_vec3	Top = _vec3(300.f, 80.f, 500.f);
+	_vec3	Bottom = _vec3(300.f, 80.f, 100.f);
 
 	_vec3	DashDir;
 
@@ -213,16 +213,32 @@ protected:
 	_bool	m_bPattern4ShotReady = false;
 	_bool	m_bPattern4Shot = false;
 
+	_int	m_iPattern1Count = 1;	// 2번 순서
+	_int	m_iPattern2Count = 2;	// 3번 순서
+	_int	m_iPattern4Count = 0;	// 1번 순서
+	_bool	m_bPhase1PatternChoose = false;
+
+	_int	m_iPhase1TotalPattern = 3;
+
 	_bool	m_bChange = false;
 
 	_bool	m_bPhase2Idle = false;
-	_bool	m_bPhase2Summon = false;
-	_bool	m_bPhase2Spike = false;
 	_bool	m_bPhase2Spike2 = false;
-	_bool	m_bPahse2SunkenReady = false;
 	_bool	m_bPhase2Sunken = false;
-	_bool	m_bPhase2SunkenAll = false;
 	
+	_bool	m_bPhase2Spike = false;
+	_bool	m_bPhase2Summon = false;
+	_bool	m_bPahse2SunkenReady = false;
+	_bool	m_bPhase2SunkenAll = false;
+
+	_int	m_iPhase2SpikeCount = 3;	// 4번 순서
+	_int	m_iPhase2SummonCount = 2;	// 3번 순서
+	_int	m_iPhase2SunkenReadyCount = 0;	// 1번 순서
+	_int	m_iPhase2SunkenAllCount = 1;	// 2번 순서
+	_bool	m_bPhase2PatternChoose = false;
+
+	_int	m_iPhase2TotalPattern = 4;
+
 	_bool	m_bPhase2FireCool = false;
 	_bool	m_bPhase2FireReady = false;
 	_bool	m_bPhase2Fire = false;
@@ -234,7 +250,7 @@ protected:
 	_int	m_iLaserTotalNum = 3;
 	_int	m_iMobTotalNum = 6;
 	_int	m_iSpikeTotalNum = 100;
-	_int	m_iSunkenTotalNum = 200;
+	_int	m_iSunkenTotalNum = 400;
 
 	_int	m_iSunkenAttackNum = 0;
 	_int	m_iSunkenAttackAllNum = 0;
@@ -258,7 +274,7 @@ protected:
 
 	float	m_fTeleportWhileTime = 1.2f;
 
-	float	m_fDeadTime = 0.12f * 26;
+	float	m_fDeadTime = 0.24f * 26;
 
 	float	m_fGroggyTime = 5.f;
 
@@ -269,7 +285,7 @@ protected:
 	float	m_fP2SunkenReadyTime = 1.f;
 	float	m_fP2SunkenTime = 3.f;
 	float	m_fP2SunkenIntervel = 0.1f;
-	float	m_fP2SunkenAllIntervel = 0.15f;
+	float	m_fP2SunkenAllIntervel = 0.1f;
 	float	m_fP2SunkenAllTime = 3.f;
 	
 	float	m_fP2FireCoolTime = 10.f;
@@ -281,7 +297,7 @@ protected:
 	float	m_fP1Laser1Time = 0.06f * 7;
 	float	m_fP1Laser2Time = 0.06f * 4;
 	float	m_fP1DashTime = 0.06f * 11;
-	float	m_fP1ChangeTime = 0.06f * 43;
+	float	m_fP1ChangeTime = 0.12f * 43;
 
 	float	m_fBullet1Intervel = 0.5f;
 	float	m_fBullet2Intervel = 0.06f;

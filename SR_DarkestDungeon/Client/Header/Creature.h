@@ -221,6 +221,7 @@ public:
 
 	// 버프 초기화
 	virtual void	Buff1Reset();					// 대단원 버프 초기화
+	virtual void	BuffReset();					// 버프 초기화
 
 	// 중독 공격
 	virtual void	BlightAttack(_int* _iDotDam);
@@ -236,6 +237,8 @@ public:
 
 	// 이펙트
 	void				SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool _bDodge);
+
+	void UpdateAttribute();
 
 protected:
 	virtual void			AddComponent();

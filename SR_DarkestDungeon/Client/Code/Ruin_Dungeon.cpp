@@ -239,10 +239,8 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
-
-		m_pRoom3->SetBattleTrigger(false);
 		dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
-
+		m_pRoom3->SetBattleTrigger(false);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
 	}
 
@@ -811,19 +809,26 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 
 	//Player
 	shared_ptr<CGameObject> m_pPlayer;
+	if (m_pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer()))
+	{
+		// 던전에서 시작해서 넘어온 경우
+		m_pPlayer->SetPos({ 70.f, 0.f, 2.f });
 
-	m_pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
-	m_pPlayer->SetPos({ 70.f, 0.f, 2.f });
-	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
+		dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(m_pPlayer->GetPos().x, m_pPlayer->GetPos().y, m_pPlayer->GetPos().z);
+		dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetAngle({ 0.f, 0.f, 0.f });
 
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
-	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(m_pPlayer->GetPos().x, m_pPlayer->GetPos().y, m_pPlayer->GetPos().z);
-	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetAngle({0.f, 0.f, 0.f});
+		for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+		{
+			m_pLayer->CreateGameObject(dynamic_pointer_cast<CHero>(iter)->GetObjKey(), iter);
+		}
 
+		dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInBattle(false);
+	}
 
 	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
 	{
-		m_pLayer->CreateGameObject(dynamic_pointer_cast<CHero>(iter)->GetObjKey(), iter);
+		dynamic_pointer_cast<CHero>(iter)->SetInDungeon(true);
 	}
 
 	//// GameObjects
@@ -953,16 +958,20 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pBoneCourtier_1 = make_shared<CBoneCourtier>(m_pGraphicDev);
 
 	// heroes
-	shared_ptr<CGameObject> m_pSheldBreaker1 = make_shared<CShieldBreaker>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
-	shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
+	//shared_ptr<CGameObject> m_pSheldBreaker1 = make_shared<CShieldBreaker>(m_pGraphicDev);
+	//shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
+	//shared_ptr<CGameObject> m_pJester = make_shared<CJester>(m_pGraphicDev);
+	//shared_ptr<CGameObject> m_pVestal = make_shared<CVestal>(m_pGraphicDev);
 
 	vector<shared_ptr<CGameObject>> Heroes_v;
-	Heroes_v.push_back(m_pSheldBreaker1);
-	Heroes_v.push_back(m_pHighwayman);
-	Heroes_v.push_back(m_pJester);
-	Heroes_v.push_back(m_pVestal);
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		Heroes_v.push_back(iter);
+	}
+	//Heroes_v.push_back(m_pSheldBreaker1);
+	//Heroes_v.push_back(m_pHighwayman);
+	//Heroes_v.push_back(m_pJester);
+	//Heroes_v.push_back(m_pVestal);
 	//dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroVec(&Heroes_v);
 
 	// 방에 GameObject 넣기
@@ -997,17 +1006,26 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room3_v4.push_back(m_pBoneSoldier_2);
 	Room3_v4.push_back(m_pBoneCourtier_1);
 
-	Room3_v4.push_back(m_pSheldBreaker1);
-	Room3_v4.push_back(m_pHighwayman);
-	Room3_v4.push_back(m_pJester);
-	Room3_v4.push_back(m_pVestal);
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		Room3_v4.push_back(iter);
+	}
+
+	//Room3_v4.push_back(m_pSheldBreaker1);
+	//Room3_v4.push_back(m_pHighwayman);
+	//Room3_v4.push_back(m_pJester);
+	//Room3_v4.push_back(m_pVestal);
 
 	// heroes
 	vector<shared_ptr<CGameObject>> Room3_v2;
-	Room3_v2.push_back(m_pSheldBreaker1);
-	Room3_v2.push_back(m_pHighwayman);
-	Room3_v2.push_back(m_pVestal);
-	Room3_v2.push_back(m_pJester);
+	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())
+	{
+		Room3_v2.push_back(iter);
+	}
+	//Room3_v2.push_back(m_pSheldBreaker1);
+	//Room3_v2.push_back(m_pHighwayman);
+	//Room3_v2.push_back(m_pVestal);
+	//Room3_v2.push_back(m_pJester);
 	m_pRoom3->PushHeroesVector(Room3_v2);
 
 	// monsters
@@ -1077,14 +1095,14 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_BrigandCutthroat", m_pBoneSoldier_1);
 	m_pLayer->CreateGameObject(L"Obj_BrigandBloodletter", m_pBoneSoldier_2);
 	m_pLayer->CreateGameObject(L"Obj_BrigandFusilier", m_pBoneCourtier_1);
-	m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker1);
-	dynamic_pointer_cast<CHero>(m_pSheldBreaker1)->SetObjKey(L"Obj_ShieldBreaker");
-	m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
-	dynamic_pointer_cast<CHero>(m_pHighwayman)->SetObjKey(L"Obj_Highwayman");
-	m_pLayer->CreateGameObject(L"Obj_Jester", m_pJester);
-	dynamic_pointer_cast<CHero>(m_pJester)->SetObjKey(L"Obj_Jester");
-	m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
-	dynamic_pointer_cast<CHero>(m_pVestal)->SetObjKey(L"Obj_Vestal");
+	//m_pLayer->CreateGameObject(L"Obj_ShieldBreaker", m_pSheldBreaker1);
+	//dynamic_pointer_cast<CHero>(m_pSheldBreaker1)->SetObjKey(L"Obj_ShieldBreaker");
+	//m_pLayer->CreateGameObject(L"Obj_Highwayman", m_pHighwayman);
+	//dynamic_pointer_cast<CHero>(m_pHighwayman)->SetObjKey(L"Obj_Highwayman");
+	//m_pLayer->CreateGameObject(L"Obj_Jester", m_pJester);
+	//dynamic_pointer_cast<CHero>(m_pJester)->SetObjKey(L"Obj_Jester");
+	//m_pLayer->CreateGameObject(L"Obj_Vestal", m_pVestal);
+	//dynamic_pointer_cast<CHero>(m_pVestal)->SetObjKey(L"Obj_Vestal");
 	m_pLayer->CreateGameObject(L"OBJ_Trap", m_pTrap1);
 	m_pLayer->CreateGameObject(L"OBJ_Obstacle", m_pObstacle1);
 	m_pLayer->CreateGameObject(L"OBJ_Obstacle", m_pObstacle2);
@@ -1101,6 +1119,7 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 
 
 	//PlayerObj
+	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 	m_pLayer->CreateGameObject(L"Obj_PlayerHand", dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPlayerHand());
 
 	dynamic_pointer_cast<CLayer>(m_pLayer)->AwakeLayer();

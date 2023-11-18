@@ -24,11 +24,11 @@ HRESULT CBrigandFusilier::ReadyGameObject()
 	m_iSize = 1;
 
 	// 스탯 설정
-	m_tCommonStat.iHp = 30;
-	m_tCommonStat.iMaxHp = 30;
+	m_tCommonStat.iHp = 10;
+	m_tCommonStat.iMaxHp = 10;
 	m_tCommonStat.iDodge = 10;
 	m_tCommonStat.iSpeed = 5;
-	m_tCommonStat.iAttackPower = 5;
+	m_tCommonStat.iAttackPower = 3;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
