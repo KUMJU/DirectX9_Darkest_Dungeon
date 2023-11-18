@@ -89,6 +89,14 @@ HRESULT CPlayer::ReadyGameObject()
 	//m_pLight2 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 	//m_pLight3 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 
+	// 파티클 테스트 삭제 예정
+	{
+		m_pParticle = make_shared<CFireworkParticle>();
+		m_pParticle->AddComponent();
+		m_pParticle->Reset();
+		m_pParticle->Init(m_pGraphicDev, L"../Bin/Resource/Image/Particle/flare.bmp");
+	}
+
 	return S_OK;
 }
 
@@ -149,6 +157,8 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 	m_pLight2->SetPosition({vPos->x, vPos->y + 15.f, vPos->z +2.f});
 	m_pLight3->SetPosition({ vPos ->x, vPos->y + 15.f, vPos->z + 2.f});
 
+	if (m_pParticle && m_pParticle->GetIsActive())
+		m_pParticle->UpdateGameObject(fTimeDelta);
 
 	return iExit;
 }
@@ -161,6 +171,9 @@ void CPlayer::LateUpdateGameObject()
 	pPos;
 
 	int a = 3;
+
+	if (m_pParticle && m_pParticle->GetIsActive())
+		m_pParticle->LateUpdateGameObject();
 
 	CGameObject::LateUpdateGameObject();
 }
@@ -405,6 +418,22 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		DecreaseHP(1);
 	}
 
+	//// 불꽃놀이 UI 이펙트 테스트
+	//if (GetAsyncKeyState('F') & 0x8000)
+	//{
+	//	if (m_pParticle && !m_pParticle->GetIsActive())
+	//	{
+	//		m_pParticle->SettingOrthogonal(_vec3(0, 0, 0.9f), _vec3(0.f, 0.f, 0.f), 100);
+	//		m_pParticle->SetActive(true);
+	//	}
+	//}
+
+	//// 불꽃놀이 UI 이펙트 테스트
+	//if (GetAsyncKeyState('G') & 0x8000)
+	//{
+	//	m_pParticle->Setting(m_pTransformCom->GetPos(), 1000);
+	//	m_pParticle->SetActive(true);
+	//}
 }
 
 void CPlayer::MouseInput()

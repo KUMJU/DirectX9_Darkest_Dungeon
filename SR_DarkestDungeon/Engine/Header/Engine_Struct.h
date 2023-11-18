@@ -115,6 +115,17 @@ namespace Engine
 			_radius = 0.0f;
 		};
 
+		bool isPointInside(_vec3& p)
+		{
+			_vec3 vLength = _vec3(p.x - _center.x, p.y - _center.y, p.z - _center.z);
+
+			if (D3DXVec3Length(&vLength) < _radius)
+				return true;
+
+			else
+				return false;
+		}
+
 		D3DXVECTOR3 _center;
 		float       _radius;
 

@@ -39,13 +39,17 @@ _int CEffect::UpdateGameObject(const _float& fTimeDelta)
             if (m_pAnimatorCom->CheckFinish())
             {
                 CEffectMgr::GetInstance()->ReturnEffect(dynamic_pointer_cast<CEffect>(shared_from_this()));
+                printf("이펙트 종료\n");
             }
         }
 
         else
         {
             if (m_fAnimTime <= 0.f)
+            {
                 CEffectMgr::GetInstance()->ReturnEffect(dynamic_pointer_cast<CEffect>(shared_from_this()));
+                printf("이펙트 종료\n");
+            }
 
             else
             {
@@ -94,6 +98,9 @@ void CEffect::RenderGameObject()
         m_pTransformCom->SetPosition(m_vPosOrigin.x + m_vPosGap.x, m_vPosOrigin.y + m_vPosGap.y, m_vPosOrigin.z + m_vPosGap.z);
 
     m_pTransformCom->SetScale(m_vScale.x * m_vScaleGap.x, m_vScale.y * m_vScaleGap.y, m_vScale.z * m_vScaleGap.z);
+
+    printf("Effect : %d\n", m_iNum);
+    printf("포지션 : %f, %f, %f\n", m_pTransformCom->GetPos()->x, m_pTransformCom->GetPos()->y, m_pTransformCom->GetPos()->z);
 
     D3DXMATRIX mat = *m_pTransformCom->GetWorld();
 
@@ -483,8 +490,15 @@ void CEffect::Fade()
 
 void CEffect::Reset()
 {
+    printf("Effect : %d ", m_iNum);
+    printf("리셋\n");
+
+    m_mapComponent->clear();
+    AddComponent();
+
     m_fDeltaTime = 0.f;
     m_vScale = { 0.f, 0.f, 0.f };
+    m_vPos = nullptr;
     m_vPosOrigin = { 0.f, 0.f, 0.f };
     m_vPosGap = { 0.f, 0.f, 0.f };
     m_vScaleGap = { 0.f, 0.f, 0.f };
@@ -493,6 +507,13 @@ void CEffect::Reset()
     m_fAnimTime = 0.f;
     m_bLoop = false;
     m_iAlpha = 255;
+
+    m_pTransformCom->SetPosition(-100.f, 0.f, -100.f);
+    m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
+    m_pTextureCom1->SetTextureKey(L"", TEX_NORMAL);
+    m_pTextureCom2->SetTextureKey(L"", TEX_NORMAL);
+
+    m_pAnimatorCom->SetAnimKey(L"", 0.f);
 
     m_fAccumMoveTime = 0.f;
     m_fAccumFadeTime = 0.f;

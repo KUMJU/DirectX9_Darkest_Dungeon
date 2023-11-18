@@ -3,6 +3,8 @@
 #include"GameObject.h"
 #include "PlayerHand.h"
 
+#include "FireworkParticle.h"
+
 BEGIN(Engine)
 
 class CRcTex;
@@ -217,4 +219,9 @@ private:
 private:
 	virtual void	Free();
 
+
+
+	// 테스트용 추후 삭제 예정
+	private:
+		shared_ptr<CFireworkParticle> m_pParticle = nullptr;
 };

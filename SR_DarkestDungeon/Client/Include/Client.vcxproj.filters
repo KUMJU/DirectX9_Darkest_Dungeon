@@ -272,9 +272,6 @@
     <ClCompile Include="..\Code\DungeonStatus.cpp">
       <Filter>01. GameObject\03. UI\14. DungeonStatus</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ExplosionParticle.cpp">
-      <Filter>01. GameObject\11. Particle\ExplosionParticle</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\FireworkParticle.cpp">
       <Filter>01. GameObject\11. Particle\FireworkParticle</Filter>
     </ClCompile>
@@ -554,9 +551,6 @@
     <ClInclude Include="..\Header\DungeonStatus.h">
       <Filter>01. GameObject\03. UI\14. DungeonStatus</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ExplosionParticle.h">
-      <Filter>01. GameObject\11. Particle\ExplosionParticle</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\FireworkParticle.h">
       <Filter>01. GameObject\11. Particle\FireworkParticle</Filter>
     </ClInclude>
@@ -721,9 +715,6 @@
     </Filter>
     <Filter Include="01. GameObject\11. Particle">
       <UniqueIdentifier>{07e1280b-a4bf-4c25-8ca5-6273dc9aad49}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. GameObject\11. Particle\ExplosionParticle">
-      <UniqueIdentifier>{916f2f86-f0ee-47d7-bf0d-0e7c9c0e93ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. GameObject\11. Particle\FireworkParticle">
       <UniqueIdentifier>{09fbb5f6-f85b-4474-9b81-9d11f9de4058}</UniqueIdentifier>

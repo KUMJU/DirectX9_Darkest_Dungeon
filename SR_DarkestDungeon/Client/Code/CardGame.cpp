@@ -6,6 +6,7 @@
 
 #include"CameraMgr.h"
 #include"SoundMgr.h"
+#include "ParticleMgr.h"
 
 #include"Player.h"
 
@@ -23,6 +24,18 @@ HRESULT CCardGame::ReadyGameObject()
 
 	m_vCardList.reserve(10);
 	m_vAnswer.reserve(5);
+
+	{
+		m_pParticle1 = make_shared<CFireworkParticle>();
+		m_pParticle1->AddComponent();
+		m_pParticle1->Reset();
+		m_pParticle1->Init(m_pGraphicDev, L"../Bin/Resource/Image/Particle/flare.bmp");
+
+		m_pParticle2 = make_shared<CFireworkParticle>();
+		m_pParticle2->AddComponent();
+		m_pParticle2->Reset();
+		m_pParticle2->Init(m_pGraphicDev, L"../Bin/Resource/Image/Particle/flare.bmp");
+	}
 
 	__super::ReadyGameObject();
 
@@ -65,11 +78,30 @@ _int CCardGame::UpdateGameObject(const _float& fTimeDelta)
 				CSoundMgr::GetInstance()->StopAll();
 				CSoundMgr::GetInstance()->PlaySound(L"Minigame_Clear.wav", CHANNELID::PLAYER, 1.f);
 				m_bClearSoundOn = true;
+
+				if (m_pParticle1 && !m_pParticle1->GetIsActive())
+				{
+					m_pParticle1->SettingOrthogonal(_vec3(-350.f, 0.f, 0.9f), _vec3(0.f, 0.f, 0.f), 100);
+					m_pParticle1->SetActive(true);
+				}
+
+				if (m_pParticle2 && !m_pParticle2->GetIsActive())
+				{
+					m_pParticle2->SettingOrthogonal(_vec3(350.f , 0.f, 0.9f), _vec3(0.f, 0.f, 0.f), 100);
+					m_pParticle2->SetActive(true);
+				}
 			}
+
+			if (m_pParticle1 && m_pParticle1->GetIsActive())
+				m_pParticle1->UpdateGameObject(fTimeDelta);
+			if (m_pParticle2 && m_pParticle2->GetIsActive())
+				m_pParticle2->UpdateGameObject(fTimeDelta);
 
 			m_fFreezeTime += fTimeDelta;
 
 			if (m_fFreezeTime > 6.f) {
+				m_pParticle1->Reset();
+				m_pParticle2->Reset();
 				End();
 			}
 
@@ -93,6 +125,12 @@ void CCardGame::LateUpdateGameObject()
 	for (auto& iter : m_vCardList) {
 		iter->LateUpdateGameObject();
 	}
+
+	if (m_pParticle1 && m_pParticle1->GetIsActive())
+		m_pParticle1->LateUpdateGameObject();
+
+	if (m_pParticle2 && m_pParticle2->GetIsActive())
+		m_pParticle2->LateUpdateGameObject();
 
 }
 

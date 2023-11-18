@@ -219,7 +219,7 @@ void CBoss2::FSM(const _float& fTimeDelta)
 	// Idle상태
 	if (m_eCurAnimState == EBossState::P1_IDLE)
 	{
-		if (m_bIdle)
+		/*if (m_bIdle)
 		{
 			m_fIdleTime -= fTimeDelta;
 			if (m_iHp <= 100)
@@ -257,7 +257,7 @@ void CBoss2::FSM(const _float& fTimeDelta)
 				m_eCurAnimState = EBossState::P1_TELEPORT;
 				break;
 			}
-		}
+		}*/
 	}
 
 	// Teleport상태
