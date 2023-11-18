@@ -675,7 +675,7 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_target_3_1.png", 1, bDefault);
 		CreateNewTexture(L"UI_HeroStat_Recommend_Target_4", TEX_NORMAL,
 			L"../Bin/Resource/Image/UI/Hero/Skill/armatureName_skill_strength_target_4_1.png", 1, bDefault);
-
+		 
 		// 스킬 활성화 상태
 		CreateNewTexture(L"UI_HeroStat_Selected_Skill", TEX_NORMAL,
 			L"../Bin/Resource/Image/UI/Hero/selected_ability.png", 1, bDefault);
@@ -830,7 +830,7 @@ void CResourceMgr::UITextureLoad()
 
 	// Battle UI
 	{
-		// Damage Number Font
+		// Damage Number Font 
 		{
 			CreateNewTexture(L"UI_Damage0", TEX_NORMAL,
 				L"../Bin/Resource/Image/UI/Battle/Number/Damage/0.png", 1, bDefault);

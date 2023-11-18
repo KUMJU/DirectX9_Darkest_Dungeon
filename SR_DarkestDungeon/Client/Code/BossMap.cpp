@@ -348,7 +348,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 		m_pLayer->CreateGameObject(L"Obj_Spike", pVecSpike[i]);
 	}
 	// ¼ºÅ«
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 400; i++)
 	{
 		pSunken = nullptr;
 		pSunken = make_shared<CSunken>(m_pGraphicDev);
@@ -455,7 +455,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	{
 		Room1_v1.push_back(pVecSpike[i]);
 	}
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 400; i++)
 	{
 		Room1_v1.push_back(pVecSunken[i]);
 	}

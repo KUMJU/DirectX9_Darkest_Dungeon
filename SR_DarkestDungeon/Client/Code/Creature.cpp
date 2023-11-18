@@ -805,6 +805,14 @@ void CCreature::Buff1Reset()
 	for (int i = 0; i < 4; i++) m_iBuff1Dot[i] = 0;
 }
 
+void CCreature::BuffReset()
+{
+	m_bState3[0] = false;
+	m_bState3[1] = false;
+	for (int i = 0; i < 4; i++) m_iBuff1Dot[i] = 0;
+	for (int i = 0; i < 4; i++) m_iBuff2Dot[i] = 0;
+}
+
 void CCreature::BlightAttack(_int* _iDotDam)
 {
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
@@ -892,6 +900,28 @@ void CCreature::SetEffectInfo(shared_ptr<CSkill> _pSkill, _bool _bTarget, _bool 
 			pEffect->SetSkillEffect(_pSkill->GetEffectAnimKey(), textureInfo->vImgSize, m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
 			pEffect->SetActive(true);
 		}
+	}
+}
+
+void CCreature::UpdateAttribute()
+{
+	// 스탯갱신
+	m_pStatInfo->SetHp(m_tCommonStat.iHp);
+	for (int i = 0; i < 3; i++)
+	{
+		if (m_bState[i])
+			m_pStatInfo->SetAttribute(i);
+		else
+			m_pStatInfo->SetAttributeOff(i);
+	}
+
+	// 버프, 디버프
+	for (int i = 5; i < 7; i++)
+	{
+		if (m_bState3[i - 5])
+			m_pStatInfo->SetAttribute(i);
+		else
+			m_pStatInfo->SetAttributeOff(i);
 	}
 }
 

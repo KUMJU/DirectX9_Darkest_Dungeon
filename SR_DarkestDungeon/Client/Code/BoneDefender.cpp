@@ -28,7 +28,7 @@ HRESULT CBoneDefender::ReadyGameObject()
 	m_tCommonStat.iMaxHp = 50;
 	m_tCommonStat.iDodge = 5;
 	m_tCommonStat.iSpeed = 1;
-	m_tCommonStat.iAttackPower = 10;
+	m_tCommonStat.iAttackPower = 5;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};
@@ -37,7 +37,7 @@ HRESULT CBoneDefender::ReadyGameObject()
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneDefender_1 = make_shared<CSkill>
 		(L"Attack1", L"Bone Defender_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.f, 1.2f, 1.5f,
-			m_bArrAttack1, 1, 10, 0, true);
+			m_bArrAttack1, 1, 0, 0, true);
 	pVecSkill.push_back(m_pBoneDefender_1);
 
 	int Skill2_Dot[2] = { 0,0 };

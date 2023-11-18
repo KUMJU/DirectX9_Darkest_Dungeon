@@ -24,8 +24,8 @@ HRESULT CBoneCourtier::ReadyGameObject()
 	m_iSize = 1;
 
 	// Ω∫≈» º≥¡§
-	m_tCommonStat.iHp = 40;
-	m_tCommonStat.iMaxHp = 40;
+	m_tCommonStat.iHp = 20;
+	m_tCommonStat.iMaxHp = 20;
 	m_tCommonStat.iDodge = 20;
 	m_tCommonStat.iSpeed = 7;
 	m_tCommonStat.iAttackPower = 5;
@@ -37,15 +37,15 @@ HRESULT CBoneCourtier::ReadyGameObject()
 	_bool	bTargetPos1[4] = { 1,1,0,0 };
 	shared_ptr<CSkill> m_pBoneCourtier_1 = make_shared<CSkill>
 		(L"Attack1", L"Bone Courtier_Attack1", bTargetPos1, Skill1_Dot, 0.f, 0.f, 1.f, 1.2f,
-			m_bArrAttack1, 0, 20, 0, true);
+			m_bArrAttack1, 0, 50, 0, true);
 	pVecSkill.push_back(m_pBoneCourtier_1);
 
-	int Skill2_Dot[2] = { 2,3 };
+	int Skill2_Dot[2] = { 1,3 };
 	_bool	bArrAttack2[8] = { 0, 1, 0, 0, 0, 0, 0, 0 };
 	_bool	bTargetPos2[4] = { 1,1,1,1 };
 	shared_ptr<CSkill> m_pBoneCourtier_2 = make_shared<CSkill>
 		(L"Attack2", L"Bone Courtier_Attack2", bTargetPos2, Skill2_Dot, 0.f, 0.f, 1.f, 1.2f,
-			bArrAttack2, 0, 20);
+			bArrAttack2, 0, 50);
 	pVecSkill.push_back(m_pBoneCourtier_2);
 	SetSkill(pVecSkill);
 

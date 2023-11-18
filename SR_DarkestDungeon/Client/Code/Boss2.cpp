@@ -129,7 +129,8 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 		m_fDashTime = 0.12f * 11;
 		m_bPattern2 = false;
 		m_bGroggy = true;
-		m_eCurAnimState = EBossState::P1_TELEPORT;
+		//m_eCurAnimState = EBossState::P1_TELEPORT;
+		m_eCurAnimState = EBossState::P1_GROGGY;
 	}
 
 	// 키 입력
@@ -197,7 +198,7 @@ void CBoss2::AddComponent()
 void CBoss2::OnCollide(shared_ptr<CGameObject> _pObj)
 {
 
-	if (ECollideID::WALL == _pObj->GetColType())
+	if (ECollideID::WALL == _pObj->GetColType() && m_eCurAnimState == EBossState::P1_PATTERN2DASH)
 	{
 		if (m_bAbleWallCollsion)
 		{
@@ -238,25 +239,37 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		}
 		else if (!m_bIdle)
 		{
-			switch (rand() % 3)
+			if (m_iPattern1Count == 0 && !m_bPhase1PatternChoose)
 			{
-			case 0:
-				m_bPattern2 = true;
-				m_eCurAnimState = EBossState::P1_TELEPORT;
-				break;
-			case 1:
-				m_bPattern4 = true;
-				m_eCurAnimState = EBossState::P1_TELEPORT;
-				break;
-			case 2:
+				m_iPattern1Count = m_iPhase1TotalPattern - 1;
+				m_bPhase1PatternChoose = true;
+				m_iPattern2Count--;
+				m_iPattern4Count--;
+
 				m_bPattern1 = true;
 				m_eCurAnimState = EBossState::P1_TELEPORT;
-				break;
-			case 3:
-				m_bPattern3 = true;
-				m_eCurAnimState = EBossState::P1_TELEPORT;
-				break;
 			}
+			else if (m_iPattern2Count == 0 && !m_bPhase1PatternChoose)
+			{
+				m_iPattern2Count = m_iPhase1TotalPattern - 1;
+				m_bPhase1PatternChoose = true;
+				m_iPattern1Count--;
+				m_iPattern4Count--;
+
+				m_bPattern2 = true;
+				m_eCurAnimState = EBossState::P1_TELEPORT;
+			}
+			else if (m_iPattern4Count == 0 && !m_bPhase1PatternChoose)
+			{
+				m_iPattern4Count = m_iPhase1TotalPattern - 1;
+				m_bPhase1PatternChoose = true;
+				m_iPattern1Count--;
+				m_iPattern2Count--;
+
+				m_bPattern4 = true;
+				m_eCurAnimState = EBossState::P1_TELEPORT;
+			}
+			m_bPhase1PatternChoose = false;
 		}
 	}
 
@@ -361,11 +374,11 @@ void CBoss2::FSM(const _float& fTimeDelta)
 				m_eCurAnimState = EBossState::P1_CHANGE;
 				Teleport(_vec3(300.f, 30.f, 300.f));
 			}
-			else if (m_bGroggy)
+			/*else if (m_bGroggy)
 			{
 				m_eCurAnimState = EBossState::P1_GROGGY;
 				Teleport(_vec3(300.f, 30.f, 300.f));
-			}
+			}*/
 			else
 			{
 				m_eCurAnimState = EBossState::P1_IDLE;
@@ -588,7 +601,7 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			m_fP1ChangeTime -= fTimeDelta;
 			if (m_fP1ChangeTime < 0.f)
 			{
-				m_fP1ChangeTime = 0.06f * 43;
+				m_fP1ChangeTime = 0.12f * 43;
 				m_bChange = false;
 				m_eCurAnimState = EBossState::P2_IDLE;
 				m_bPhase2Idle = true;
@@ -602,6 +615,7 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		m_fDeadTime -= fTimeDelta;
 		if (m_fDeadTime < 0.f)
 		{
+			m_fDeadTime = 0.24f * 26;
 			m_eCurAnimState = EBossState::ENUM_END;
 			m_pTransformCom->SetPosition(300.f, -300.f, 300.f);
 			SetEnable(false);
@@ -627,25 +641,73 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		{
 			m_fP2IdleTime = 2.f;
 			m_bPhase2Idle = false;
-			switch (rand() % 4)
+
+			if (m_iPhase2SpikeCount == 0 && !m_bPhase2PatternChoose)
 			{
-			case 0:
+				m_iPhase2SpikeCount = m_iPhase2TotalPattern - 1;
+				m_bPhase2PatternChoose = true;
+				m_iPhase2SummonCount--;
+				m_iPhase2SunkenReadyCount--;
+				m_iPhase2SunkenAllCount--;
+
 				m_eCurAnimState = EBossState::P2_SPIKE;
 				m_bPhase2Spike = true;
-				break;
-			case 1:
+			}
+			else if (m_iPhase2SummonCount == 0 && !m_bPhase2PatternChoose)
+			{
+				m_iPhase2SummonCount = m_iPhase2TotalPattern - 1;
+				m_bPhase2PatternChoose = true;
+				m_iPhase2SpikeCount--;
+				m_iPhase2SunkenReadyCount--;
+				m_iPhase2SunkenAllCount--;
+
 				m_eCurAnimState = EBossState::P2_SUMMON;
 				m_bPhase2Summon = true;
-				break;
-			case 2:
+			}
+			else if (m_iPhase2SunkenReadyCount == 0 && !m_bPhase2PatternChoose)
+			{
+				m_iPhase2SunkenReadyCount = m_iPhase2TotalPattern - 1;
+				m_bPhase2PatternChoose = true;
+				m_iPhase2SpikeCount--;
+				m_iPhase2SummonCount--;
+				m_iPhase2SunkenAllCount--;
+
 				m_eCurAnimState = EBossState::P2_SUNKEN;
 				m_bPahse2SunkenReady = true;
-				break;
-			case 3:
+			}
+			else if (m_iPhase2SunkenAllCount == 0 && !m_bPhase2PatternChoose)
+			{
+				m_iPhase2SunkenAllCount = m_iPhase2TotalPattern - 1;
+				m_bPhase2PatternChoose = true;
+				m_iPhase2SpikeCount--;
+				m_iPhase2SummonCount--;
+				m_iPhase2SunkenReadyCount--;
+
 				m_eCurAnimState = EBossState::P2_SUNKENALL;
 				m_bPhase2SunkenAll = true;
-				break;
 			}
+			m_bPhase2PatternChoose = false;
+
+
+			//switch (rand() % 4)
+			//{
+			//case 0:
+			//	m_eCurAnimState = EBossState::P2_SPIKE;
+			//	m_bPhase2Spike = true;
+			//	break;
+			//case 1:
+			//	m_eCurAnimState = EBossState::P2_SUMMON;
+			//	m_bPhase2Summon = true;
+			//	break;
+			//case 2:
+			//	m_eCurAnimState = EBossState::P2_SUNKEN;
+			//	m_bPahse2SunkenReady = true;
+			//	break;
+			//case 3:
+			//	m_eCurAnimState = EBossState::P2_SUNKENALL;
+			//	m_bPhase2SunkenAll = true;
+			//	break;
+			//}
 		}
 	}
 
@@ -791,7 +853,7 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		m_fP2SunkenAllIntervel -= fTimeDelta;
 		if (m_fP2SunkenAllIntervel < 0.f)
 		{
-			m_fP2SunkenAllIntervel = 0.15f;
+			m_fP2SunkenAllIntervel = 0.1f;
 			// 성큰 소환
 			// 위
 			vTargetPos = _vec3(300.f, 5.f, 360.f);
@@ -850,7 +912,6 @@ void CBoss2::FSM(const _float& fTimeDelta)
 					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
 						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
 					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
-					m_iSunkenAttackAllNum++;
 					break;
 				}
 			}
@@ -881,6 +942,36 @@ void CBoss2::FSM(const _float& fTimeDelta)
 					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
 						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
 					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+					break;
+				}
+			}
+			//좌
+			vTargetPos = _vec3(240.f, 5.f, 300.f);
+			vDir = vTargetPos - vPos;
+			D3DXVec3Normalize(&vDir, &vDir);
+			for (int i = 0; i < m_iSunkenTotalNum; i++)
+			{
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
+					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
+					break;
+				}
+			}
+			//우
+			vTargetPos = _vec3(360.f, 5.f, 300.f);
+			vDir = vTargetPos - vPos;
+			D3DXVec3Normalize(&vDir, &vDir);
+			for (int i = 0; i < m_iSunkenTotalNum; i++)
+			{
+				if (!dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecSunken[i])->SetEnable(true);
+					dynamic_pointer_cast<CTransform>(m_pVecSunken[i]->GetComponent(L"Com_Transform", ID_DYNAMIC))->
+						SetPosition(m_vPos.x + vDir.x * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1), 12.f, m_vPos.z + vDir.z * m_iSunkentIntervel * (m_iSunkenAttackAllNum + 1));
+					m_pVecSunken[i]->SetAnimState(ESunkenState::ATTACK);
 					m_iSunkenAttackAllNum++;
 					break;
 				}
@@ -892,7 +983,7 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		if (m_fP2SunkenAllTime < 0.f)
 		{
 			m_iSunkenAttackAllNum = 0;
-			m_fP2SunkenAllIntervel = 0.15f;
+			m_fP2SunkenAllIntervel = 0.1f;
 
 			m_fP2SunkenAllTime = 3.f;
 
@@ -1056,7 +1147,7 @@ void CBoss2::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Dash", 0.12f);
 			break;
 		case EBossState::P1_CHANGE:
-			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Change", 0.06f);
+			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Change", 0.12f);
 			break;
 		case EBossState::P1_GROGGY:
 			m_pTextureCom->SetAnimKey(L"Boss_Phase1_Groggy", 0.12f);
@@ -1065,7 +1156,7 @@ void CBoss2::ChangeAnim()
 			m_pTextureCom->SetAnimKey(L"Boss_Phase2_Idle", 0.06f);
 			break;
 		case EBossState::P2_DEATH:
-			m_pTextureCom->SetAnimKey(L"Boss_Phase2_Death", 0.12f);
+			m_pTextureCom->SetAnimKey(L"Boss_Phase2_Death", 0.24f);
 			break;
 		}
 		m_ePrevAnimState = m_eCurAnimState;
@@ -1307,7 +1398,7 @@ void CBoss2::ShootBullet3()
 			_vec3 vTarget;
 			if (m_bPhase2)
 			{
-				vTarget = m_vPos + _vec3((-6.f + (rand() % 2 + 1) * 4.f) * 1280.f, -2.f, (-6.f + (rand() % 2 + 1) * 4.f) * 1280.f);
+				vTarget = m_vPos + _vec3((-10.f + (rand() % 4 + 1) * 4.f) * 1280.f, -0.5f * 1280.f, (-10.f + (rand() % 4 + 1) * 4.f) * 1280.f);
 			}
 			else
 			{
