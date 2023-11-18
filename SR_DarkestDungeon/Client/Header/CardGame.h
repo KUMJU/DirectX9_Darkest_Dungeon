@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "FireworkParticle.h"
 
 BEGIN(Engine)
 
@@ -68,6 +69,9 @@ private:
 	shared_ptr<CTransform>	m_pTransformCom = nullptr;
 	shared_ptr<CRcTex>		m_pRCTexCom = nullptr;
 	shared_ptr<CTexture>	m_pTextureCom = nullptr;
+
+	shared_ptr<CFireworkParticle> m_pParticle1 = nullptr;
+	shared_ptr<CFireworkParticle> m_pParticle2 = nullptr;
 
 };
 

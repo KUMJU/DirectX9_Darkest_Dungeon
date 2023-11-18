@@ -918,7 +918,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			// 중독, 출혈 데미지 이펙트가 발생중인 시간
 			if (m_bWhileDotDamEffectRender)
 			{
-				printf("중독, 출혈 데미지 이펙트 시간\m_fDotDamageEffectTime : %f\n", m_fDotDamageEffectTime);
+				printf("중독, 출혈 데미지 이펙트 시간\nm_fDotDamageEffectTime : %f\n", m_fDotDamageEffectTime);
 
 				m_fDotDamageEffectTime -= fTimeDelta;
 

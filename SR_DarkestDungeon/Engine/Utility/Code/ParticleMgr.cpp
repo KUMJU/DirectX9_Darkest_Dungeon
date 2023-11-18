@@ -47,7 +47,7 @@ void CParticleMgr::SetParticleMgr(LPDIRECT3DDEVICE9 _pGraphicDev)
 		pParticle->SetNum(i);
 		pParticle->AddComponent();
 		pParticle->Reset();
-		pParticle->Init(m_pGraphicDev, L"../Bin/Resource/Image/Particle/Explosion_04.png");
+		pParticle->Init(m_pGraphicDev, L"../Bin/Resource/Image/Particle/sprite_blood_particle 1.png");
 		m_pExplosionParticleList.push_back(pParticle);
 	}
 }

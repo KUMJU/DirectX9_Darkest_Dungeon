@@ -3,7 +3,7 @@
 
 CExplosionParticle::CExplosionParticle()
 {
-	m_fSize = 1.f;
+	m_fSize = 0.5f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -61,7 +61,7 @@ void CExplosionParticle::ResetParticle(PARTICLE_ATTRIBUTE* attribute)
 	attribute->vPosition = m_vOrigin;
 
 	_vec3 min = _vec3(-1.f, -1.f, -1.f);
-	_vec3 max = _vec3(1.f, 1.f, 1.f);
+	_vec3 max = _vec3(1.f, 0.f, 1.f);
 
 	GetRandomVector(
 		&attribute->vVelocity,

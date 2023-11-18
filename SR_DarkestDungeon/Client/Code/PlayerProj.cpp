@@ -140,10 +140,19 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 		pEffect->SetProjEffect(m_strEffectAnimKey, *m_pTransmCom->GetPos(), 0.5f);
 		pEffect->SetActive(true);
 
+		shared_ptr<CParticleSystem> pParticle = CParticleMgr::GetInstance()->GetExplosionParticle();
+
+		if (pParticle)
+		{
+			pParticle->SettingOrigin(m_pTransmCom->GetPos(), 50);
+			pParticle->SetActive(true);
+		}
+
 		m_pTransmCom->SetPosition(200.f, -200.f, 200.f);
 
 		m_bTestBool = false;
 		m_bEnable = false;
+
 	}
 	else if (ECollideID::BOSS == _pObj->GetColType())
 	{
@@ -167,6 +176,14 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 			pEffect2->SetAnimEffect(L"Yellow_Blood", *m_pTransmCom->GetPos(), _vec3(3.f, 3.f, 3.f), 1.f, false);
 			pEffect2->SetActive(true);
 			break;
+		}
+
+		shared_ptr<CParticleSystem> pParticle = CParticleMgr::GetInstance()->GetExplosionParticle();
+
+		if (pParticle)
+		{
+			pParticle->SettingOrigin(m_pTransmCom->GetPos(), 100);
+			pParticle->SetActive(true);
 		}
 
 		m_pTransmCom->SetPosition(200.f, -200.f, 200.f);
@@ -207,14 +224,6 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 		// Particle Setting
 		/*dynamic_pointer_cast<CFireworkParticle>(m_pParticle)->Setting(m_pTransmCom->GetPos(), 6000);
 		m_pParticle->SetActive(true);*/
-
-		shared_ptr<CParticleSystem> pParticle = CParticleMgr::GetInstance()->GetExplosionParticle();
-
-		if (pParticle)
-		{
-			pParticle->SettingOrigin(m_pTransmCom->GetPos(), 50);
-			pParticle->SetActive(true);
-		}
 	}
 	m_bEnable = false;
 }

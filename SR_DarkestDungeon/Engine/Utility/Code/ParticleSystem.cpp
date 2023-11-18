@@ -67,6 +67,9 @@ void CParticleSystem::LateUpdateGameObject()
     {
         Reset();
         SetActive(false);
+        RemoveDeadParticles();
+        RemoveAllParticles();
+        return;
     }
         
     CRenderer::GetInstance()->AddRenderGroup(RENDER_ALPHA, shared_from_this());
@@ -249,6 +252,20 @@ void CParticleSystem::SettingBounding(BOUNDING_BOX* _tBoundingBox, _vec3* _vPos,
         AddParticle();
 }
 
+void CParticleSystem::SettingBoundingSphere(BOUNDING_SPHERE* _tBoundingSphere, _vec3 _vPos, _int _iNumParticles)
+{
+    m_tBoundingShpere = *_tBoundingSphere;
+
+    m_vOrigin = _vPos;
+    m_pTransformCom->SetPosition(m_vOrigin.x, m_vOrigin.y, m_vOrigin.z);
+    m_pTransformCom->SetScale(1.f, 1.f, 1.f);
+
+    for (int i = 0; i < _iNumParticles; ++i)
+        AddParticle();
+
+    m_bOrthogonal = true;
+}
+
 // 한 파티클의 속성을 리셋하는 함수
 void CParticleSystem::ResetParticle(PARTICLE_ATTRIBUTE* attribute)
 {
@@ -293,6 +310,16 @@ void CParticleSystem::RemoveDeadParticles()
         }
 
         iter++;
+    }
+}
+
+void CParticleSystem::RemoveAllParticles()
+{
+    auto iter = m_listParticles.begin();
+
+    while (iter != m_listParticles.end())
+    {
+        iter = m_listParticles.erase(iter);
     }
 }
 
