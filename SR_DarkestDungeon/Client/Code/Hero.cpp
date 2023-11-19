@@ -116,6 +116,9 @@ void CHero::PickingObj()
 
 		if ((*pPlayerTransform).y > -10)
 		{
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+			CSoundMgr::GetInstance()->PlaySound(L"ui_page_open.wav", CHANNELID::EFFECT, 1.f);
+
 			m_pStatUI->SetForHire(true);
 			m_pStatUI->SetVisible(true);
 		}

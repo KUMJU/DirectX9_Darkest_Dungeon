@@ -16,7 +16,7 @@ CLoadingBack::~CLoadingBack()
 HRESULT CLoadingBack::ReadyGameObject()
 {
 	m_vSize = { WINCX * 0.5f, WINCY * 0.5f , 0.f };
-	m_vPos = { 0.f, 0.f , 0.f };
+	m_vPos = { 0.f, 0.f , 0.1f };
 
 	m_bVisible = true;
 	m_bEnable = true;
@@ -71,7 +71,13 @@ void CLoadingBack::RenderGameObject()
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pLayoutTransCom[i]->GetWorld());
 		m_pTextureCom[i]->SetTexture(0);
 		m_pLayoutRcTexCom[i]->RenderBuffer();
+	}
 
+	// Torch
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pLayoutTransCom[2]->GetWorld());
+		m_pAnimatorCom->SetAnimTexture();
+		m_pLayoutRcTexCom[2]->RenderBuffer();
 	}
 
 	//Font
@@ -132,7 +138,7 @@ void CLoadingBack::AddComponent()
 
 
 	//Layout
-	for (int i = 0; i < 2; ++i) {
+	for (int i = 0; i < 3; ++i) {
 
 		tstring strCurNum = to_wstring(i);
 
@@ -148,13 +154,18 @@ void CLoadingBack::AddComponent()
 		m_pLayoutTransCom[i]->ReadyTransform();
 		m_mapComponent[ID_DYNAMIC].insert({ strComName2,pComponent });
 
-
+		if (i >= 2) break;
 		pComponent = m_pTextureCom[i] = make_shared<CTexture>(m_pGraphicDev);
 		m_mapComponent[ID_STATIC].insert({ strComName3,pComponent });
 	}
 
+	pComponent = m_pAnimatorCom = make_shared<CAnimator>(m_pGraphicDev);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator", pComponent});
+
 	m_pTextureCom[0]->SetTextureKey(L"UI_Loading_TitleOverlay", TEXTUREID::TEX_NORMAL);
 	m_pTextureCom[1]->SetTextureKey(L"UI_Loading_TipOverlay", TEXTUREID::TEX_NORMAL);
+
+	m_pAnimatorCom->SetAnimKey(L"UI_Loading_Torch", 0.1f);
 
 	m_pLayoutTransCom[0]->SetPosition(0.f, 280.f, 0.f);
 	m_pLayoutTransCom[0]->SetAngle({ 0.f, 0.f, 0.f });
@@ -163,6 +174,10 @@ void CLoadingBack::AddComponent()
 	m_pLayoutTransCom[1]->SetPosition(0.f, -200.f, 0.f);
 	m_pLayoutTransCom[1]->SetAngle({ 0.f, 0.f, 0.f });
 	m_pLayoutTransCom[1]->SetScale(223.f, 82.f, 0.f);
+
+	m_pLayoutTransCom[2]->SetPosition(22.f, -252.f, 0.f);
+	m_pLayoutTransCom[2]->SetAngle({ 0.f, 0.f, 0.f });
+	m_pLayoutTransCom[2]->SetScale(100.f, 100.f, 0.f);
 
 	//BackGround-----------------------------------------------------------------------------------------
 	pComponent = m_pBackGroundTex = make_shared<CTexture>(m_pGraphicDev);

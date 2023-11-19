@@ -4,6 +4,7 @@
 #include"CameraMgr.h"
 #include"Export_System.h"
 #include"PickingMgr.h"
+#include "SoundMgr.h"
 
 #include "GlowParticle.h"
 
@@ -96,6 +97,50 @@ void CItem::RenderGameObject()
 
 void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
 {
+	switch (m_eItemState)
+	{
+	case EHandItem::SHOVEL:
+	case EHandItem::ANTI_VENOM:
+	case EHandItem::BANDAGE:
+	case EHandItem::KEYS:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_all.wav", CHANNELID::ITEM, 1.f);
+		break;
+	case EHandItem::GOLD:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM2);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_gold.wav", CHANNELID::ITEM2, 1.f);
+		break;
+	case EHandItem::HEIRLOOM:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM3);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_heirloom.wav", CHANNELID::ITEM3, 1.f);
+		break;
+	case EHandItem::FOOD:
+	case EHandItem::TORCH:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM2);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_all.wav", CHANNELID::ITEM2, 1.f);
+		break;
+	case EHandItem::RED_GEM:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_jewerly.wav", CHANNELID::ITEM, 1.f);
+		break;
+	case EHandItem::BLUE_GEM:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM2);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_jewerly.wav", CHANNELID::ITEM2, 1.f);
+		break;
+	case EHandItem::GREEN_GEM:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM3);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_jewerly.wav", CHANNELID::ITEM3, 1.f);
+		break;
+	case EHandItem::ENUM_END:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_ring.wav", CHANNELID::ITEM, 1.f);
+		break;
+	default:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_all.wav", CHANNELID::ITEM, 1.f);
+		break;
+	}
+
 	m_pParticle->Reset();
 	m_pParticle->SetActive(false);
 	m_pParticle = nullptr;

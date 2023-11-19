@@ -206,9 +206,20 @@ void CTavernUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 
 		// 돈 부족하면 리턴
 		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetGold() < 500)
+		{
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+			CSoundMgr::GetInstance()->PlaySound(L"ui_town_buy_fail.wav", CHANNELID::UI, 1.f);
+
 			return;
+		}
 
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetGold(500, false);
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+		CSoundMgr::GetInstance()->PlaySound(L"town_tavern_bar.wav", CHANNELID::EFFECT, 1.f);
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+		CSoundMgr::GetInstance()->PlaySound(L"ui_select.wav", CHANNELID::UI, 1.f);
 
 		// 체력이랑 스트레스 회복하기
 		m_pHero.lock()->IncreaseHP(20);

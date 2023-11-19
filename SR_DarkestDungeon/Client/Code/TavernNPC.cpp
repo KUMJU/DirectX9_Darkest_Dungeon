@@ -82,6 +82,9 @@ void CTavernNPC::GetInteractionKey(const _float& fTimeDelta)
 	// 키 입력받기
 	if (GetAsyncKeyState('C') & 0x8000)
 	{
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+		CSoundMgr::GetInstance()->PlaySound(L"vo_town_tavern.wav", CHANNELID::NPC, 1.f);
+
 		m_bInteracting = true;
 
 		// 플레이어 움직임 막기

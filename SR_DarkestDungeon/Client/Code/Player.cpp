@@ -570,7 +570,28 @@ void CPlayer::OnCollide(shared_ptr<CGameObject> _pObj)
 		if (pItem->IsOnStore())
 		{
 			if (m_iGold < pNewItem->GetMoney())
+			{
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+				CSoundMgr::GetInstance()->PlaySound(L"ui_town_buy_fail.wav", CHANNELID::UI, 1.f);
+
 				return;
+			}
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+
+			switch (rand() % 3)
+			{
+			case 0:
+				CSoundMgr::GetInstance()->PlaySound(L"ui_town_use_coins1.wav", CHANNELID::EFFECT, 1.f);
+				break;
+			case 1:
+				CSoundMgr::GetInstance()->PlaySound(L"ui_town_use_coins2.wav", CHANNELID::EFFECT, 1.f);
+				break;
+			case 2:
+				CSoundMgr::GetInstance()->PlaySound(L"ui_town_use_coins3.wav", CHANNELID::EFFECT, 1.f);
+				break;
+			}
+
 
 			SetGold(pNewItem->GetMoney(), false);
 		}

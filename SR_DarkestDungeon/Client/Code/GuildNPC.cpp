@@ -111,6 +111,8 @@ void CGuildNPC::GetInteractionKey(const _float& fTimeDelta)
 	// 키 입력받기
 	if (GetAsyncKeyState('C') & 0x8000)
 	{
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+		CSoundMgr::GetInstance()->PlaySound(L"town_guild_npc.wav", CHANNELID::EFFECT, 1.f);
 
 		shared_ptr<CUIObj> pHeroSkillUI;
 		_int	iIdx = 0;

@@ -194,6 +194,9 @@ void CBattleHeroUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
         m_arrSkillTransform[6]->SetPosition(m_vPos.x - 45.f , m_vPos.y, m_vPos.z);
         m_bIconClick = true;
         m_iSelectSkill = 1;
+
+        CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+        CSoundMgr::GetInstance()->PlaySound(L"ui_select.wav", CHANNELID::UI, 1.f);
         
     }else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 2 >= _fX) {
         //Skill2 버튼 클릭 트리거
@@ -202,12 +205,18 @@ void CBattleHeroUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
         m_bIconClick = true;
         m_iSelectSkill = 2;
 
+        CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+        CSoundMgr::GetInstance()->PlaySound(L"ui_select.wav", CHANNELID::UI, 1.f);
+
     }else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 2 < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 3 >= _fX) {
         //Skill3 버튼 클릭 트리거
         m_iCursorPos = 2;
         m_arrSkillTransform[6]->SetPosition(m_vPos.x - 45.f + 57.f * 2.f, m_vPos.y, m_vPos.z);
         m_bIconClick = true;
         m_iSelectSkill = 3;
+
+        CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+        CSoundMgr::GetInstance()->PlaySound(L"ui_select.wav", CHANNELID::UI, 1.f);
 
 
     }else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 3 < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 4 >= _fX) {
@@ -217,11 +226,17 @@ void CBattleHeroUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
         m_bIconClick = true;
         m_iSelectSkill = 4;
 
+        CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+        CSoundMgr::GetInstance()->PlaySound(L"ui_select.wav", CHANNELID::UI, 1.f);
+
     }else if (m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 4 < _fX && m_vPos.x + WINCX * 0.5f - 80.f + 57.f * 5 >= _fX) {
         m_iCursorPos = 4;
         m_arrSkillTransform[6]->SetPosition(m_vPos.x - 45.f + 57.f * 4.f, m_vPos.y, m_vPos.z);
         m_bIconClick = true;
         m_iSelectSkill = 5;
+
+        CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+        CSoundMgr::GetInstance()->PlaySound(L"ui_select.wav", CHANNELID::UI, 1.f);
 
         //자리 스왑 버튼 클릭 트리거 
     }

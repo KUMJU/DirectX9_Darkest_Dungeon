@@ -15,6 +15,7 @@ BEGIN(Engine)
 class CRcTex;
 class CTexture;
 class CTransform;
+class CAnimator;
 
 END
 
@@ -44,8 +45,9 @@ private:
 	shared_ptr<CTexture> m_pBackGroundTex = nullptr;
 
 	shared_ptr<CTexture> m_pTextureCom[2];
-	shared_ptr<CTransform> m_pLayoutTransCom[2];
-	shared_ptr<CRcTex> m_pLayoutRcTexCom[2];
+	shared_ptr<CTransform> m_pLayoutTransCom[3];
+	shared_ptr<CRcTex> m_pLayoutRcTexCom[3];
+	shared_ptr<CAnimator> m_pAnimatorCom;
 
 private:
 	ELoadingSceneType m_eLoadingType;
