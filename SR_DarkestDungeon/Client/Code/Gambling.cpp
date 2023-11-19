@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Gambling.h"
 #include "GameMgr.h"
+#include "SoundMgr.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -101,6 +102,9 @@ void CGambling::GetInteractionKey(const _float& fTimeDelta)
 		if (m_bDebounce)
 			return;
 
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+		CSoundMgr::GetInstance()->PlaySound(L"town_tavern_gambling.wav", CHANNELID::EFFECT, 1.f);
+
 		m_bInteracting = true;
 
 		// 플레이어 움직임 막기
@@ -150,8 +154,11 @@ void CGambling::ChangeTexture()
 
 void CGambling::GetReward()
 {
+	/*CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+	CSoundMgr::GetInstance()->PlaySound(L"ui_town_buy.wav", CHANNELID::EFFECT, 1.f);*/
+
 	//500 대신 reward 값 넣어주기 
-	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetGold(500, true);
+	//dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetGold(500, true);
 
 
 }

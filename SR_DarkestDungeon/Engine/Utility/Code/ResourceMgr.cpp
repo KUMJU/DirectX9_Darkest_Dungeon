@@ -764,6 +764,10 @@ void CResourceMgr::BaseTextureLoad()
 	// »ç¸Á ÀÌÆåÆ®
 	CreateNewTexture(L"Effect_Death", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Battle/Death/Death/armatureName_death_%d.png", 40, bDefault);
+
+	// ·Îµù ½ºÅ©¸° È¶ºÒ
+	CreateNewTexture(L"UI_Loading_Torch", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Effect/Fire/armatureName_dim_loop_%d.png", 73, bDefault);
 }
 
 void CResourceMgr::UITextureLoad()

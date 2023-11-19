@@ -104,6 +104,9 @@ _int CHeroStat::UpdateGameObject(const _float& fTimeDelta)
 		{
 			m_bVisible = false;
 
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+			CSoundMgr::GetInstance()->PlaySound(L"ui_page_close.wav", CHANNELID::EFFECT, 1.f);
+
 			// 플레이어 행동 풀기
 			CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 		}
@@ -135,6 +138,9 @@ _int CHeroStat::UpdateGameObject(const _float& fTimeDelta)
 
 			else
 			{
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+				CSoundMgr::GetInstance()->PlaySound(L"town_stagecoach_hire.wav", CHANNELID::EFFECT, 1.f);
+
 				CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 
 				// 영웅 추가 코드

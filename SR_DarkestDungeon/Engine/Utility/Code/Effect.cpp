@@ -203,13 +203,13 @@ void CEffect::AddComponent()
     m_mapComponent[ID_STATIC].insert({ L"Com_Texture2", pComponent });
 }
 
-void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _float _fAnimTime, _bool _bOrthogonal, _bool _bZEnable)
+void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _float _fAnimTime, _bool _bOrthogonal, _bool _bZEnable, _bool _bLoop)
 {
     printf("Effect %d\n%s\n", m_iNum, _strAnimKey);
 
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
-    m_bLoop = false;
+    m_bLoop = _bLoop;
 
     m_vPos = nullptr;
     m_vPosOrigin = _vPos;

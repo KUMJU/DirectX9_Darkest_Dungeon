@@ -80,24 +80,14 @@ void CDoor::GetInteractionKey(const _float& fTimeDelta)
 		// 텍스처 또는 애니메이션 변경
 		//ChangeTexture();
 
+
 		if (EFacilityType::TERVARN == m_eDoorType)
 		{
-
-			// 진짜 테스트
-			{
-				//shared_ptr<CPlayer> pPlayer = dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer());
-				//
-				//vector<shared_ptr<CGameObject>>* pHeroVec = pPlayer->GetHeroVec();
-
-				//shared_ptr<CHero> pHero = dynamic_pointer_cast<CHero>((*pHeroVec)[0]);
-
-				//pHero->SetStress(50);
-				//pHero->SetHp(10);
-			}
-
 			// 여관 내부로 이동
 			dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(50.f, -97.f, 4.f);
 
+			CSoundMgr::GetInstance()->StopAll();
+			CSoundMgr::GetInstance()->PlaySound(L"town_tavern_bgm.wav", CHANNELID::BGM, 1.f);
 		}
 			
 		else if (EFacilityType::GUILD == m_eDoorType)
@@ -105,7 +95,12 @@ void CDoor::GetInteractionKey(const _float& fTimeDelta)
 			// 훈련소 내부로 이동
 			dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(0.f, -197.f, 104.f);
 
+			CSoundMgr::GetInstance()->StopAll();
+			CSoundMgr::GetInstance()->PlaySound(L"town_guild_bgm.wav", CHANNELID::BGM, 1.f);
 		}
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+		CSoundMgr::GetInstance()->PlaySound(L"town_enter_tavern.wav", CHANNELID::EFFECT, 1.f);
 
 		Interaction();
 		}

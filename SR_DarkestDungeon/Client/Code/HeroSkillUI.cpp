@@ -177,11 +177,20 @@ void CHeroSkillUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 				{
 					// 돈 체크
 					if (1 > dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeirloom())
+					{
+						CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+						CSoundMgr::GetInstance()->PlaySound(L"ui_town_use_heirloom_fail.wav", CHANNELID::EFFECT, 1.f);
 						return;
+					}
 
 					// 돈 내고 잠금 해제
 					else
 					{
+						CSoundMgr::GetInstance()->StopSound(CHANNELID::UI);
+						CSoundMgr::GetInstance()->PlaySound(L"ui_town_skill_unlock.wav", CHANNELID::UI, 1.f);
+
+						CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+						CSoundMgr::GetInstance()->PlaySound(L"ui_town_use_heirloom.wav", CHANNELID::EFFECT, 1.f);
 						dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetHeirloom(1, false);
 						(*pSkillVector)[iSkillNum]->SetUnlocked(true);
 					}
@@ -192,11 +201,18 @@ void CHeroSkillUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 				{
 					if (!(*pSkillVector)[iSkillNum]->IsEquipped())
 					{
-						if (m_iEquippedCnt >= 4) return;
+						if (m_iEquippedCnt >= 4)
+						{
+							CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+							CSoundMgr::GetInstance()->PlaySound(L"ui_town_buy_fail.wav", CHANNELID::EFFECT, 1.f);
+							return;
+						}
 
 						// 장착하기
 						else
 						{
+							CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+							CSoundMgr::GetInstance()->PlaySound(L"ui_town_skill_equip.wav", CHANNELID::EFFECT, 1.f);
 							++m_iEquippedCnt;
 							(*pSkillVector)[iSkillNum]->SetEquipped(true);
 						}
@@ -205,6 +221,9 @@ void CHeroSkillUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 					else
 					{
 						if (m_iEquippedCnt <= 0) return;
+
+						CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+						CSoundMgr::GetInstance()->PlaySound(L"ui_town_skill_unequip.wav", CHANNELID::EFFECT, 1.f);
 
 						// 장착 해제하기
 						--m_iEquippedCnt;

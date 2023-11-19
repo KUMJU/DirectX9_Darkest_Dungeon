@@ -74,6 +74,12 @@ void CTrigger::OnCollide(shared_ptr<CGameObject> _pObj)
 	{
 		if (m_strKeyName == L"Tavern")
 		{
+			CSoundMgr::GetInstance()->StopAll();
+			CSoundMgr::GetInstance()->PlaySound(L"Mus_Town_Base.wav", CHANNELID::BGM, 1.f);
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+			CSoundMgr::GetInstance()->PlaySound(L"town_door_close.wav", CHANNELID::EFFECT, 1.f);
+
 			_pObj->SetPos({ 51.16f, 0.0f, 68.27f + VILLAGE_TILESIZE * 2.f - 2.f });
 			dynamic_pointer_cast<CTransform>(_pObj->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(_pObj->GetPos().x, _pObj->GetPos().y, _pObj->GetPos().z);
 			_pObj->SetAngle({0.f, 3.22f, 0.f});
@@ -81,6 +87,12 @@ void CTrigger::OnCollide(shared_ptr<CGameObject> _pObj)
 
 		else if (m_strKeyName == L"Guild")
 		{
+			CSoundMgr::GetInstance()->StopAll();
+			CSoundMgr::GetInstance()->PlaySound(L"Mus_Town_Base.wav", CHANNELID::BGM, 1.f);
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+			CSoundMgr::GetInstance()->PlaySound(L"town_door_close.wav", CHANNELID::EFFECT, 1.f);
+
 			_pObj->SetPos({ 94.35f, 0.0f, 79.65f + VILLAGE_TILESIZE });
 			dynamic_pointer_cast<CTransform>(_pObj->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(_pObj->GetPos().x, _pObj->GetPos().y, _pObj->GetPos().z);
 			_pObj->SetAngle({ 0.f, 4.07f, 0.f });

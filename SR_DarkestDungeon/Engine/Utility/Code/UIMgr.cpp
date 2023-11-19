@@ -183,6 +183,7 @@ void CUIMgr::SetDescription(shared_ptr<CGameObject> _pGameObject, _vec3 _vPos)
 {
 	auto iter = m_UIList.find(L"Obj_DescriptionUI");
 
+
 	(*iter).second->SetVisible(true);
 	(*iter).second->ActiveUI(_pGameObject, _vPos);
 }

@@ -77,17 +77,21 @@ _int CCardGame::UpdateGameObject(const _float& fTimeDelta)
 			if (!m_bClearSoundOn) {
 				CSoundMgr::GetInstance()->StopAll();
 				CSoundMgr::GetInstance()->PlaySound(L"Minigame_Clear.wav", CHANNELID::PLAYER, 1.f);
+
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+				CSoundMgr::GetInstance()->PlaySound(L"town_firework.wav", CHANNELID::EFFECT, 1.f);
+
 				m_bClearSoundOn = true;
 
 				if (m_pParticle1 && !m_pParticle1->GetIsActive())
 				{
-					m_pParticle1->SettingOrthogonal(_vec3(-350.f, 0.f, 0.9f), _vec3(0.f, 0.f, 0.f), 100);
+					m_pParticle1->SettingOrthogonal(_vec3(-350.f, -100.f, 0.9f), _vec3(0.f, 0.f, 0.f), 100);
 					m_pParticle1->SetActive(true);
 				}
 
 				if (m_pParticle2 && !m_pParticle2->GetIsActive())
 				{
-					m_pParticle2->SettingOrthogonal(_vec3(350.f , 0.f, 0.9f), _vec3(0.f, 0.f, 0.f), 100);
+					m_pParticle2->SettingOrthogonal(_vec3(350.f , -100.f, 0.9f), _vec3(0.f, 0.f, 0.f), 100);
 					m_pParticle2->SetActive(true);
 				}
 			}
@@ -196,7 +200,11 @@ void CCardGame::End()
 
 	ResetGame();
 	CSoundMgr::GetInstance()->StopAll();
-	CSoundMgr::GetInstance()->PlayBGM(L"Mus_Town_Base.wav", 1.f);
+	CSoundMgr::GetInstance()->PlayBGM(L"town_tavern_bgm.wav", 1.f);
+
+	CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+	CSoundMgr::GetInstance()->PlaySound(L"ui_town_buy.wav", CHANNELID::EFFECT, 1.f);
+
 	CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 
 }
