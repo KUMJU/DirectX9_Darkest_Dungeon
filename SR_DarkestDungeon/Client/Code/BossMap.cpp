@@ -70,6 +70,8 @@ HRESULT CBossMap::ReadyScene()
 {
 	CResourceMgr::GetInstance()->BossMapTextureLoad();
 
+	CSoundMgr::GetInstance()->PlayBGM(L"Boss_BGM0.wav", 1.2f);
+
 	// text
 	lstrcpy(m_szString, L"Boss Map");
 	// BossMap
@@ -121,7 +123,8 @@ _int CBossMap::UpdateScene(const _float& fTimeDelta)
 			}
 
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
-			CSoundMgr::GetInstance()->PlayBGM(L"Combat_Level2_Loop1.wav", 0.6f);
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+			CSoundMgr::GetInstance()->PlayBGM(L"Boss_TurnBattleBGM.wav", 0.6f);
 			pTransform->SetPosition(300.f, 0.f, m_fBattlePositionZ - 20.f);
 			m_pRoom2->SetBattleStart(true);
 			dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(true);
@@ -153,8 +156,6 @@ _int CBossMap::UpdateScene(const _float& fTimeDelta)
 			if (m_pRoom2->BattleUpdate(fTimeDelta))
 			{
 				CCameraMgr::GetInstance()->SetFPSMode();
-				CSoundMgr::GetInstance()->StopAll();
-				CSoundMgr::GetInstance()->PlayBGM(L"Amb_Weald_Base.wav", 1.f);
 				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
 				dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
@@ -167,9 +168,11 @@ _int CBossMap::UpdateScene(const _float& fTimeDelta)
 		}
 	}
 
-	// 전투 시작될때
+	// 3D전투 시작될때
 	if (m_b3DBattleStart && !m_bBattleReady)
 	{
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+		CSoundMgr::GetInstance()->PlayBGM(L"Boss_BGM1.wav", 0.6f);
 		m_pBossMap->DisableAllRoom();
 		m_pBossMap->AbleRoom(1);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetCurrentRoom(1);
@@ -285,7 +288,7 @@ void CBossMap::KeyInput()
 	if (GetAsyncKeyState('9') & 0x8000) {
 		m_pRoom2->GetBattleSystem()->EndBattle();
 		CSoundMgr::GetInstance()->StopAll();
-		CSoundMgr::GetInstance()->PlayBGM(L"Amb_Weald_Base.wav", 1.f);
+		CSoundMgr::GetInstance()->PlayBGM(L"Boss_BGM1.wav", 0.6f);
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
@@ -401,7 +404,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
-	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(300.f, 0.f, 50.f);
+	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(300.f, 0.f, 150.f);
 	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetAngle({ 0.f, 0.f, 0.f });
 
 	for (auto& iter : *dynamic_pointer_cast<CPlayer>(m_pPlayer)->GetHeroVec())

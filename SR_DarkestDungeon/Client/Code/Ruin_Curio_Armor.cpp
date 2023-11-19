@@ -153,10 +153,11 @@ void CRuin_Curio_Armor::GetInteractionKey(const _float& fTimeDelta)
 
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
-
+		
 		// 텍스처 또는 애니메이션 변경
 		ChangeTexture();
 
+		CSoundMgr::GetInstance()->PlaySound(L"prop_curio_suitofarmor.wav", CHANNELID::CURIO, 1.f);
 
 
 		Interaction();

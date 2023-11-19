@@ -288,6 +288,8 @@ void CBoss2::OnCollide(shared_ptr<CGameObject> _pObj)
 	{
 		DecreaseHp(5);
 		m_bHitByPlayer = true;
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_HITTED);
+		CSoundMgr::GetInstance()->PlaySound(L"Boss_Hitted.wav", CHANNELID::BOSS_HITTED, 1.f);
 	}
 }
 
@@ -449,6 +451,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			{
 				m_eCurAnimState = EBossState::P1_CHANGE;
 				Teleport(_vec3(300.f, 30.f, 300.f));
+
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+				CSoundMgr::GetInstance()->PlayBGM(L"Boss_BGM2.wav", 1.f);
 			}
 			/*else if (m_bGroggy)
 			{
@@ -715,6 +720,19 @@ void CBoss2::FSM(const _float& fTimeDelta)
 
 			m_eCurAnimState = EBossState::P2_DEATH;
 			m_bPhaseDeath = true;
+
+			// ¿úµé ¾ø¾Ö±â
+			for (int i = 0; i < m_iMobTotalNum; i++)
+			{
+				if (dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->GetIsEnable())
+				{
+					dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->SetEnable(false);
+				}
+			}
+
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopAll();
+			
+			//CSoundMgr::GetInstance()->PlaySound(L"Boss_Hitted.wav", CHANNELID::BOSS_HITTED, 1.f);
 		}
 		
 		m_fP2IdleTime -= fTimeDelta;
@@ -1338,6 +1356,10 @@ void CBoss2::OnFloor(_float _fHeight)
 
 void CBoss2::Teleport(_vec3 vPos)
 {
+	CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_EFFECT);
+	CSoundMgr::GetInstance()->PlaySound(L"Boss_Teleport.wav", CHANNELID::BOSS_EFFECT, 1.f);
+	
+
 	PrevTeleportPos = CurrentTeleportPos;
 	CurrentTeleportPos = vPos;
 	if (PrevTeleportPos != CurrentTeleportPos)

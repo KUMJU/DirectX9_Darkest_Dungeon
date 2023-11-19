@@ -187,13 +187,20 @@ void CRuin_Trap::GetInteractionKey(const _float& fTimeDelta)
 			m_bTabInteractionKey = true;
 
 			int iNum = 0;
-			iNum = rand() % 2;
+			//iNum = rand() % 2;
+			iNum = 0;
 			if (iNum == 0)
 			{
+				CSoundMgr::GetInstance()->PlaySound(L"prop_trap_bladewheel.wav", CHANNELID::TRAP, 1.f);
+
+
 				m_bSuccess = false;
 			}
 			else
 			{
+				CSoundMgr::GetInstance()->PlaySound(L"prop_trap_disarm.wav", CHANNELID::TRAP, 1.f);
+
+
 				m_bSuccess = true;
 			}
 		}

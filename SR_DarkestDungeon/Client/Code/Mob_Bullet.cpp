@@ -4,6 +4,7 @@
 #include "Export_System.h"
 
 #include "Player.h"
+#include "SoundMgr.h"
 
 
 CMobBullet::CMobBullet(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -156,6 +157,9 @@ void CMobBullet::OnCollide(shared_ptr<CGameObject> _pObj)
 		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
 		m_bCollsion = true;
 		SetEnable(false);
+
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ2);
+		CSoundMgr::GetInstance()->PlaySound(L"Boss_ProjectileImpact.wav", CHANNELID::BOSS_PROJ2, 1.f);
 	}
 
 	if (ECollideID::PLAYER == _pObj->GetColType())
@@ -163,6 +167,9 @@ void CMobBullet::OnCollide(shared_ptr<CGameObject> _pObj)
 		m_pTransformCom->SetPosition(400.f, -200.f, 300.f);
 		m_bCollsion = true;
 		SetEnable(false);
+
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ2);
+		CSoundMgr::GetInstance()->PlaySound(L"Boss_ProjectileImpact.wav", CHANNELID::BOSS_PROJ2, 1.f);
 	}
 }
 

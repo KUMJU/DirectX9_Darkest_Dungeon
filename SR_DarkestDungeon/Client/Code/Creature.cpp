@@ -14,6 +14,8 @@
 #include "UIMgr.h"
 #include "ScreenEffect.h"
 
+#include "Alien.h"
+
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -444,7 +446,17 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	// 단순 공격
 	if (arrAttack[0])
 	{
-		iDodgeNum = rand() % 100;
+		// 보스의 공격이였을 경우
+		if (dynamic_pointer_cast<CAlien>(_pCreature2))
+		{
+			iDodgeNum = 100;
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
+			CSoundMgr::GetInstance()->PlaySound(L"Boss_Scream.wav", CHANNELID::BOSS, 1.2f);
+		}
+		else
+		{
+			iDodgeNum = rand() % 100;
+		}
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
@@ -1045,6 +1057,11 @@ void CCreature::UpdateAttribute()
 		else
 			m_pStatInfo->SetAttributeOff(i);
 	}
+
+	// 죽음의 일격 갱신
+	if (m_bBeforeDeath)	m_pStatInfo->SetAttribute(7);
+	else
+		m_pStatInfo->SetAttributeOff(7);
 }
 
 void CCreature::AddComponent()
