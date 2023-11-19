@@ -155,8 +155,8 @@ void CBullet1::OnCollide(shared_ptr<CGameObject> _pObj)
 		m_bCollsion = true;
 		SetEnable(false);
 
-		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ2);
-		CSoundMgr::GetInstance()->PlaySound(L"Boss_ProjectileImpact.wav", CHANNELID::BOSS_PROJ2, 1.f);
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ1);
+		CSoundMgr::GetInstance()->PlaySound(L"Boss_ProjectileImpact.wav", CHANNELID::BOSS_PROJ1, 1.f);
 	}
 
 	if (ECollideID::PLAYER == _pObj->GetColType())
@@ -170,8 +170,8 @@ void CBullet1::OnCollide(shared_ptr<CGameObject> _pObj)
 		m_bCollsion = true;
 		SetEnable(false);
 
-		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ2);
-		CSoundMgr::GetInstance()->PlaySound(L"Boss_ProjectileImpact.wav", CHANNELID::BOSS_PROJ2, 1.f);
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ1);
+		CSoundMgr::GetInstance()->PlaySound(L"Boss_ProjectileImpact.wav", CHANNELID::BOSS_PROJ1, 1.f);
 	}
 }
 

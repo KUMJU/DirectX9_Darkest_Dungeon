@@ -49,8 +49,8 @@ void CSoundMgr::PlaySound(const TCHAR* _pSoundKey, CHANNELID eID, _float _fVolum
 	FMOD_BOOL bPlay = FALSE;
 	if (FMOD_Channel_IsPlaying(m_pChannelArr[(unsigned long long)eID], &bPlay))
 	{	
-		FMOD_Channel_SetVolume(m_pChannelArr[(unsigned long long)eID], _fVolume);
 		FMOD_System_PlaySound(m_pSystem, iter->second,NULL, FALSE, &m_pChannelArr[(unsigned long long)eID]);
+		FMOD_Channel_SetVolume(m_pChannelArr[(unsigned long long)eID], _fVolume);
 
 	}
 	FMOD_System_Update(m_pSystem);
