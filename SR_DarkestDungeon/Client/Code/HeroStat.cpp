@@ -138,7 +138,25 @@ _int CHeroStat::UpdateGameObject(const _float& fTimeDelta)
 				CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 
 				// 영웅 추가 코드
-				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->AddHero(m_pHero.lock());
+				if (m_pHero.lock()->GetHeroType() == EHeroType::SHILEDBREAKER)
+				{
+					dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->AddHero(m_pHero.lock());
+					if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec()->size() == 3)
+					{
+						dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SwapHero(0, 2);
+						dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SwapHero(1, 2);
+					}
+					if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec()->size() == 4)
+					{
+						dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SwapHero(0, 3);
+						dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SwapHero(1, 3);
+						dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SwapHero(2, 3);
+					}
+				}
+				if (m_pHero.lock()->GetHeroType() == EHeroType::VESTAL)
+				{
+					dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->AddHero(m_pHero.lock());
+				}
 				CSceneMgr::GetInstance()->AddNewObject(L"Layer_4_GameObj", m_pHero.lock()->GetObjKey(), m_pHero.lock());
 
 				m_bVisible = false;
