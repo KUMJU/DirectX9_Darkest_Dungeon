@@ -252,6 +252,9 @@ void CRuin_Curio_Sarcophagus::GetInteractionKey(const _float& fTimeDelta)
 		if (m_bDebounce)
 			return;
 
+		//CSoundMgr::GetInstance()->PlaySound(L"prop_curio_secretstash.wav", CHANNELID::CURIO, 1.f);
+
+
 		m_bActive = true;
 		m_bDebounce = true;
 		//UI ¶ç¿ì±â

@@ -170,10 +170,20 @@ void CWeald_Obstacle::GetInteractionKey(const _float& fTimeDelta)
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);
 
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentItem()
+			== EHandItem::SHOVEL)
+		{
+			CSoundMgr::GetInstance()->PlaySound(L"prop_obstacle_thorny_pick.wav", CHANNELID::OBSTACLE, 1.f);
+			CSoundMgr::GetInstance()->PlaySound(L"prop_curio_use_shovel.wav", CHANNELID::INTERACTION, 1.f);
+		}
+		// 삽없는 상호작용
+		else
+		{
+			CSoundMgr::GetInstance()->PlaySound(L"prop_obstacle_thorny_hand.wav", CHANNELID::OBSTACLE, 1.f);
+		}
+
 		// 텍스처 또는 애니메이션 변경
 		ChangeTexture();
-
-
 
 		Interaction();
 	}

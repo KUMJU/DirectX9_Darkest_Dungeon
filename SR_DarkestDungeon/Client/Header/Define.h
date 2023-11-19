@@ -63,4 +63,4 @@
 
 // ¿¸≈ı
 #define CRIRATE	30
-#define DEATHRATE	10
+#define DEATHRATE	0

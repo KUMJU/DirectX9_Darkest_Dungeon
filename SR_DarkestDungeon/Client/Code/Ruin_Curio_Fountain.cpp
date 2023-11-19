@@ -153,6 +153,8 @@ void CRuin_Curio_Fountain::GetInteractionKey(const _float& fTimeDelta)
 		// 텍스처 또는 애니메이션 변경
 		ChangeTexture();
 
+		CSoundMgr::GetInstance()->PlaySound(L"prop_curio_fountain.wav", CHANNELID::CURIO, 1.f);
+
 
 
 		Interaction();

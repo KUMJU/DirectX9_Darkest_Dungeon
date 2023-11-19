@@ -142,6 +142,7 @@ private:
 
 	_bool	m_bEndBattleStart = false;
 	_bool	m_bBattleEndEffectOn = false;
+	_bool	m_bBossBattleEndEffectOn = false;
 
 
 	vector<_vec3> m_vHeroLocation = {};			// hero position

@@ -157,6 +157,17 @@ void CWeald_Curio_Chest::GetInteractionKey(const _float& fTimeDelta)
 		// 텍스처 또는 애니메이션 변경
 		ChangeTexture();
 
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentItem()
+			== EHandItem::KEYS)
+		{
+			CSoundMgr::GetInstance()->PlaySound(L"prop_curio_chest.wav", CHANNELID::CURIO, 1.f);
+			CSoundMgr::GetInstance()->PlaySound(L"prop_curio_use_key.wav", CHANNELID::INTERACTION, 1.f);
+		}
+		// 삽없는 상호작용
+		else
+		{
+			CSoundMgr::GetInstance()->PlaySound(L"prop_curio_chest.wav", CHANNELID::CURIO, 1.f);
+		}
 
 
 		Interaction();

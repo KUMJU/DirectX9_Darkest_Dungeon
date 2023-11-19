@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "SoundMgr.h"
 
 CRuinDungeonDoor::CRuinDungeonDoor(LPDIRECT3DDEVICE9 pGraphicDev, ERuinDungeonDoorType _eDoorType)
 	: CInteractionObj(pGraphicDev), m_eDoorType(_eDoorType)
@@ -177,6 +178,10 @@ void CRuinDungeonDoor::GetInteractionKey(const _float& fTimeDelta)
 
 		// 텍스처 또는 애니메이션 변경
 		ChangeTexture();
+
+		CSoundMgr::GetInstance()->PlaySound(L"door_open_ruin.wav", CHANNELID::DOOR, 1.f);
+
+
 		m_bOpenStart = true;
 
 		switch (m_eDoorType)

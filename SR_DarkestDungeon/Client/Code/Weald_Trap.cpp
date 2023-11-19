@@ -190,13 +190,18 @@ void CWeald_Trap::GetInteractionKey(const _float& fTimeDelta)
 			m_bActive = true;
 
 			int iNum = 0;
-			iNum = rand() % 2;
+			//iNum = rand() % 2;
+			iNum = 1;
 			if (iNum == 0)
 			{
+				CSoundMgr::GetInstance()->PlaySound(L"prop_trap_poisoncloud.wav", CHANNELID::TRAP, 1.f);
+
 				m_bSuccess = false;
 			}
 			else
 			{
+				CSoundMgr::GetInstance()->PlaySound(L"prop_trap_disarm_weald.wav", CHANNELID::TRAP, 1.f);
+
 				m_bSuccess = true;
 			}
 		}

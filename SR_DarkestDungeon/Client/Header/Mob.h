@@ -82,7 +82,7 @@ public:
 protected:
 	vector<shared_ptr<CMobBullet>> m_pVecBullet1;
 
-	_int	m_iHp = 30;
+	_int	m_iHp = 20;
 
 	_bool	m_bIdle = true;
 	_bool	m_bIn = false;

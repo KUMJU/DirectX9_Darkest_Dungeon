@@ -611,6 +611,13 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 보스전에서 종료
 	if (m_bEndBattleStart && !m_bNext && (m_iBattleType == 1))
 	{
+		//1회만 실행될 수 있도록 bool State로 관리
+		if (!m_bBossBattleEndEffectOn && m_fEndTime2 < 9.f ) {
+			//승리BGM 재생
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+			CSoundMgr::GetInstance()->PlayBGM(L"Boss_Intro2.wav", 1.5f);
+			m_bBossBattleEndEffectOn = true;
+		}
 		m_fEndTime2 -= fTimeDelta;
 
 		// 여기서 뭔가의 연출
@@ -1166,12 +1173,13 @@ _bool CBattleSystem::EndBattle()
 {
 	dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->OffTurnCursor();
 
-	// 영웅들 버프, 출혈, 중독, 디버프 다 초기화
+	// 영웅들 버프, 출혈, 중독, 디버프, 죽음의일격상태 다 초기화
 	for (auto& iter : m_vHeroes)
 	{
 		dynamic_pointer_cast<CCreature>(iter)->BlightCure();
 		dynamic_pointer_cast<CCreature>(iter)->BleedCure();
 		dynamic_pointer_cast<CCreature>(iter)->BuffReset();
+		dynamic_pointer_cast<CCreature>(iter)->SetBeforeDeath(false);
 		dynamic_pointer_cast<CCreature>(iter)->UpdateAttribute();
 	}
 

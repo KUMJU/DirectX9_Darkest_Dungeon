@@ -1512,7 +1512,7 @@ void CResourceMgr::BossMapTextureLoad()
 		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Out/cthulhu_tentacle_out00%d.png", 9, bDefault);
 	CreateNewTexture(L"Mob_Shoot", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Shoot/cthulhu_tentacle_shoot00%d.png", 11, bDefault);
-
+	
 
 	CreateNewTexture(L"Mob_Shooting", TEX_NORMAL,
 		L"../Bin/Resource/Image/Creatures/Monsters/Mob/Shooting/cthulhu_tentacle_shoot0007.png", 1, bDefault);

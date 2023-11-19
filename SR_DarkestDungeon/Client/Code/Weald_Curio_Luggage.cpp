@@ -163,6 +163,17 @@ void CWeald_Curio_Luggage::GetInteractionKey(const _float& fTimeDelta)
 		// 텍스처 또는 애니메이션 변경
 		ChangeTexture();
 
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentItem()
+			== EHandItem::ANTI_VENOM)
+		{
+			CSoundMgr::GetInstance()->PlaySound(L"prop_curio_lostluggage.wav", CHANNELID::CURIO, 1.f);
+			CSoundMgr::GetInstance()->PlaySound(L"prop_curio_use_antivenom.wav", CHANNELID::INTERACTION, 1.f);
+		}
+		// 삽없는 상호작용
+		else
+		{
+			CSoundMgr::GetInstance()->PlaySound(L"prop_curio_lostluggage.wav", CHANNELID::CURIO, 1.f);
+		}
 
 
 		Interaction();
