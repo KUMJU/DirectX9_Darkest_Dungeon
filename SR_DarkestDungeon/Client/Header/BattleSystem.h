@@ -117,6 +117,7 @@ private:
 	_bool	m_bDeadCheck = false;
 
 	_bool	m_bWhileDotDamEffectRender = false;	// 도트뎀 이펙트가 뜨는 시간
+	_bool	m_bWhileStunEffectRender = false;	// 기절 이펙트가 뜨는 시간
 	_bool	m_bWhileStressEffectRender = false;	// 스트레스 이펙트가 뜨는 시간
 	_bool	m_bStressEffectRender = false;	// 스트레스 이펙트가 출력되었는지
 

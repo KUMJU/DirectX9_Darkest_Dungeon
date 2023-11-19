@@ -68,7 +68,7 @@ void CVideo::PlayVideo(const wchar_t* videoFilename, HWND hwnd) {
 	HRESULT hr = m_pControl->Run();
 
 	// Wait for completion or timeout after 5000 milliseconds (5 seconds)
-	DWORD result = WaitForSingleObject(m_pEvent, 5000);
+	DWORD result = WaitForSingleObject(m_pEvent, 100);
 
 	//long evCode;
 	//m_pEvent->WaitForCompletion(INFINITE, &evCode);
@@ -86,6 +86,7 @@ void CVideo::PlayVideo(const wchar_t* videoFilename, HWND hwnd) {
 
 void CVideo::StopVideo()
 {
-	m_pControl->Stop();
+	if(m_pControl)
+		m_pControl->Stop();
 	CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 }

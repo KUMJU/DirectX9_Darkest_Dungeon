@@ -148,7 +148,7 @@ void CPlayerProj::OnCollide(shared_ptr<CGameObject> _pObj)
 
 		if (pParticle)
 		{
-			pParticle->SettingOrigin(m_pTransmCom->GetPos(), 50);
+			pParticle->SettingOrigin(m_pTransmCom->GetPos(), 100);
 			pParticle->SetActive(true);
 		}
 

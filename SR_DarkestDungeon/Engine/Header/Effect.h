@@ -33,7 +33,7 @@ public:
 	void	SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime);
 	void	SetDamageEffect(_int _iDamageType, _int _iDamage, _vec3* _vPos, _float _fAnimTime);
 	void	SetFontEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime);
-	void	SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime, _bool _bLoop);
+	void	SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime, _bool _bLoop, _bool _bShieldBreaker = false);
 	void	SetProjEffect(tstring _strAnimKey, _vec3 _vPos, _float _fAnimTime);
 
 

@@ -44,7 +44,7 @@ void CUIMgr::SceneChange()
 {
 	for (auto iter = m_UIList.begin(); iter != m_UIList.end(); ) {
 		if (L"UI_Inventory" != iter->first && L"UI_Narration" != iter->first &&
-			L"UI_Mouse" != iter->first && L"UI_Player_FPSUI" != iter->first &&
+			L"UI_Mouse" != iter->first && L"UI_Player_FPSUI" != iter->first && L"UI_TextBoard" != iter->first &&
 			L"Obj_DescriptionUI" != iter->first && L"UI_InteractionInfo" != iter->first && L"UI_ScreenEffect" != iter->first)
 		{
 			m_UIList.erase(iter++);
@@ -95,6 +95,14 @@ void CUIMgr::NarrationOn(tstring _strKeyName)
 	if (iter != m_UIList.end())
 		(*iter).second->ActiveUI(_strKeyName);
 
+}
+
+void CUIMgr::TextBoardOn(tstring _strText, _vec3 _vPos, _vec3 _vScale, _float _fActTime)
+{
+	auto iter = m_UIList.find(L"UI_TextBoard");
+
+	if (iter != m_UIList.end())
+		(*iter).second->ActiveUI(_strText, _vPos, _vScale, _fActTime);
 }
 
 void CUIMgr::RemoveAllListElements()

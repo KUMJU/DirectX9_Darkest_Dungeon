@@ -10,6 +10,7 @@
 #include"CameraMgr.h"
 #include "PickingMgr.h"
 #include "EffectMgr.h"
+#include "UIMgr.h"
 
 CBattleSystem::CBattleSystem()
 {
@@ -401,7 +402,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 						if (dynamic_pointer_cast<CHero>(m_vHeroes[i])->IsAffliction())
 						{
 							dynamic_pointer_cast<CHero>(m_vHeroes[i])->SetStressEvent(true);
-							dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnAffliction();
+							dynamic_pointer_cast<CHero>(m_vHeroes[i])->OnAffliction();
 							m_bNext = false;
 							m_bWhileStressEvent = true;
 						}
@@ -409,7 +410,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 						else if (dynamic_pointer_cast<CHero>(m_vHeroes[i])->IsVirtue())
 						{
 							dynamic_pointer_cast<CHero>(m_vHeroes[i])->SetStressEvent(true);
-							dynamic_pointer_cast<CCreature>(m_vHeroes[i])->OnVirtue();
+							dynamic_pointer_cast<CHero>(m_vHeroes[i])->OnVirtue();
 							m_bNext = false;
 							m_bWhileStressEvent = true;
 						}
@@ -540,22 +541,22 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		{
 			if (iStressOutputType[0])
 			{
-				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->IncreaseStress(10);
+				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->IncreaseStress(10, true);
 			}
 			if (iStressOutputType[1])
 			{
-				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->DecreaseHP(5);
+				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->DecreaseHP(5, true);
 			}
 			if (iStressOutputType[2])
 			{
 				for (int i = 0; i < size(m_vHeroes); i++)
 				{
-					dynamic_pointer_cast<CHero>(m_vHeroes[i])->DecreaseStress(10);
+					dynamic_pointer_cast<CHero>(m_vHeroes[i])->DecreaseStress(10, true);
 				}
 			}
 			if (iStressOutputType[3])
 			{
-				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->IncreaseHP(10);
+				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->IncreaseHP(10, true);
 			}
 
 			for (int i = 0; i < 4; i++)
@@ -591,6 +592,8 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			//승리BGM 재생
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"Combat_Victory.wav", CHANNELID::MONSTER, 1.f);
+
+			CUIMgr::GetInstance()->TextBoardOn(L"승리!", {0.f, 150.f, 0.3f}, {150.f, 70.f, 1.f}, STRESSEVENTINTERVEL - 1.f);
 			m_bBattleEndEffectOn = true;
 		}
 
@@ -878,7 +881,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		// 자동전투이면
 		else
 		{
-			while (m_bNext && !m_bWhileDotDamEffectRender && !m_bWhileStressEffectRender)
+			while (m_bNext && !m_bWhileDotDamEffectRender && !m_bWhileStressEffectRender && !m_bWhileStunEffectRender)
 			{
 				// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽음상태로
 				if (!m_bCalculate)
@@ -929,8 +932,10 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 						pEffect->SetFontEffect(L"UI_Stun", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
 						pEffect->SetActive(true);
 
-						m_bWhileDotDamEffectRender = true;
+						m_bWhileStunEffectRender = true;
 						m_bCalcStun = true;
+
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetStun(false);
 						break;
 					}
 
@@ -987,6 +992,36 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 				{
 					m_bWhileDotDamEffectRender = false;
 					m_fDotDamageEffectTime = DOTDAMEFFECTTIME;
+				}
+			}
+
+			// 기절 이펙트가 발생중인 시간
+			if (m_bWhileStunEffectRender)
+			{
+				printf("기절 이펙트 시간\m_fStunEffectTime : %f\n", m_fDotDamageEffectTime);
+
+				m_fDotDamageEffectTime -= fTimeDelta;
+
+				if (m_fDotDamageEffectTime < 0.f)
+				{
+					m_bWhileStunEffectRender = false;
+					// 기절 이펙트 없애는 타이밍
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetLoopEffect()->Reset();
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetLoopEffect()->SetActive(false);
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTurn(false);
+					m_fDotDamageEffectTime = DOTDAMEFFECTTIME;
+
+					// 크리처 턴 엔드
+					CreatureTurnEnd();
+					m_bNext = false;
+					m_bBattle = false;
+					m_bCalculate = false;
+					m_bCalcBlight = false;
+					m_bCalcBleed = false;
+					m_bCalcStun = false;
+
+					m_vStressTargetHeroes.clear();
+					m_bStressEffectRender = false;
 				}
 			}
 

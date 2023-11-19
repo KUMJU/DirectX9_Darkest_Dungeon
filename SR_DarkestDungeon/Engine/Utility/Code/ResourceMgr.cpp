@@ -753,6 +753,17 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Effect_BattleStart", TEX_NORMAL,
 		L"../Bin/Resource/Image/UI/Battle/BattleStart/armatureName_start_%d.png", 28, bDefault);
 
+	// BackBoard
+	CreateNewTexture(L"Backboard_Text", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Battle/Backboard/TextBackboard.png", 1, bDefault);
+
+	// Ω√√º ªÁ∏¡ ¿Ã∆Â∆Æ
+	CreateNewTexture(L"Effect_Corpse", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Battle/Death/Corpse/armatureName_death_%d.png", 40, bDefault);
+
+	// ªÁ∏¡ ¿Ã∆Â∆Æ
+	CreateNewTexture(L"Effect_Death", TEX_NORMAL,
+		L"../Bin/Resource/Image/UI/Battle/Death/Death/armatureName_death_%d.png", 40, bDefault);
 }
 
 void CResourceMgr::UITextureLoad()

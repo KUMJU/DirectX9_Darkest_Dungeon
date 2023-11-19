@@ -131,7 +131,7 @@ void CHero::PickingObj()
 	}
 }
 
-void CHero::IncreaseStress(_int _iValue)
+void CHero::IncreaseStress(_int _iValue, _bool _bStressEvent)
 {
 	if (_iValue == 0) return;
 
@@ -147,7 +147,10 @@ void CHero::IncreaseStress(_int _iValue)
 	// 헤드 이펙트
 	{
 		pEffect = CEffectMgr::GetInstance()->GetEffect();
-		pEffect->SetHeadEffect(L"UI_Head_StressUp", m_pTransformCom->GetPos(), ATTACKTIME, false);
+		if (m_eHeroType == EHeroType::SHILEDBREAKER)
+			pEffect->SetHeadEffect(L"UI_Head_StressUp", m_pTransformCom->GetPos(), ATTACKTIME, false, true);
+		else
+			pEffect->SetHeadEffect(L"UI_Head_StressUp", m_pTransformCom->GetPos(), ATTACKTIME, false);
 		pEffect->SetActive(true);
 	}
 
@@ -155,7 +158,20 @@ void CHero::IncreaseStress(_int _iValue)
 	{
 		if (_iValue >= 100) _iValue = 99;
 		pEffect = CEffectMgr::GetInstance()->GetEffect();
-		pEffect->SetDamageEffect(2, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+
+		// 붕괴/기상 이벤트로 인한 데미지인 경우
+		if (_bStressEvent)
+		{
+			m_vStressEventPos = m_pTransformCom->GetPos();
+			m_vStressEventPos->y -= 2.f;
+			pEffect->SetDamageEffect(2, _iValue, m_vStressEventPos, ATTACKTIME);
+		}
+
+		// 그 외의 경우
+		else
+		{
+			pEffect->SetDamageEffect(2, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+		}
 		pEffect->SetActive(true);
 	}
 
@@ -197,35 +213,113 @@ void CHero::IncreaseStress(_int _iValue)
 	}
 }
 
-void CHero::DecreaseStress(_int _iValue)
+void CHero::DecreaseStress(_int _iValue, _bool _bStressEvent)
 {
 	m_iStress -= _iValue;
 	if (m_iStress < 0) m_iStress = 0;
 
-	//shared_ptr<CEffect> pEffect;
+	shared_ptr<CEffect> pEffect;
 
-	//// 이펙트 넣을 시점
-	//// 헤드 이펙트
-	//{
-	//	pEffect = CEffectMgr::GetInstance()->GetEffect();
-	//	pEffect->SetHeadEffect(L"UI_Head_StressDown", m_pTransformCom->GetPos(), ATTACKTIME, false);
-	//	pEffect->SetActive(true);
-	//}
+	// 이펙트 넣을 시점
+	// 헤드 이펙트
+	{
+		pEffect = CEffectMgr::GetInstance()->GetEffect();
+		pEffect->SetHeadEffect(L"UI_Head_StressDown", m_pTransformCom->GetPos(), ATTACKTIME, false);
+		pEffect->SetActive(true);
+	}
 
-	//// 폰트 이펙트
-	//{
-	//	if (_iValue >= 100) _iValue = 99;
-	//	pEffect = CEffectMgr::GetInstance()->GetEffect();
-	//	pEffect->SetDamageEffect(2, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
-	//	pEffect->SetActive(true);
-	//}
+	// 폰트 이펙트
+	{
+		if (_iValue >= 100) _iValue = 99;
+		pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+		// 붕괴/기상 이벤트로 인한 데미지인 경우
+		if (_bStressEvent)
+		{
+			m_vStressEventPos = m_pTransformCom->GetPos();
+			m_vStressEventPos->y -= 2.f;
+			pEffect->SetDamageEffect(2, _iValue, m_vStressEventPos, ATTACKTIME);
+		}
+
+		// 그 외의 경우
+		else
+		{
+			pEffect->SetDamageEffect(2, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+		}
+		pEffect->SetActive(true);
+	}
 }
 
-void CHero::DecreaseHP(_int _iValue)
+void CHero::DecreaseHP(_int _iValue, _bool _bStressEvent)
 {
-	CCreature::DecreaseHP(_iValue);
+	CCreature::DecreaseHP(_iValue, _bStressEvent);
 	GetHeroStatusEvent(true);
 
+}
+
+void CHero::OnAffliction()
+{
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 200, true, true);
+	pEffect->SetActive(true);
+
+	pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetAnimEffect(m_strName + L"_Affliction", { 0.f, 0.f, 0.5f }, { 450.f, 420.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true, true);
+	pEffect->SetActive(true);
+
+	tstring strAffiction;
+
+	switch (m_eAffliction)
+	{
+	case EAffliction::SELFISH:
+		strAffiction = L"이기적";
+		break;
+	case EAffliction::IRRATIONAL:
+		strAffiction = L"비이성적";
+		break;
+	default:
+		strAffiction = L"";
+		break;
+	}
+
+	CUIMgr::GetInstance()->TextBoardOn(strAffiction, { 0.f, -200.f, 0.3f }, { 230.f, 70.f, 1.f }, STRESSEVENTINTERVEL - 1.f);
+
+	m_pStatInfo->SetAffliction(true);
+}
+
+void CHero::OnVirtue()
+{
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 200, true, true);
+	pEffect->SetActive(true);
+
+	pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+	pEffect->SetAnimEffect(m_strName + L"_Virtue", { 0.f, 0.f, 0.5f }, { 400.f, 400.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true, true);
+	pEffect->SetActive(true);
+
+	tstring strVirtue;
+	
+	switch (m_eVirtue)
+	{
+	case EVirtue::COURAGEOUS:
+		strVirtue = L"충만한 용기";
+		break;
+	case EVirtue::VIGOROUS:
+		strVirtue = L"원기 왕성";
+		break;
+	case EVirtue::ENUM_END:
+		break;
+	default:
+		break;
+	}
+
+	CUIMgr::GetInstance()->TextBoardOn(strVirtue, { 0.f, -200.f, 0.3f }, { 230.f, 70.f, 1.f }, STRESSEVENTINTERVEL - 1.f);
+
+	m_pStatInfo->SetVirtue(true);
 }
 
 shared_ptr<CSkill> CHero::SelectSkill(_int _iSkillID)

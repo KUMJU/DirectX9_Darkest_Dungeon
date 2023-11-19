@@ -36,6 +36,7 @@ public:
 
 	virtual void ActiveUI(tstring _strKey) {};
 	virtual void ActiveUI(tstring _strKey, _vec3 _vPos) {};
+	virtual void ActiveUI(tstring _strKey, _vec3 _vPos, _vec3 _vScale, _float _fActTime) {};
 	virtual void ActiveUI(shared_ptr<CGameObject> _pGameObject) {};
 	virtual void ActiveUI(shared_ptr<CGameObject> _pGameObject, _vec3 _vPos) {};
 

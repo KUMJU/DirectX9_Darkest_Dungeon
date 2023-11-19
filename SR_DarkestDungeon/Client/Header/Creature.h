@@ -147,8 +147,8 @@ public:
 
 	_int	GetHp() { return m_tCommonStat.iHp; }
 	void	SetHp(_int _iValue) { m_tCommonStat.iHp = _iValue; }
-	void	IncreaseHP(_int _iValue);
-	virtual void	DecreaseHP(_int _iValue);
+	void	IncreaseHP(_int _iValue, _bool _bStressEvent = false);
+	virtual void	DecreaseHP(_int _iValue, _bool _bStressEvent = false);
 
 	_int	GetCurrentBleed() { return m_iBleedDot[0]; }
 	_int	GetCurrentPoision() { return m_iBlightDot[0]; }
@@ -242,6 +242,9 @@ public:
 
 	void UpdateAttribute();
 
+	// 루프 이펙트 가져오기
+	shared_ptr<CEffect> GetLoopEffect() { return m_pLoopEffect; }
+
 protected:
 	virtual void			AddComponent();
 	virtual void			ClimbingTerrain();
@@ -333,6 +336,9 @@ protected:
 	_bool		m_bPicked = false;
 
 	tstring		m_strName = L"";
+
+	// 붕괴/기상 이벤트 발생 시 폰트를 출력할 포지션 (다른 이펙트와 안겹치기 위해서 따로 둠)
+	_vec3* m_vStressEventPos;
 
 
 protected:

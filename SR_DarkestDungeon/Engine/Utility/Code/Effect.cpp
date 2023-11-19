@@ -39,7 +39,6 @@ _int CEffect::UpdateGameObject(const _float& fTimeDelta)
             if (m_pAnimatorCom->CheckFinish())
             {
                 CEffectMgr::GetInstance()->ReturnEffect(dynamic_pointer_cast<CEffect>(shared_from_this()));
-                printf("이펙트 종료\n");
             }
         }
 
@@ -48,7 +47,6 @@ _int CEffect::UpdateGameObject(const _float& fTimeDelta)
             if (m_fAnimTime <= 0.f)
             {
                 CEffectMgr::GetInstance()->ReturnEffect(dynamic_pointer_cast<CEffect>(shared_from_this()));
-                printf("이펙트 종료\n");
             }
 
             else
@@ -99,9 +97,8 @@ void CEffect::RenderGameObject()
 
     m_pTransformCom->SetScale(m_vScale.x * m_vScaleGap.x, m_vScale.y * m_vScaleGap.y, m_vScale.z * m_vScaleGap.z);
 
-    printf("Effect : %d\n", m_iNum);
-    printf("포지션 : %f, %f, %f\n", m_pTransformCom->GetPos()->x, m_pTransformCom->GetPos()->y, m_pTransformCom->GetPos()->z);
-
+    //printf("Effect : %d\n", m_iNum);
+    
     D3DXMATRIX mat = *m_pTransformCom->GetWorld();
 
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
@@ -109,18 +106,18 @@ void CEffect::RenderGameObject()
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, m_bZEnable);
 
-    m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    //m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
     m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 
-    m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
-    //m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+    //m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+    m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
     m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
     m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-    m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(m_iAlpha, 255, 255, 255));
+    m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(m_iAlpha, 0, 0, 0));
 
     if (m_bAnimation)
     {
@@ -208,6 +205,7 @@ void CEffect::AddComponent()
 
 void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _float _fAnimTime, _bool _bOrthogonal, _bool _bZEnable)
 {
+    printf("Effect %d\n%s\n", m_iNum, _strAnimKey);
 
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
@@ -228,12 +226,12 @@ void CEffect::SetAnimEffect(tstring _strAnimKey, _vec3 _vPos, _vec3 _vScale, _fl
     m_bOrthogonal = _bOrthogonal;
     m_bZEnable = _bZEnable;
 
-    if (m_bOrthogonal) m_bZEnable = false;
+    //if (m_bOrthogonal) m_bZEnable = false;
 }
 
 void CEffect::SetTextureEffect(tstring _strTextureKey, _vec3 _vPos, _vec3 _vScale, _float _fShowTime, _int _iAlpha, _bool _bOrthogonal, _bool _bZEnable)
 {
-    // printf("Effect %d\nTexture\n", m_iNum);
+     printf("Effect %d\n%s\n", m_iNum, _strTextureKey);
 
     m_strAnimKey = _strTextureKey;
     m_fAnimTime = _fShowTime;
@@ -254,7 +252,7 @@ void CEffect::SetTextureEffect(tstring _strTextureKey, _vec3 _vPos, _vec3 _vScal
     m_bOrthogonal = _bOrthogonal;
     m_bZEnable = _bZEnable;
 
-    if (m_bOrthogonal) m_bZEnable = false;
+    //if (m_bOrthogonal) m_bZEnable = false;
 }
 
 void CEffect::SetSkillEffect(tstring _strAnimKey, _vec2 _vTextureScale, _vec3* _vPos, const _vec3* _vScale, _float _fAnimTime)
@@ -369,7 +367,7 @@ void CEffect::SetFontEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime
     SetMove(true, { 0.f, 1.5f, 0.f }, m_fAnimTime);
 }
 
-void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime, _bool _bLoop)
+void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime, _bool _bLoop, _bool _bShieldBreaker)
 {
     m_strAnimKey = _strAnimKey;
     m_fAnimTime = _fAnimTime;
@@ -378,6 +376,10 @@ void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime
     m_vPos = _vPos;
     m_pTransformCom->SetPosition(m_vPos->x, m_vPos->y, m_vPos->z);
     m_vPosGap = { 0.f, 2.3f, 0.f };
+    if (_bShieldBreaker)
+    {
+        m_vPosGap.x += 1.f;
+    }
     m_vScale = {2.5f, 2.f, 3.f};
     m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
     m_vScaleGap = { 1.f, 1.f, 1.f };
