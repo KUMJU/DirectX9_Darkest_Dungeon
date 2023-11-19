@@ -53,6 +53,10 @@ private:
 	shared_ptr<CRcTex> m_pItemBufCom = nullptr;
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
 
+	shared_ptr<CTransform> m_pEffectTransmCom = nullptr;
+	shared_ptr<CRcTex> m_pEffectBufCom = nullptr;
+	shared_ptr<CTexture> m_pEffectTextureCom = nullptr;
+
 	shared_ptr<CAnimator> m_pAnimCom = nullptr;
 
 	//LateUpdate에서 포지션을 잡아주기 때문에 deltaTime을 변수에 따로 받아서 넘겨줌
@@ -68,6 +72,9 @@ private:
 	_bool m_bPlrSpellHand = false;
 
 	_bool m_bReady = false;
+
+	_bool m_bShoot = false;
+	_bool m_fEffectTime = 0.f;
 
 };
 

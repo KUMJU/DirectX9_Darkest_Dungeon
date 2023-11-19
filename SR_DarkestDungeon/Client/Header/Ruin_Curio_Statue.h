@@ -1,6 +1,7 @@
 #pragma once
 
 #include"InteractionObj.h"
+#include "Light.h"
 
 enum class StatueState {
 	STATUE_EMPTY,
@@ -47,6 +48,8 @@ private:
 
 	_float m_fDebounceTime = 0.f;
 
+
+	shared_ptr<CLight> m_pLight = nullptr;
 
 };
 

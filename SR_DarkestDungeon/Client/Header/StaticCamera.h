@@ -28,6 +28,14 @@ enum class EEffectState {
 	ENUM_END
 };
 
+enum class EShakingType {
+	CROSS,
+	VERTICAL,
+	HORIZON,
+	RANDOM,
+	ENUM_END
+};
+
 struct tagEffectInfo {
 	EEffectState eEffectType;
 	_float		 fAmplitude;
@@ -35,6 +43,7 @@ struct tagEffectInfo {
 	_float		 MoveDistance;
 	_float		 fTime;
 	_float		 fActTime;
+	EShakingType eShakingType;
 };
 
 class CStaticCamera : public CCamera
@@ -69,7 +78,7 @@ public:
 	//최종 포지션을 잡고 직선을 그리며 카메라 포지션 옮기기 : 줌인, 줌아웃, 카메라 무빙
 	void MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float _fTime = 1.f);
 	//카메라 이펙트 세팅
-	void AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.5f);
+	void AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.5f, EShakingType _eShaking = EShakingType::CROSS);
 	//오른쪽 왼쪽으로만 이동하는 함수
 	void MovingRightVec(_int _iDir);
 	

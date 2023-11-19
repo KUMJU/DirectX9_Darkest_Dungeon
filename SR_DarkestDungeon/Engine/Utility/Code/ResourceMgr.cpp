@@ -225,6 +225,9 @@ void CResourceMgr::BaseTextureLoad()
 	CreateNewTexture(L"Particle_Flare", TEX_NORMAL,
 		L"../Bin/Resource/Image/Particle/flare.png", 1, bDefault);
 
+	CreateNewTexture(L"Effect_Spell_Blur", TEX_NORMAL,
+		L"../Bin/Resource/Image/PlayerHand/Fire/Overlay/Effect_Spell_Blur.png", 1, bDefault);
+
 	//--------------------------------------------------------------------------------------------
 
 	// Item
@@ -1308,6 +1311,9 @@ void CResourceMgr::VillageTextureLoad()
 
 		CreateNewTexture(L"Minigame_ClickEffect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Village/Minigame/ClickEffect/UI_ClickEffect_%d.png", 7, bDefault);
+
+		CreateNewTexture(L"Minigame_BackGround", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Minigame/BackGround/Minigame_BackGround.png", 1, bDefault);
 
 	}
 

@@ -182,6 +182,7 @@ void CRuin_Curio_Sarcophagus::LateUpdateGameObject()
 				break;
 		}
 
+
 		if (m_bPuzzleDone) {
 
 			for (auto& iter : m_StatueVec) {
@@ -189,8 +190,8 @@ void CRuin_Curio_Sarcophagus::LateUpdateGameObject()
 			}
 
 			//EarthQuake Effect
-			CSoundMgr::GetInstance()->PlaySound(L"Effect_earthquake.wav", CHANNELID::EFFECT, 0.7f);
-			CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 2.f, 0.1f);
+			CSoundMgr::GetInstance()->PlaySound(L"Effect_earthquake.wav", CHANNELID::PLAYER, 0.7f);
+			CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 2.f, 0.1f , EShakingType::HORIZON);
 		}
 	}
 }

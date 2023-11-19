@@ -140,11 +140,11 @@ void CCardGame::RenderGameObject()
 		return;
 	}
 
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pTextureCom->SetTexture(0);
-	//m_pRCTexCom->RenderBuffer();
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
+	m_pTextureCom->SetTexture(0);
+	m_pRCTexCom->RenderBuffer();
 
 	for (auto& iter : m_vCardList) {
 		iter->RenderGameObject();
@@ -158,18 +158,20 @@ void CCardGame::AddComponent()
 {
 	shared_ptr<CComponent> pComponent;
 
-	//pComponent = m_pRCTexCom = make_shared<CRcTex>(m_pGraphicDev);
-	//dynamic_pointer_cast<CRcTex>(m_pRCTexCom)->ReadyBuffer();
-	//m_mapComponent[ID_STATIC].insert({ L"Com_RcTex", pComponent });
+	pComponent = m_pRCTexCom = make_shared<CRcTex>(m_pGraphicDev);
+	dynamic_pointer_cast<CRcTex>(m_pRCTexCom)->ReadyBuffer();
+	m_mapComponent[ID_STATIC].insert({ L"Com_RcTex", pComponent });
 
-	//pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
-	//m_pTransformCom->ReadyTransform();
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
-	//m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
+	pComponent = m_pTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
+	m_pTransformCom->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
+	m_pTransformCom->SetPosition(35.f, -52.f , 50.f + 0.3f );
+	m_pTransformCom->SetScale(8.f, 8.f, 2.f );
+	m_pTransformCom->SetAngle(_vec3(0.f, 0.f, 0.f));
 
-	//pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
-	//m_pTextureCom->SetTextureKey(L"Village_Door_Close", TEX_NORMAL);
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Texture",pComponent });
+	pComponent = m_pTextureCom = make_shared<CTexture>(m_pGraphicDev);
+	m_pTextureCom->SetTextureKey(L"Minigame_BackGround", TEX_NORMAL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Texture",pComponent });
 
 }
 

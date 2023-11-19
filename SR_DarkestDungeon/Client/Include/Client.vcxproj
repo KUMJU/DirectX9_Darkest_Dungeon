@@ -221,6 +221,7 @@
     <ClInclude Include="..\Header\Ruin_Dungeon.h" />
     <ClInclude Include="..\Header\Ruin_Obstacle.h" />
     <ClInclude Include="..\Header\Ruin_Trap.h" />
+    <ClInclude Include="..\Header\SceneEvent.h" />
     <ClInclude Include="..\Header\ScreenEffect.h" />
     <ClInclude Include="..\Header\ShieldBreaker.h" />
     <ClInclude Include="..\Header\SoundMgr.h" />
@@ -325,6 +326,7 @@
     <ClCompile Include="..\Code\Ruin_Dungeon.cpp" />
     <ClCompile Include="..\Code\Ruin_Obstacle.cpp" />
     <ClCompile Include="..\Code\Ruin_Trap.cpp" />
+    <ClCompile Include="..\Code\SceneEvent.cpp" />
     <ClCompile Include="..\Code\ScreenEffect.cpp" />
     <ClCompile Include="..\Code\ShieldBreaker.cpp" />
     <ClCompile Include="..\Code\SoundMgr.cpp" />

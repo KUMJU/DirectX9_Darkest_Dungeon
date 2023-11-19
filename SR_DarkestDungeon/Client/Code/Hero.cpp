@@ -141,7 +141,8 @@ void CHero::IncreaseStress(_int _iValue)
 
 	GetHeroStatusEvent(false);
 
-
+	CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+	CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_StressUp.wav", CHANNELID::STATUS, 1.f);
 	// 이펙트 넣을 시점
 	// 헤드 이펙트
 	{

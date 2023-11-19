@@ -89,7 +89,7 @@ void CScreenEffect::RenderGameObject()
         m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
         m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
         
-        if (EScreenEffect::ATTACKED == m_eCurrentEffect) {
+        if (EScreenEffect::ATTACKED == m_eCurrentEffect || EScreenEffect::FADEIN_WHITE == m_eCurrentEffect) {
             m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 
             m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
@@ -126,11 +126,18 @@ void CScreenEffect::SetScreenEffect(EScreenEffect _eEffect)
     if (EScreenEffect::BLOOD == _eEffect) {
         m_fEffectTime = 3.f;
     }
-    else {
+    else if (EScreenEffect::ATTACKED == _eEffect) 
+    {
         m_fEffectTime = 1.5f;
+        m_iAlpha = 110;
+
+    }
+    else if (EScreenEffect::FADEIN_WHITE == _eEffect) {
+
+        m_fEffectTime = 4.f;
+        m_iAlpha = 0;
     }
 
-    m_iAlpha = 110;
 
 }
 

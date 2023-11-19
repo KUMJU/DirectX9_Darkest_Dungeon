@@ -53,9 +53,9 @@ _float CCameraMgr::GetYAngle()
 	return m_pMainCam->GetYAngle();
 }
 
-void CCameraMgr::AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude)
+void CCameraMgr::AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude, EShakingType _eShakeType)
 {
-	m_pMainCam->AddCameraEffect(_eEffect, _fTime, _fAmplitude);
+	m_pMainCam->AddCameraEffect(_eEffect, _fTime, _fAmplitude, _eShakeType);
 }
 
 void CCameraMgr::CamAngleReset()

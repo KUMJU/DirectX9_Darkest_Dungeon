@@ -36,5 +36,7 @@ private:
 
 	_int  m_iAlpha = 225;
 
+	_bool m_bFadeInDone = false;
+
 };
 

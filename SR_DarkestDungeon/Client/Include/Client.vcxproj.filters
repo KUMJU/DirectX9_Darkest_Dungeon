@@ -284,6 +284,7 @@
     <ClCompile Include="..\Code\Video.cpp">
       <Filter>00. Scene\06. Video</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\SceneEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -572,6 +573,7 @@
     <ClInclude Include="..\Header\Video.h">
       <Filter>00. Scene\06. Video</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\SceneEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -739,6 +741,9 @@
     </Filter>
     <Filter Include="00. Scene\06. Video">
       <UniqueIdentifier>{3e113a73-f7e4-44cc-b5b2-275847b84908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\12. SceneEvent">
+      <UniqueIdentifier>{03d8bd01-ba3d-4730-9630-0da4b6a6b550}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

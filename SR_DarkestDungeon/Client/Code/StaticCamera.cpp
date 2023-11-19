@@ -511,7 +511,7 @@ void CStaticCamera::LineCameraNoLerp()
 }
 
 
-void CStaticCamera::AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude)
+void CStaticCamera::AddCameraEffect(EEffectState _eEffect, _float _fTime, _float _fAmplitude , EShakingType _eShaking)
 {
 
 	unique_ptr<tagEffectInfo> pEffectInfo = make_unique<tagEffectInfo>();
@@ -522,6 +522,7 @@ void CStaticCamera::AddCameraEffect(EEffectState _eEffect, _float _fTime, _float
 	pEffectInfo->MoveDistance = 0.f;
 	pEffectInfo->fActTime = 0.f;
 	pEffectInfo->fDir = -1.f;
+	pEffectInfo->eShakingType = _eShaking;
 
 	m_qEffectQueue.push(std::move(pEffectInfo));
 
@@ -586,27 +587,40 @@ void CStaticCamera::ShakingCamera()
 
 	if (m_eCurrentState == ECameraMode::FPS || m_eCurrentState == ECameraMode::VILLAGE) {
 
-		//vCurrentPos.y += m_qEffectQueue.front()->MoveDistance * fDir;
-		//vCurrentPos.x += m_qEffectQueue.front()->MoveDistance * fDir;
-		//vCurrentPos.x += m_qEffectQueue.front()->MoveDistance * fDir;
+		if(EShakingType::CROSS == m_qEffectQueue.front()->eShakingType){
+			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vRight;
+			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vUp;
+		}
+		else if (EShakingType::HORIZON == m_qEffectQueue.front()->eShakingType) {
+			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vRight;
+		}
+		else if (EShakingType::HORIZON == m_qEffectQueue.front()->eShakingType) {
+			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vUp;
 
-		vCurrentPos += m_qEffectQueue.front()->MoveDistance * vRight;
-		vCurrentPos += m_qEffectQueue.front()->MoveDistance * vUp;
-
-		/*printf("%f\n", fDir);
-		printf("%f\n", m_qEffectQueue.front()->MoveDistance * fDir);*/
+		}
+		else if (EShakingType::RANDOM == m_qEffectQueue.front()->eShakingType) {
+		
+		
+		}
 
 	}
 	else {
 
-		vCurrentPos += m_qEffectQueue.front()->MoveDistance  * vRight;
-		vCurrentPos += m_qEffectQueue.front()->MoveDistance  * vUp;
+		if (EShakingType::CROSS == m_qEffectQueue.front()->eShakingType) {
+			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vRight;
+			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vUp;
+		}
+		else if (EShakingType::HORIZON == m_qEffectQueue.front()->eShakingType) {
+			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vRight;
+		}
+		else if (EShakingType::HORIZON == m_qEffectQueue.front()->eShakingType) {
+			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vUp;
 
-		//vCurrentPos.y += m_qEffectQueue.front()->MoveDistance * fDir;
-		//vCurrentPos.x += m_qEffectQueue.front()->MoveDistance * fDir;
+		}
+		else if (EShakingType::RANDOM == m_qEffectQueue.front()->eShakingType) {
 
-		/*vCurrentPos.y += fDistance;
-		vCurrentPos.x += fDistance;*/
+
+		}
 	}
 
 	memcpy(&m_matView.m[3][0], &vCurrentPos, sizeof(_vec3));
