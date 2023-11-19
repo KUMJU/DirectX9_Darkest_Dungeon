@@ -316,8 +316,7 @@ protected:
 	// 플레이어의 위치를 받아오기 위한 플레이어 오브젝트
 	shared_ptr<CGameObject>	m_pPlayer = nullptr;
 	shared_ptr<CTransform>	m_pPlayerTransformCom = nullptr;
-
-	shared_ptr<CVideo>	m_pVideo;
+	shared_ptr<CVideo>   m_pVideo;
 
 	_bool	m_bAbleWallCollsion = false;
 	_bool	m_bWallCollision = false;
@@ -328,5 +327,6 @@ protected:
 	_int	m_iRed = 255;
 	_int	m_iGreen = 255;
 	_int	m_iBlue = 255;
+
 };
 

@@ -157,8 +157,8 @@ private:
 	_float	m_fAngle = 0.f;
 	_float	m_fActTime = 0.f;
 
-	float	m_fEndTime1 = 3.f;
-	float	m_fEndTime2 = 8.f;
+	float	m_fEndTime1 = 8.f;
+	float	m_fEndTime2 = 15.f;
 	//공격이후 애니메이션이 풀리고 턴 리셋을 위해 기록하는 시간
 	_float	m_fTurnResetTime = 0.f;
 	//스킬 사용이후 텍스쳐(애니메이션)이 변경했는지 여부
