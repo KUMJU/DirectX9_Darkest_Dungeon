@@ -375,7 +375,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	m_bGetStress = false;
 
 	// 닷지 계산용
-	int iDodgeNum = rand() % 100;
+	int iDodgeNum;
 
 	// 치명타 계산용
 	int iCritical = rand() % 100;
@@ -386,6 +386,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	// 단순 공격
 	if (arrAttack[0])
 	{
+		iDodgeNum = rand() % 100;
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
@@ -422,7 +423,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 
 				if (dynamic_cast<CHero*>(this))
 				{
-					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+					//dynamic_cast<CHero*>(this)->DecreaseStress(5);
 				}
 			}
 			else
@@ -445,6 +446,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	// 중독
 	if (arrAttack[1])
 	{
+		iDodgeNum = rand() % 100;
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
@@ -452,7 +454,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
 				if (dynamic_cast<CHero*>(this))
 				{
-					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+					//dynamic_cast<CHero*>(this)->DecreaseStress(5);
 				}
 			}
 			else
@@ -465,6 +467,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	// 출혈
 	if (arrAttack[2])
 	{
+		iDodgeNum = rand() % 100;
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
@@ -472,7 +475,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
 				if (dynamic_cast<CHero*>(this))
 				{
-					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+					//dynamic_cast<CHero*>(this)->DecreaseStress(5);
 				}
 			}
 			else
@@ -485,6 +488,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	// 기절
 	if (arrAttack[3])
 	{
+		iDodgeNum = rand() % 100;
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
@@ -492,7 +496,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
 				if (dynamic_cast<CHero*>(this))
 				{
-					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+					//dynamic_cast<CHero*>(this)->DecreaseStress(5);
 				}
 			}
 			else
@@ -504,6 +508,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	// 이동
 	if (arrAttack[4])
 	{
+		iDodgeNum = 100;
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
@@ -511,7 +516,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetCriticalRatio()));
 				if (dynamic_cast<CHero*>(this))
 				{
-					dynamic_cast<CHero*>(this)->DecreaseStress(5);
+					//dynamic_cast<CHero*>(this)->DecreaseStress(5);
 				}
 			}
 			else
@@ -522,10 +527,11 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	// 힐
 	if (arrAttack[5])
 	{
+		iDodgeNum = 100;
 		if (iCritical < CRIRATE)
 		{
 			_pCreature->IncreaseHP(static_cast<_int>(_pSkill->GetHeal() * _pSkill->GetCriticalRatio()));
-			dynamic_pointer_cast<CHero>(_pCreature)->DecreaseStress(5);
+			//dynamic_pointer_cast<CHero>(_pCreature)->DecreaseStress(5);
 		}
 		else
 			_pCreature->IncreaseHP(static_cast<_int>(_pSkill->GetHeal() * _pSkill->GetDamageRatio()));
@@ -560,6 +566,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 		// 회피 버프
 		if (!_pSkill->GetArrToEnemy()[3])
 		{
+			iDodgeNum = 100;
 			_int  DotBuff[2] = { 10, 3 };
 			_pCreature->Buff2Skill(DotBuff);
 			_pCreature->SetBuff(true);

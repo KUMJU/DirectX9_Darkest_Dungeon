@@ -1008,8 +1008,8 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pHighwayman = make_shared<CHighwayman>(m_pGraphicDev);
 
 	vector<shared_ptr<CGameObject>> Heroes_v;
-	Heroes_v.push_back(m_pJester);
 	Heroes_v.push_back(m_pHighwayman);
+	Heroes_v.push_back(m_pJester);
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetHeroVec(&Heroes_v);
 
 	// 방에 GameObject 넣기

@@ -323,6 +323,8 @@ protected:
 	_bool	m_bHitByPlayer = false;
 	_bool	m_bChangeColor = false;
 
+	_bool	m_bSuperArmor = false;
+
 	_int	m_iAlpha = 255;
 	_int	m_iRed = 255;
 	_int	m_iGreen = 255;

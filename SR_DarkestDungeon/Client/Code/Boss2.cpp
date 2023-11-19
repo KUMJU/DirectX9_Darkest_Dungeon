@@ -113,11 +113,12 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 		}
 	}
 
-	// 피격시 점멸
+	// 피격시 0.5초 무적
 	if (m_bHitByPlayer)
 	{
-		m_fHittedIntervel -= fTimeDelta;
-		if (m_fHittedIntervel < 0.f && !m_bChangeColor)
+		m_bSuperArmor = true;
+		//m_fHittedIntervel -= fTimeDelta;
+		/*if (m_fHittedIntervel < 0.f && !m_bChangeColor)
 		{
 			m_fHittedIntervel = 0.01f;
 			m_iAlpha = 50;
@@ -134,21 +135,21 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 			m_iGreen = 255;
 			m_iBlue = 255;
 			m_bChangeColor = false;
-		}
+		}*/
 
 		m_fHittedTime -= fTimeDelta;
 		if (m_fHittedTime < 0.f)
 		{
+			m_bSuperArmor = false;
 			m_fHittedTime = 0.5f;
+			m_bHitByPlayer = false;
 
-			m_fHittedIntervel = 0.01f;
+			/*m_fHittedIntervel = 0.01f;
 			m_iAlpha = 255;
 			m_iRed = 255;
 			m_iGreen = 255;
 			m_iBlue = 255;
-			m_bChangeColor = false;
-
-			m_bHitByPlayer = false;
+			m_bChangeColor = false;*/
 		}
 	}
 
@@ -197,7 +198,7 @@ void CBoss2::RenderGameObject()
 		m_szString,
 		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-	if (m_bHitByPlayer)
+	/*if (m_bHitByPlayer)
 	{
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -228,7 +229,7 @@ void CBoss2::RenderGameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	}
-	else
+	else*/
 	{
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -283,11 +284,10 @@ void CBoss2::OnCollide(shared_ptr<CGameObject> _pObj)
 		m_bAbleWallCollsion = true;
 	}
 
-	if (ECollideID::PLAYER_PROJECTILE == _pObj->GetColType())
+	if ((ECollideID::PLAYER_PROJECTILE == _pObj->GetColType()) && !m_bSuperArmor)
 	{
 		DecreaseHp(5);
 		m_bHitByPlayer = true;
-		m_fHittedTime = 0.5f;
 	}
 }
 
@@ -674,9 +674,11 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		m_bPhase2 = true;
 		if (m_bChange)
 		{
+			m_bSuperArmor = true;
 			m_fP1ChangeTime -= fTimeDelta;
 			if (m_fP1ChangeTime < 0.f)
 			{
+				m_bSuperArmor = false;
 				m_fP1ChangeTime = 0.12f * 43;
 				m_bChange = false;
 				m_eCurAnimState = EBossState::P2_IDLE;
