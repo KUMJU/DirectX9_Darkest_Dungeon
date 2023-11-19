@@ -131,9 +131,13 @@ void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM3);
 		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_jewerly.wav", CHANNELID::ITEM3, 1.f);
 		break;
-	case EHandItem::ENUM_END:
+	case EHandItem::RING:
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
 		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_ring.wav", CHANNELID::ITEM, 1.f);
+		break;
+	case EHandItem::ENUM_END:
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_all.wav", CHANNELID::ITEM, 1.f);
 		break;
 	default:
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
@@ -277,7 +281,7 @@ void CItem::GetUITextureKeyName(const tstring& _strOriginName)
 	}
 	else if (L"Item_MagicRing" == _strOriginName) {
 		strKey = L"Item_UI_MagicRing";
-		m_eItemState = EHandItem::ENUM_END;
+		m_eItemState = EHandItem::RING;
 
 		m_tDescription->m_strTitle = L"???";
 		m_tDescription->m_strMainContent = L"신비한 힘이 느껴진다...";

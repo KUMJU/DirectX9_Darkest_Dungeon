@@ -87,6 +87,7 @@ enum class EHandItem {
 	RED_GEM,			//∆€¡ÒπÊ ∫∏ºÆ
 	BLUE_GEM,
 	GREEN_GEM,
+	RING,
 	ENUM_END	
 };
 
