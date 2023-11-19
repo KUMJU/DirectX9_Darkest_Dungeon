@@ -56,7 +56,7 @@ _int CWeald_Obstacle::UpdateGameObject(const _float& fTimeDelta)
 				shared_ptr<CUIObj> pScreenEffect = CUIMgr::GetInstance()->FindUI(L"UI_ScreenEffect");
 
 				if (pScreenEffect) {
-					dynamic_pointer_cast<CScreenEffect>(pScreenEffect)->SetScreenEffect(EScreenEffect::ATTACKED);
+					dynamic_pointer_cast<CScreenEffect>(pScreenEffect)->SetScreenEffect(EScreenEffect::ATTACKED );
 				}
 
 				vector<shared_ptr<CGameObject>> *pHeroVec =
@@ -115,8 +115,7 @@ void CWeald_Obstacle::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	D3DMATERIAL9 tMtrl = SetMaterial();
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	SetMaterial();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 

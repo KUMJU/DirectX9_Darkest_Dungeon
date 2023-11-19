@@ -69,6 +69,7 @@ public:
 	virtual void			SwapSkill(_int _iIdx1, _int _iIdx2);
 
 	void					GetHeroStatusEvent(_bool _bHpEvent);
+	void					GetHeroBuffEvent();
 
 protected:
 	virtual void		AddComponent();

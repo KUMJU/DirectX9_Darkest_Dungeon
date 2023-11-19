@@ -87,41 +87,16 @@ void CRuinDungeonDoor::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+	SetMaterial();
 
-	D3DMATERIAL9			tMtrl;
-	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
-
-	tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Ambient = { 0.2f, 0.2f, 0.2f, 1.f };
-	tMtrl.Emissive = { 0.f, 0.f, 0.f, 0.f };
-	tMtrl.Power = 0.f;
-	
-	m_pGraphicDev->SetMaterial(&tMtrl);
 	m_pTextureCom2->SetTexture(0);
 	m_pBufferCom2->RenderBuffer();
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
 
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom3->GetWorld());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-
-	D3DMATERIAL9			tMtrl2;
-	ZeroMemory(&tMtrl2, sizeof(D3DMATERIAL9));
-
-	tMtrl2.Diffuse = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl2.Specular = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl2.Ambient = { 0.2f, 0.2f, 0.2f, 1.f };
-	tMtrl2.Emissive = { 0.f, 0.f, 0.f, 0.f };
-	tMtrl2.Power = 0.f;
-
-	m_pGraphicDev->SetMaterial(&tMtrl2);
 	m_pTextureCom3->SetTexture(0);
 	m_pBufferCom3->RenderBuffer();
+
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

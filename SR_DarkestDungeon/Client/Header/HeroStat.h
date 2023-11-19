@@ -23,7 +23,7 @@ public:
 	virtual void RenderGameObject() override;
 
 public:
-	virtual void PickingUI(LONG _fX, LONG _fY) override;
+	virtual void PickingUI(LONG _fX, LONG _fY, _bool _bLB) override;
 	
 public:
 	void	SetHero(shared_ptr<CHero> _pHero) { m_pHero = _pHero; }

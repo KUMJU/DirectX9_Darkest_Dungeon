@@ -543,14 +543,13 @@ void CResourceMgr::BaseTextureLoad()
 
 
 		// 스킬 이펙트 (본인에게)
-		//여기 바꾸기
 
 		CreateNewTexture(L"BattleBallad_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad/armatureName_battle_ballad_%d.png", 2, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad/armatureName_battle_ballad_%d.png", 28, bDefault);
 		CreateNewTexture(L"Finale_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale/armatureName_finale_%d.png", 2, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale/armatureName_finale_%d.png", 20, bDefault);
 		CreateNewTexture(L"Solo_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo/armatureName_solo_%d.png", 2, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo/armatureName_solo_%d.png", 28, bDefault);
 
 
 		// 스킬 이펙트 (타겟)
@@ -558,16 +557,42 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"BattleBallad_Target_Effect", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/battle_ballad_target/armatureName_battle_ballad_target_%d.png", 20, bDefault);
 		CreateNewTexture(L"Finale_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 2, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/finale_target/armatureName_finale_target_%d.png", 20, bDefault);
 		CreateNewTexture(L"Solo_Target_Effect", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 2, bDefault);
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/fx/solo_target/armatureName_solo_target_%d.png", 20, bDefault);
 
 	}
 
-	// 붕괴, 기상
-	{
-		/*CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
+
+
+	// 붕괴, 기상 (진짜)
+	/*{
+		CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+		CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+		CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+		CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
+
+
+		CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+		CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+		CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+		CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
+
+
+	}*/
+
+	// 붕괴, 기상(로딩 줄이기 용)
+	{
+		CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
+			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
 		CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
 		CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
@@ -583,27 +608,8 @@ void CResourceMgr::BaseTextureLoad()
 		CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
 		CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);*/
+			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
 
-
-			CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
-			CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
-			CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
-			CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
-
-
-			CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
-			CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
-			CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
-			CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
 
 	}
 
@@ -924,13 +930,12 @@ void CResourceMgr::UITextureLoad()
 
 		// Head Effect
 		{
-			//여기 바꾸기
 			CreateNewTexture(L"UI_Head_StressUp", TEX_NORMAL,
 				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_afflicted_%d.png", 54, bDefault);
 			CreateNewTexture(L"UI_Head_StressDown", TEX_NORMAL,
-				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_heroic_%d.png", 2, bDefault);
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_heroic_%d.png", 52, bDefault);
 			CreateNewTexture(L"UI_Head_Stun", TEX_NORMAL,
-				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_stun_loop_%d.png", 2, bDefault);
+				L"../Bin/Resource/Image/UI/Battle/HeadEffect/armatureName_stun_loop_%d.png", 31, bDefault);
 		}
 
 		// ETC
@@ -1294,12 +1299,15 @@ void CResourceMgr::VillageTextureLoad()
 	//미니게임
 
 	{
-
+		//UI_ClickEffect_06
 		CreateNewTexture(L"Minigame_Card", TEX_NORMAL,
 			L"../Bin/Resource/Image/Village/Minigame/Minigame_Card%d.png", 5, bDefault);
 
 		CreateNewTexture(L"Minigame_CardBack", TEX_NORMAL,
 			L"../Bin/Resource/Image/Village/Minigame/Minigame_CardBack.png", 1, bDefault);
+
+		CreateNewTexture(L"Minigame_ClickEffect", TEX_NORMAL,
+			L"../Bin/Resource/Image/Village/Minigame/ClickEffect/UI_ClickEffect_%d.png", 7, bDefault);
 
 	}
 

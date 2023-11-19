@@ -533,7 +533,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 스트레스 영웅 행동 발생 시간
 	if (m_bWhileStressOutput)
 	{
-		printf("스트레스 영웅 행동 발생 시간 \m_fStressOutputTime : %f\n", m_fStressOutputTime);
 
 		m_fStressOutputTime -= fTimeDelta;
 
@@ -956,7 +955,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			// 중독, 출혈 데미지 이펙트가 발생중인 시간
 			if (m_bWhileDotDamEffectRender)
 			{
-				printf("중독, 출혈 데미지 이펙트 시간\nm_fDotDamageEffectTime : %f\n", m_fDotDamageEffectTime);
 
 				m_fDotDamageEffectTime -= fTimeDelta;
 
@@ -970,7 +968,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			// 스트레스 획득 이펙트가 발생중인 시간
 			if (m_bWhileStressEffectRender)
 			{
-				printf("스트레스 획득 이펙트 발생 시간\m_fStressEffectTime : %f\n", m_fStressEffectTime);
 
 				m_fStressEffectTime -= fTimeDelta;
 

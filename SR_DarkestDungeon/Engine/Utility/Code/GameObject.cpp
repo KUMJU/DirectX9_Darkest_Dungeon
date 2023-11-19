@@ -61,7 +61,7 @@ void CGameObject::AddComponent()
 {
 }
 
-D3DMATERIAL9 CGameObject::SetMaterial()
+void CGameObject::SetMaterial()
 {
 	D3DMATERIAL9			tMtrl;
 	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
@@ -72,7 +72,7 @@ D3DMATERIAL9 CGameObject::SetMaterial()
 	tMtrl.Emissive = { 0.f, 0.f, 0.f, 0.f };
 	tMtrl.Power = 0.f;
 
-	return tMtrl;
+	m_pGraphicDev->SetMaterial(&tMtrl);
 
 }
 

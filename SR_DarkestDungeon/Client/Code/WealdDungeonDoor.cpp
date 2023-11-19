@@ -70,16 +70,7 @@ void CWealdDungeonDoor::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 
-	D3DMATERIAL9			tMtrl;
-	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
-
-	tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Ambient = { 0.2f, 0.2f, 0.2f, 1.f };
-	tMtrl.Emissive = { 0.f, 0.f, 0.f, 0.f };
-	tMtrl.Power = 0.f;
-
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	SetMaterial();
 	m_pTextureCom2->SetTexture(0);
 	m_pBufferCom2->RenderBuffer();
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);

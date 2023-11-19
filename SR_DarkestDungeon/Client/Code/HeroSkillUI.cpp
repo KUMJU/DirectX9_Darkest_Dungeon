@@ -159,7 +159,7 @@ void CHeroSkillUI::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-void CHeroSkillUI::PickingUI(LONG _fX, LONG _fY)
+void CHeroSkillUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 {
 	for (int iHeroNum = 0; iHeroNum < 4; ++iHeroNum)
 	{

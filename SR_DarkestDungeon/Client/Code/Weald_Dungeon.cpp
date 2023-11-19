@@ -140,6 +140,9 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 				pEffect->SetActive(true);
 			}
 
+			//전투 조명 on
+			CLightMgr::GetInstance()->DungeonBattleLightOn();
+
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
 			pTransform->SetPosition(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 21.3f, 0.f, 210.f);
 			m_pRoom3->SetBattleStart(true);
@@ -173,10 +176,21 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 			// 전투가 끝나면
 			if (m_pRoom3->BattleUpdate(fTimeDelta))
 			{
+				//SOUND 원상복구
+				CSoundMgr::GetInstance()->StopAll();
+				CSoundMgr::GetInstance()->PlayBGM(L"Amb_Weald_Base.wav", 1.f);
+
+				//카메라 원상복구
 				CCameraMgr::GetInstance()->SetFPSMode();
+
+				//UI 원상복구
 				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
+				CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
+				dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
 
+				//조명 원상복구
+				CLightMgr::GetInstance()->DungeonBattleLightOff();
 
 				m_pRoom3->SetBattleTrigger(false);
 				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
@@ -315,6 +329,8 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
 		dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+		CLightMgr::GetInstance()->DungeonBattleLightOff();
+
 
 		m_pRoom3->SetBattleTrigger(false);
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
@@ -329,6 +345,8 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 		//로딩 스레드 적용
 		CSoundMgr::GetInstance()->StopAll();
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->DungeonClear();
+
 		shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::VILLAGE);
 		CSceneMgr::GetInstance()->SetLoadingState(false);
 		CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
@@ -342,6 +360,9 @@ _int CWeald_Dungeon::UpdateScene(const _float& fTimeDelta)
 
 		CSoundMgr::GetInstance()->StopAll();
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+
+		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->DungeonClear();
+
 		shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::VILLAGE);
 		CSceneMgr::GetInstance()->SetLoadingState(false);
 		CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
@@ -421,6 +442,9 @@ void CWeald_Dungeon::SetLight()
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_AMBIENT, 0x00202020);
+
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SettingLight();
+
 }
 
 HRESULT CWeald_Dungeon::Ready_Layer_Environment(tstring pLayerTag)
@@ -874,6 +898,22 @@ HRESULT CWeald_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pCurioC1->SetPos(_vec3(WEALD_WALLSIZEX + WEALD_PATHSIZEX + 22.f, WEALD_WALLSIZEUPY - 2.5f, 230.f));
 	m_pCurioC1->SetAngle(_vec3(0.f, 0.f, 0.f));
 	m_pCurioC1->SetScale(_vec3(WEALD_WALLSIZEX / 5.f, (WEALD_WALLSIZEX / 5.f) / 279.f * 220.f, 1.f));
+
+	//가보상자 조명
+	D3DLIGHT9 _pLightInfo1;
+
+	_pLightInfo1.Diffuse = { 0.5f , 0.5f , 0.5f , 1.f };
+	_pLightInfo1.Specular = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo1.Ambient = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo1.Position = { WEALD_WALLSIZEX + WEALD_PATHSIZEX + 22.f , WEALD_WALLSIZEUPY + 4.f , 230.f + 10.f };
+	_pLightInfo1.Range = 20.f;
+
+	_pLightInfo1.Attenuation0 = 0.f;
+	_pLightInfo1.Attenuation1 = 0.f;
+	_pLightInfo1.Attenuation2 = 0.f;
+
+	CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1, 99);
+
 
 	// 독성상자
 	shared_ptr<CGameObject>m_pCurioL1 = make_shared<CWeald_Curio_Luggage>(m_pGraphicDev);

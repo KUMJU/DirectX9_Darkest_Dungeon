@@ -108,7 +108,8 @@ void CGambling::GetInteractionKey(const _float& fTimeDelta)
 
 		// 카메라 이동
 		CCameraMgr::GetInstance()->SetState(ECameraMode::IDLE);
-		CCameraMgr::GetInstance()->MovingStraight(ECameraMode::ZOOMIN, { 35.f, 7.5f , 50.f - 7.5f });
+		CCameraMgr::GetInstance()->CamAngleReset();
+		CCameraMgr::GetInstance()->CamSetPos({ 35.f, -52.f , 50.f - 7.5f });
 
 		Interaction();
 		m_bDebounce = true;

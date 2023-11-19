@@ -8,6 +8,9 @@
 #include "EffectMgr.h"
 #include "Effect.h"
 
+#include "UIMgr.h"
+#include "ScreenEffect.h"
+
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -387,6 +390,25 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 		{
 			if (iCritical < CRIRATE)
 			{
+				//크리티컬 이펙트(영웅만)
+				if (m_bIsHero) {
+
+					shared_ptr<CUIObj> pScreenEffect = CUIMgr::GetInstance()->FindUI(L"UI_ScreenEffect");
+
+					if (pScreenEffect) {
+						dynamic_pointer_cast<CScreenEffect>(pScreenEffect)->SetScreenEffect(EScreenEffect::BLOOD);
+					}
+
+
+					_int iRandNum = rand() % 4;
+
+					tstring strBaseSoundKey = L"Narr_Battle_Critical";
+					strBaseSoundKey = strBaseSoundKey + to_wstring(iRandNum);
+
+					CUIMgr::GetInstance()->GetInstance()->NarrationOn(strBaseSoundKey);
+
+				}
+
 				// 대단원일때
 				if (!_pSkill->GetArrToEnemy()[2])
 				{

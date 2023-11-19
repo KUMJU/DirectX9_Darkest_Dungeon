@@ -7,6 +7,8 @@
 #include"Ruin_Dungeon.h"
 #include "GameMgr.h"
 
+#include "BossMap.h"
+
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -72,6 +74,18 @@ _uint CLoading::Loading_ForRuin()
 	return 0;
 }
 
+_uint CLoading::Loading_ForBossMap()
+{
+	CResourceMgr::GetInstance()->BossMapTextureLoad();
+
+	m_pNextScene = make_shared<CBossMap>(m_pGraphicDev);
+	CSceneMgr::GetInstance()->SetReadyScene(m_pNextScene);
+	m_pNextScene->ReadyScene();
+	m_bFinish = true;
+
+	return 0;
+}
+
 unsigned int CLoading::Thread_Main(void* pArg)
 {
 	CLoading* pLoading = reinterpret_cast<CLoading*>(pArg);
@@ -89,9 +103,9 @@ unsigned int CLoading::Thread_Main(void* pArg)
 		break;
 	case LOADING_RUIN:
 		iFlag = pLoading->Loading_ForRuin();
-
 		break;
 	case LOADING_BOSSMAP:
+		iFlag = pLoading->Loading_ForBossMap();
 		break;
 	}
 

@@ -79,6 +79,9 @@ _int CRuin_Curio_Sarcophagus::UpdateGameObject(const _float& fTimeDelta)
 			pItem->ReadyGameObject();
 			dynamic_pointer_cast<CItem>(pItem)->StartParticle();
 			CSceneMgr::GetInstance()->AddNewObject(L"Layer_4_GameObj", L"Obj_Item_Ring", pItem);
+		
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+			CSoundMgr::GetInstance()->PlaySound(L"Effect_Find_MagicRing.wav", CHANNELID::EFFECT, 0.7f);
 
 			shared_ptr<CBossRoomDoor> pBossDoor = make_shared<CBossRoomDoor>(m_pGraphicDev);
 			pBossDoor->SetPos(_vec3(m_vPos.x , m_vPos.y + 1.5f, m_vPos.z + 12.f));
@@ -187,10 +190,9 @@ void CRuin_Curio_Sarcophagus::LateUpdateGameObject()
 
 			//EarthQuake Effect
 			CSoundMgr::GetInstance()->PlaySound(L"Effect_earthquake.wav", CHANNELID::EFFECT, 0.7f);
-			CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 2.f, 0.2f);
+			CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 2.f, 0.1f);
 		}
 	}
-
 }
 
 void CRuin_Curio_Sarcophagus::RenderGameObject()
@@ -198,13 +200,14 @@ void CRuin_Curio_Sarcophagus::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	SetMaterial();
 
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

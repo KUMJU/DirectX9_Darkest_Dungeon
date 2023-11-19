@@ -340,6 +340,15 @@ void CHero::GetHeroStatusEvent(_bool _bHpEvent)
 
 }
 
+void CHero::GetHeroBuffEvent()
+{
+	shared_ptr<CUIObj> pFindUI = CUIMgr::GetInstance()->FindUI(L"UI_DungeonStatus");
+
+	if(pFindUI)
+		dynamic_pointer_cast<CDungeonStatus>(pFindUI)->GetBuff(m_eHeroType);
+
+}
+
 void CHero::ChangeAnimState()
 {
 

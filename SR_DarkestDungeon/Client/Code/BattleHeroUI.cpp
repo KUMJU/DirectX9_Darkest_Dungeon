@@ -181,7 +181,7 @@ void CBattleHeroUI::SettingHeroInfo(_int _iMaxHP, _int _iHP, _int _iStress, tstr
     m_iCursorPos = 99;
 }
 
-void CBattleHeroUI::PickingUI(LONG _fX, LONG _fY)
+void CBattleHeroUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 {
     //YÃà°Ë»ç
     if (_fY > (m_vPos.y * -1.f) + WINCY * 0.5f - 5.f || _fY < (m_vPos.y * -1.f) + WINCY * 0.5f - 60.f)

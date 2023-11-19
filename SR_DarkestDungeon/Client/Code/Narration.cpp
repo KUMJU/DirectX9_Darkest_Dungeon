@@ -49,7 +49,7 @@ _int CNarration::UpdateGameObject(const _float& fTimeDelta)
 
 	m_fActTime += fTimeDelta;
 
-	if (m_fActTime > 10.f) {
+	if (m_fActTime > m_fTotalTime) {
 
 		m_bVisible = false;
 		m_fActTime = 0.f;
@@ -104,7 +104,19 @@ void CNarration::ActiveUI(tstring _strKey)
 	m_bVisible = true;
 	
 	tstring SoundKey = m_strCurrentKey + L".wav";
+	CSoundMgr::GetInstance()->StopSound(CHANNELID::NARRATION);
 	CSoundMgr::GetInstance()->PlaySound(SoundKey.c_str(), CHANNELID::NARRATION, 0.5f);
+
+	m_fActTime = 0.f;
+
+	if (_strKey == L"Narr_Battle_Critical0" || _strKey == L"Narr_Battle_Critical1" ||
+		_strKey == L"Narr_Battle_Critical2" || _strKey == L"Narr_Battle_Critical3") {
+		m_fTotalTime = 3.f;
+	}
+	else {
+		m_fTotalTime = 8.f;
+	}
+
 }
 
 void CNarration::AddComponent()
@@ -127,6 +139,9 @@ void CNarration::SetNarrationMap()
 	m_NarrationMap.insert({L"Narr_tut_firstdungeon", L"이 길은 산적들이 점령하고 있으니, 샛길을 통해 가자꾸나.\n 영지는 바로 저 앞에 있다."});
 	m_NarrationMap.insert({L"Narr_tut_firstBattle", L"기습이다! 이 버러지들에게 똑똑히 전하라.\n이 땅의 적법한 상속자가 돌아왔으니, 너희 족속들은 이제 발붙일 곳조차 없을 것이라고!"});
 	m_NarrationMap.insert({L"Narr_Darkest_Return1", L"넌 지금껏 공허의 끝자락만을 살짝 엿보았을 뿐이지,\n이제 너도, 나처럼 저들의 진실된 모습을 볼 수 있을 게다..."});
-	
+	m_NarrationMap.insert({L"Narr_Battle_Critical0", L"강력한 일격이로다!"});
+	m_NarrationMap.insert({L"Narr_Battle_Critical1", L"대단하구나!"});
+	m_NarrationMap.insert({L"Narr_Battle_Critical2", L"결정타로구나!"});
+	m_NarrationMap.insert({L"Narr_Battle_Critical3", L"강력하구나!"});
 
 }

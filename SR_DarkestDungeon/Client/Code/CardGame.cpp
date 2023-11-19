@@ -355,7 +355,7 @@ void CCardGame::PlaceCardOnBoard()
 		}
 
 		m_vCardList[i]->SetScale({ 1.f, 0.7f * (417.f / 189.f) , 0.7f });
-		m_vCardList[i]->SetPos({30.f + 2.5f * iWidth, 10.f - 3.5f * iHeight, 50.f});
+		m_vCardList[i]->SetPos({30.f + 2.5f * iWidth, -50.f - 3.5f * iHeight, 50.f});
 		m_vCardList[i]->SetCardGame(dynamic_pointer_cast<CCardGame>(shared_from_this()));
 		m_vCardList[i]->SetColliding(true);
 		m_vCardList[i]->AwakeGameObject();

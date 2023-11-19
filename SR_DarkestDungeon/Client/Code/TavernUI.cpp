@@ -189,7 +189,7 @@ void CTavernUI::SetHero(shared_ptr<CHero> _pHero)
 	// m_iCursorPos = 99;
 }
 
-void CTavernUI::PickingUI(LONG _fX, LONG _fY)
+void CTavernUI::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 {
 	//YÃà°Ë»ç
 	if (_fY > 590 || _fY < 564.f)

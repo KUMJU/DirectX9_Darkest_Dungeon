@@ -247,12 +247,12 @@ void CDescription::CalcLine(_bool _bSimpleContent)
 {
 	if (_bSimpleContent)
 	{
-		m_fLine = std::count(m_strMainContent.begin(), m_strMainContent.end(), '\n') + 1;
+		m_fLine = static_cast<_float>(std::count(m_strMainContent.begin(), m_strMainContent.end(), '\n') + 1);
 	}
 
 	else
 	{
-		_int _iSize = m_tDescription->m_strMainContent.size();
+		_int _iSize = (_int)m_tDescription->m_strMainContent.size();
 
 		m_fLine = std::count(m_tDescription->m_strMainContent.begin(), m_tDescription->m_strMainContent.end(), '\n');
 		m_fLine += 1;
@@ -380,10 +380,10 @@ void CDescription::PrintContent()
 
 	for (int i = 0; i < m_fContentLine; ++i)
 	{
-		_iSize = _copyText.size();
+		_iSize = (_int)_copyText.size();
 		// 첫 번째 개행 문자가 나올 때 줄바꿈으로 변경
 
-		_iIdx = _copyText.find('\n');
+		_iIdx = static_cast<_int>(_copyText.find('\n'));
 		if (_iIdx < 0) PrintText(_copyText, WHITE, true);
 		else PrintText(_copyText.substr(0, _iIdx), WHITE, true);
 		_copyText = _copyText.substr(_iIdx + 1);

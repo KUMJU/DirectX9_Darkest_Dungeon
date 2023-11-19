@@ -305,7 +305,7 @@ void CHeroStat::RenderGameObject()
 }
 
 
-void CHeroStat::PickingUI(LONG _fX, LONG _fY)
+void CHeroStat::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 {
 	int i = 0;
 

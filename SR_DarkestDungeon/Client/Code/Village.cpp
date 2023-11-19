@@ -105,6 +105,9 @@ void CVillage::SetLight()
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SettingLight();
+
 }
 
 void CVillage::KeyInput()
@@ -356,10 +359,10 @@ HRESULT CVillage::Ready_Layer_GameObject(tstring pLayerTag)
 	}
 
 		// 테스트 (돈, 가보 초기 세팅)
-		{
-			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitGold(2000);
-			dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
-		}
+		//{
+		//	dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitGold(2000);
+		//	dynamic_pointer_cast<CPlayer>(m_pPlayer)->InitHeirloom(3);
+		//}
 
 		//shared_ptr<CGameObject> m_pPlayerHand = make_shared<CPlayerHand>(m_pGraphicDev);
 		//m_pLayer->CreateGameObject(L"Obj_PlayerHand", m_pPlayerHand);

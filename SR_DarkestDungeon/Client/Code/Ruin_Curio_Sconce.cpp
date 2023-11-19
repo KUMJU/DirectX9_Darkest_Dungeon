@@ -27,6 +27,21 @@ HRESULT CRuin_Curio_Sconce::ReadyGameObject()
 	m_bInteractionKey = L"C";
 	m_bInteractionInfo = L"불 붙이기";
 
+	D3DLIGHT9 _pLightInfo1;
+
+	_pLightInfo1.Diffuse = { 1.f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Specular = { 1.f , 1.f, 1.f , 1.f };
+	_pLightInfo1.Ambient = { 1.f ,1.f , 1.f , 1.f };
+	_pLightInfo1.Position = { m_vPos.x, m_vPos.y + 1.5f  , m_vPos.z };
+	_pLightInfo1.Range = 30.f;
+
+
+	_pLightInfo1.Attenuation0 = 0.f;
+	_pLightInfo1.Attenuation1 = 0.5f;
+	_pLightInfo1.Attenuation2 = 0.f;
+
+	shared_ptr<CLight> m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1, 4);
+
 	return S_OK;
 }
 
@@ -89,13 +104,15 @@ void CRuin_Curio_Sconce::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	SetMaterial();
 
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

@@ -90,6 +90,7 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 			m_pTransformCom->SetScale(3.f * 482.f / 303.f, 3.f * 383.f / 382.f, 3.f * 482.f / 303.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 383.f / 382.f, m_vPos.z);
 
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_whipsingle.wav", CHANNELID::MONSTER, 1.f);
 
 			break;
@@ -97,6 +98,7 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack2", 0.02f);
 			m_pTransformCom->SetScale(3.f * 474.f / 303.f, 3.f * 379.f / 382.f, 3.f * 474.f / 303.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 379.f / 382.f, m_vPos.z);
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_pointblank.wav", CHANNELID::MONSTER, 1.f);
 			break;
 		case EAnimState::CORPSE:

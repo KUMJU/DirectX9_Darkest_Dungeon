@@ -87,7 +87,8 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack1", 0.02f);
 			m_pTransformCom->SetScale(2.5f * 427.f / 232.f, 2.5f * 268.f / 311.f, 2.5f * 427.f / 232.f);
-			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 268.f / 311.f, m_vPos.z);
+			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 268.f / 311.f, m_vPos.z);			
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_brigcut_uppercutslice.wav", CHANNELID::MONSTER, 1.f);
 
 			break;
@@ -95,6 +96,7 @@ _int CBrigandCutthroat::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Brigand Cutthroat_Attack2", 0.02f);
 			m_pTransformCom->SetScale(2.5f * 232.f / 232.f, 2.5f * 365.f / 311.f, 2.5f * 232.f / 232.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 365.f / 311.f, m_vPos.z);
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_brigcut_doubleslice.wav", CHANNELID::MONSTER, 1.f);
 
 

@@ -113,7 +113,7 @@ shared_ptr<CUIObj> CUIMgr::FindUI(tstring _strKeyName)
 
 }
 
-_bool CUIMgr::PickingUI(LONG _fX, LONG _fY)
+_bool CUIMgr::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 {
 	for (auto& iter : m_UIList) {
 		if (iter.second->GetVisible()) {
@@ -121,11 +121,31 @@ _bool CUIMgr::PickingUI(LONG _fX, LONG _fY)
 
 			if (rc.left <= _fX && rc.right >= _fX
 				&& rc.top <= _fY && rc.bottom >= _fY) {
-				iter.second->PickingUI(_fX, _fY);
+				iter.second->PickingUI(_fX, _fY ,true);
 				return true;
 			}
 		}
 	}
+	return false;
+}
+
+_bool CUIMgr::PickingUIRB(LONG _fX, LONG _fY, _bool _bLB)
+{
+
+	auto iter = m_UIList.find(L"UI_Inventory");
+
+	if (m_UIList.end() != iter) {
+		if (iter->second->GetVisible()) {
+			RECT rc = iter->second->GetUIRect();
+
+			if (rc.left <= _fX && rc.right >= _fX
+				&& rc.top <= _fY && rc.bottom >= _fY) {
+				iter->second->PickingUI(_fX, _fY, false);
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 

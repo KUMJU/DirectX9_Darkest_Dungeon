@@ -57,3 +57,13 @@ void CCameraMgr::AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAm
 {
 	m_pMainCam->AddCameraEffect(_eEffect, _fTime, _fAmplitude);
 }
+
+void CCameraMgr::CamAngleReset()
+{
+	m_pMainCam->SetAngleReset();
+}
+
+void CCameraMgr::CamSetPos(_vec3 _vPos)
+{
+	m_pMainCam->SetCameraPos(_vPos);
+}

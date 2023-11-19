@@ -6,6 +6,9 @@
 #include "Creature.h"
 #include "Hero.h"
 
+#include "UIMgr.h"
+#include "ScreenEffect.h"
+
 CRuin_Obstacle::CRuin_Obstacle(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
 {
@@ -23,6 +26,9 @@ CRuin_Obstacle::~CRuin_Obstacle()
 HRESULT CRuin_Obstacle::ReadyGameObject()
 {
 	__super::ReadyGameObject();
+
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"장애물 제거";
 
 	return S_OK;
 }
@@ -46,6 +52,13 @@ _int CRuin_Obstacle::UpdateGameObject(const _float& fTimeDelta)
 			// 삽없는 상호작용
 			else
 			{
+				//Blood Screen Effect
+				shared_ptr<CUIObj> pScreenEffect = CUIMgr::GetInstance()->FindUI(L"UI_ScreenEffect");
+
+				if (pScreenEffect) {
+					dynamic_pointer_cast<CScreenEffect>(pScreenEffect)->SetScreenEffect(EScreenEffect::ATTACKED);
+				}
+
 				vector<shared_ptr<CGameObject>>* pHeroVec =
 					dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
 				for (int i = 0; i < size(*pHeroVec); i++)
@@ -102,13 +115,15 @@ void CRuin_Obstacle::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	SetMaterial();
 
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -150,6 +165,7 @@ void CRuin_Obstacle::GetInteractionKey(const _float& fTimeDelta)
 	{
 		//m_bInteracting = true;
 		m_bActive = true;
+		m_bTabInteractionKey = true;
 
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);

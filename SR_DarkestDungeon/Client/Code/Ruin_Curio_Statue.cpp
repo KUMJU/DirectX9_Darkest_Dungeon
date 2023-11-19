@@ -60,8 +60,14 @@ void CRuin_Curio_Statue::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	SetMaterial();
+
 	m_pTextureCom->SetTexture(static_cast<_uint>(m_eCurrentState));
 	m_pBufferCom->RenderBuffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
