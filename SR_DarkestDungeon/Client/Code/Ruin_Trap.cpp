@@ -6,6 +6,9 @@
 #include "Creature.h"
 #include "Hero.h"
 
+#include "UIMgr.h"
+#include "ScreenEffect.h"
+
 CRuin_Trap::CRuin_Trap(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
 {
@@ -23,6 +26,9 @@ CRuin_Trap::~CRuin_Trap()
 HRESULT CRuin_Trap::ReadyGameObject()
 {
 	__super::ReadyGameObject();
+
+	m_bInteractionKey = L"C";
+	m_bInteractionInfo = L"함정 제거";
 
 	return S_OK;
 }
@@ -49,6 +55,13 @@ _int CRuin_Trap::UpdateGameObject(const _float& fTimeDelta)
 			// 해제 실패
 			else
 			{
+				//Blood Screen Effect
+				shared_ptr<CUIObj> pScreenEffect = CUIMgr::GetInstance()->FindUI(L"UI_ScreenEffect");
+
+				if (pScreenEffect) {
+					dynamic_pointer_cast<CScreenEffect>(pScreenEffect)->SetScreenEffect(EScreenEffect::BLOOD);
+				}
+
 				vector<shared_ptr<CGameObject>>* pHeroVec =
 					dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetHeroVec();
 				for (int i = 0; i < size(*pHeroVec); i++)
@@ -123,13 +136,15 @@ void CRuin_Trap::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	SetMaterial();
+
 
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -169,6 +184,7 @@ void CRuin_Trap::GetInteractionKey(const _float& fTimeDelta)
 		if (!m_bActive && !m_bFinish)
 		{
 			m_bActive = true;
+			m_bTabInteractionKey = true;
 
 			int iNum = 0;
 			iNum = rand() % 2;

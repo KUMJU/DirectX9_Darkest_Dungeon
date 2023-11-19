@@ -382,7 +382,7 @@ void CEffect::SetHeadEffect(tstring _strAnimKey, _vec3* _vPos, _float _fAnimTime
     m_pTransformCom->SetScale(m_vScale.x, m_vScale.y, m_vScale.z);
     m_vScaleGap = { 1.f, 1.f, 1.f };
 
-    _float fTest = m_fAnimTime / CResourceMgr::GetInstance()->GetTexture(m_strAnimKey, TEX_NORMAL)->size();
+   // _float fTest = m_fAnimTime / CResourceMgr::GetInstance()->GetTexture(m_strAnimKey, TEX_NORMAL)->size();
 
     m_pAnimatorCom->SetAnimKey(m_strAnimKey, m_fAnimTime / CResourceMgr::GetInstance()->GetTexture(m_strAnimKey, TEX_NORMAL)->size());
 

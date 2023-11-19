@@ -26,6 +26,7 @@ public:
 
 	void GetEvent(_bool _bHPEvent, EHeroType _eHero);
 
+	void GetBuff(EHeroType _eHero);
 
 protected:
 	void			AddComponent();

@@ -23,7 +23,7 @@ public:
 
 public:
 	void			SettingHeroInfo(_int _iMaxHp, _int _iHp, vector<shared_ptr<CSkill>>* _pSkillVec);
-	virtual			void PickingUI(LONG _fX, LONG _fY) override;
+	virtual			void PickingUI(LONG _fX, LONG _fY, _bool _bLB) override;
 	virtual			void HoverUI(LONG _fX, LONG _fY) override;
 
 	_int			GetEquippedCnt() { return m_iEquippedCnt; }

@@ -44,7 +44,7 @@ _int CDungeonStatus::UpdateGameObject(const _float& fTimeDelta)
 			}
 		}
 
-		m_iCurrentHeroNum = m_vHeroVec.size();
+		m_iCurrentHeroNum = (size_t)m_vHeroVec.size();
 		m_bVisible = true;
 	}
 
@@ -119,6 +119,35 @@ void CDungeonStatus::GetEvent(_bool _bHPEvent, EHeroType _eHero)
 
 	CSoundMgr::GetInstance()->StopSound(CHANNELID::HIGHWAYMAN);
 	CSoundMgr::GetInstance()->PlaySound(L"Hero_Stress_Up.wav", CHANNELID::HIGHWAYMAN, 1.f);
+
+}
+
+void CDungeonStatus::GetBuff(EHeroType _eHero)
+{
+
+	if (!m_bVisible)
+		return;
+
+
+	_int iCount = 0;
+
+	for (auto& iter : m_vHeroVec) {
+		if (_eHero == iter) {
+			break;
+		}
+		++iCount;
+	}
+
+	_vec3 vPos = *m_pTransformCom[iCount]->GetPos();
+
+	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+	pEffect->SetAnimEffect(L"UI_Buff", _vec3(vPos.x, vPos.y - 6.f, 0.f), _vec3(45.f, 20.f, 1.f), 2.f, true);
+	pEffect->SetActive(true);
+
+	
+
+	CSoundMgr::GetInstance()->StopSound(CHANNELID::HIGHWAYMAN);
+	CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Buff.wav", CHANNELID::HIGHWAYMAN, 1.f);
 
 }
 

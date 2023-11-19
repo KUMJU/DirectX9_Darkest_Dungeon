@@ -70,6 +70,10 @@ public:
 		if (_bInBattle) {
 			m_eCurrentItem = EHandItem::ENUM_END;
 			m_pPlayerHand->SetCurrentItem(EHandItem::ENUM_END);
+			PlayerLightOff();
+		}
+		else {
+			PlayerLightOn();
 		}
 	}
 	_bool			GetInBattle() { return m_bInBattle; }
@@ -119,8 +123,21 @@ public:
 	void	SetSpeed(_float _fSpeed) { m_fSpeed = _fSpeed; }
 
 public:
+//Light 관련 기능 함수
+
+	//Scene이 바뀔 때 필요에 따라 재셋팅
 	void SettingLight();
+	void SpendTorchItem();
+
+	void PlayerLightOn();
+	void PlayerLightOff();
+	
+
+public:
+
 	void SetPlayerMode(EPlayerMode _ePlrMode);
+	//던전 종료시 재화교환 함수
+	void DungeonClear();
 
 private:
 	void			AddComponent();
@@ -171,6 +188,7 @@ private:
 // 마우스 중복 방지
 	_bool		m_bPrevMouse = true;
 	_bool		m_bCurMouse = false;
+	_float		m_fMouseDebTime = 0.f;
 
 	_bool		m_bLookBack = false;
 
@@ -202,8 +220,9 @@ private:
 	_bool		m_bShowTavernUI = false;
 
 	shared_ptr<CLight> m_pLight = nullptr;
-	shared_ptr<CLight> m_pLight2 = nullptr;
-	shared_ptr<CLight> m_pLight3 = nullptr;
+
+	_int m_iLightIntensity = 3;
+	_float m_fLightActTime = 0.f;
 
 	EPlayerMode m_ePlayerMode = EPlayerMode::DEFAULT;
 

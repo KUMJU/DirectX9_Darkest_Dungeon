@@ -66,4 +66,6 @@ private:
 
 	_float	m_fTimeDelta = 0.f;
 
+	_float m_fTotalRange = 0.f;
+
 };

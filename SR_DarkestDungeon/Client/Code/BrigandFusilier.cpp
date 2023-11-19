@@ -81,6 +81,7 @@ _int CBrigandFusilier::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Brigand Fusilier_Attack1", 0.02f);
 			m_pTransformCom->SetScale(2.5f * 207.f / 230.f, 2.5f * 291.f / 291.f, 2.5f * 207.f / 230.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 291.f / 291.f, m_vPos.z);
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_pointblank.wav", CHANNELID::MONSTER, 1.f);
 			break;
 		case EAnimState::CORPSE:

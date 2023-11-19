@@ -50,16 +50,7 @@ void CTerrain::RenderGameObject()
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 
-	D3DMATERIAL9			tMtrl;
-	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
-
-	tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Ambient = { 0.2f, 0.2f, 0.2f, 1.f };
-	tMtrl.Emissive = { 0.f, 0.f, 0.f, 0.f };
-	tMtrl.Power = 0.f;
-
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	SetMaterial();
 
 
 	m_pTextureCom->SetTextureKey(m_strKeyName, TEX_NORMAL);
@@ -97,10 +88,10 @@ void CTerrain::AddComponent()
 		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(VTXCNTX, VTXCNTZ, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
 		break;
 	case ETerrainType::DUNGEON2:
-		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(640.f, 640.f, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(640, 640, (_ulong)VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
 		break;
 	case ETerrainType::DUNGEON2_ROOF:
-		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(640.f, 640.f, VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
+		dynamic_pointer_cast<CTerrainTex>(m_pBufferCom)->ReadyBuffer(640, 640, (_ulong)VTXITV, L"../Bin/Resource/Image/Height_Terrain/TestHeight10.bmp", 20, 20);
 		m_pTransformCom->SetPosition(m_vPos.x, m_vPos.y + 16.f, m_vPos.z);
 		break;
 	case ETerrainType::ENUM_END:

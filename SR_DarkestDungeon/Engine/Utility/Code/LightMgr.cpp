@@ -50,7 +50,56 @@ void CLightMgr::LightOn()
 {
 }
 
-shared_ptr<CLight> CLightMgr::InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3DLIGHT9 _pLightInfo)
+void CLightMgr::DungeonLightOn(_int _iDungeonNum)
+{
+	for (auto& iter : m_LightList) {
+		if (iter->GetDungeonNum() == _iDungeonNum) {
+			iter->LightOn();
+		}
+	}
+
+}
+
+void CLightMgr::DungeonLightOff(_int _iDungeonNum)
+{
+	for (auto& iter : m_LightList) {
+		if (iter->GetDungeonNum() == _iDungeonNum) {
+			iter->LightOff();
+		}
+	}
+}
+
+void CLightMgr::DungeonLightAllOff()
+{
+	for (auto& iter : m_LightList) {
+		if (0 != iter->GetDungeonNum()) {
+			iter->LightOff();
+		}
+	}
+}
+
+void CLightMgr::DungeonBattleLightOn()
+{
+
+	for (auto& iter : m_LightList) {
+		if (99 == iter->GetDungeonNum()) {
+			iter->LightOn();
+		}
+	}
+
+}
+
+void CLightMgr::DungeonBattleLightOff()
+{
+	for (auto& iter : m_LightList) {
+		if (99 == iter->GetDungeonNum()) {
+			iter->LightOff();
+		}
+	}
+}
+
+
+shared_ptr<CLight> CLightMgr::InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3DLIGHT9 _pLightInfo, _int _iDungeonNum)
 {
 	D3DLIGHT9 pLightInfo;
 
@@ -71,14 +120,14 @@ shared_ptr<CLight> CLightMgr::InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3D
 	pLightInfo.Attenuation2 = _pLightInfo.Attenuation2;
 
 	shared_ptr<CLight> pLight = make_shared<CLight>(_pGraphicDev);
-	pLight->ReadyLight(&pLightInfo, (_uint)m_LightList.size());
+	pLight->ReadyLight(&pLightInfo, (_uint)m_LightList.size(), _iDungeonNum);
 
 	m_LightList.push_back(pLight);
 
 	return pLight;
 }
 
-shared_ptr<CLight> CLightMgr::InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev , D3DLIGHT9 _pLightInfo)
+shared_ptr<CLight> CLightMgr::InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev , D3DLIGHT9 _pLightInfo, _int _iDungeonNum)
 {
 	D3DLIGHT9 pLightInfo;
 
@@ -87,22 +136,27 @@ shared_ptr<CLight> CLightMgr::InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev 
 	pLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 
 	pLightInfo.Diffuse = _pLightInfo.Diffuse;
-	
-	//{ 0.5f, 0.5f, 0.5f, 1.f };
-	pLightInfo.Specular = _pLightInfo.Specular;
-		
-	//{ 0.5f, 0.5f, 0.5f, 1.f };
+	pLightInfo.Specular = _pLightInfo.Specular;	
 	pLightInfo.Ambient = _pLightInfo.Ambient;
-	
-	//{ 0.5f, 0.5f, 0.5f, 1.f };
 	pLightInfo.Direction = _pLightInfo.Direction;
 	
-	//{ 1.f, -1.f, 1.f };
-
 	shared_ptr<CLight> pLight = make_shared<CLight>(_pGraphicDev);
-	pLight->ReadyLight(&pLightInfo, (_uint)m_LightList.size());
+	pLight->ReadyLight(&pLightInfo, (_uint)m_LightList.size(), _iDungeonNum);
 
 	m_LightList.push_back(pLight);
+
+	return pLight;
+}
+
+shared_ptr<CLight> CLightMgr::InitSpotLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3DLIGHT9 _pLightInfo, _int _iDungeonNum)
+{
+	D3DLIGHT9 pLightInfo;
+
+	ZeroMemory(&pLightInfo, sizeof(D3DLIGHT9));
+	pLightInfo.Type = D3DLIGHT_DIRECTIONAL;
+
+	shared_ptr<CLight> pLight = make_shared<CLight>(_pGraphicDev);
+
 
 	return pLight;
 }

@@ -6,6 +6,8 @@
 #include"Player.h"
 #include"Export_System.h"
 
+#include "SoundMgr.h"
+
 CInventory::CInventory(LPDIRECT3DDEVICE9 _pGraphicDev)
     :Engine::CUIObj(_pGraphicDev)
 {
@@ -98,6 +100,49 @@ void CInventory::RenderGameObject()
 
 }
 
+void CInventory::ExchangeGoods(int* _iGold, int* _iHeirRoom)
+{
+
+    _bool bFindGold = false;
+    _bool bFindHeirRoom = false;
+
+    for (auto iter = m_itemList.begin(); iter != m_itemList.end(); ) {
+
+        if (EHandItem::HEIRLOOM == (*iter)->pItem->GetItemTypeEnum()) {
+            
+            *_iHeirRoom += (*iter)->iCapacity;
+           iter = m_itemList.erase(iter);
+           --m_iTotalItemNum;
+           bFindHeirRoom = true;
+        }
+        else if (EHandItem::GOLD == (*iter)->pItem->GetItemTypeEnum()) {
+
+           *_iGold += (*iter)->iCapacity;
+            iter = m_itemList.erase(iter);
+            --m_iTotalItemNum;
+            bFindGold = true;
+        }
+        else {
+            ++iter;
+        }
+
+        if (bFindGold && bFindHeirRoom)
+            break;
+
+    }
+
+    _int iCount = 0;
+
+    for (auto& iter : m_itemList) {
+
+        iter->pItem->UpdateInventory({ -182.f + (iCount * 42.f) , -320.f ,0.f });
+        ++iCount;
+    }
+
+
+
+}
+
 void CInventory::InsertItem(shared_ptr<CItem> _pItem)
 {
 
@@ -159,7 +204,7 @@ void CInventory::DeleteItem(tstring _strItmeName)
 
 }
 
-void CInventory::PickingUI(LONG _fX, LONG _fY)
+void CInventory::PickingUI(LONG _fX, LONG _fY, _bool _bLB)
 {
     size_t iCurrentNum = -1;
     auto iter = m_itemList.begin();
@@ -178,8 +223,19 @@ void CInventory::PickingUI(LONG _fX, LONG _fY)
        EHandItem eType = (*iter)->pItem->GetItemTypeEnum();
         
        if (eType != EHandItem::ENUM_END) {
-           auto pSharedPlayer = m_pPlayer.lock();
-           pSharedPlayer->SetCurrentItem(eType);
+
+           if(EHandItem::TORCH == eType && false == _bLB){
+               auto pSharedPlayer = m_pPlayer.lock();
+               pSharedPlayer->SpendTorchItem();
+
+               CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
+               CSoundMgr::GetInstance()->PlaySound(L"UI_Item_Torch_Start.wav", CHANNELID::ITEM, 1.f);
+               DeleteItem(L"Item_UI_Torch");
+           }
+           else {
+               auto pSharedPlayer = m_pPlayer.lock();
+               pSharedPlayer->SetCurrentItem(eType);
+           }
        }
     }
 }

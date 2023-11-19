@@ -4,6 +4,8 @@
 #include"CameraMgr.h"
 #include"PlayerProj.h"
 
+#include "SoundMgr.h"
+
 CPlayerHand::CPlayerHand(LPDIRECT3DDEVICE9 _pGraphicDev)
 	:CGameObject(_pGraphicDev)
 {
@@ -217,6 +219,14 @@ void CPlayerHand::SetCurrentItem(EHandItem _handItem)
 		m_bEnable = true;
 		break;
 
+	case EHandItem::TORCH:
+		m_pTextureCom->SetTextureKey(L"Item_Torch", TEX_NORMAL);
+		m_pItemTransmCom->SetScale(1.5f, 1.5f, 1.f);
+		m_pItemTransmCom->SetAngle({ 0.f ,0.f, D3DXToRadian(-10.f) });
+		m_bPlrSpellHand = false;
+		m_bEnable = true;
+		break;
+
 	case EHandItem::SPELLHAND_FIRE:
 		m_pAnimCom->SetAnimKey(L"Player_SpellHand_Fire", 0.3f);
 		m_pItemTransmCom->SetAngle({ 0.f ,0.f, 0.f });
@@ -267,6 +277,11 @@ void CPlayerHand::CreateProjection()
 	m_pGraphicDev->GetTransform(D3DTRANSFORMSTATETYPE::D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
 
+
+	//Player_Magic_Proj
+
+	CSoundMgr::GetInstance()->StopSound(CHANNELID::PLAYER_PROJ);
+	CSoundMgr::GetInstance()->PlaySound(L"Player_Magic_Proj.wav", CHANNELID::PLAYER_PROJ, 1.f);
 
 	//shared_ptr<CGameObject> pProj = make_shared<CPlayerProj>(m_pGraphicDev, L"SpellHand_Proj_Fire", *m_pItemTransmCom->GetPos(), *m_pPlrTransmCom->GetWorld());
 	shared_ptr<CGameObject> pProj = make_shared<CPlayerProj>(m_pGraphicDev, L"SpellHand_Proj_Fire", *m_pItemTransmCom->GetPos(), matView);

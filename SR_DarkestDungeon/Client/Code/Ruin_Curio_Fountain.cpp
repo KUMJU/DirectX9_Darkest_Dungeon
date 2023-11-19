@@ -25,7 +25,7 @@ HRESULT CRuin_Curio_Fountain::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bInteractionKey = L"C";
-	m_bInteractionInfo = L"분수 살펴보기";
+	m_bInteractionInfo = L"호수 살펴보기";
 
 	return S_OK;
 }
@@ -96,13 +96,14 @@ void CRuin_Curio_Fountain::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	SetMaterial();
 
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -144,6 +145,7 @@ void CRuin_Curio_Fountain::GetInteractionKey(const _float& fTimeDelta)
 	{
 		//m_bInteracting = true;
 		m_bActive = true;
+		m_bTabInteractionKey = true;
 
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);

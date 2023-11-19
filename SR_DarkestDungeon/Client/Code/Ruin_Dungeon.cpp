@@ -156,7 +156,11 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 				pEffect->SetActive(true);
 			}
 
+			CLightMgr::GetInstance()->DungeonBattleLightOn();
+
+
 			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetBattleTrigger(true);
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
 			CSoundMgr ::GetInstance()->PlayBGM(L"Combat_Level2_Loop1.wav", 0.6f);
 			pTransform->SetPosition(RUIN_WALLSIZEX*4.5f, 0.f, RUIN_WALLSIZEX * 13.5f - 20.f);
 			m_pRoom3->SetBattleStart(true);
@@ -188,10 +192,18 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 			// 전투가 끝나면
 			if (m_pRoom3->BattleUpdate(fTimeDelta))
 			{
+				CSoundMgr::GetInstance()->StopAll();
+				CSoundMgr::GetInstance()->PlayBGM(L"Amb_Ruin_Base.wav", 1.f);
+
+
 				CCameraMgr::GetInstance()->SetFPSMode();
+
 				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
+				CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
 				dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+
+				CLightMgr::GetInstance()->DungeonBattleLightOff();
 
 	
 				m_pRoom3->SetBattleTrigger(false);
@@ -236,11 +248,18 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 		CCameraMgr::GetInstance()->SetFPSMode();
 
 		CSoundMgr::GetInstance()->StopAll();
+		CSoundMgr::GetInstance()->PlayBGM(L"Amb_Ruin_Base.wav", 1.f);
+
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
 		CUIMgr::GetInstance()->SelectUIVisibleOff(L"Battle_Hero_UI");
 		CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
-		dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+
+		CLightMgr::GetInstance()->DungeonBattleLightOff();
+
+
 		m_pRoom3->SetBattleTrigger(false);
+		dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
+
 		dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
 	}
 
@@ -328,6 +347,7 @@ void CRuin_Dungeon::SetLight()
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SettingLight();
 
 }
 
@@ -866,6 +886,22 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pCurioF1->SetPos(_vec3(RUIN_WALLSIZEX * 4.5f, RUIN_WALLSIZEUPY - 1.5f, RUIN_WALLSIZEX * 13.5f));
 	m_pCurioF1->SetAngle(_vec3(0.f, 0.f, 0.f));
 	m_pCurioF1->SetScale(_vec3(RUIN_WALLSIZEX / 4.f, (RUIN_WALLSIZEX / 4.f) / 388.f * 345.f, 1.f));
+
+
+	D3DLIGHT9 _pLightInfo1;
+
+	_pLightInfo1.Diffuse = { 0.5f , 0.5f , 0.5f , 1.f };
+	_pLightInfo1.Specular = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo1.Ambient = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo1.Position = { RUIN_WALLSIZEX * 4.5f , RUIN_WALLSIZEUPY - 1.5f + 4.f ,RUIN_WALLSIZEX * 13.5f + 10.f };
+	_pLightInfo1.Range = 20.f;
+
+	_pLightInfo1.Attenuation0 = 0.f;
+	_pLightInfo1.Attenuation1 = 0.f;
+	_pLightInfo1.Attenuation2 = 0.f;
+
+	CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1, 99);
+
 
 	// 보물상자
 	shared_ptr<CGameObject>m_pCurioT1 = make_shared<CRuin_Curio_Sarcophagus>(m_pGraphicDev);

@@ -33,10 +33,14 @@ public:
 	void SetPlayer(shared_ptr<CPlayer> _pPlayer) { m_pPlayer = _pPlayer; }
 
 public:
+
+	void ExchangeGoods(int* _iGold, int* _iHeirRoom);
+
+public:
 	void InsertItem(shared_ptr<CItem> _pItem);
 	void DeleteItem(tstring _strItmeName);
 
-	virtual void PickingUI(LONG _fX, LONG _fY) override;
+	virtual void PickingUI(LONG _fX, LONG _fY, _bool _bLB) override;
 	virtual void HoverUI(LONG _fX, LONG _fY) override;
 
 protected:

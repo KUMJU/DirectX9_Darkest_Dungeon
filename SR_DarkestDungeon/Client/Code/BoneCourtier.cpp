@@ -86,11 +86,16 @@ _int CBoneCourtier::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Attack1", 0.02f);
 			m_pTransformCom->SetScale(2.5f * 274.f / 193.f, 2.5f * 261.f / 289.f, 2.5f * 274.f / 193.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 280.f / 289.f, m_vPos.z);
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
+			CSoundMgr::GetInstance()->PlaySound(L"En_BoneCo_Dagger.wav", CHANNELID::MONSTER, 1.f);
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Attack2", 0.02f);
 			m_pTransformCom->SetScale(2.5f * 229.f / 193.f, 2.5f * 277.f / 289.f, 2.5f * 229.f / 193.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 277.f / 289.f, m_vPos.z);
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
+			CSoundMgr::GetInstance()->PlaySound(L"En_BoneCo_Debuff.wav", CHANNELID::MONSTER, 1.f);
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Bone Courtier_Dead", 0.02f);
@@ -102,6 +107,8 @@ _int CBoneCourtier::UpdateGameObject(const _float& fTimeDelta)
 			m_pTransformCom->SetScale(2.5f, 2.5f, 2.5f);
 			break;
 		}
+		m_ePrevAnimState = m_eCurAnimState;
+
 	}
 
 	// юс╫ц

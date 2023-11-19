@@ -317,6 +317,8 @@ protected:
 	shared_ptr<CGameObject>	m_pPlayer = nullptr;
 	shared_ptr<CTransform>	m_pPlayerTransformCom = nullptr;
 
+	shared_ptr<CVideo>	m_pVideo;
+
 	_bool	m_bAbleWallCollsion = false;
 	_bool	m_bWallCollision = false;
 	_bool	m_bHitByPlayer = false;

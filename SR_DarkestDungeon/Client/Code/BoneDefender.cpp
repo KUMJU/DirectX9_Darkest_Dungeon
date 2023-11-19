@@ -86,11 +86,19 @@ _int CBoneDefender::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Attack1", 0.02f);
 			m_pTransformCom->SetScale(3.f * 382.f / 290.f, 3.f * 304.f / 390.f, 3.f * 382.f / 290.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 304.f / 390.f, m_vPos.z);
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
+			CSoundMgr::GetInstance()->PlaySound(L"En_BoneDef_Attack.wav", CHANNELID::MONSTER, 1.f);
+
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Attack2", 0.02f);
 			m_pTransformCom->SetScale(3.f * 324.f / 290.f, 3.f * 327.f / 390.f, 3.f * 324.f / 290.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 327.f / 390.f, m_vPos.z);
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
+			CSoundMgr::GetInstance()->PlaySound(L"En_BoneDef_Attack.wav", CHANNELID::MONSTER, 1.f);
+
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Dead", 0.02f);
@@ -102,6 +110,8 @@ _int CBoneDefender::UpdateGameObject(const _float& fTimeDelta)
 			m_pTransformCom->SetScale(3.f, 3.f, 3.f);
 			break;
 		}
+		m_ePrevAnimState = m_eCurAnimState;
+
 	}
 
 	// юс╫ц

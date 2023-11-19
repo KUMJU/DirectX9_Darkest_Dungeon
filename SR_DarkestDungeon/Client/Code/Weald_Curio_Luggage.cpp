@@ -25,7 +25,7 @@ HRESULT CWeald_Curio_Luggage::ReadyGameObject()
 	__super::ReadyGameObject();
 
 	m_bInteractionKey = L"C";
-	m_bInteractionInfo = L"상자 열기";
+	m_bInteractionInfo = L"독성 상자 열기";
 
 	return S_OK;
 }
@@ -108,9 +108,7 @@ void CWeald_Curio_Luggage::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-	D3DMATERIAL9 tMtrl = SetMaterial();
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	SetMaterial();
 
 	m_pAnimatorCom->SetAnimTexture();
 

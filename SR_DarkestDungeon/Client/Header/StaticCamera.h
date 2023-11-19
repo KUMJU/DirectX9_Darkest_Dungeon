@@ -83,7 +83,13 @@ public:
 		m_fRightVecDir = _fDir;
 	}
 
+	void SetCameraPos(_vec3 _vPos);
+
 	_float GetYAngle() { return m_fYAngle; }
+
+public:
+	//미니게임, 앵글 오류 등 원점으로 돌려놔야할 경우에 사용
+	void SetAngleReset();
 
 private:
 //Moving Function

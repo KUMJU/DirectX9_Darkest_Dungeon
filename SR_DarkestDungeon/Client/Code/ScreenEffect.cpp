@@ -123,7 +123,13 @@ void CScreenEffect::SetScreenEffect(EScreenEffect _eEffect)
 
     m_eCurrentEffect = _eEffect;
     m_bVisible = true;
-    m_fEffectTime = 1.5f;
+    if (EScreenEffect::BLOOD == _eEffect) {
+        m_fEffectTime = 3.f;
+    }
+    else {
+        m_fEffectTime = 1.5f;
+    }
+
     m_iAlpha = 110;
 
 }

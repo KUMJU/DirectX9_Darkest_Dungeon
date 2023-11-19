@@ -35,6 +35,8 @@ private:
 	tstring m_strCurrentKey = L"";
 
 
+	_float m_fTotalTime = 0.f;
+
 private:
 	shared_ptr<CTexture> m_pTextureCom;
 	unordered_map<tstring, tstring> m_NarrationMap;

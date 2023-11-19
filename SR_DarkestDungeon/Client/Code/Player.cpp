@@ -14,6 +14,7 @@
 #include "Description.h"
 
 #include"PlayerFPSUI.h"
+#include "ScreenEffect.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -29,9 +30,9 @@ HRESULT CPlayer::ReadyGameObject()
 {
 	D3DLIGHT9 _pLightInfo1;
 
-	_pLightInfo1.Diffuse = { 0.2f , 0.2f , 0.2f , 1.f };
-	_pLightInfo1.Specular = { 0.2f , 0.2f , 0.2f , 1.f };
-	_pLightInfo1.Ambient = { 0.2f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Diffuse = { 0.5f , 0.5f , 0.5f , 1.f };
+	_pLightInfo1.Specular = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo1.Ambient = { 1.f , 1.f , 1.f , 1.f };
 	_pLightInfo1.Position = { m_vPos.x , m_vPos.y , m_vPos.z };
 	_pLightInfo1.Range = 20.f;
 
@@ -41,35 +42,6 @@ HRESULT CPlayer::ReadyGameObject()
 
 	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1);
 
-
-	D3DLIGHT9 _pLightInfo2;
-
-	_pLightInfo2.Diffuse = { 0.2f , 0.2f , 0.2f , 1.f };
-	_pLightInfo2.Specular = { 1.f , 1.f , 1.f , 1.f };
-	_pLightInfo2.Ambient = { 1.f , 1.f , 1.f , 1.f };
-	_pLightInfo2.Position = { m_vPos.x , m_vPos.y , m_vPos.z };
-	_pLightInfo2.Range = 20.f;
-
-	_pLightInfo2.Attenuation0 = 0.f;
-	_pLightInfo2.Attenuation1 = 0.f;
-	_pLightInfo2.Attenuation2 = 0.f;
-
-	m_pLight2 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1);
-
-
-	D3DLIGHT9 _pLightInfo3;
-
-	_pLightInfo3.Diffuse = { 1.f , 1.f , 1.f , 1.f };
-	_pLightInfo3.Specular = { 1.f , 1.f , 1.f , 1.f };
-	_pLightInfo3.Ambient = { 1.f , 1.f , 1.f , 1.f };
-	_pLightInfo3.Position = { m_vPos.x , m_vPos.y , m_vPos.z };
-	_pLightInfo3.Range = 20.f;
-
-	_pLightInfo3.Attenuation0 = 0.f;
-	_pLightInfo3.Attenuation1 = 0.f;
-	_pLightInfo3.Attenuation2 = 0.f;
-
-	m_pLight3 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1);
 
 	if (m_bReady)
 		return S_OK;
@@ -82,12 +54,7 @@ HRESULT CPlayer::ReadyGameObject()
 	m_bColliding = true;
 
 	m_bReady = true;
-	SetGold(1000, true);
-	SetHeirloom(5, true);
 
-//	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
-	//m_pLight2 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
-	//m_pLight3 = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev);
 
 	// 파티클 테스트 삭제 예정
 	{
@@ -111,6 +78,18 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 			m_fHittedTime = 1.f;
 			m_bHitted = false;
 		}
+	}
+
+
+	if (m_bCurMouse) {
+
+		m_fMouseDebTime += fTimeDelta;
+
+		if (m_fMouseDebTime > 0.2f) {
+			m_bCurMouse = false;
+			m_fMouseDebTime = 0.f;
+		}
+
 	}
 
 
@@ -152,13 +131,32 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 	if (m_pTavernUI)
 		m_pTavernUI->UpdateGameObject(fTimeDelta);
 
+
+	//횃불 밝기 조절 
+	if (m_bInDungeon && !m_bInBattle) {
+
+		m_fLightActTime += fTimeDelta;
+
+		if (m_fLightActTime > 20.f && m_iLightIntensity != 1) {
+			--m_iLightIntensity;
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
+			CSoundMgr::GetInstance()->PlaySound(L"UI_Item_Torch_End.wav", CHANNELID::ITEM, 1.f);
+
+			printf("밝기 down %d !", m_iLightIntensity);
+			m_pLight->LightIntensity(m_iLightIntensity);
+
+			m_fLightActTime = 0.f;
+		}
+
+	}
+
 	_vec3* vPos = m_pTransformCom->GetPos();
-	m_pLight->SetPosition({ vPos ->x, vPos->y + 15.f, vPos->z+2.f});
-	m_pLight2->SetPosition({vPos->x, vPos->y + 15.f, vPos->z +2.f});
-	m_pLight3->SetPosition({ vPos ->x, vPos->y + 15.f, vPos->z + 2.f});
+	m_pLight->SetPosition({ vPos ->x, vPos->y + 15.f, vPos->z+3.f + 1.f* (_float)m_iLightIntensity});
 
 	if (m_pParticle && m_pParticle->GetIsActive())
 		m_pParticle->UpdateGameObject(fTimeDelta);
+
 
 	return iExit;
 }
@@ -166,11 +164,9 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdateGameObject()
 {
 	MouseInput();
-	m_bPrevMouse = m_bCurMouse;
 	_vec3 pPos = *m_pTransformCom->GetPos();
 	pPos;
 
-	int a = 3;
 
 	if (m_pParticle && m_pParticle->GetIsActive())
 		m_pParticle->LateUpdateGameObject();
@@ -266,9 +262,40 @@ void CPlayer::DecreaseHP(_int _iDamage)
 
 void CPlayer::SettingLight()
 {
-	
+	if (m_bInDungeon) {
+		m_iLightIntensity = 3;
+		m_fLightActTime = 0.f;
+
+		m_pLight->LightIntensity(m_iLightIntensity);
+		m_pLight->LightOn();
+	}
+	else {
+		m_pLight->LightOff();
+	}
+
+}
+
+void CPlayer::SpendTorchItem()
+{
+	if (3 == m_iLightIntensity)
+		return;
+
+	m_fLightActTime = 0.f;
+	++m_iLightIntensity;
+	m_pLight->LightIntensity(m_iLightIntensity);
 
 
+}
+
+void CPlayer::PlayerLightOn()
+{
+	m_pLight->LightOn();
+
+}
+
+void CPlayer::PlayerLightOff()
+{
+	m_pLight->LightOff();
 }
 
 void CPlayer::SetPlayerMode(EPlayerMode _ePlrMode)
@@ -298,6 +325,12 @@ void CPlayer::SetPlayerMode(EPlayerMode _ePlrMode)
 	}
 
 
+
+}
+
+void CPlayer::DungeonClear()
+{
+	m_pInventory->ExchangeGoods(&m_iGold, &m_iHeirlooms);
 
 }
 
@@ -402,7 +435,6 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		m_eLastMove = EPlayerMove::UP;
 	}
 
-
 	//기본 던전 카메라
 	if (GetAsyncKeyState('1') & 0x8000) {
 		CCameraMgr::GetInstance()->SetFPSMode();
@@ -445,13 +477,33 @@ void CPlayer::MouseInput()
 
 	if (m_ePlayerMode == EPlayerMode::DEFAULT) {
 
+		//UI Hover
+		{
+			CUIMgr::GetInstance()->HoverUI(ptMouse.x, ptMouse.y);
+
+		}
+
+
+		if (m_bCurMouse)
+			return;
+
+		if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_RB)) {
+
+			m_bCurMouse = true;
+
+			//if (m_bCurMouse == m_bPrevMouse)
+			//	return;
+
+			_bool result = CUIMgr::GetInstance()->PickingUIRB(ptMouse.x, ptMouse.y);
+		}
+
 		//마우스 픽킹
 		if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
 
 			m_bCurMouse = true;
 
-			if (m_bCurMouse == m_bPrevMouse)
-				return;
+			//if (m_bCurMouse == m_bPrevMouse)
+			//	return;
 
 			_bool result = CUIMgr::GetInstance()->PickingUI(ptMouse.x, ptMouse.y);
 
@@ -460,27 +512,17 @@ void CPlayer::MouseInput()
 			}
 		}
 
-		else
-			m_bCurMouse = false;
-
-		//UI Hover
-		{
-			CUIMgr::GetInstance()->HoverUI(ptMouse.x, ptMouse.y);
-
-		}
 	}
 	else if (m_ePlayerMode == EPlayerMode::BOSS_FIELD) 
 	{
+
+		if (m_bCurMouse)
+			return;
+
 		if (Engine::Get_DIMouseState(MOUSEKEYSTATE::DIM_LB)) {
 			m_bCurMouse = true;
-
-			if (m_bCurMouse == m_bPrevMouse)
-				return;
-
 			m_pPlayerHand->CreateProjection();
 		}
-		else
-			m_bCurMouse = false;
 
 	}
 

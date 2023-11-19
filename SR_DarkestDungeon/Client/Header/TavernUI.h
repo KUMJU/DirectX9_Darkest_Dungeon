@@ -23,7 +23,7 @@ public:
 	void SetHero(shared_ptr<CHero> _pHero);
 
 public:
-	virtual void PickingUI(LONG _fX, LONG _fY) override;
+	virtual void PickingUI(LONG _fX, LONG _fY, _bool _bLB) override;
 	virtual void HoverUI(LONG _fX, LONG _fY) override;
 
 public:

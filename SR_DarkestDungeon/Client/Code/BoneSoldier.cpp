@@ -79,6 +79,10 @@ _int CBoneSoldier::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Bone Soldier_Attack1", 0.02f);
 			m_pTransformCom->SetScale(2.5f * 323.f / 205.f, 2.5f * 300.f / 310.f, 2.5f * 323.f / 205.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 2.5f * 269.f / 310.f, m_vPos.z);
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
+			CSoundMgr::GetInstance()->PlaySound(L"En_BoneSol_Attack.wav", CHANNELID::MONSTER, 1.f);
+
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Bone Soldier_Dead", 0.02f);
@@ -90,6 +94,8 @@ _int CBoneSoldier::UpdateGameObject(const _float& fTimeDelta)
 			m_pTransformCom->SetScale(2.5f, 2.5f, 2.5f);
 			break;
 		}
+		m_ePrevAnimState = m_eCurAnimState;
+
 	}
 
 	if ((IsAttacking()) && !m_bCorpse)

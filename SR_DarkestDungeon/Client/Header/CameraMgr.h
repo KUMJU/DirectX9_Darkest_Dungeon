@@ -37,6 +37,8 @@ public: //Camera Moving
 public: 
 
 	void AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.1f);
+	void CamAngleReset();
+	void CamSetPos(_vec3 _vPos);
 
 private:
 

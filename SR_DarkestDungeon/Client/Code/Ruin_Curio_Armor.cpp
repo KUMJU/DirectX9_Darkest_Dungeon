@@ -6,6 +6,9 @@
 #include "Creature.h"
 #include "Hero.h"
 
+#include "UIMgr.h"
+
+
 CRuin_Curio_Armor::CRuin_Curio_Armor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
 {
@@ -46,6 +49,8 @@ _int CRuin_Curio_Armor::UpdateGameObject(const _float& fTimeDelta)
 			{
 				// 버프 내용
 				dynamic_pointer_cast<CHero>((*pHeroVec)[i])->CurioBuff2();
+				dynamic_pointer_cast<CHero>((*pHeroVec)[i])->GetHeroBuffEvent();
+				
 			}
 
 			m_fActiveTime = CURIOACTIVETIME;
@@ -95,13 +100,14 @@ void CRuin_Curio_Armor::RenderGameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	SetMaterial();
 
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -143,6 +149,7 @@ void CRuin_Curio_Armor::GetInteractionKey(const _float& fTimeDelta)
 	{
 		//m_bInteracting = true;
 		m_bActive = true;
+		m_bTabInteractionKey = true;
 
 		// 플레이어 행동 막기
 		//CGameMgr::GetInstance()->SetGameState(EGameState::LOCK);

@@ -111,9 +111,7 @@ void CWeald_Curio_Spider::RenderGameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-	D3DMATERIAL9 tMtrl = SetMaterial();
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	SetMaterial();
 
 	m_pAnimatorCom->SetAnimTexture();
 

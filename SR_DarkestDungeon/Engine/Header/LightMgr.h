@@ -24,11 +24,20 @@ public:
 	void LightOff();
 	void LightOn();
 
+
+	void DungeonLightOn(_int _iDungeonNum);
+	void DungeonLightOff(_int _iDungeonNum);
+
+	void DungeonLightAllOff();
+
+	void DungeonBattleLightOn();
+	void DungeonBattleLightOff();
+
 public:
 
-	shared_ptr<CLight> InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3DLIGHT9 _pLightInfo);
-	shared_ptr<CLight> InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3DLIGHT9 _pLightInfo);
-	//shared_ptr<CLight> InitDirectionLight(const _uint& _index);
+	shared_ptr<CLight> InitPointLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3DLIGHT9 _pLightInfo , _int _iDungeonNum = 0);
+	shared_ptr<CLight> InitDirectionLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3DLIGHT9 _pLightInfo, _int _iDungeonNum = 0);
+	shared_ptr<CLight> InitSpotLight(LPDIRECT3DDEVICE9 _pGraphicDev, D3DLIGHT9 _pLightInfo, _int _iDungeonNum = 0);
 
 private:
 	 

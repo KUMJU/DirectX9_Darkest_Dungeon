@@ -249,6 +249,38 @@ void CStaticCamera::MovingLineCamera(ECameraMode _eCamType, _vec3 _vDst, _float 
 
 }
 
+void CStaticCamera::SetCameraPos(_vec3 _vPos)
+{
+	D3DXMatrixInverse(&m_matView, 0, &m_matView);
+
+	memcpy(&m_matView.m[3][0], &_vPos, sizeof(_vec3));
+
+	D3DXMatrixInverse(&m_matView, 0, &m_matView);
+
+}
+
+void CStaticCamera::SetAngleReset()
+{
+
+	m_fYAngle = 0.f;
+
+
+	D3DXMatrixInverse(&m_matView, 0, &m_matView);
+
+
+	_vec3 vRight = { 1.f , 0.f , 0.f };
+	_vec3 vUp = { 0.f , 1.f , 0.f };
+	_vec3 vLook = { 0.f, 0.f, 1.f };
+
+	memcpy(&m_matView.m[0][0], &vRight, sizeof(_vec3));
+	memcpy(&m_matView.m[1][0], &vUp, sizeof(_vec3));
+	memcpy(&m_matView.m[2][0], &vLook, sizeof(_vec3));
+
+	D3DXMatrixInverse(&m_matView, 0, &m_matView);
+
+
+}
+
 void CStaticCamera::ChangeCamEyePos()
 {
 	D3DXQUATERNION q;
@@ -489,7 +521,7 @@ void CStaticCamera::AddCameraEffect(EEffectState _eEffect, _float _fTime, _float
 	pEffectInfo->fAmplitude = _fAmplitude;
 	pEffectInfo->MoveDistance = 0.f;
 	pEffectInfo->fActTime = 0.f;
-	pEffectInfo->fDir = 1.f;
+	pEffectInfo->fDir = -1.f;
 
 	m_qEffectQueue.push(std::move(pEffectInfo));
 
@@ -534,30 +566,53 @@ void CStaticCamera::ShakingCamera()
 	if (fabsf(m_qEffectQueue.front()->MoveDistance + fDistance) >= m_qEffectQueue.front()->fAmplitude) {
 		fDistance = m_qEffectQueue.front()->fAmplitude * fDir - m_qEffectQueue.front()->MoveDistance;
 		m_qEffectQueue.front()->MoveDistance = m_qEffectQueue.front()->fAmplitude * fDir;
+		printf("위치 출력!! %f\n", m_qEffectQueue.front()->fAmplitude * fDir);
+
 		m_qEffectQueue.front()->fDir *= -1.f;
 	}
 	else {
 		m_qEffectQueue.front()->MoveDistance += fDistance;
 	}
 
+	D3DXMatrixInverse(&m_matView, 0, &m_matView);
+
+	_vec3 vRight, vUp;
 	//현재 카메라 position에 더해주기
 	memcpy(&vCurrentPos, &m_matView.m[3][0], sizeof(_vec3));
 
+	memcpy(&vRight, &m_matView.m[0][0], sizeof(_vec3));
+	memcpy(&vUp, &m_matView.m[1][0], sizeof(_vec3));
+
 
 	if (m_eCurrentState == ECameraMode::FPS || m_eCurrentState == ECameraMode::VILLAGE) {
-		vCurrentPos.y += m_qEffectQueue.front()->MoveDistance * fDir;
-		vCurrentPos.x += m_qEffectQueue.front()->MoveDistance * fDir;
+
+		//vCurrentPos.y += m_qEffectQueue.front()->MoveDistance * fDir;
+		//vCurrentPos.x += m_qEffectQueue.front()->MoveDistance * fDir;
+		//vCurrentPos.x += m_qEffectQueue.front()->MoveDistance * fDir;
+
+		vCurrentPos += m_qEffectQueue.front()->MoveDistance * vRight;
+		vCurrentPos += m_qEffectQueue.front()->MoveDistance * vUp;
 
 		/*printf("%f\n", fDir);
 		printf("%f\n", m_qEffectQueue.front()->MoveDistance * fDir);*/
 
 	}
 	else {
-		vCurrentPos.y += fDistance;
-		vCurrentPos.x += fDistance;
+
+		vCurrentPos += m_qEffectQueue.front()->MoveDistance  * vRight;
+		vCurrentPos += m_qEffectQueue.front()->MoveDistance  * vUp;
+
+		//vCurrentPos.y += m_qEffectQueue.front()->MoveDistance * fDir;
+		//vCurrentPos.x += m_qEffectQueue.front()->MoveDistance * fDir;
+
+		/*vCurrentPos.y += fDistance;
+		vCurrentPos.x += fDistance;*/
 	}
 
 	memcpy(&m_matView.m[3][0], &vCurrentPos, sizeof(_vec3));
+
+
+	D3DXMatrixInverse(&m_matView, 0, &m_matView);
 
 	//지속시간 측정 후, 지정한 시간에 도달하면 pop을 해 없애준다
 	m_qEffectQueue.front()->fActTime += m_deltaTime;
@@ -590,15 +645,15 @@ void CStaticCamera::CameraMove()
 
 		_float fAngle = dwMouseMove / 10.f;
 
-		if (fabsf(m_fYAngle + fAngle) > 30.f) {
+		if (fabsf(m_fYAngle + fAngle) > 60.f) {
 			if (fAngle < 0) {
-				fAngle = 30.f - m_fYAngle;
-				m_fYAngle = -30.f;
+				fAngle = 60.f - m_fYAngle;
+				m_fYAngle = -60.f;
 				fAngle = 0.f;
 			}
 			else {
-				fAngle = 30.f - m_fYAngle;
-				m_fYAngle = 30.f;
+				fAngle = 60.f - m_fYAngle;
+				m_fYAngle = 60.f;
 				fAngle = 0.f;
 			}
 		}

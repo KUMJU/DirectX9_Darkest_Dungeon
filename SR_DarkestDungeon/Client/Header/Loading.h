@@ -26,6 +26,7 @@ public:
 	_uint				Loading_ForStage();
 	_uint				Loading_ForVillage();
 	_uint				Loading_ForRuin();
+	_uint				Loading_ForBossMap();
 
 
 public:
