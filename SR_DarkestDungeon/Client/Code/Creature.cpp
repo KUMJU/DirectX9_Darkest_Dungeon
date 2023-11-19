@@ -5,6 +5,9 @@
 #include "Export_Utility.h"
 #include"StatView.h"
 
+#include "TextBoard.h"
+#include "UIMgr.h"
+
 #include "EffectMgr.h"
 #include "Effect.h"
 
@@ -134,6 +137,12 @@ _bool CCreature::IsAttacking()
 
 void CCreature::SetStun(_bool _bStun)
 {
+	if (!_bStun)
+	{
+		m_bState[2] = false;
+		return;
+	}
+
 	m_bState[2] = true;
 
 	shared_ptr<CEffect> pEffect;
@@ -173,13 +182,26 @@ void CCreature::SetStun(_bool _bStun)
 //	return S_OK;
 //}
 
-void CCreature::IncreaseHP(_int _iValue)
+void CCreature::IncreaseHP(_int _iValue, _bool _bStressEvent)
 {
 	if (_iValue == 0) return;
 
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+	
+	// 붕괴/기상 이벤트로 인한 데미지인 경우
+	if (_bStressEvent)
+	{
+		m_vStressEventPos = m_pTransformCom->GetPos();
+		m_vStressEventPos->y -= 2.f;
+		pEffect->SetDamageEffect(1, _iValue, m_vStressEventPos, ATTACKTIME);
+	}
 
-	pEffect->SetDamageEffect(1, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+	// 그 외의 경우
+	else
+	{
+		pEffect->SetDamageEffect(1, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+	}
+
 	pEffect->SetActive(true);
 
 	m_tCommonStat.iHp += _iValue;
@@ -187,14 +209,26 @@ void CCreature::IncreaseHP(_int _iValue)
 		m_tCommonStat.iHp = m_tCommonStat.iMaxHp;
 }
 
-void CCreature::DecreaseHP(_int _iValue)
+void CCreature::DecreaseHP(_int _iValue, _bool _bStressEvent)
 {
 	if (_iValue == 0) return;
 
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
+	// 붕괴/기상 이벤트로 인한 데미지인 경우
+	if (_bStressEvent)
+	{
+		m_vStressEventPos = m_pTransformCom->GetPos();
+		m_vStressEventPos->y -= 2.f;
+		pEffect->SetDamageEffect(0, _iValue, m_vStressEventPos, ATTACKTIME);
+	}
 
-	pEffect->SetDamageEffect(0, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+	// 그 외의 경우
+	else
+	{
+		pEffect->SetDamageEffect(0, _iValue, m_pTransformCom->GetPos(), ATTACKTIME);
+	}
+
 	pEffect->SetActive(true);
 
 	// 딜이 일정 기준을 넘으면 영웅 즉사시키기
@@ -290,7 +324,7 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 	}
 
 	// 기절
-	if (m_bState[2])
+	if (m_bState[2] && _bAutoEffect)
 	{
 		// 기절 이펙트 없애는 타이밍
 		m_pLoopEffect->Reset();
@@ -303,10 +337,9 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 
 			pEffect->SetFontEffect(L"UI_Stun", m_pTransformCom->GetPos(), ATTACKTIME);
 			pEffect->SetActive(true);
+			m_bMyTurn = false;
+			m_bState[2] = false;
 		}
-
-		m_bState[2] = false;
-		m_bMyTurn = false;
 	}
 
 	// 버프
@@ -665,6 +698,11 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				// 사망
 				if (iNum < DEATHRATE)
 				{
+					/*shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+					pEffect->SetSkillEffect(L"Effect_Death", m_pTextureCom->GetTextureSize(), m_pTransformCom->GetPos(), m_pTransformCom->GetScale(), ATTACKTIME);
+					pEffect->SetActive(true);*/
+
 					dynamic_pointer_cast<CCreature>(_pCreature)->SetDeath(true);
 					dynamic_pointer_cast<CCreature>(_pCreature)->SetHp(-100);
 					dynamic_pointer_cast<CCreature>(_pCreature)->SetStartBarOn(false);
@@ -674,6 +712,34 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				&& !dynamic_pointer_cast<CCreature>(_pCreature)->GetIsBeforeDeath())
 			{
 				dynamic_pointer_cast<CCreature>(_pCreature)->SetBeforeDeath(true);
+			}
+		}
+
+		// 맞은 애가 몬스터면
+		else
+		{
+			shared_ptr<CEffect> pEffect;
+
+			shared_ptr<CTransform> pTargetTransform = dynamic_pointer_cast<CTransform>(_pCreature->GetComponent(L"Com_Transform", ID_DYNAMIC));
+			shared_ptr<CAnimator> pTargetTexture = dynamic_pointer_cast<CAnimator>(_pCreature->GetComponent(L"Com_Animator", ID_DYNAMIC));
+
+
+			// 시체 여부	
+			if (dynamic_pointer_cast<CCreature>(_pCreature)->GetHp() <= 0 && !dynamic_pointer_cast<CCreature>(_pCreature)->GetIsCorpse())
+			{
+				pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+				pEffect->SetSkillEffect(L"Effect_Death", pTargetTexture->GetTextureSize(), pTargetTransform->GetPos(), pTargetTransform->GetScale(), ATTACKTIME);
+				pEffect->SetActive(true);
+			}
+
+			// 사망 여부
+			else if (dynamic_pointer_cast<CCreature>(_pCreature)->GetHp() <= 0 && dynamic_pointer_cast<CCreature>(_pCreature)->GetIsCorpse())
+			{
+				pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+				pEffect->SetSkillEffect(L"Effect_Corpse", pTargetTexture->GetTextureSize(), pTargetTransform->GetPos(), pTargetTransform->GetScale(), ATTACKTIME);
+				pEffect->SetActive(true);
 			}
 		}
 
@@ -779,40 +845,9 @@ void CCreature::OffTurnUi()
 	m_pStatInfo->SetIsTurnOff(true);
 }
 
-void CCreature::OnVirtue()
-{
-	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
-
-	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 150, true , false);
-	pEffect->SetActive(true);
-
-	pEffect = CEffectMgr::GetInstance()->GetEffect();
-
-	pEffect->SetAnimEffect(m_strName + L"_Virtue", { 0.f, 0.f, 0.5f }, {400.f, 400.f, 1.f}, STRESSEVENTINTERVEL - 1.f, true);
-	pEffect->SetActive(true);
-
-	m_pStatInfo->SetVirtue(true);
-}
-
 void CCreature::OffVirtue()
 {
 	m_pStatInfo->SetVirtue(false);
-}
-
-void CCreature::OnAffliction()
-{
-
-	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
-
-	pEffect->SetTextureEffect(L"Alpha_Black", { 0.f, 0.f, 0.7f }, { 1280.f, 720.f, 1.f }, STRESSEVENTINTERVEL - 1.f, 50, true);
-	pEffect->SetActive(true);
-
-	pEffect = CEffectMgr::GetInstance()->GetEffect();
-
-	pEffect->SetAnimEffect(m_strName + L"_Affliction", { 0.f, 0.f, 0.5f }, { 450.f, 420.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true , false);
-	pEffect->SetActive(true);
-
-	m_pStatInfo->SetAffliction(true);
 }
 
 void CCreature::OffAffliction()

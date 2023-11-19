@@ -88,10 +88,10 @@ public:
 
 	_int		GetStress() { return m_iStress; }
 	void		SetStress(_int _iValue) { m_iStress = _iValue; }
-	void		IncreaseStress(_int _iValue);
-	void		DecreaseStress(_int _iValue);
+	void		IncreaseStress(_int _iValue, _bool _bStressEvent = false);
+	void		DecreaseStress(_int _iValue, _bool _bStressEvent = false);
 
-	virtual void DecreaseHP(_int _iValue);
+	virtual void DecreaseHP(_int _iValue, _bool _bStressEvent = false);
 
 	_float		GetCritical() { return m_fCritical; }
 	void		SetCritical(_float _fValue) { m_fCritical = _fValue; }
@@ -105,9 +105,11 @@ public:
 
 	_bool		IsAffliction() { return m_bAffliction; }
 	void		SetAffliction(_bool _bAffliction) { m_bAffliction = _bAffliction; }
+	void		OnAffliction();
 
 	_bool		IsVirtue() { return m_bVirtue; }
 	void		SetVirtue(_bool _bVirtue) { m_bVirtue = _bVirtue; }
+	void		OnVirtue();
 
 	EHeroType	GetHeroType() { return m_eHeroType; }
 

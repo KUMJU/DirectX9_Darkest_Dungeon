@@ -51,6 +51,7 @@
 #include"MouseCursor.h"
 
 #include"Narration.h"
+#include "TextBoard.h"
 
 #include"PlayerFPSUI.h"
 
@@ -1150,6 +1151,10 @@ HRESULT CWeald_Dungeon::Ready_Layer_UI(tstring pLayerTag)
 	shared_ptr<CGameObject> m_pNarr = make_shared<CNarration>(m_pGraphicDev);
 	CUIMgr::GetInstance()->AddUIObject(L"UI_Narration", dynamic_pointer_cast<CUIObj>(m_pNarr));
 	m_pLayer->CreateGameObject(L"Obj_Narr", m_pNarr);
+
+	shared_ptr<CGameObject> m_pTextBoard = make_shared<CTextBoard>(m_pGraphicDev);
+	CUIMgr::GetInstance()->AddUIObject(L"UI_TextBoard", dynamic_pointer_cast<CUIObj>(m_pTextBoard));
+	m_pLayer->CreateGameObject(L"Obj_TextBoard", m_pTextBoard);
 
 	shared_ptr<CGameObject> pMouse = make_shared<CMouseCursor>(m_pGraphicDev);
 	m_pLayer->CreateGameObject(L"Obj_Mouse", pMouse);

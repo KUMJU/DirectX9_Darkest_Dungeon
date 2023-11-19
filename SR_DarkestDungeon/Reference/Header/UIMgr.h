@@ -36,6 +36,7 @@ public:
 	void SelectUIVisibleOff(tstring _strKeyName);
 	
 	void NarrationOn(tstring _strKeyName);
+	void TextBoardOn(tstring _strText, _vec3 _vPos, _vec3 _vScale, _float _fActTime);
 	void RemoveAllListElements();
 
 	shared_ptr<CUIObj> FindUI(tstring _strKeyName);

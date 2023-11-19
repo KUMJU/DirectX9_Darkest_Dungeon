@@ -117,12 +117,12 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 		return E_FAIL;
 	}
 
-	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Point", L"이순신 Regular", 15, 25, FW_HEAVY))) {
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Point", L"이순신 Regular", 15, 27, FW_HEAVY))) {
 		//MSG_BOX("Ready InputDev Failed!");
 		return E_FAIL;
 	}
 
-	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Point_Title", L"이순신 Regular", 20, 30, FW_HEAVY))) {
+	if (FAILED(Engine::Ready_Font((*ppGraphicDev), L"Font_Point_Title", L"이순신 Regular", 20, 33, FW_HEAVY))) {
 		//MSG_BOX("Ready InputDev Failed!");
 		return E_FAIL;
 	}

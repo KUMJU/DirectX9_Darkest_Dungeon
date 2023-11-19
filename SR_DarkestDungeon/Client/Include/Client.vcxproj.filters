@@ -285,6 +285,9 @@
       <Filter>00. Scene\06. Video</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SceneEvent.cpp" />
+    <ClCompile Include="..\Code\TextBoard.cpp">
+      <Filter>01. GameObject\03. UI\15. TextBoard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -574,6 +577,9 @@
       <Filter>00. Scene\06. Video</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SceneEvent.h" />
+    <ClInclude Include="..\Header\TextBoard.h">
+      <Filter>01. GameObject\03. UI\15. TextBoard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -744,6 +750,9 @@
     </Filter>
     <Filter Include="01. GameObject\12. SceneEvent">
       <UniqueIdentifier>{03d8bd01-ba3d-4730-9630-0da4b6a6b550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameObject\03. UI\15. TextBoard">
+      <UniqueIdentifier>{02c24ea1-ef28-43ce-b831-a41f3d1b3500}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

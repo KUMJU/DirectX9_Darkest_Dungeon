@@ -3,7 +3,7 @@
 
 CExplosionParticle::CExplosionParticle()
 {
-	m_fSize = 0.5f;
+	m_fSize = 2.f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -21,6 +21,9 @@ _int CExplosionParticle::UpdateGameObject(const _float& fTimeDelta)
 	{
 		if (i->bIsAlive)
 		{
+			i->vVelocity.x -= GetRandomFloat(0.9f, 1.f) * fTimeDelta;
+			i->vVelocity.z -= GetRandomFloat(0.9f, 1.f) * fTimeDelta;
+			i->vVelocity.y += -9.8f * fTimeDelta * GetRandomFloat(-3.f, 10.f);
 			i->vPosition += i->vVelocity * fTimeDelta;
 
 			i->fAge += fTimeDelta;
@@ -60,8 +63,8 @@ void CExplosionParticle::ResetParticle(PARTICLE_ATTRIBUTE* attribute)
 	attribute->bIsAlive = true;
 	attribute->vPosition = m_vOrigin;
 
-	_vec3 min = _vec3(-1.f, -1.f, -1.f);
-	_vec3 max = _vec3(1.f, 0.f, 1.f);
+	_vec3 min = _vec3(-1.f, 0.f, -1.f);
+	_vec3 max = _vec3(1.f, 1.f, 1.f);
 
 	GetRandomVector(
 		&attribute->vVelocity,
@@ -81,5 +84,5 @@ void CExplosionParticle::ResetParticle(PARTICLE_ATTRIBUTE* attribute)
 		1.f);*/
 
 	attribute->fAge = 0.f;
-	attribute->fLifeTime = 0.5f;
+	attribute->fLifeTime = 1.5f;
 }

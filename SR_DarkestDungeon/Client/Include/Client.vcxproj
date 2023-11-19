@@ -232,6 +232,7 @@
     <ClInclude Include="..\Header\TavernNPC.h" />
     <ClInclude Include="..\Header\TavernUI.h" />
     <ClInclude Include="..\Header\Tervarn.h" />
+    <ClInclude Include="..\Header\TextBoard.h" />
     <ClInclude Include="..\Header\Trigger.h" />
     <ClInclude Include="..\Header\Video.h" />
     <ClInclude Include="..\Header\WealdDungeonDoor.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="..\Code\TavernNPC.cpp" />
     <ClCompile Include="..\Code\TavernUI.cpp" />
     <ClCompile Include="..\Code\Tervarn.cpp" />
+    <ClCompile Include="..\Code\TextBoard.cpp" />
     <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\Video.cpp" />
     <ClCompile Include="..\Code\WealdDungeonDoor.cpp" />
