@@ -172,6 +172,9 @@ _int CBoss2::UpdateGameObject(const _float& fTimeDelta)
 		m_bGroggy = true;
 		//m_eCurAnimState = EBossState::P1_TELEPORT;
 		m_eCurAnimState = EBossState::P1_GROGGY;
+
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
+		CSoundMgr::GetInstance()->PlaySound(L"Boss_Groggy.wav", CHANNELID::BOSS, 3.f);
 	}
 
 	// 키 입력
@@ -279,6 +282,9 @@ void CBoss2::OnCollide(shared_ptr<CGameObject> _pObj)
 		{
 			return;
 		}
+
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_EFFECT);	
+		CSoundMgr::GetInstance()->PlaySound(L"Boss_WallHitted.wav", CHANNELID::BOSS_EFFECT, 1.f);
 		
 		m_bWallCollision = true;
 		m_bAbleWallCollsion = true;
@@ -454,6 +460,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 
 				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
 				CSoundMgr::GetInstance()->PlayBGM(L"Boss_BGM2.wav", 1.f);
+
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
+				CSoundMgr::GetInstance()->PlaySound(L"Boss_Change.wav", CHANNELID::BOSS, 1.5f);
 			}
 			/*else if (m_bGroggy)
 			{
@@ -490,6 +499,8 @@ void CBoss2::FSM(const _float& fTimeDelta)
 	// Groggy 상태
 	if (m_eCurAnimState == EBossState::P1_GROGGY)
 	{
+		CSoundMgr::GetInstance()->PlaySound(L"Boss_Groggy.wav", CHANNELID::BOSS, 3.f);
+
 		m_fGroggyTime -= fTimeDelta;
 		if (m_fGroggyTime < 0.f)
 		{
@@ -536,6 +547,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		{
 			m_eCurAnimState = EBossState::P1_PATTERN1FIRE;
 			m_bPattern1Ready = false;
+
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
+			CSoundMgr::GetInstance()->PlaySound(L"Boss_Attack1.wav", CHANNELID::BOSS, 1.5f);
 		}
 	}
 
@@ -570,6 +584,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 				m_bPattern2DashReady = false;
 				m_eCurAnimState = EBossState::P1_PATTERN2CHARGE;
 				m_bPattern2DashCharge = true;
+
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
+				CSoundMgr::GetInstance()->PlaySound(L"Boss_Charge.wav", CHANNELID::BOSS, 1.f);
 			}
 		}
 	}
@@ -577,9 +594,11 @@ void CBoss2::FSM(const _float& fTimeDelta)
 	{
 		if (m_bPattern2DashCharge)
 		{
+			//CSoundMgr::GetInstance()->PlaySound(L"Boss_Charge.wav", CHANNELID::BOSS, 0.5f);
 			m_fDashChargeTime -= fTimeDelta;
 			if (m_fDashChargeTime < 0.f)
 			{
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
 				m_fDashChargeTime = 3.f;
 				m_bPattern2DashCharge = false;
 				m_eCurAnimState = EBossState::P1_PATTERN2DASH;
@@ -587,6 +606,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 
 				DashDir = CalcDirection();
 				D3DXVec3Normalize(&DashDir, &DashDir);
+
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
+				CSoundMgr::GetInstance()->PlaySound(L"Boss_Dash.wav", CHANNELID::BOSS, 1.f);
 			}
 		}
 	}
@@ -698,6 +720,7 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		m_fDeadTime -= fTimeDelta;
 		if (m_fDeadTime < 0.f)
 		{
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopAll();
 			m_fDeadTime = 0.24f * 26;
 			m_eCurAnimState = EBossState::ENUM_END;
 			m_pTransformCom->SetPosition(300.f, -300.f, 300.f);
@@ -721,6 +744,9 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			m_eCurAnimState = EBossState::P2_DEATH;
 			m_bPhaseDeath = true;
 
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
+			CSoundMgr::GetInstance()->PlaySound(L"Boss_Death.wav", CHANNELID::BOSS, 5.f);
+
 			// 웜들 없애기
 			for (int i = 0; i < m_iMobTotalNum; i++)
 			{
@@ -729,8 +755,6 @@ void CBoss2::FSM(const _float& fTimeDelta)
 					dynamic_pointer_cast<CGameObject>(m_pVecMob[i])->SetEnable(false);
 				}
 			}
-
-			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopAll();
 			
 			//CSoundMgr::GetInstance()->PlaySound(L"Boss_Hitted.wav", CHANNELID::BOSS_HITTED, 1.f);
 		}
@@ -846,6 +870,8 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			if (m_fP2SpikeTime < 0.f)
 			{
 				m_fP2SpikeTime = 1.5f;
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::SPIKE);
+				CSoundMgr::GetInstance()->PlaySound(L"Boss_Death.wav", CHANNELID::SPIKE, 1.f);
 				// 스파이크 소환
 				for (int i = 0; i < 100; i++)
 				{
@@ -867,6 +893,8 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			if (m_fP2SpikeTime2 < 0.f)
 			{
 				m_fP2SpikeTime2 = 1.f;
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::SPIKE);
+				CSoundMgr::GetInstance()->PlaySound(L"Boss_Death.wav", CHANNELID::SPIKE, 1.f);
 				// 스파이크 소환
 				for (int i = 100; i < m_iSpikeTotalNum; i++)
 				{
@@ -904,6 +932,8 @@ void CBoss2::FSM(const _float& fTimeDelta)
 			m_fP2SunkenIntervel -= fTimeDelta;
 			if (m_fP2SunkenIntervel < 0.f)
 			{
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::SUNKEN);
+				CSoundMgr::GetInstance()->PlaySound(L"Boss_Sunken.wav", CHANNELID::SUNKEN, 1.f);
 				// 플레이어로 향하는 방향 벡터
 				_vec3 PlayerDir;
 				PlayerDir = CalcDirection();
@@ -952,6 +982,8 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		m_fP2SunkenAllIntervel -= fTimeDelta;
 		if (m_fP2SunkenAllIntervel < 0.f)
 		{
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::SUNKEN);
+			CSoundMgr::GetInstance()->PlaySound(L"Boss_Sunken.wav", CHANNELID::SUNKEN, 1.f);
 			m_fP2SunkenAllIntervel = 0.1f;
 			// 성큰 소환
 			// 위
@@ -1471,6 +1503,8 @@ void CBoss2::ShootBullet2()
 	{
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet1[i])->GetIsEnable())
 		{
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ1);
+			CSoundMgr::GetInstance()->PlaySound(L"BossProjectile1.wav", CHANNELID::BOSS_PROJ1, 0.5f);
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet1[i])->SetEnable(true);
 			m_pVecBullet1[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
@@ -1493,6 +1527,8 @@ void CBoss2::ShootBullet3()
 	{
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->GetIsEnable())
 		{
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ2);
+			CSoundMgr::GetInstance()->PlaySound(L"BossProjectile2.wav", CHANNELID::BOSS_PROJ2, 0.3f);
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet2[i])->SetEnable(true);
 			m_pVecBullet2[i]->SetOnCollision(false);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
@@ -1579,6 +1615,8 @@ void CBoss2::ShootBullet4()
 	{
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet3[i])->GetIsEnable())
 		{
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ3);
+			CSoundMgr::GetInstance()->PlaySound(L"BossProjectile3.wav", CHANNELID::BOSS_PROJ3, 0.4f);
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet3[i])->SetEnable(true);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 				m_pVecBullet3[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
@@ -1610,6 +1648,8 @@ void CBoss2::ShootBullet5()
 	{
 		if (!dynamic_pointer_cast<CGameObject>(m_pVecBullet3[i])->GetIsEnable())
 		{
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS_PROJ3);
+			CSoundMgr::GetInstance()->PlaySound(L"BossProjectile3.wav", CHANNELID::BOSS_PROJ3, 0.4f);
 			dynamic_pointer_cast<CGameObject>(m_pVecBullet3[i])->SetEnable(true);
 			shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(
 				m_pVecBullet3[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));

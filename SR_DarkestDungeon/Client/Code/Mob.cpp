@@ -159,6 +159,8 @@ void CMob::OnCollide(shared_ptr<CGameObject> _pObj)
 	if (ECollideID::PLAYER_PROJECTILE == _pObj->GetColType())
 	{
 		DecreaseHp(5);
+		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::MOB);
+		CSoundMgr::GetInstance()->PlaySound(L"Mob_Hitted.wav", CHANNELID::MOB, 1.5f);
 	}
 }
 
@@ -189,6 +191,9 @@ void CMob::FSM(const _float& fTimeDelta)
 			m_bIdle = false;
 			m_eCurAnimState = EMobState::DEATH;
 			m_bDeath = true;
+
+			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::MOB);
+			CSoundMgr::GetInstance()->PlaySound(L"Mob_Death.wav", CHANNELID::MOB, 1.5f);
 		}
 		if (m_fIdleTime < 0.f)
 		{
@@ -199,6 +204,9 @@ void CMob::FSM(const _float& fTimeDelta)
 				m_eCurAnimState = EMobState::ATTACK;
 				m_bAttack = true;
 				m_bIdle = false;
+
+				CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::MOB);
+				CSoundMgr::GetInstance()->PlaySound(L"Mob_Attack.wav", CHANNELID::MOB, 1.5f);
 			}
 			// 들어가기
 			else
