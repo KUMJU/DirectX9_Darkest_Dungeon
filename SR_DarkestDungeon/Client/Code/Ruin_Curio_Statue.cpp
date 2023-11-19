@@ -7,6 +7,9 @@
 #include"GameMgr.h"
 #include "Player.h"
 
+#include "SoundMgr.h"
+#include "LightMgr.h"
+
 CRuin_Curio_Statue::CRuin_Curio_Statue(LPDIRECT3DDEVICE9 _pGraphicDev, StatueState _eAnswerState)
 	:CInteractionObj(_pGraphicDev), m_eAnswerState(_eAnswerState)
 {
@@ -22,6 +25,41 @@ HRESULT CRuin_Curio_Statue::ReadyGameObject()
 
 	m_bInteractionKey = L"C";
 	m_bInteractionInfo = L"보석 삽입하기";
+
+	
+	D3DLIGHT9 _pLightInfo1;
+
+
+	if (StatueState::STATUE_RED == m_eAnswerState) {
+		_pLightInfo1.Diffuse = { 1.f , 0.2f , 0.2f , 1.f };
+		_pLightInfo1.Specular = { 1.f , 0.2f , 0.2f , 1.f };
+		_pLightInfo1.Ambient = { 1.f , 0.2f , 0.2f , 1.f };
+
+
+	}
+	else if (StatueState::STATUE_BLUE == m_eAnswerState){
+		_pLightInfo1.Diffuse = { 0.2f , 0.2f , 1.f , 1.f };
+		_pLightInfo1.Specular = { 0.2f , 0.2f , 1.f , 1.f };
+		_pLightInfo1.Ambient = { 0.2f , 0.2f , 1.f , 1.f };
+
+
+	}
+	else if (StatueState::STATUE_GREEN == m_eAnswerState) {
+		_pLightInfo1.Diffuse = { 0.2f , 1.f , 0.2f , 1.f };
+		_pLightInfo1.Specular = { 0.2f , 1.f , 0.2f , 1.f };
+		_pLightInfo1.Ambient = { 0.2f , 1.f , 0.2f , 1.f };
+
+
+	}
+
+	_pLightInfo1.Position = { m_vPos.x , m_vPos.y + 1.f ,m_vPos.z };
+	_pLightInfo1.Range = 13.f;
+
+	_pLightInfo1.Attenuation0 = 0.f;
+	_pLightInfo1.Attenuation1 = 0.4f;
+	_pLightInfo1.Attenuation2 = 0.f;
+
+	m_pLight =  CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1, 95);
 
     return S_OK;
 }
@@ -177,10 +215,14 @@ void CRuin_Curio_Statue::Interaction()
 		if (m_eCurrentState == m_eAnswerState) {
 
 			m_bIsAnswer = true;
+			m_pLight->LightOn();
 
 		}
 
 	}
+
+	CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
+	CSoundMgr::GetInstance()->PlaySound(L"Puzzle_Gem_Input.wav", CHANNELID::EFFECT, 0.7f);
 	
 
 	m_bDebounce = true;

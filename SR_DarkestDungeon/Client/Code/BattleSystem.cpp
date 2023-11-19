@@ -586,6 +586,15 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 일반전투에서 종료
 	if (m_bEndBattleStart && !m_bNext && (m_iBattleType == 0))
 	{
+		//1회만 실행될 수 있도록 bool State로 관리
+		if (!m_bBattleEndEffectOn) {
+			//승리BGM 재생
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
+			CSoundMgr::GetInstance()->PlaySound(L"Combat_Victory.wav", CHANNELID::MONSTER, 1.f);
+			m_bBattleEndEffectOn = true;
+		}
+
+
 		m_fEndTime1 -= fTimeDelta;
 		if (m_fEndTime1 < 0.f)
 		{

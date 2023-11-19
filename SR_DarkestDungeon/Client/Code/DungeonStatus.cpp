@@ -141,7 +141,7 @@ void CDungeonStatus::GetBuff(EHeroType _eHero)
 	_vec3 vPos = *m_pTransformCom[iCount]->GetPos();
 
 	shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
-	pEffect->SetAnimEffect(L"UI_Buff", _vec3(vPos.x, vPos.y - 6.f, 0.f), _vec3(45.f, 20.f, 1.f), 2.f, true);
+	pEffect->SetAnimEffect(L"Stat_Attribute_Buff", _vec3(vPos.x, vPos.y - 6.f, 0.f), _vec3(25.f, 40.f, 1.f), 2.f, true);
 	pEffect->SetActive(true);
 
 	

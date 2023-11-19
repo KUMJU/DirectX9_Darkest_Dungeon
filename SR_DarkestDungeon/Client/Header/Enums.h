@@ -93,7 +93,7 @@ enum class EHandItem {
 enum class EScreenEffect {
 	BLOOD,
 	ATTACKED,
-	FADEIN,
-	FADEOUT,
+	FADEIN_WHITE,
+	FADEIN_BLACK,
 	ENUM_END
 };

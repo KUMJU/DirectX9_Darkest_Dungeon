@@ -36,7 +36,7 @@ public: //Camera Moving
 	_float GetYAngle();
 public: 
 
-	void AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.1f);
+	void AddEffectInfo(EEffectState _eEffect, _float _fTime, _float _fAmplitude = 0.1f , EShakingType _eShakeType = EShakingType::CROSS);
 	void CamAngleReset();
 	void CamSetPos(_vec3 _vPos);
 

@@ -6,6 +6,8 @@
 
 #include "SoundMgr.h"
 
+
+
 CPlayerHand::CPlayerHand(LPDIRECT3DDEVICE9 _pGraphicDev)
 	:CGameObject(_pGraphicDev)
 {
@@ -39,6 +41,17 @@ _int CPlayerHand::UpdateGameObject(const _float& fTimeDelta)
 	int iExit(0);
 	iExit = __super::UpdateGameObject(fTimeDelta);
 	
+
+	if (m_bShoot) {
+
+		m_fEffectTime += fTimeDelta;
+
+		if (m_fEffectTime > 0.9f) {
+			m_bShoot = false;
+			m_fEffectTime = 0.f;
+		}
+
+	}
 	
 	_vec3 vPos;
 	_matrix matWorld;
@@ -123,6 +136,7 @@ void CPlayerHand::LateUpdateGameObject()
 		fYAngle = CCameraMgr::GetInstance()->GetYAngle();
 
 		vPos = vPos + ((vLook * 4.5f + vUp * -2.f + vRight * -3.f));
+		_vec3 vCopyPos = vPos + ((vLook * 5.f + vUp * -2.f + vRight * -3.f));
 
 		if (m_bWalking) {
 			m_fActTime += m_fTime;
@@ -141,6 +155,9 @@ void CPlayerHand::LateUpdateGameObject()
 		m_pItemTransmCom->SetAngle({ D3DXToRadian(fYAngle) , vAngle.y, vAngle.z });
 
 
+		m_pEffectTransmCom->SetPosition(vCopyPos.x, vCopyPos.y + m_fTotalHeight, vCopyPos.z);
+		m_pEffectTransmCom->SetAngle({ D3DXToRadian(fYAngle) , vAngle.y, vAngle.z });
+
 	}
 
 }
@@ -151,6 +168,7 @@ void CPlayerHand::RenderGameObject()
 		return;
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pItemTransmCom->GetWorld());
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -158,13 +176,22 @@ void CPlayerHand::RenderGameObject()
 
 
 	if (m_bPlrSpellHand) {
+
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
+		if (m_bShoot) {
+			m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pEffectTransmCom->GetWorld());
+			m_pEffectTextureCom->SetTexture(0);
+			m_pEffectBufCom->RenderBuffer();
+		}
+
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pItemTransmCom->GetWorld());
 		m_pAnimCom->SetAnimTexture();
+
 	}
 	else {
 		m_pTextureCom->SetTexture(0);
@@ -273,6 +300,7 @@ void CPlayerHand::SetCurrentItem(EHandItem _handItem)
 
 void CPlayerHand::CreateProjection()
 {
+
 	_matrix matView;
 	m_pGraphicDev->GetTransform(D3DTRANSFORMSTATETYPE::D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
@@ -282,11 +310,12 @@ void CPlayerHand::CreateProjection()
 
 	CSoundMgr::GetInstance()->StopSound(CHANNELID::PLAYER_PROJ);
 	CSoundMgr::GetInstance()->PlaySound(L"Player_Magic_Proj.wav", CHANNELID::PLAYER_PROJ, 1.f);
-
-	//shared_ptr<CGameObject> pProj = make_shared<CPlayerProj>(m_pGraphicDev, L"SpellHand_Proj_Fire", *m_pItemTransmCom->GetPos(), *m_pPlrTransmCom->GetWorld());
+	 
 	shared_ptr<CGameObject> pProj = make_shared<CPlayerProj>(m_pGraphicDev, L"SpellHand_Proj_Fire", *m_pItemTransmCom->GetPos(), matView);
 	pProj->AwakeGameObject();
 	pProj->ReadyGameObject();
+
+	m_bShoot = true;
 
 	CSceneMgr::GetInstance()->AddNewObject(L"Layer_4_GameObj", L"Player_Proj", pProj);
 }
@@ -310,6 +339,20 @@ void CPlayerHand::AddComponent()
 
 	pComponent = m_pAnimCom = make_shared<CAnimator>(m_pGraphicDev);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator", pComponent });
+
+
+	pComponent = m_pEffectBufCom = make_shared<CRcTex>(m_pGraphicDev);
+	m_pEffectBufCom->ReadyBuffer();
+	m_mapComponent[ID_STATIC].insert({ L"Com_EffectRcTex",pComponent });
+
+	pComponent = m_pEffectTextureCom = make_shared<CTexture>(m_pGraphicDev);
+	m_mapComponent[ID_STATIC].insert({ L"Com_EffectTex",pComponent });
+	m_pEffectTextureCom->SetTextureKey(L"Effect_Spell_Blur", TEXTUREID::TEX_NORMAL);
+
+	pComponent = m_pEffectTransmCom = make_shared<CTransform>();
+	m_pEffectTransmCom->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_EffectTrans",pComponent });
+	m_pEffectTransmCom->SetScale(5.f, 5.f, 5.f);
 
 
 }

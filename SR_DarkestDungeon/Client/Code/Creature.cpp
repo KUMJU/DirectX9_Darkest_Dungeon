@@ -228,6 +228,9 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 
 				pEffect->SetFontEffect(L"UI_Blight", m_pTransformCom->GetPos(), ATTACKTIME);
 				pEffect->SetActive(true);
+
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+				CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Poison_Dot.wav", CHANNELID::STATUS, 1.f);
 			}
 
 			if (m_bState[1])
@@ -236,6 +239,9 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 
 				pEffect->SetFontEffect(L"UI_Blood", m_pTransformCom->GetPos(), ATTACKTIME);
 				pEffect->SetActive(true);
+
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+				CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Bleed_Dot.wav", CHANNELID::STATUS, 1.f);
 			}
 
 			// 도트뎀 계산
@@ -251,6 +257,17 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 			m_tCommonStat.iHp -= (m_iBlightDot[0] + m_iBleedDot[0]);
 
 		_iValue = m_iBlightDot[0] + m_iBleedDot[0];
+
+		if (m_iBlightDot[0] > 0) {
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+			CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Poison_Dot.wav", CHANNELID::STATUS, 1.f);
+		}
+
+		if (m_iBleedDot[0] > 0) {
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+			CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Bleed_Dot.wav", CHANNELID::STATUS, 1.f);
+		}
 
 		// 사망하지 않았을때는 피가 0아래로 안닳게 하기
 		if (!m_bDeath)
@@ -303,6 +320,10 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 		m_iBuff1Dot[3] = 0;
 		m_iBuff2Dot[3] = 0;
 
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+		CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Buff.wav", CHANNELID::STATUS, 1.f);
+
 		if (!m_iBuff1Dot[0] && !m_iBuff2Dot[0]) m_bState3[0] = false;
 	}
 
@@ -315,6 +336,10 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 			m_iDeBuff1Dot[i - 1] = m_iDeBuff1Dot[i];
 		}
 		m_iDeBuff1Dot[3] = 0;
+
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+		CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Debuff.wav", CHANNELID::STATUS, 1.f);
 
 		if (!m_iDeBuff1Dot[0]) m_bState3[1] = false;
 	}
@@ -462,6 +487,9 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 			_pCreature->BlightAttack(_pSkill->GetDotDamage());
 			_pCreature->SetBlight(true);
 		}
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+		CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Poison_Onset.wav", CHANNELID::STATUS, 1.f);
 	}
 
 	// 출혈
@@ -483,6 +511,10 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 			_pCreature->BleedAttack(_pSkill->GetDotDamage());
 			_pCreature->SetBleed(true);
 		}
+
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+		CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Bleed_Onset.wav", CHANNELID::STATUS, 1.f);
 	}
 
 	// 기절
@@ -503,6 +535,9 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 				_pCreature->DecreaseHP((_int)((_float)m_tCommonStat.iAttackPower * _pSkill->GetDamageRatio()));
 			_pCreature->SetStun(true);
 		}
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+		CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Stun_Onset.wav", CHANNELID::STATUS, 1.f);
 	}
 
 	// 이동

@@ -243,9 +243,19 @@ void CPlayer::DecreaseHP(_int _iDamage)
 {
 	if (!m_bHitted)
 	{
-		CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.2f, 0.5f);
+		CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 0.2f, 0.8f);
 
 		m_iHP -= _iDamage;
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::PLAYER);
+		CSoundMgr::GetInstance()->PlaySound(L"Player_Hit.wav", CHANNELID::PLAYER, 1.f);
+
+		shared_ptr<CUIObj> pScreenEffect = CUIMgr::GetInstance()->FindUI(L"UI_ScreenEffect");
+
+		if (pScreenEffect) {
+			dynamic_pointer_cast<CScreenEffect>(pScreenEffect)->SetScreenEffect(EScreenEffect::BLOOD);
+		}
+
 
 		if (!m_pPlrFPSUI) {
 
