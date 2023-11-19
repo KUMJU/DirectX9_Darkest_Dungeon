@@ -28,7 +28,7 @@ HRESULT CAlienMob::ReadyGameObject()
 	m_tCommonStat.iMaxHp = 100;
 	m_tCommonStat.iDodge = 0;
 	m_tCommonStat.iSpeed = 2;
-	m_tCommonStat.iAttackPower = 50;
+	m_tCommonStat.iAttackPower = 30;
 
 	// 스킬 넣어주기
 	vector<shared_ptr<CSkill>>	pVecSkill = {};

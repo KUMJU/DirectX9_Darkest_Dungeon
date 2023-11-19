@@ -573,6 +573,15 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	if (m_bEndBattleStart && m_bNext)
 	{
 		m_bNext = false;
+
+		// 보스전이였을 경우
+		if (m_iBattleType == 1)
+		{
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetMoving(true);
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetTargetPos(_vec3(300.f, 7.5f, 230.f));
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetMovingSpeed(
+				dynamic_pointer_cast<CCreature>(m_vMonsters[2])->MovingSpeed(_vec3(300.f, 7.5f, 230.f), 14.f));
+		}
 	}
 	// 일반전투에서 종료
 	if (m_bEndBattleStart && !m_bNext && (m_iBattleType == 0))
@@ -580,8 +589,9 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		m_fEndTime1 -= fTimeDelta;
 		if (m_fEndTime1 < 0.f)
 		{
-			m_fEndTime1 = 3.f;
+			m_fEndTime1 = 8.f;
 			m_bEndBattleStart = false;
+			m_bNext = true;
 
 			return true;
 		}
@@ -592,12 +602,18 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		m_fEndTime2 -= fTimeDelta;
 
 		// 여기서 뭔가의 연출
-		
+		if (m_fEndTime2 < 11.f)
+		{
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->MovePos(dynamic_pointer_cast<CCreature>(m_vMonsters[2])->GetTargetPos(),
+				fTimeDelta, dynamic_pointer_cast<CCreature>(m_vMonsters[2])->GetMovingSpeed());
+		}
 
 		if (m_fEndTime2 < 0.f)
 		{
-			m_fEndTime2 = 8.f;
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetAttackMoving(false);
+			m_fEndTime2 = 15.f;
 			m_bEndBattleStart = false;
+			m_bNext = true;
 
 			return true;
 		}

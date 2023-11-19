@@ -46,7 +46,7 @@ HRESULT CBrigandBloodletter::ReadyGameObject()
 	_bool	bTargetPos2[4] = { 1,0,0,0 };
 	shared_ptr<CSkill> m_pBrigandBloodletter_2 = make_shared<CSkill>
 		(L"Attack2", L"Brigand Bloodletter_Attack2", bTargetPos2, Skill2_Dot, 0.f, 0.f, 2.f, 2.2f,
-			bArrAttack2, 1, 30, 0, 1, 0);
+			bArrAttack2, 1, 30, 0, 0, 0);
 	pVecSkill.push_back(m_pBrigandBloodletter_2);
 	SetSkill(pVecSkill);
 
