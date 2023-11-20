@@ -595,9 +595,9 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		if (m_iBattleType == 1)
 		{
 			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetMoving(true);
-			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetTargetPos(_vec3(300.f, 7.5f, 230.f));
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetTargetPos(_vec3(280.f, 7.5f, 230.f));
 			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetMovingSpeed(
-			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->MovingSpeed(_vec3(300.f, 7.5f, 230.f), 14.f));
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->MovingSpeed(_vec3(280.f, 7.5f, 230.f), 14.f));
 		}
 	}
 	// 일반전투에서 종료
