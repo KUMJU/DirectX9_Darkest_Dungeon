@@ -52,7 +52,7 @@
 #define CHANGETIME	1.f
 #define DELAYTIME	1.f
 
-#define DOTDAMEFFECTTIME 2.f
+#define DOTDAMEFFECTTIME 1.3f
 #define STRESSEFFECTTIME 3.f
 
 // Village
