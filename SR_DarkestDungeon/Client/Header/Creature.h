@@ -349,6 +349,7 @@ protected:
 	// 붕괴/기상 이벤트 발생 시 폰트를 출력할 포지션 (다른 이펙트와 안겹치기 위해서 따로 둠)
 	_vec3* m_vStressEventPos;
 
+	_float m_fYpos = 0.f;
 
 protected:
 	virtual void	Free();

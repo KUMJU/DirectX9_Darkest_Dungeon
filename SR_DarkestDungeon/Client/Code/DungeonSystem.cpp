@@ -28,7 +28,6 @@ void CDungeonSystem::AbleRoom(int _iNum)
 	}
 
 	CLightMgr::GetInstance()->DungeonLightOn(_iNum);
-	printf("던전 방 조명 켜기 \n");
 
 }
 
@@ -54,6 +53,5 @@ void CDungeonSystem::DisableAllRoom()
 	}
 
 	CLightMgr::GetInstance()->DungeonLightAllOff();
-	printf("던전 조명 소거! \n");
 
 }

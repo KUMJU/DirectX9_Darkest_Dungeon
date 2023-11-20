@@ -56,6 +56,11 @@ HRESULT CCreature::ReadyGameObject()
 
 _int CCreature::UpdateGameObject(const _float& fTimeDelta)
 {
+	if (0 != m_fYpos) {
+
+		m_pTransformCom->SetYPos(m_fYpos);
+	}
+
 	_int	iExit = CGameObject::UpdateGameObject(fTimeDelta);
 
 	m_vPos = *m_pTransformCom->GetPos();
@@ -403,6 +408,9 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 			m_bCorpse = false;
 			m_bDeath = true;
 			m_tCommonStat.iHp = -100;
+
+			BleedCure();
+			BlightCure();
 
 			bStatBarOn = false;
 		}

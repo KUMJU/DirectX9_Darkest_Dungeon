@@ -16,6 +16,7 @@
 #include"PlayerFPSUI.h"
 #include "ScreenEffect.h"
 
+#include "MouseCursor.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -154,7 +155,6 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
 			CSoundMgr::GetInstance()->PlaySound(L"UI_Item_Torch_End.wav", CHANNELID::ITEM, 1.f);
 
-			printf("¹à±â down %d !", m_iLightIntensity);
 			m_pLight->LightIntensity(m_iLightIntensity);
 
 			m_fLightActTime = 0.f;
@@ -340,6 +340,8 @@ void CPlayer::SetPlayerMode(EPlayerMode _ePlrMode)
 
 		CUIMgr::GetInstance()->SwitchFPSMode();
 		CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_DungeonStatus");
+
+		dynamic_pointer_cast<CMouseCursor>(CUIMgr::GetInstance()->FindUI(L"UI_Mouse"))->SwitchCursorImage();
 
 		if (m_pPlayerHand) {
 			m_pPlayerHand->SetCurrentItem(m_eCurrentItem);

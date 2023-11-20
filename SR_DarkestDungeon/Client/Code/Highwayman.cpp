@@ -446,6 +446,7 @@ void CHighwayman::ChangeAnim()
 		}
 
 		m_pTransformCom->SetScale(2.f* fXpos, 3.f * fYpos, 2.f * fXpos);
+		m_fYpos = 3.f * fYpos;
 
 	}
 }

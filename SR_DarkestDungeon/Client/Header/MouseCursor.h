@@ -21,11 +21,19 @@ public:
 	virtual void LateUpdateGameObject() override;
 	virtual void RenderGameObject() override;
 
+
+public:
+	void SwitchCursorImage();
+	void SwitchCursorOrigin();
+	void CursorOn();
+	void CursorOff();
+
 private:
 	virtual void			AddComponent();
 
 private:
 	shared_ptr<CTexture> m_pTextureCom = nullptr;
 
+	_bool m_bCursorVisible = true;
 };
 

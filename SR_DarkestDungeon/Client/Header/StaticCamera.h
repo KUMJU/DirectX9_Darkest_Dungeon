@@ -174,6 +174,9 @@ private:
 
 	_float m_fYAngle = 0.f;
 	
+	_bool m_bKeyDeb = false;
+	_float m_fDebTime = 0.f;
+
 private:
 	queue<unique_ptr<tagEffectInfo>> m_qEffectQueue;
 

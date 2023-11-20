@@ -521,7 +521,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 스트레스 이벤트 발생중인 시간
 	if (m_bWhileStressEvent)
 	{
-		printf("스트레스 이벤트 발생 시간\m_fStressEventTime : %f\n", m_fStressEventTime);
 
 		m_fStressEventTime -= fTimeDelta;
 
@@ -542,7 +541,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 스트레스 영웅 행동 발생 시간
 	if (m_bWhileStressOutput)
 	{
-		printf("스트레스 영웅 행동 발생 시간\m_fStressOutputTime : %f\n", m_fStressOutputTime);
 
 		if (!m_bStressOutputEffectRender)
 		{
@@ -595,9 +593,9 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		if (m_iBattleType == 1)
 		{
 			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetMoving(true);
-			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetTargetPos(_vec3(280.f, 7.5f, 230.f));
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetTargetPos(_vec3(290.f, 7.5f, 230.f));
 			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetMovingSpeed(
-			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->MovingSpeed(_vec3(280.f, 7.5f, 230.f), 14.f));
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->MovingSpeed(_vec3(290.f, 7.5f, 230.f), 14.f));
 		}
 	}
 	// 일반전투에서 종료
@@ -815,7 +813,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			// 중독, 출혈 데미지 이펙트가 발생중인 시간
 			if (m_bWhileDotDamEffectRender)
 			{
-				printf("중독, 출혈 데미지 이펙트 발생 시간\m_fDotDamageEffectTime : %f\n", m_fDotDamageEffectTime);
 
 				m_fDotDamageEffectTime -= fTimeDelta;
 
@@ -829,7 +826,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			// 기절 이펙트가 발생중인 시간
 			if (m_bWhileStunEffectRender)
 			{
-				printf("기절 이펙트 시간\m_fStunEffectTime : %f\n", m_fDotDamageEffectTime);
 
 				m_fDotDamageEffectTime -= fTimeDelta;
 
@@ -860,7 +856,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			// 스트레스 획득 이펙트가 발생중인 시간
 			if (m_bWhileStressEffectRender)
 			{
-				printf("스트레스 획득 이펙트 발생 시간\m_fStressEffectTime : %f\n", m_fStressEffectTime);
 
 				m_fStressEffectTime -= fTimeDelta;
 
@@ -1188,7 +1183,6 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			// 기절 이펙트가 발생중인 시간
 			if (m_bWhileStunEffectRender)
 			{
-				printf("기절 이펙트 시간\m_fStunEffectTime : %f\n", m_fDotDamageEffectTime);
 
 				m_fDotDamageEffectTime -= fTimeDelta;
 

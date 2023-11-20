@@ -190,17 +190,6 @@ void CBoss2::LateUpdateGameObject()
 
 void CBoss2::RenderGameObject()
 {
-	// Font
-	_tchar		m_szString[128];
-	TCHAR szBuff[32] = { };
-	_stprintf_s(szBuff, TEXT("%d"),m_iHp);
-	lstrcpy(m_szString, szBuff);
-	_vec2 vFontPos;
-	vFontPos = _vec2(400.f - 100.f, 100.f);
-	Engine::Render_Font(L"Font_Default",
-		m_szString,
-		&vFontPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-
 	/*if (m_bHitByPlayer)
 	{
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->GetWorld());

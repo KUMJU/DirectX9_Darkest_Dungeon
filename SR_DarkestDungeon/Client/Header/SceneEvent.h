@@ -29,6 +29,8 @@ private:
 	_bool m_bSecondEventDone = false;
 	_bool m_bThirdEventDone = false;
 
+	_bool m_bSoundEvenetDone = false;
+
 	shared_ptr<CGameObject> m_pMainObject = nullptr;
 	_vec3 m_vCurrentPos;
 

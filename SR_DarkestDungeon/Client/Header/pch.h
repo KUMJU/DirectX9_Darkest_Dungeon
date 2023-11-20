@@ -53,15 +53,6 @@
 #endif
 #endif
 
-
-//콘솔창
-#ifdef UNICODE
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-#else
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-#endif
-
-
 extern HINSTANCE g_hInst;
 extern HWND g_hWnd;
 

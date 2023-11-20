@@ -94,9 +94,7 @@ void CFireworkParticle::LateUpdateGameObject()
 
 void CFireworkParticle::RenderGameObject()
 {
-	printf("ºÒ²É³îÀÌ Ãâ·Â\n");
-	printf("%f, %f, %f\n", m_pTransformCom->GetPos()->x, m_pTransformCom->GetPos()->x, m_pTransformCom->GetPos()->z);
-	printf("%f, %f, %f\n\n", m_pTransformCom->GetScale()->x, m_pTransformCom->GetScale()->x, m_pTransformCom->GetScale()->z);
+	
 
 	__super::RenderGameObject();
 }
