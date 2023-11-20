@@ -180,6 +180,33 @@ void CHero::IncreaseStress(_int _iValue, _bool _bStressEvent)
 
 	if (m_iStress >= 100 && !m_bVirtue && !m_bAffliction)
 	{
+		tstring strHeroName = L"";
+
+		switch (m_eHeroType)
+		{
+		case EHeroType::VESTAL:
+			strHeroName = L"성녀";
+			break;
+		case EHeroType::HIGHWAYMAN:
+			strHeroName = L"노상강도";
+			break;
+		case EHeroType::SHILEDBREAKER:
+			strHeroName = L"방패파괴자";
+			break;
+		case EHeroType::JESTER:
+			strHeroName = L"광대";
+			break;
+		case EHeroType::ENUM_END:
+			break;
+		default:
+			break;
+		}
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_test.wav", CHANNELID::NPC, 1.f);
+
+		CUIMgr::GetInstance()->TextBoardOn(strHeroName + L"의 의지가 시험받고 있습니다...", {0.f, 200.f, 0.3f}, {500.f, 70.f, 1.f}, 5.f);
+
 		int iNum = 0;
 
 		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer()))
@@ -288,6 +315,9 @@ void CHero::OnAffliction()
 	pEffect->SetAnimEffect(m_strName + L"_Affliction", { 0.f, 0.f, 0.5f }, { 450.f, 420.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true, true);
 	pEffect->SetActive(true);
 
+	CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+	CSoundMgr::GetInstance()->PlaySound(L"dun_affliction.wav", CHANNELID::NPC, 1.f);
+
 	tstring strAffiction;
 
 	switch (m_eAffliction)
@@ -319,6 +349,9 @@ void CHero::OnVirtue()
 
 	pEffect->SetAnimEffect(m_strName + L"_Virtue", { 0.f, 0.f, 0.5f }, { 400.f, 400.f, 1.f }, STRESSEVENTINTERVEL - 1.f, true, true);
 	pEffect->SetActive(true);
+
+	CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+	CSoundMgr::GetInstance()->PlaySound(L"dun_virtue.wav", CHANNELID::NPC, 1.f);
 
 	tstring strVirtue;
 	
