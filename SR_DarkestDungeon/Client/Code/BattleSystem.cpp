@@ -12,6 +12,8 @@
 #include "EffectMgr.h"
 #include "UIMgr.h"
 
+#include "SceneEvent.h"
+
 CBattleSystem::CBattleSystem()
 {
 }
@@ -587,7 +589,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetMoving(true);
 			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetTargetPos(_vec3(300.f, 7.5f, 230.f));
 			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->SetMovingSpeed(
-				dynamic_pointer_cast<CCreature>(m_vMonsters[2])->MovingSpeed(_vec3(300.f, 7.5f, 230.f), 14.f));
+			dynamic_pointer_cast<CCreature>(m_vMonsters[2])->MovingSpeed(_vec3(300.f, 7.5f, 230.f), 14.f));
 		}
 	}
 	// 일반전투에서 종료
@@ -625,6 +627,17 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			m_bBossBattleEndEffectOn = true;
 		}
 		m_fEndTime2 -= fTimeDelta;
+
+		if (!m_bBossEventStart) {
+
+			shared_ptr<CGameObject> pEvent = make_shared<CSceneEvent>(m_pGraphicDev);
+			pEvent->AwakeGameObject();
+			pEvent->ReadyGameObject();
+
+			CSceneMgr::GetInstance()->AddNewObject(L"Layer_4_GameObj", L"Obj_SceneEvent", pEvent);
+
+			m_bBossEventStart = true;
+		}
 
 		// 여기서 뭔가의 연출
 		if (m_fEndTime2 < 11.f)

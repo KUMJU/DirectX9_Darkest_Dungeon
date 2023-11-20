@@ -992,7 +992,7 @@ void CResourceMgr::UITextureLoad()
 	//ScreenEffect
 
 	CreateNewTexture(L"UI_ScreenEffect", TEX_NORMAL,
-		L"../Bin/Resource/Image/UI/ScreenEffect/UI_ScreenEffect_%d.png", 2, bDefault);
+		L"../Bin/Resource/Image/UI/ScreenEffect/UI_ScreenEffect_%d.png", 3, bDefault);
 
 }
 
@@ -1387,6 +1387,10 @@ void CResourceMgr::RuinDungeonTextureLoad()
 
 	CreateNewTexture(L"Ruin_Sconce", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/sconce/idle/armatureName_idle_0.png", 1, bDefault);
+
+	CreateNewTexture(L"Ruin_Sconce_Fire", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/sconce/Fire/armatureName_campfire_loop_0%d.png", 14, bDefault);
+
 
 	CreateNewTexture(L"Ruin_Sconce_Finish", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/Curios/Ruin/sconce/investigate/armatureName_investigate_0.png", 1, bDefault);

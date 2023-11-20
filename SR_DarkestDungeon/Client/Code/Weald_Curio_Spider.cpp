@@ -6,6 +6,8 @@
 #include "Creature.h"
 #include "Hero.h"
 
+#include "UIMgr.h"
+
 CWeald_Curio_Spider::CWeald_Curio_Spider(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
 {
@@ -67,6 +69,8 @@ _int CWeald_Curio_Spider::UpdateGameObject(const _float& fTimeDelta)
 			m_bActive = false;
 			m_ePrevAnimState = m_eCurAnimState;
 			m_eCurAnimState = EState::FINISH;
+
+			CUIMgr::GetInstance()->NarrationOn(L"Narr_Tut_Curio");
 		}
 	}
 

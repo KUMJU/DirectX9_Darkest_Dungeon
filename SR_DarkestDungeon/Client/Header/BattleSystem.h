@@ -63,6 +63,9 @@ public:
 	void SetCenterPos(_vec3 _vPos) { m_vCenterPos = _vPos; }
 	void SetBattleType(_int _iType) { m_iBattleType = _iType; }
 
+	void SetGraphicDev(LPDIRECT3DDEVICE9 _pGraphicDev) {m_pGraphicDev = _pGraphicDev;}
+
+
 protected:
 	// 위치 변경
 	void SwitchPosition(int _iCurrentIndex, int _iMoveCnt, _bool _bHero = true);
@@ -142,6 +145,7 @@ private:
 
 	_bool	m_bEndBattleStart = false;
 	_bool	m_bBattleEndEffectOn = false;
+	_bool	m_bBossEventStart = false;
 	_bool	m_bBossBattleEndEffectOn = false;
 
 
@@ -180,6 +184,7 @@ private:
 private:
 	shared_ptr<CBattleHeroUI> m_pHeroUI = nullptr;
 	
+	LPDIRECT3DDEVICE9 m_pGraphicDev = nullptr;
 
 
 	_int iLiveHeroes = 0;

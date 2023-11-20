@@ -324,6 +324,7 @@ void CPlayer::SetPlayerMode(EPlayerMode _ePlrMode)
 		m_ePlayerMode = EPlayerMode::BOSS_FIELD;
 
 		CUIMgr::GetInstance()->SwitchFPSMode();
+		CUIMgr::GetInstance()->SelectUIVisibleOff(L"UI_DungeonStatus");
 
 		if (m_pPlayerHand) {
 			m_pPlayerHand->SetCurrentItem(m_eCurrentItem);
