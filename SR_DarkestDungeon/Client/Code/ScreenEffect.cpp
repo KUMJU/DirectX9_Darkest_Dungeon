@@ -43,8 +43,37 @@ _int CScreenEffect::UpdateGameObject(const _float& fTimeDelta)
     if (EScreenEffect::ENUM_END != m_eCurrentEffect) {
 
 
-        m_fActTime += fTimeDelta;
-        --m_iAlpha;
+        if (EScreenEffect::FADEIN_WHITE == m_eCurrentEffect) {
+            m_fActTime += fTimeDelta;
+
+            if (m_fActTime < 2.f) {
+                m_iAlpha += 3;
+
+                if (m_iAlpha > 255) {
+                    m_iAlpha = 255;
+                }
+            }
+            else if (m_fActTime >= 2.f && m_fActTime < 5.f) {
+                m_iAlpha = 255;
+
+            }
+            else {
+                m_iAlpha -= 3;
+
+                if (m_iAlpha < 0) {
+                    m_iAlpha = 0;
+                }
+            }
+
+
+
+        }
+        else {
+
+            m_fActTime += fTimeDelta;
+            --m_iAlpha;
+
+        }
 
         if (m_fActTime >= m_fEffectTime) {
 
@@ -134,7 +163,7 @@ void CScreenEffect::SetScreenEffect(EScreenEffect _eEffect)
     }
     else if (EScreenEffect::FADEIN_WHITE == _eEffect) {
 
-        m_fEffectTime = 4.f;
+        m_fEffectTime = 7.f;
         m_iAlpha = 0;
     }
 

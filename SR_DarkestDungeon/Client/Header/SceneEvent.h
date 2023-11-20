@@ -14,6 +14,12 @@ public:
 	virtual void			LateUpdateGameObject();
 	virtual void			RenderGameObject();
 
+
+public:
+
+	void MoveObject(_float _fTime);
+	void MoveObjectFront(_float _fTime);
+
 private:
 
 	_float m_fEventTime = 0.f;
@@ -21,6 +27,10 @@ private:
 
 	_bool m_bFirstEventDone = false;
 	_bool m_bSecondEventDone = false;
+	_bool m_bThirdEventDone = false;
+
+	shared_ptr<CGameObject> m_pMainObject = nullptr;
+	_vec3 m_vCurrentPos;
 
 
 };

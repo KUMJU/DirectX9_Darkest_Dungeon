@@ -648,6 +648,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	pRoom2_Battle->PushMonstersVector(Room2_v3);
 	m_pRoom2->SetBattleSystem(pRoom2_Battle);
 	m_pRoom2->SetBattleCameraPos(_vec3(300.f, 3.f, m_fBattlePositionZ));
+	pRoom2_Battle->SetGraphicDev(m_pGraphicDev);
 
 	//BattleUI Test
 	shared_ptr<CBattleHeroUI> m_pHeroUI = make_shared<CBattleHeroUI>(m_pGraphicDev);
