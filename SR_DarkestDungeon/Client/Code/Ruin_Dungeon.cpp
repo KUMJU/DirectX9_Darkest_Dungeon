@@ -30,6 +30,8 @@
 #include "Ruin_Curio_Sconce.h"
 #include "Ruin_Curio_Statue.h"
 
+#include "Ruin_SecretDoor.h"
+
 #include "BrigandCutthroat.h"
 #include "BrigandFusilier.h"
 #include "BrigandBloodletter.h"
@@ -213,7 +215,28 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 	}
 	
 	// 전리품 드롭
-	// 4번방
+	// 4번방(횃불 방)
+	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 4)
+	{
+		// 횃불 다 켰을때
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEventTrigger() &&
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEvent2Trigger()&&
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEvent3Trigger())
+		{
+			// 문 열기
+			for (int i = 0; i < size(m_pRoom4->GetGameObjectVector()); i++)
+			{
+				if (dynamic_pointer_cast<CRuinSecretDoor>(m_pRoom4->GetGameObjectVector()[i]))
+				{
+					dynamic_pointer_cast<CRuinSecretDoor>(m_pRoom4->GetGameObjectVector()[i])->SetOpenStart(true);
+				}
+			}
+
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent2Trigger(false);
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent3Trigger(false);
+		}
+	}
 
 	// 5번방
 	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 5)
@@ -852,6 +875,12 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	}
 
 	//// GameObjects
+	// 비밀문
+	shared_ptr<CGameObject> m_pSecretDoor = make_shared<CRuinSecretDoor>(m_pGraphicDev);
+	m_pSecretDoor->SetPos(_vec3(RUIN_WALLSIZEX * 13.f + RUIN_WALLSIZEX / 2.f + RUIN_WALLSIZEX * 1.f, RUIN_WALLSIZEUPY + 1.f, RUIN_WALLSIZEX * 13.5f));
+	m_pSecretDoor->SetAngle(_vec3(0.f, PI / 2.f, 0.f));
+	m_pSecretDoor->SetScale(_vec3(RUIN_PATHSIZEX / 2.f, RUIN_PATHSIZEX / 2.f, 1.f));
+	
 	// 함정
 	shared_ptr<CGameObject>m_pTrap1 = make_shared<CRuin_Trap>(m_pGraphicDev);
 	m_pTrap1->SetPos(_vec3(RUIN_WALLSIZEX * 4.5f, RUIN_WALLSIZEUPY + 1.f - 2.5f, RUIN_WALLSIZEX * 7.f));
@@ -1096,6 +1125,7 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room4_v1.push_back(m_pItem1_4);
 	Room4_v1.push_back(m_pItem2_4);
 	Room4_v1.push_back(m_pItem3_4);
+	Room4_v1.push_back(m_pSecretDoor);
 	m_pRoom4->PushGameObjectVector(Room4_v1);
 
 	// Room5
@@ -1148,6 +1178,8 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"OBJ_CurioSconce", m_pCurioS2);
 	m_pLayer->CreateGameObject(L"OBJ_CurioSconce", m_pCurioS3);
 	m_pLayer->CreateGameObject(L"OBJ_CurioSarcophagus", m_pCurioT1);
+
+	m_pLayer->CreateGameObject(L"OBJ_SecretDoor", m_pSecretDoor);
 
 	m_pLayer->CreateGameObject(L"OBJ_CurioStatue1", m_pCurioSt1);
 	m_pLayer->CreateGameObject(L"OBJ_CurioStatue2", m_pCurioSt2);

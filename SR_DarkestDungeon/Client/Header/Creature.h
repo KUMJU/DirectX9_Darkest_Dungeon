@@ -183,6 +183,9 @@ public:
 	void	SetDone(_bool _bDone) { m_bDone = _bDone; }
 	void	SetAbleAct(_bool _bAbleAct) { m_bAbleAct = _bAbleAct; }
 
+	_bool	GetPrevStun() { return m_bPrevStun; }
+	void	SetPrevStun(_bool _bPrevStun) { m_bPrevStun = _bPrevStun; }
+
 	// 공격당하는애, 공격하는애, 스킬
 	virtual void	AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCreature> _pCreature2, shared_ptr<CSkill> _pSkill);
 	void	MovePos(_vec3 _vPos, const _float& fTimeDelta, _float _fSpeed);
@@ -277,6 +280,8 @@ protected:
 	_bool		m_bBeforeDeath = false;		// 영웅의 죽음의 일격 여부
 	_bool		m_bState[4] = { 0 };	// 순서대로 중독, 출혈, 기절, 시체 여부
 	_bool		m_bState3[2] = {0};		// 순서대로 버프, 디버프
+
+	_bool		m_bPrevStun = false;
 
 	_int		m_iBlightDot[4] = { 0 };	// 턴마다 중독 도트뎀
 	_int		m_iBleedDot[4] = { 0 };		// 턴마다 출혈 도트뎀

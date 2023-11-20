@@ -122,6 +122,9 @@ public:
 
 	void	SetSpeed(_float _fSpeed) { m_fSpeed = _fSpeed; }
 
+	_bool	GetPrevVirtue() { return m_bPrevVirtue; }
+	void	SetPrevVirtue(_bool m_bVirtue) { m_bPrevVirtue = m_bVirtue; }
+
 public:
 //Light 관련 기능 함수
 
@@ -234,6 +237,9 @@ private:
 	_int m_iMaxHP = 100;
 
 	shared_ptr<CPlayerFPSUI> m_pPlrFPSUI = nullptr;
+
+	// 임시 때우기(기상이나 붕괴 캐릭터가 전에 나왔나 안나왔나)
+	_bool	m_bPrevVirtue = true;
 
 
 private:

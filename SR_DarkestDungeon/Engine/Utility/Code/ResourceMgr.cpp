@@ -1351,6 +1351,8 @@ void CResourceMgr::RuinDungeonTextureLoad()
 	CreateNewTexture(L"Com_Ruin_BackWallTexture", TEX_NORMAL,
 		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.corridor_mid.png", 1, bDefault);
 
+	CreateNewTexture(L"Com_SecretWallTexture", TEX_NORMAL,
+		L"../Bin/Resource/Image/Dungeons/BackGround/Ruin/crypts.endhall.01.png", 1, bDefault);
 
 	// ¹®
 	CreateNewTexture(L"Ruin_Door_Closed", TEX_NORMAL,

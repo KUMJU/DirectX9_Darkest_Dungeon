@@ -369,6 +369,12 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	if (!m_bNext && m_bCounting && !m_bWhileStressEvent && !m_bWhileStressOutput)
 	{
 		m_fBattleTime -= fTimeDelta;
+		if(dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetPrevStun())
+		{
+			m_fBattleTime = 1.f;
+			dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetPrevStun(false);
+		}
+
 		if (m_fBattleTime < 0.f)
 		{
 			// 배틀 ui 끄기, 턴 ui 끄기
@@ -1627,6 +1633,9 @@ void CBattleSystem::Battle(int _iNum)
 				if (!dynamic_pointer_cast<CCreature>(m_vHeroes[iTarget])->GetIsDeath() &&
 					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetTargetPos()[iTarget])
 				{
+					// 기절 공격이고 그 대상이 방파자일때 다른 대상을 고르도록
+					if(!(dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetSkill(iNum)->GetArrAttack()[3] &&
+						dynamic_pointer_cast<CHero>(m_vHeroes[iTarget])->GetHeroType() == EHeroType::SHILEDBREAKER))
 					break;
 				}
 			}

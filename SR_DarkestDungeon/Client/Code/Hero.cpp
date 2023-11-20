@@ -180,7 +180,23 @@ void CHero::IncreaseStress(_int _iValue, _bool _bStressEvent)
 
 	if (m_iStress >= 100 && !m_bVirtue && !m_bAffliction)
 	{
-		switch (rand() % 2)
+		int iNum = 0;
+
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer()))
+		{
+			if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetPrevVirtue())
+			{
+				iNum = 1;
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetPrevVirtue(false);
+			}
+			else
+			{
+				iNum = 0;
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetPrevVirtue(true);
+			}
+		}
+
+		switch (iNum)
 		{
 		case 0:
 			m_bVirtue = true;

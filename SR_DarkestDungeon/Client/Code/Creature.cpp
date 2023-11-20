@@ -145,6 +145,7 @@ void CCreature::SetStun(_bool _bStun)
 		return;
 	}
 
+	m_bPrevStun = true;
 	m_bState[2] = true;
 
 	shared_ptr<CEffect> pEffect;
@@ -457,6 +458,13 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 		{
 			iDodgeNum = rand() % 100;
 		}
+
+		// 자리 이동시키는 공격이였을 경우
+		if (_pSkill->GetMoveCnt() != 0)
+		{
+			iDodgeNum = 100;
+		}
+
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)
