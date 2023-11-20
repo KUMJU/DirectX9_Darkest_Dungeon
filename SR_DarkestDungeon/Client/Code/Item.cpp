@@ -132,8 +132,8 @@ void CItem::OnCollide(shared_ptr<CGameObject> _pObj)
 		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_jewerly.wav", CHANNELID::ITEM3, 1.f);
 		break;
 	case EHandItem::RING:
-		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);
-		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_ring.wav", CHANNELID::ITEM, 1.f);
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM3);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_loot_ring.wav", CHANNELID::ITEM3, 1.f);
 		break;
 	case EHandItem::ENUM_END:
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::ITEM);

@@ -44,10 +44,7 @@ HRESULT CVideo::Ready_Video(VIDEOID eVideo)
 
 void CVideo::PlayVideo(const wchar_t* videoFilename, HWND hwnd, _bool _bChange) {
 
-	if (!_bChange)
-	{
-		CoInitialize(NULL);
-	}
+	CoInitialize(NULL);
 
 	CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**)&m_pGraph);
 	m_pGraph->QueryInterface(IID_IMediaControl, (void**)&m_pControl);

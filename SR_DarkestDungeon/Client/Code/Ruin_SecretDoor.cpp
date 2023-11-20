@@ -35,6 +35,9 @@ _int CRuinSecretDoor::UpdateGameObject(const _float& fTimeDelta)
 	{
 		m_fOpenTime -= fTimeDelta;
 
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_secret_door.wav", CHANNELID::NPC, 1.f);
+
 		_vec3 DirR = _vec3(1.f, 0.f, 0.f);
 		_vec3 DirL = _vec3(-1.f, 0.f, 0.f);
 
