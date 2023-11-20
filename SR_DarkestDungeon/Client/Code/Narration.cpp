@@ -143,5 +143,7 @@ void CNarration::SetNarrationMap()
 	m_NarrationMap.insert({L"Narr_Battle_Critical1", L"대단하구나!"});
 	m_NarrationMap.insert({L"Narr_Battle_Critical2", L"결정타로구나!"});
 	m_NarrationMap.insert({L"Narr_Battle_Critical3", L"강력하구나!"});
+	m_NarrationMap.insert({L"Narr_Tut_Curio", L"꼼꼼히 살펴보고 지나가거라.\n이 버려진 길에는 찾을만한 물건이 아주 많다."});
+	m_NarrationMap.insert({L"Narr_EnterVillage", L"집에 돌아온 걸 환영한다. 이 황폐한 마을, 타락한 영지가 모두 네 것이다.\n 너도 이곳에 묶여버린 셈이지."});
 
 }

@@ -30,17 +30,17 @@ HRESULT CRuin_Curio_Sconce::ReadyGameObject()
 	D3DLIGHT9 _pLightInfo1;
 
 	_pLightInfo1.Diffuse = { 1.f , 0.2f , 0.2f , 1.f };
-	_pLightInfo1.Specular = { 1.f , 1.f, 1.f , 1.f };
-	_pLightInfo1.Ambient = { 1.f ,1.f , 1.f , 1.f };
+	_pLightInfo1.Specular = { 1.f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Ambient = { 1.f , 0.2f , 0.2f , 1.f };
 	_pLightInfo1.Position = { m_vPos.x, m_vPos.y + 1.5f  , m_vPos.z };
 	_pLightInfo1.Range = 30.f;
 
 
 	_pLightInfo1.Attenuation0 = 0.f;
-	_pLightInfo1.Attenuation1 = 0.5f;
+	_pLightInfo1.Attenuation1 = 0.2f;
 	_pLightInfo1.Attenuation2 = 0.f;
 
-	shared_ptr<CLight> m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1, 4);
+	m_pLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo1, 95);
 
 	return S_OK;
 }
@@ -61,6 +61,7 @@ _int CRuin_Curio_Sconce::UpdateGameObject(const _float& fTimeDelta)
 			m_bActive = false;
 			m_ePrevAnimState = m_eCurAnimState;
 			m_eCurAnimState = EState::FINISH;
+			m_pLight->LightOn();
 		}
 	}
 
@@ -85,11 +86,15 @@ _int CRuin_Curio_Sconce::UpdateGameObject(const _float& fTimeDelta)
 	}
 
 	//ºôº¸µå ½ÃÀÛ
-	_matrix matWorld;
+	_matrix matWorld, matWorld2;
 
 	matWorld = *m_pTransformCom->GetWorld();
 	SetBillBoard(matWorld);
 	m_pTransformCom->SetWorld(&matWorld);
+
+	matWorld2 = *m_pFireTransformCom->GetWorld();
+	SetBillBoard(matWorld2);
+	m_pFireTransformCom->SetWorld(&matWorld2);
 
 	return iExit;
 }
@@ -111,6 +116,26 @@ void CRuin_Curio_Sconce::RenderGameObject()
 	m_pAnimatorCom->SetAnimTexture();
 
 	m_pBufferCom->RenderBuffer();
+
+
+	if (EState::FINISH == m_eCurAnimState) {
+
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pFireTransformCom->GetWorld());
+		m_pFireAnimatorCom->SetAnimTexture();
+		m_pFireBufferCom->RenderBuffer();
+
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+
+
+
+	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
@@ -142,6 +167,21 @@ void CRuin_Curio_Sconce::AddComponent()
 	pComponent = m_pAnimatorCom = make_shared<CAnimator>(m_pGraphicDev);
 	m_pAnimatorCom->SetAnimKey(L"Ruin_Sconce", 0.05f);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Animator",pComponent });
+
+
+	pComponent = m_pFireBufferCom = make_shared<CRcTex>(m_pGraphicDev);
+	dynamic_pointer_cast<CRcTex>(m_pFireBufferCom)->ReadyBuffer();
+	m_mapComponent[ID_STATIC].insert({ L"Com_FireRcTex", pComponent });
+
+	pComponent = m_pFireTransformCom = make_shared<CTransform>(_vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f), _vec3(0.f, 0.f, 0.f));
+	m_pFireTransformCom->ReadyTransform();
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_FireTransform", pComponent });
+	m_pFireTransformCom->SetPosition(m_vPos.x, m_vPos.y+ 2.5f, m_vPos.z);
+	m_pFireTransformCom->SetScale(1.5f, 2.5f, 1.5f);
+
+	pComponent = m_pFireAnimatorCom = make_shared<CAnimator>(m_pGraphicDev);
+	m_pFireAnimatorCom->SetAnimKey(L"Ruin_Sconce_Fire", 0.1f);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_FireAnimator", pComponent });
 }
 
 void CRuin_Curio_Sconce::GetInteractionKey(const _float& fTimeDelta)

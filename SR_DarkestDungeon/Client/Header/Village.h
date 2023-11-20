@@ -29,5 +29,7 @@ private:
 	HRESULT				Ready_Layer_UI(tstring pLayerTag);
 	HRESULT				Ready_Layer_Camera(tstring pLayerTag);
 
+	_bool				m_bInitNarr = false;
+
 };
 

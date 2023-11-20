@@ -74,7 +74,7 @@ private:
 	_bool m_bReady = false;
 
 	_bool m_bShoot = false;
-	_bool m_fEffectTime = 0.f;
+	_float m_fEffectTime = 0.f;
 
 };
 

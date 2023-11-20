@@ -74,6 +74,12 @@ HRESULT CVillage::ReadyScene()
 
 _int CVillage::UpdateScene(const _float& fTimeDelta)
 {
+	if (!m_bInitNarr) {
+
+		CUIMgr::GetInstance()->NarrationOn(L"Narr_EnterVillage");
+		m_bInitNarr = true;
+	}
+
 	int iExit;
 	iExit = __super::UpdateScene(fTimeDelta);
 

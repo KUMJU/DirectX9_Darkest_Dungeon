@@ -1,5 +1,6 @@
 #pragma once
 #include "InteractionObj.h"
+#include "Light.h"
 
 class CRuin_Curio_Sconce : public CInteractionObj
 {
@@ -42,6 +43,11 @@ private:
 	tstring		m_strAnimKey = L"";				// 애니메이션 키
 	tstring		m_strEffectKey = L"";				// 이펙트 키
 
+	shared_ptr<CRcTex> m_pFireBufferCom = nullptr;
+	shared_ptr <CTransform> m_pFireTransformCom = nullptr;
+	shared_ptr<CAnimator> m_pFireAnimatorCom = nullptr;
+
+	shared_ptr<CLight> m_pLight = nullptr;
 
 };
 

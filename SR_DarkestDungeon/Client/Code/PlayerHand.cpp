@@ -46,7 +46,7 @@ _int CPlayerHand::UpdateGameObject(const _float& fTimeDelta)
 
 		m_fEffectTime += fTimeDelta;
 
-		if (m_fEffectTime > 0.9f) {
+		if (m_fEffectTime > 1.2f) {
 			m_bShoot = false;
 			m_fEffectTime = 0.f;
 		}
@@ -315,7 +315,8 @@ void CPlayerHand::CreateProjection()
 	pProj->AwakeGameObject();
 	pProj->ReadyGameObject();
 
-	m_bShoot = true;
+	if(!m_bShoot)
+		m_bShoot = true;
 
 	CSceneMgr::GetInstance()->AddNewObject(L"Layer_4_GameObj", L"Player_Proj", pProj);
 }
