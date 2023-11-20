@@ -68,8 +68,6 @@ CBossMap::~CBossMap()
 
 HRESULT CBossMap::ReadyScene()
 {
-	CResourceMgr::GetInstance()->BossMapTextureLoad();
-
 	CSoundMgr::GetInstance()->PlayBGM(L"Boss_BGM0.wav", 1.2f);
 
 	// text
@@ -138,6 +136,8 @@ _int CBossMap::UpdateScene(const _float& fTimeDelta)
 	{
 		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetBattleTrigger())
 		{
+			ChangeLightInfo();
+
 			m_pRoom2->SetBattleTrigger(true);
 			// 전투준비
 			m_pRoom2->BattleReady();
@@ -156,10 +156,6 @@ _int CBossMap::UpdateScene(const _float& fTimeDelta)
 			if (m_pRoom2->BattleUpdate(fTimeDelta))
 			{
 				CCameraMgr::GetInstance()->SetFPSMode();
-				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_Inventory");
-				CUIMgr::GetInstance()->SelectUIVisibleOn(L"UI_DungeonStatus");
-				dynamic_pointer_cast<CInteractionInfo>(CUIMgr::GetInstance()->FindUI(L"UI_InteractionInfo"))->SetIsBattle(false);
-
 				m_pRoom2->SetBattleTrigger(false);
 				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetInBattle(false);
 
@@ -171,6 +167,7 @@ _int CBossMap::UpdateScene(const _float& fTimeDelta)
 	// 3D전투 시작될때
 	if (m_b3DBattleStart && !m_bBattleReady)
 	{
+
 		CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
 		CSoundMgr::GetInstance()->PlayBGM(L"Boss_BGM1.wav", 0.6f);
 		m_pBossMap->DisableAllRoom();
@@ -201,6 +198,46 @@ void CBossMap::RenderScene()
 
 void CBossMap::SetLight()
 {
+	CLightMgr::GetInstance()->DungeonLightAllOff();
+
+	D3DLIGHT9 _pLightInfo1;
+
+	_pLightInfo1.Diffuse = { 0.2f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Specular = { 0.2f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Ambient = { 0.2f , 0.2f , 0.2f , 1.f };
+	_pLightInfo1.Direction = { 1.f, -1.f, 1.f };
+
+	m_pDirLight = CLightMgr::GetInstance()->InitDirectionLight(m_pGraphicDev, _pLightInfo1);
+
+
+	D3DLIGHT9 _pLightInfo2;
+
+	_pLightInfo2.Diffuse = { 0.5f , 0.5f , 0.5f , 1.f };
+	_pLightInfo2.Specular = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo2.Ambient = { 1.f , 1.f , 1.f , 1.f };
+	_pLightInfo2.Position = { 300.f, 0.f, m_fBattlePositionZ };
+	_pLightInfo2.Range = 20.f;
+
+	_pLightInfo2.Attenuation0 = 0.f;
+	_pLightInfo2.Attenuation1 = 0.f;
+	_pLightInfo2.Attenuation2 = 0.f;
+
+	m_pPointLight = CLightMgr::GetInstance()->InitPointLight(m_pGraphicDev, _pLightInfo2);
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->PlayerLightOff();
+
+
+
+}
+
+void CBossMap::ChangeLightInfo()
+{
+
+	m_pPointLight->LightOff();
+	m_pDirLight->LightOff();
+
+
 	D3DLIGHT9 _pLightInfo1;
 
 	_pLightInfo1.Diffuse = { 0.8f , 0.8f , 0.8f , 1.f };
@@ -210,7 +247,6 @@ void CBossMap::SetLight()
 
 	CLightMgr::GetInstance()->InitDirectionLight(m_pGraphicDev, _pLightInfo1);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 void CBossMap::SetWall(shared_ptr<CWall> _pWall, shared_ptr<CLayer> _pLayer,
@@ -404,6 +440,7 @@ HRESULT CBossMap::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pLayer->CreateGameObject(L"Obj_Player", m_pPlayer);
 
 	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInDungeon(true);
+	dynamic_pointer_cast<CPlayer>(m_pPlayer)->SetInBossRoom(true);
 	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(300.f, 0.f, 150.f);
 	dynamic_pointer_cast<CTransform>(m_pPlayer->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetAngle({ 0.f, 0.f, 0.f });
 

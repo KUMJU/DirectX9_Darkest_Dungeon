@@ -32,6 +32,9 @@ HRESULT CLoadingScreen::ReadyScene()
     else if (ELoadingSceneType::RUIN == m_eLoadingType) {
         m_pLoading->Ready_Loading(CLoading::LOADING_RUIN);
     }
+    else if (ELoadingSceneType::BOSS == m_eLoadingType) {
+        m_pLoading->Ready_Loading(CLoading::LOADING_BOSSMAP);
+    }
 
     if (!m_pLoading)
         return E_FAIL;

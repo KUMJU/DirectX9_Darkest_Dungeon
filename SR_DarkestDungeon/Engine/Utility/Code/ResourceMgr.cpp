@@ -569,7 +569,7 @@ void CResourceMgr::BaseTextureLoad()
 
 
 	// ºØ±«, ±â»ó (ÁøÂ¥)
-	/*{
+	{
 		CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
 			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 76, bDefault);
 		CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
@@ -590,31 +590,31 @@ void CResourceMgr::BaseTextureLoad()
 			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 76, bDefault);
 
 
-	}*/
+	}
 
 	// ºØ±«, ±â»ó(·Îµù ÁÙÀÌ±â ¿ë)
-	{
-		CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
-		CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
-		CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
-		CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
-		
-		
-		CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
-				L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
-		CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
-		CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
-		CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
-			L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
+	//{
+	//	CreateNewTexture(L"Highwayman_Affliction", TEX_NORMAL,
+	//		L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
+	//	CreateNewTexture(L"Jester_Affliction", TEX_NORMAL,
+	//		L"../Bin/Resource/Image/Creatures/Heroes/Jester/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
+	//	CreateNewTexture(L"Vestal_Affliction", TEX_NORMAL,
+	//		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
+	//	CreateNewTexture(L"ShieldBreaker_Affliction", TEX_NORMAL,
+	//		L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Affliction/armatureName_afflicted_%d.png", 2, bDefault);
+	//	
+	//	
+	//	CreateNewTexture(L"Highwayman_Virtue", TEX_NORMAL,
+	//			L"../Bin/Resource/Image/Creatures/Heroes/Highwayman/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
+	//	CreateNewTexture(L"Jester_Virtue", TEX_NORMAL,
+	//		L"../Bin/Resource/Image/Creatures/Heroes/Jester/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
+	//	CreateNewTexture(L"Vestal_Virtue", TEX_NORMAL,
+	//		L"../Bin/Resource/Image/Creatures/Heroes/Vestal/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
+	//	CreateNewTexture(L"ShieldBreaker_Virtue", TEX_NORMAL,
+	//		L"../Bin/Resource/Image/Creatures/Heroes/ShieldBreaker/Virtue/armatureName_heroic_human_%d.png", 2, bDefault);
 
 
-	}
+	//}
 
 	// ¿µ¿õ ½ºÅÈ UI
 	{
@@ -971,6 +971,10 @@ void CResourceMgr::UITextureLoad()
 
 	CreateNewTexture(L"UI_Loading_Ruin", TEX_NORMAL,
 		L"../Bin/Resource/Image/Loading_Screen/loading_screen_tutorial_crypts.png", 1, bDefault);
+
+	CreateNewTexture(L"UI_Loading_Boss", TEX_NORMAL,
+		L"../Bin/Resource/Image/Loading_Screen/loading_screen_Boss.png", 1, bDefault);
+
 
 	CreateNewTexture(L"UI_Loading_TipOverlay", TEX_NORMAL,
 		L"../Bin/Resource/Image/Loading_Screen/loading_screen_tipoverlay.png", 1, bDefault);

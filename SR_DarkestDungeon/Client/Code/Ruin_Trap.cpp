@@ -55,6 +55,8 @@ _int CRuin_Trap::UpdateGameObject(const _float& fTimeDelta)
 			// 해제 실패
 			else
 			{
+				CUIMgr::GetInstance()->NarrationOn(L"Narr_Trap_Fail");
+				
 				//Blood Screen Effect
 				shared_ptr<CUIObj> pScreenEffect = CUIMgr::GetInstance()->FindUI(L"UI_ScreenEffect");
 

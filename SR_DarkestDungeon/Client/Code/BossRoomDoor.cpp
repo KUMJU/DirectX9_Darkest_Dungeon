@@ -8,6 +8,8 @@
 #include"BossMap.h"
 #include"SoundMgr.h"
 
+#include "LoadingScreen.h"
+
 CBossRoomDoor::CBossRoomDoor(LPDIRECT3DDEVICE9 _pGraphicDev)
 	:CInteractionObj(_pGraphicDev)
 {
@@ -102,13 +104,7 @@ void CBossRoomDoor::GetInteractionKey(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('C') & 0x8000) {
 
-
-		CSoundMgr::GetInstance()->StopAll();
-		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
-		shared_ptr<CBossMap> pScene = make_shared<CBossMap>(m_pGraphicDev);
-		CSceneMgr::GetInstance()->ChangeScene(pScene);
-		pScene->ReadyScene();
-
+		CSceneMgr::GetInstance()->SetSceneChange();
 		m_bDebounce = true;
 
 	}

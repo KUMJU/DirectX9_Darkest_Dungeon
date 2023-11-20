@@ -68,6 +68,8 @@
 #include "DungeonStatus.h"
 #include"InteractionInfo.h"
 
+#include "LoadingScreen.h"
+
 
 CRuin_Dungeon::CRuin_Dungeon(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -130,6 +132,12 @@ HRESULT CRuin_Dungeon::ReadyScene()
 
 _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 {
+	if (!m_bInitNarr) {
+		CUIMgr::GetInstance()->NarrationOn(L"Narr_SecondDungeon");
+		m_bInitNarr = true;
+	}
+
+
 	// 방 이동했는지 체크
 	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetRoomChange())
 	{
@@ -296,6 +304,20 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 		shared_ptr<CBossMap> pScene = make_shared<CBossMap>(m_pGraphicDev);
 		CSceneMgr::GetInstance()->ChangeScene(pScene);
 		pScene->ReadyScene();
+	}
+
+	//보스 씬 이동
+	if (m_bSceneChange) {
+		
+		CSoundMgr::GetInstance()->StopAll();
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
+		
+		shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::BOSS);
+		CSceneMgr::GetInstance()->SetLoadingState(false);
+		CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
+		pLoadingScreen->ReadyScene();
+
+
 	}
 
 	return iExit;

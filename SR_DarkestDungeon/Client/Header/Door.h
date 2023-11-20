@@ -33,5 +33,6 @@ protected:
 
 protected:
 	EFacilityType m_eDoorType;
+	_bool m_bIsFirstEnter = false;
 };
 

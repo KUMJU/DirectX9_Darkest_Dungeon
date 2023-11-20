@@ -15,6 +15,8 @@
 
 #include"SoundMgr.h"
 
+#include "LoadingScreen.h"
+
 CRuin_Curio_Sarcophagus::CRuin_Curio_Sarcophagus(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
 {

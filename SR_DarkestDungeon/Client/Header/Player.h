@@ -64,6 +64,7 @@ public:
 	void			SetTavernUI(shared_ptr<CTavernUI> _pTavernUI);
 	void			ShowTavernUI(shared_ptr<CHero> _pHero);
 
+	void			SetInBossRoom(_bool _bInBossRoom) { m_bInBossRoom = _bInBossRoom; }
 	void			SetInBattle(_bool _bInBattle) { 
 		m_bInBattle = _bInBattle;
 		
@@ -203,6 +204,7 @@ private:
 
 	// 마을 or 던전
 	_bool		m_bInDungeon = true;
+	_bool		m_bInBossRoom = false;
 
 	// 트리거
 	_bool		m_bBattleTrigger = false;
@@ -221,6 +223,10 @@ private:
 	// TavernUI ON/Off
 	shared_ptr<CTavernUI> m_pTavernUI = nullptr;
 	_bool		m_bShowTavernUI = false;
+	_bool		m_bFirstLighUp = false;
+
+	_bool		m_bPlrWalkingDeb = false;
+	_float		m_fWalkDebTime = 0.f;
 
 	shared_ptr<CLight> m_pLight = nullptr;
 

@@ -66,6 +66,9 @@ _int CLayer::UpdateLayer(const _float& fTimeDelta)
 		}
 	}
 
+
+
+
 	return iResult;
 }
 

@@ -111,6 +111,12 @@ void CGuildNPC::GetInteractionKey(const _float& fTimeDelta)
 	// 키 입력받기
 	if (GetAsyncKeyState('C') & 0x8000)
 	{
+
+		if (!m_bInteractionFirst) {
+			CUIMgr::GetInstance()->NarrationOn(L"Narr_Visit_Guild");
+			m_bInteractionFirst = true;
+		}
+
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);
 		CSoundMgr::GetInstance()->PlaySound(L"town_guild_npc.wav", CHANNELID::EFFECT, 1.f);
 
