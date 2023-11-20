@@ -513,7 +513,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 스트레스 이벤트 발생중인 시간
 	if (m_bWhileStressEvent)
 	{
-		//printf("스트레스 이벤트 발생 시간\m_fStressEventTime : %f\n", m_fStressEventTime);
+		printf("스트레스 이벤트 발생 시간\m_fStressEventTime : %f\n", m_fStressEventTime);
 
 		m_fStressEventTime -= fTimeDelta;
 
@@ -534,11 +534,12 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 스트레스 영웅 행동 발생 시간
 	if (m_bWhileStressOutput)
 	{
+		printf("스트레스 영웅 행동 발생 시간\m_fStressOutputTime : %f\n", m_fStressOutputTime);
 
-		m_fStressOutputTime -= fTimeDelta;
-
-		if (m_fStressOutputTime < 0.f)
+		if (!m_bStressOutputEffectRender)
 		{
+			m_bStressOutputEffectRender = true;
+
 			if (iStressOutputType[0])
 			{
 				dynamic_pointer_cast<CHero>(m_pCurrentCreature)->IncreaseStress(10, true);
@@ -563,9 +564,16 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			{
 				iStressOutputType[i] = 0;
 			}
+		}
 
+		m_fStressOutputTime -= fTimeDelta;
+
+
+		if (m_fStressOutputTime < 0.f)
+		{
 			m_fStressOutputTime = STRESSOUTPUTINTERVEL;
 			m_bWhileStressOutput = false;
+			m_bStressOutputEffectRender = false;
 			m_bNext = true;
 		}
 	}
@@ -593,7 +601,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"Combat_Victory.wav", CHANNELID::MONSTER, 1.f);
 
-			CUIMgr::GetInstance()->TextBoardOn(L"승리!", {0.f, 150.f, 0.3f}, {150.f, 70.f, 1.f}, STRESSEVENTINTERVEL - 1.f);
+			CUIMgr::GetInstance()->TextBoardOn(L"승리!", { 0.f, 150.f, 0.3f }, { 150.f, 70.f, 1.f }, STRESSEVENTINTERVEL - 1.f);
 			m_bBattleEndEffectOn = true;
 		}
 
@@ -612,7 +620,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	if (m_bEndBattleStart && !m_bNext && (m_iBattleType == 1))
 	{
 		//1회만 실행될 수 있도록 bool State로 관리
-		if (!m_bBossBattleEndEffectOn && m_fEndTime2 < 9.f ) {
+		if (!m_bBossBattleEndEffectOn && m_fEndTime2 < 9.f) {
 			//승리BGM 재생
 			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
 			CSoundMgr::GetInstance()->PlayBGM(L"Boss_Intro2.wav", 1.5f);
@@ -641,7 +649,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 	// 크리처의 턴일때
 	if (m_bNext && dynamic_pointer_cast<CCreature>(m_pCurrentCreature) &&
 		dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn()
-		&& !m_bDeathMoving && !m_bAttackSkillMoving && !m_bWhileAttack)
+		&& !m_bDeathMoving && !m_bAttackSkillMoving && !m_bWhileAttack && !m_bWhileStressOutput)
 	{
 
 		// 턴 커서 키기
@@ -686,32 +694,174 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		// 영웅 차례이면서 자동전투가 아니면
 		if (m_bHero && !m_bAutoBattle)
 		{
-			// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽음상태로
-			if (!m_bCalculate)
+			while (m_bNext && !m_bCalculate && !m_bWhileDotDamEffectRender && !m_bWhileStressEffectRender && !m_bWhileStunEffectRender)
 			{
-				int iDamage;
-
-				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate(true, iDamage);
-				m_bCalculate = true;
-			}
-
-			// 종료 조건
-			if (HeroesAllDead() || MonstersAllDead())
-			{
-				if (EndBattle())
+				// 출혈, 독뎀 반영, 기절이면 기절 줄어들기, 죽으면 죽음상태로
+				if (!m_bCalculate)
 				{
-					m_bEndBattleStart = true;
+					int iDamage;
+
+					// 출혈, 중독, 기절 상태인 경우 딜레이 주기
+					if (!m_bCalcBlight && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsBlight())
+					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalcBlight(iDamage);
+
+						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetFontEffect(L"UI_Blight", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetDamageEffect(0, iDamage, dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						m_bWhileDotDamEffectRender = true;
+						m_bCalcBlight = true;
+						break;
+					}
+
+					if (!m_bCalcBleed && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsBleed())
+					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalcBleed(iDamage);
+
+						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetFontEffect(L"UI_Blood", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetDamageEffect(0, iDamage, dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						m_bWhileDotDamEffectRender = true;
+						m_bCalcBleed = true;
+						break;
+					}
+
+					if (!m_bCalcStun && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsStun())
+					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalcStun(iDamage);
+
+						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
+
+						pEffect->SetFontEffect(L"UI_Stun", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
+						pEffect->SetActive(true);
+
+						m_bWhileStunEffectRender = true;
+						m_bCalcStun = true;
+
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetStun(false);
+						break;
+					}
+
+					if (!m_bCalcBuff)
+					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalcBuff(iDamage);
+
+						m_bCalcBuff = true;
+					}
+
+					else
+					{
+						m_bCalcBlight = false;
+						m_bCalcBleed = false;
+						m_bCalcStun = false;
+						m_bCalcBuff = false;
+						m_bCalculate = true;
+					}
+				}
+
+				// 종료 조건
+				if (HeroesAllDead() || MonstersAllDead())
+				{
+					if (EndBattle())
+					{
+						m_bEndBattleStart = true;
+					}
+				}
+
+				if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse() ||
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsDeath() ||
+					!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn())
+				{
+					CreatureTurnEnd();
+					m_bNext = false;
 				}
 			}
 
-			if (dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsCorpse() ||
-				dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsDeath() ||
-				!dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetTurn())
+
+			// 중독, 출혈 데미지 이펙트가 발생중인 시간
+			if (m_bWhileDotDamEffectRender)
 			{
-				CreatureTurnEnd();
-				m_bNext = false;
+				printf("중독, 출혈 데미지 이펙트 발생 시간\m_fDotDamageEffectTime : %f\n", m_fDotDamageEffectTime);
+
+				m_fDotDamageEffectTime -= fTimeDelta;
+
+				if (m_fDotDamageEffectTime < 0.f)
+				{
+					m_bWhileDotDamEffectRender = false;
+					m_fDotDamageEffectTime = DOTDAMEFFECTTIME;
+				}
 			}
-			else
+
+			// 기절 이펙트가 발생중인 시간
+			if (m_bWhileStunEffectRender)
+			{
+				printf("기절 이펙트 시간\m_fStunEffectTime : %f\n", m_fDotDamageEffectTime);
+
+				m_fDotDamageEffectTime -= fTimeDelta;
+
+				if (m_fDotDamageEffectTime < 0.f)
+				{
+					m_bWhileStunEffectRender = false;
+					// 기절 이펙트 없애는 타이밍
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetLoopEffect()->Reset();
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetLoopEffect()->SetActive(false);
+					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->SetTurn(false);
+					m_fDotDamageEffectTime = DOTDAMEFFECTTIME;
+
+					// 크리처 턴 엔드
+					CreatureTurnEnd();
+					m_bNext = false;
+					m_bBattle = false;
+					m_bCalculate = false;
+					m_bCalcBlight = false;
+					m_bCalcBleed = false;
+					m_bCalcStun = false;
+					m_bCalcBuff = false;
+
+					m_vStressTargetHeroes.clear();
+					m_bStressEffectRender = false;
+				}
+			}
+
+			// 스트레스 획득 이펙트가 발생중인 시간
+			if (m_bWhileStressEffectRender)
+			{
+				printf("스트레스 획득 이펙트 발생 시간\m_fStressEffectTime : %f\n", m_fStressEffectTime);
+
+				m_fStressEffectTime -= fTimeDelta;
+
+				if (m_fStressEffectTime <= STRESSEFFECTTIME / 2.f && !m_bStressEffectRender)
+				{
+					for (auto& iter : m_vStressTargetHeroes)
+						dynamic_pointer_cast<CHero>(iter)->IncreaseStress(m_iStressValue);
+
+					m_bStressEffectRender = true;
+				}
+
+				if (m_fStressEffectTime < 0.f)
+				{
+					m_iStressValue = 0;
+					m_vStressTargetHeroes.clear();
+					m_bWhileStressEffectRender = false;
+					m_fStressEffectTime = STRESSEFFECTTIME;
+				}
+			}
+
+			if (m_bCalculate && !m_bWhileDotDamEffectRender && !m_bWhileStressEffectRender && !m_bWhileStunEffectRender)
 			{
 				if (!m_bAblePickingInput)
 				{
@@ -725,6 +875,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 					}
 					m_bAblePickingInput = true;
 				}
+
 				if (m_bAblePickingInput)
 				{
 					// 스킬 받아오기
@@ -895,11 +1046,13 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 				{
 					int iDamage;
 
-					dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate(false, iDamage);
+					//dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalculate(false, iDamage);
 
 					// 출혈, 중독, 기절 상태인 경우 딜레이 주기
 					if (!m_bCalcBlight && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsBlight())
 					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalcBlight(iDamage);
+
 						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
 						pEffect->SetFontEffect(L"UI_Blight", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
@@ -917,6 +1070,8 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 
 					if (!m_bCalcBleed && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsBleed())
 					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalcBleed(iDamage);
+
 						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
 						pEffect->SetFontEffect(L"UI_Blood", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
@@ -934,6 +1089,8 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 
 					if (!m_bCalcStun && dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->GetIsStun())
 					{
+						dynamic_pointer_cast<CCreature>(m_pCurrentCreature)->StartCalcStun(iDamage);
+
 						shared_ptr<CEffect> pEffect = CEffectMgr::GetInstance()->GetEffect();
 
 						pEffect->SetFontEffect(L"UI_Stun", dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", ID_DYNAMIC))->GetPos(), DOTDAMEFFECTTIME);
@@ -947,7 +1104,13 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 					}
 
 					else
+					{
+						m_bCalcBlight = false;
+						m_bCalcBleed = false;
+						m_bCalcStun = false;
+						m_bCalcBuff = false;
 						m_bCalculate = true;
+					}
 				}
 
 				// 종료 조건

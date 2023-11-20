@@ -54,6 +54,8 @@ _int CMainLogo::UpdateScene(const _float& _fTimeDelta)
 
 	if (true == m_pLoading->Get_Finish())
 	{
+		m_pVideo->ChangeVideo();
+
 		if (!m_bLoadingFin && !m_bIsFirstView) {
 			m_pBackGround->SetLoadingState();
 			CSoundMgr::GetInstance()->StopAll();
@@ -62,6 +64,9 @@ _int CMainLogo::UpdateScene(const _float& _fTimeDelta)
 		}
 
 	}
+
+	else
+		m_pVideo->Update(_fTimeDelta);
 
 	return iExit;
 }
@@ -84,6 +89,7 @@ void CMainLogo::LateUpdateScene()
 
 			if (m_bIsFirstView) {
 				m_bIsFirstView = false;
+				CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 				if (m_pVideo)
 				{
 					m_pVideo->StopVideo();

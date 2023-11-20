@@ -298,10 +298,28 @@ void CDescription::FitSize(_bool _bSimpleContent)
 	
 	m_vSize.y = (m_fLine) * 15.f;
 	m_pTransCom->SetScale(m_vSize.x, m_vSize.y, m_vSize.z);
+
+	// 가로가 화면을 벗어나는 경우
 	if (m_vPos.x + m_vSize.x + m_vSize.x / 2.f > WINCX / 2.f)
 		m_vPos.x -= m_vSize.x;
 	else
 		m_vPos.x += m_vSize.x;
+
+	// 세로가 화면을 벗어나는 경우
+	if (fabs(m_vPos.y) + m_vSize.y > WINCY / 2.f)
+	{
+		// 화면 아래로 내려가는 경우
+		if (m_vPos.y < 0.f)
+		{
+			m_vPos.y += fabs(m_vPos.y) + m_vSize.y - WINCY / 2.f;
+		}
+
+		else if (m_vPos.y > 0.f)
+		{
+
+		}
+	}
+
 	m_pTransCom->SetPosition(m_vPos.x, m_vPos.y, m_vPos.z);
 
 	m_pTextureCom->SetTexture(0);

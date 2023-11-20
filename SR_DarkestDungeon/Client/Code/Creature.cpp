@@ -427,6 +427,215 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 	}
 }
 
+void CCreature::StartCalcBlight(_int& _iValue)
+{
+	// 중독 상태라면
+	if (m_bState[0])
+	{
+		m_tCommonStat.iHp -= m_iBlightDot[0];
+
+		_iValue = m_iBlightDot[0];
+
+		if (m_iBlightDot[0] > 0) {
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+			CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Poison_Dot.wav", CHANNELID::STATUS, 1.f);
+		}
+
+		// 사망하지 않았을때는 피가 0아래로 안닳게 하기
+		if (!m_bDeath)
+		{
+			if (m_tCommonStat.iHp < 0)
+			{
+				m_tCommonStat.iHp = 0;
+			}
+		}
+		for (int i = 1; i < 3; i++)
+		{
+			m_iBlightDot[i - 1] = m_iBlightDot[i];
+		}
+
+		m_iBlightDot[3] = 0;
+
+		if (!m_iBlightDot[0]) m_bState[0] = false;
+	}
+
+	if (!m_bIsHero)
+	{
+		// 시체 여부	
+		if (m_tCommonStat.iHp <= 0 && !m_bCorpse && !m_bDeath)
+		{
+			BleedCure();
+			BlightCure();
+			m_bCorpse = true;
+			m_tCommonStat.iHp = 10;
+			m_tCommonStat.iMaxHp = 10;
+			// 스탯갱신
+			m_pStatInfo->SetMaxHp(m_tCommonStat.iMaxHp);
+			m_pStatInfo->SetHp(m_tCommonStat.iHp);
+			m_pStatInfo->SetCorpse(true);
+		}
+
+		// 사망 여부
+		if (m_tCommonStat.iHp <= 0 && m_bCorpse)
+		{
+			m_bCorpse = false;
+			m_bDeath = true;
+			m_tCommonStat.iHp = -100;
+
+			bStatBarOn = false;
+		}
+	}
+	else
+	{
+		// 죽음의 일격 상태
+		if (m_tCommonStat.iHp <= 0 && m_bBeforeDeath)
+		{
+			int iNum = rand() % 100;
+			// 사망
+			if (iNum < DEATHRATE)
+			{
+				m_bDeath = true;
+				m_tCommonStat.iHp = -100;
+
+				bStatBarOn = false;
+			}
+		}
+		else if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath && !m_bDeath)
+		{
+			m_bBeforeDeath = true;
+		}
+	}
+}
+
+void CCreature::StartCalcBleed(_int& _iValue)
+{
+	// 중독 상태라면
+	if (m_bState[1])
+	{
+		m_tCommonStat.iHp -= m_iBleedDot[0];
+
+		_iValue = m_iBleedDot[0];
+
+		if (m_iBleedDot[0] > 0) {
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+			CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Bleed_Dot.wav", CHANNELID::STATUS, 1.f);
+		}
+
+		// 사망하지 않았을때는 피가 0아래로 안닳게 하기
+		if (!m_bDeath)
+		{
+			if (m_tCommonStat.iHp < 0)
+			{
+				m_tCommonStat.iHp = 0;
+			}
+		}
+		for (int i = 1; i < 3; i++)
+		{
+			m_iBleedDot[i - 1] = m_iBleedDot[i];
+		}
+		m_iBleedDot[3] = 0;
+
+		if (!m_iBleedDot[0]) m_bState[1] = false;
+	}
+
+	if (!m_bIsHero)
+	{
+		// 시체 여부	
+		if (m_tCommonStat.iHp <= 0 && !m_bCorpse && !m_bDeath)
+		{
+			BleedCure();
+			BlightCure();
+			m_bCorpse = true;
+			m_tCommonStat.iHp = 10;
+			m_tCommonStat.iMaxHp = 10;
+			// 스탯갱신
+			m_pStatInfo->SetMaxHp(m_tCommonStat.iMaxHp);
+			m_pStatInfo->SetHp(m_tCommonStat.iHp);
+			m_pStatInfo->SetCorpse(true);
+		}
+
+		// 사망 여부
+		if (m_tCommonStat.iHp <= 0 && m_bCorpse)
+		{
+			m_bCorpse = false;
+			m_bDeath = true;
+			m_tCommonStat.iHp = -100;
+
+			bStatBarOn = false;
+		}
+	}
+	else
+	{
+		// 죽음의 일격 상태
+		if (m_tCommonStat.iHp <= 0 && m_bBeforeDeath)
+		{
+			int iNum = rand() % 100;
+			// 사망
+			if (iNum < DEATHRATE)
+			{
+				m_bDeath = true;
+				m_tCommonStat.iHp = -100;
+
+				bStatBarOn = false;
+			}
+		}
+		else if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath && !m_bDeath)
+		{
+			m_bBeforeDeath = true;
+		}
+	}
+}
+
+void CCreature::StartCalcStun(_int& _iValue)
+{
+	// 기절
+	if (m_bState[2])
+	{
+		// 기절 이펙트 없애는 타이밍
+		m_pLoopEffect->Reset();
+		m_pLoopEffect->SetActive(false);
+	}
+}
+
+void CCreature::StartCalcBuff(_int& _iValue)
+{
+	// 버프
+	if (m_bState3[0])
+	{
+		for (int i = 1; i < 3; i++)
+		{
+			m_iBuff1Dot[i - 1] = m_iBuff1Dot[i];
+			m_iBuff2Dot[i - 1] = m_iBuff2Dot[i];
+		}
+		m_iBuff1Dot[3] = 0;
+		m_iBuff2Dot[3] = 0;
+
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+		CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Buff.wav", CHANNELID::STATUS, 1.f);
+
+		if (!m_iBuff1Dot[0] && !m_iBuff2Dot[0]) m_bState3[0] = false;
+	}
+
+	// 디버프
+	if (m_bState3[1])
+	{
+		for (int i = 1; i < 3; i++)
+		{
+			m_iDeBuff1Dot[i - 1] = m_iDeBuff1Dot[i];
+			m_iDeBuff1Dot[i - 1] = m_iDeBuff1Dot[i];
+		}
+		m_iDeBuff1Dot[3] = 0;
+
+
+		CSoundMgr::GetInstance()->StopSound(CHANNELID::STATUS);
+		CSoundMgr::GetInstance()->PlaySound(L"Gen_Status_Debuff.wav", CHANNELID::STATUS, 1.f);
+
+		if (!m_iDeBuff1Dot[0]) m_bState3[1] = false;
+	}
+}
+
 void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCreature> _pCreature2, shared_ptr<CSkill> _pSkill)
 {
 	if (!_pCreature) return;

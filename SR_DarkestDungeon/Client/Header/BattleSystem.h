@@ -128,6 +128,7 @@ private:
 	_bool	m_bCalcBlight = false;
 	_bool	m_bCalcBleed = false;
 	_bool	m_bCalcStun = false;
+	_bool	m_bCalcBuff = false;
 
 	_bool	m_bAutoBattle = false;
 	_bool	m_bSkillInput = false;
@@ -143,6 +144,8 @@ private:
 	_bool	m_bEndBattleStart = false;
 	_bool	m_bBattleEndEffectOn = false;
 	_bool	m_bBossBattleEndEffectOn = false;
+
+	_bool	m_bStressOutputEffectRender = false;
 
 
 	vector<_vec3> m_vHeroLocation = {};			// hero position
