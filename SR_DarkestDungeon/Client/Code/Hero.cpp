@@ -59,27 +59,27 @@ _int CHero::UpdateGameObject(const _float& fTimeDelta)
 	SetAnimDelay(fTimeDelta);
 
 	// 테스트용
-	{
-		if (GetAsyncKeyState(VK_HOME) & 0x8000)
-		{
-			m_eCurAnimState = EAnimState::COMBAT;
-		}
+	//{
+	//	if (GetAsyncKeyState(VK_HOME) & 0x8000)
+	//	{
+	//		m_eCurAnimState = EAnimState::COMBAT;
+	//	}
 
-		else if (GetAsyncKeyState(VK_PRIOR) & 0x8000)
-		{
-			m_eCurAnimState = EAnimState::WALK;
-		}
+	//	else if (GetAsyncKeyState(VK_PRIOR) & 0x8000)
+	//	{
+	//		m_eCurAnimState = EAnimState::WALK;
+	//	}
 
-		else if (GetAsyncKeyState(VK_NEXT) & 0x8000)
-		{
-			m_eCurAnimState = EAnimState::SKILL1;
-		}
+	//	else if (GetAsyncKeyState(VK_NEXT) & 0x8000)
+	//	{
+	//		m_eCurAnimState = EAnimState::SKILL1;
+	//	}
 
-		else if (GetAsyncKeyState(VK_END) & 0x8000)
-		{
-			m_eCurAnimState = EAnimState::SKILL2;
-		}
-	}
+	//	else if (GetAsyncKeyState(VK_END) & 0x8000)
+	//	{
+	//		m_eCurAnimState = EAnimState::SKILL2;
+	//	}
+	//}
 
 	if (m_pStatUI) {
 		m_pStatUI->UpdateGameObject(fTimeDelta);

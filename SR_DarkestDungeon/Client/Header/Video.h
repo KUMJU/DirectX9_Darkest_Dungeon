@@ -10,11 +10,14 @@ public:
 	virtual ~CVideo();
 
 public:
+	HRESULT			Update(const _float& fTimeDelta);
+
 	VIDEOID			Get_VideoID() const { return m_eVideoID; }
 
 public:
 	HRESULT				Ready_Video(VIDEOID eVideo);
-	void				PlayVideo(const wchar_t* videoFilename, HWND hwnd);
+	void				PlayVideo(const wchar_t* videoFilename, HWND hwnd, _bool _bChange = false);
+	void				ChangeVideo();
 	void				StopVideo();
 
 private:
@@ -22,6 +25,7 @@ private:
 
 	//Checking State
 	_bool				m_bFinish;
+	_bool				m_bChanged = false;
 
 	VIDEOID				m_eVideoID;
 
@@ -31,4 +35,14 @@ private:
 	IFileSourceFilter* m_pFileSourceFilter = NULL;
 	shared_ptr<IVideoWindow> m_pVidWin = NULL;
 	shared_ptr<IMediaControl> m_pControl = NULL;
+	shared_ptr<IMediaSeeking> m_pSeek = NULL;
+	REFERENCE_TIME rtCurrent;
+
+	shared_ptr<IGraphBuilder> m_pGraphChange = NULL;
+	IMediaEventEx* m_pEventChange = NULL;
+	IBaseFilter* m_pSourceChange = NULL;
+	IFileSourceFilter* m_pFileSourceFilterChange = NULL;
+	shared_ptr<IVideoWindow> m_pVidWinChange = NULL;
+	shared_ptr<IMediaControl> m_pControlChange = NULL;
+	shared_ptr<IMediaSeeking> m_pSeekChange = NULL;
 };

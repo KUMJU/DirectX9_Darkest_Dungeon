@@ -44,7 +44,7 @@ _uint CLoading::Loading_ForStage()
 
 	m_bFinish = true;
 
-	CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
+	//CGameMgr::GetInstance()->SetGameState(EGameState::PRCESS);
 
 	return 0;
 

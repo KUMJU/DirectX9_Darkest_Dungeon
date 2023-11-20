@@ -170,6 +170,10 @@ public:
 	const _tchar* Get_String3() const { return m_szString3; }
 
 	void	StartCalculate(_bool _bAutoEffect, _int& _iValue);
+	void	StartCalcBleed(_int& _iValue);
+	void	StartCalcBlight(_int& _iValue);
+	void	StartCalcStun(_int& _iValue);
+	void	StartCalcBuff(_int& _iValue);
 
 	tstring GetSoundKey() { return m_strSoundKey; }
 	void	SetSoundKey(tstring _strSoundKey) { m_strSoundKey = _strSoundKey; }

@@ -45,7 +45,7 @@ HRESULT CPlayer::ReadyGameObject()
 
 	if (m_bReady)
 		return S_OK;
-	
+
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	__super::ReadyGameObject();
@@ -152,7 +152,7 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 	}
 
 	_vec3* vPos = m_pTransformCom->GetPos();
-	m_pLight->SetPosition({ vPos ->x, vPos->y + 15.f, vPos->z+3.f + 1.f* (_float)m_iLightIntensity});
+	m_pLight->SetPosition({ vPos->x, vPos->y + 15.f, vPos->z + 3.f + 1.f * (_float)m_iLightIntensity });
 
 	if (m_pParticle && m_pParticle->GetIsActive())
 		m_pParticle->UpdateGameObject(fTimeDelta);
@@ -316,7 +316,7 @@ void CPlayer::SetPlayerMode(EPlayerMode _ePlrMode)
 
 
 	}
-	else if(EPlayerMode::BOSS_FIELD == _ePlrMode) {
+	else if (EPlayerMode::BOSS_FIELD == _ePlrMode) {
 
 		CCameraMgr::GetInstance()->SetVillageMode();
 
@@ -454,7 +454,7 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	//빌리지 카메라 & FPS 보스 카메라
 	if (GetAsyncKeyState('2') & 0x8000) {
 		SetPlayerMode(EPlayerMode::BOSS_FIELD);
-	//	CCameraMgr::GetInstance()->SetVillageMode();
+		//	CCameraMgr::GetInstance()->SetVillageMode();
 	}
 
 	if (GetAsyncKeyState('4') & 0x8000) {
@@ -477,6 +477,18 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 	//	m_pParticle->Setting(m_pTransformCom->GetPos(), 1000);
 	//	m_pParticle->SetActive(true);
 	//}
+	
+	if (GetAsyncKeyState(VK_PRIOR) & 0x8000)
+	{
+		SetGold(1000, true);
+		SetHeirloom(3, true);
+	}
+
+	if (GetAsyncKeyState(VK_NEXT) & 0x8000)
+	{
+		SetGold(1000, false);
+		SetHeirloom(3, false);
+	}
 }
 
 void CPlayer::MouseInput()
@@ -524,7 +536,7 @@ void CPlayer::MouseInput()
 		}
 
 	}
-	else if (m_ePlayerMode == EPlayerMode::BOSS_FIELD) 
+	else if (m_ePlayerMode == EPlayerMode::BOSS_FIELD)
 	{
 
 		if (m_bCurMouse)
