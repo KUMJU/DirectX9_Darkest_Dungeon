@@ -55,7 +55,18 @@ _int CRuin_Curio_Sconce::UpdateGameObject(const _float& fTimeDelta)
 		if (m_fActiveTime < 0)
 		{
 			// 상호작용
-			//dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(true);
+			if (!dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEventTrigger())
+			{
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(true);
+			}
+			else if (!dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEvent2Trigger())
+			{
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent2Trigger(true);
+			}
+			else if (!dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEvent3Trigger())
+			{
+				dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEvent3Trigger(true);
+			}
 
 			m_fActiveTime = CURIOACTIVETIME;
 			m_bActive = false;

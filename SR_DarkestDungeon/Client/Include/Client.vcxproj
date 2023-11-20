@@ -220,6 +220,7 @@
     <ClInclude Include="..\Header\Ruin_Curio_Statue.h" />
     <ClInclude Include="..\Header\Ruin_Dungeon.h" />
     <ClInclude Include="..\Header\Ruin_Obstacle.h" />
+    <ClInclude Include="..\Header\Ruin_SecretDoor.h" />
     <ClInclude Include="..\Header\Ruin_Trap.h" />
     <ClInclude Include="..\Header\SceneEvent.h" />
     <ClInclude Include="..\Header\ScreenEffect.h" />
@@ -326,6 +327,7 @@
     <ClCompile Include="..\Code\Ruin_Curio_Statue.cpp" />
     <ClCompile Include="..\Code\Ruin_Dungeon.cpp" />
     <ClCompile Include="..\Code\Ruin_Obstacle.cpp" />
+    <ClCompile Include="..\Code\Ruin_SecretDoor.cpp" />
     <ClCompile Include="..\Code\Ruin_Trap.cpp" />
     <ClCompile Include="..\Code\SceneEvent.cpp" />
     <ClCompile Include="..\Code\ScreenEffect.cpp" />

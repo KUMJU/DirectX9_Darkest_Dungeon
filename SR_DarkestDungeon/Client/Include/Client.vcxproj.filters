@@ -288,6 +288,9 @@
     <ClCompile Include="..\Code\TextBoard.cpp">
       <Filter>01. GameObject\03. UI\15. TextBoard</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Ruin_SecretDoor.cpp">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Define.h" />
@@ -579,6 +582,9 @@
     <ClInclude Include="..\Header\SceneEvent.h" />
     <ClInclude Include="..\Header\TextBoard.h">
       <Filter>01. GameObject\03. UI\15. TextBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ruin_SecretDoor.h">
+      <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

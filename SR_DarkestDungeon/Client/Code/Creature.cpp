@@ -145,6 +145,7 @@ void CCreature::SetStun(_bool _bStun)
 		return;
 	}
 
+	m_bPrevStun = true;
 	m_bState[2] = true;
 
 	shared_ptr<CEffect> pEffect;
