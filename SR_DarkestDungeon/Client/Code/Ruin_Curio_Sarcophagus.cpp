@@ -80,6 +80,7 @@ _int CRuin_Curio_Sarcophagus::UpdateGameObject(const _float& fTimeDelta)
 			pItem->AwakeGameObject();
 			pItem->ReadyGameObject();
 			dynamic_pointer_cast<CItem>(pItem)->StartParticle();
+			dynamic_pointer_cast<CItem>(pItem)->SetItemTypeEnum(EHandItem::RING);
 			CSceneMgr::GetInstance()->AddNewObject(L"Layer_4_GameObj", L"Obj_Item_Ring", pItem);
 		
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::EFFECT);

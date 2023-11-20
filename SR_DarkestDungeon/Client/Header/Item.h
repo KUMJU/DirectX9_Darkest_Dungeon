@@ -60,6 +60,7 @@ public:
 	tstring GetItemKeyName() { return m_strItemKey; }
 	
 	EHandItem GetItemTypeEnum() { return m_eItemState; }
+	void	SetItemTypeEnum(EHandItem _eItemState) { m_eItemState = _eItemState; }
 
 	virtual void PickingObj() override;
 	

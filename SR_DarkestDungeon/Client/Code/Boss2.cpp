@@ -720,6 +720,8 @@ void CBoss2::FSM(const _float& fTimeDelta)
 		m_fDeadTime -= fTimeDelta;
 		if (m_fDeadTime < 0.f)
 		{
+			CGameMgr::GetInstance()->SetGameState(EGameState::VIDEO);
+
 			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopAll();
 			m_fDeadTime = 0.24f * 26;
 			m_eCurAnimState = EBossState::ENUM_END;

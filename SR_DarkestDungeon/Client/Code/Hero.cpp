@@ -203,7 +203,7 @@ void CHero::IncreaseStress(_int _iValue, _bool _bStressEvent)
 		}
 
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
-		CSoundMgr::GetInstance()->PlaySound(L"dun_test.wav", CHANNELID::NPC, 1.f);
+		CSoundMgr::GetInstance()->PlaySound(L"dun_test_long.wav", CHANNELID::NPC, 3.f);
 
 		CUIMgr::GetInstance()->TextBoardOn(strHeroName + L"의 의지가 시험받고 있습니다...", {0.f, 200.f, 0.3f}, {500.f, 70.f, 1.f}, 5.f);
 

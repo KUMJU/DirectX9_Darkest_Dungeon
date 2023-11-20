@@ -420,9 +420,16 @@ void CCreature::StartCalculate(_bool _bAutoEffect, _int& _iValue)
 
 				bStatBarOn = false;
 			}
+			else
+			{
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+				CSoundMgr::GetInstance()->PlaySound(L"dun_deathdoor.wav", CHANNELID::NPC, 1.5f);
+			}
 		}
 		else if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath && !m_bDeath)
 		{
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+			CSoundMgr::GetInstance()->PlaySound(L"dun_deathdoor.wav", CHANNELID::NPC, 1.5f);
 			m_bBeforeDeath = true;
 		}
 	}
@@ -501,9 +508,16 @@ void CCreature::StartCalcBlight(_int& _iValue)
 
 				bStatBarOn = false;
 			}
+			else
+			{
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+				CSoundMgr::GetInstance()->PlaySound(L"dun_deathdoor.wav", CHANNELID::NPC, 1.5f);
+			}
 		}
 		else if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath && !m_bDeath)
 		{
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+			CSoundMgr::GetInstance()->PlaySound(L"dun_deathdoor.wav", CHANNELID::NPC, 1.5f);
 			m_bBeforeDeath = true;
 		}
 	}
@@ -580,9 +594,16 @@ void CCreature::StartCalcBleed(_int& _iValue)
 
 				bStatBarOn = false;
 			}
+			else
+			{
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+				CSoundMgr::GetInstance()->PlaySound(L"dun_deathdoor.wav", CHANNELID::NPC, 1.5f);
+			}
 		}
 		else if (m_tCommonStat.iHp <= 0 && !m_bBeforeDeath && !m_bDeath)
 		{
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+			CSoundMgr::GetInstance()->PlaySound(L"dun_deathdoor.wav", CHANNELID::NPC, 1.5f);
 			m_bBeforeDeath = true;
 		}
 	}
@@ -936,10 +957,18 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 					dynamic_pointer_cast<CCreature>(_pCreature)->SetHp(-100);
 					dynamic_pointer_cast<CCreature>(_pCreature)->SetStartBarOn(false);
 				}
+				else
+				{
+					CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+					CSoundMgr::GetInstance()->PlaySound(L"dun_deathdoor.wav", CHANNELID::NPC, 1.5f);
+				}
 			}
 			else if (dynamic_pointer_cast<CCreature>(_pCreature)->GetHp() <= 0
 				&& !dynamic_pointer_cast<CCreature>(_pCreature)->GetIsBeforeDeath())
 			{
+				CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+				CSoundMgr::GetInstance()->PlaySound(L"dun_deathdoor.wav", CHANNELID::NPC, 1.5f);
+
 				dynamic_pointer_cast<CCreature>(_pCreature)->SetBeforeDeath(true);
 			}
 		}
