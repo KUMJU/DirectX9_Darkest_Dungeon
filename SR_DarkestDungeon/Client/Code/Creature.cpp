@@ -15,6 +15,7 @@
 #include "ScreenEffect.h"
 
 #include "Alien.h"
+#include "Jester.h"
 
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -645,7 +646,7 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	m_bGetStress = false;
 
 	// 닷지 계산용
-	int iDodgeNum;
+	int iDodgeNum = 0;
 
 	// 치명타 계산용
 	int iCritical = rand() % 100;
@@ -662,6 +663,12 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 			iDodgeNum = 100;
 			CSoundMgr::GetInstance()->CSoundMgr::GetInstance()->StopSound(CHANNELID::BOSS);
 			CSoundMgr::GetInstance()->PlaySound(L"Boss_Scream.wav", CHANNELID::BOSS, 1.2f);
+		}
+		// 광대 단일 공격이였을 경우
+		else if (dynamic_pointer_cast<CJester>(_pCreature2))
+		{
+			iDodgeNum = 100;
+			
 		}
 		else
 		{
@@ -782,7 +789,9 @@ void CCreature::AttackCreature(shared_ptr<CCreature> _pCreature, shared_ptr<CCre
 	// 기절
 	if (arrAttack[3])
 	{
-		iDodgeNum = rand() % 100;
+		if(iDodgeNum == 0)
+			iDodgeNum = rand() % 100;
+
 		if (iDodgeNum >= (_pCreature->GetDodge() + m_iBuff2Dot[0] + m_iDeBuff1Dot[0]))
 		{
 			if (iCritical < CRIRATE)

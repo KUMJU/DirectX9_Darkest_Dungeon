@@ -42,11 +42,11 @@ _int CRuinSecretDoor::UpdateGameObject(const _float& fTimeDelta)
 		_vec3 DirD = _vec3(0.f, 0.f, -1.f);
 
 		//m_pTransformCom->MoveForward(&DirU, fTimeDelta, 2.f);
-		m_pTransformCom->MoveForward(&DirD, fTimeDelta, 10.f);
+		m_pTransformCom->MoveForward(&DirD, fTimeDelta, 2.f);
 
 		if (m_fOpenTime < 0.f)
 		{
-			m_fOpenTime = 1.f;
+			m_fOpenTime = 5.f;
 			m_bOpenStart = false;
 		}
 	}

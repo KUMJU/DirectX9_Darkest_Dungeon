@@ -44,7 +44,7 @@ private:
 	_int	m_iCurrent = 10;
 
 	_bool	m_bOpenStart = false;
-	float	m_fOpenTime = 1.f;
+	float	m_fOpenTime = 5.f;
 
 };
 

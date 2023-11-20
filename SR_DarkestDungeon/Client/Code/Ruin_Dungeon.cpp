@@ -109,7 +109,7 @@ HRESULT CRuin_Dungeon::ReadyScene()
 
 	CSoundMgr::GetInstance()->PlayBGM(L"Amb_Ruin_Base.wav", 1.f);
 
-	shared_ptr<CItem> pItem = make_shared<CItem>(m_pGraphicDev);
+	/*shared_ptr<CItem> pItem = make_shared<CItem>(m_pGraphicDev);
 	pItem->GetUITextureKeyName(L"Player_Item_RedGem");
 	pItem->SetOnField(false);
 
@@ -119,11 +119,11 @@ HRESULT CRuin_Dungeon::ReadyScene()
 
 	shared_ptr<CItem> pItem3 = make_shared<CItem>(m_pGraphicDev);
 	pItem3->GetUITextureKeyName(L"Player_Item_GreenGem");
-	pItem3->SetOnField(false);
+	pItem3->SetOnField(false);*/
 
-	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->InsertItem(pItem);
+	/*dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->InsertItem(pItem);
 	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->InsertItem(pItem2);
-	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->InsertItem(pItem3);
+	dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->InsertItem(pItem3);*/
 
 	SetLight();
 
@@ -223,6 +223,24 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 	}
 	
 	// 전리품 드롭
+	// 3번방
+	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 3)
+	{
+		if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetEventTrigger())
+		{
+			for (int i = 0; i < size(m_pRoom3->GetGameObjectVector()); i++)
+			{
+				float fNum = 1.f / (float)(rand() % 10 + 1) * 5.f;
+				if (dynamic_pointer_cast<CItem>(m_pRoom3->GetGameObjectVector()[i]))
+				{
+					shared_ptr<CTransform> pTransform = dynamic_pointer_cast<CTransform>(m_pRoom3->GetGameObjectVector()[i]->GetComponent(L"Com_Transform", ID_DYNAMIC));
+					pTransform->SetPosition(RUIN_WALLSIZEX * 4.5f + fNum - 0.5f, 1.f, RUIN_WALLSIZEX * 13.5f - 0.01f - 0.01f * i);
+					dynamic_pointer_cast<CItem>(m_pRoom3->GetGameObjectVector()[i])->StartParticle();
+				}
+			}
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(false);
+		}
+	}
 	// 4번방(횃불 방)
 	if (dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->GetCurrentRoom() == 4)
 	{
@@ -938,7 +956,6 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	m_pCurioF1->SetAngle(_vec3(0.f, 0.f, 0.f));
 	m_pCurioF1->SetScale(_vec3(RUIN_WALLSIZEX / 4.f, (RUIN_WALLSIZEX / 4.f) / 388.f * 345.f, 1.f));
 
-
 	D3DLIGHT9 _pLightInfo1;
 
 	_pLightInfo1.Diffuse = { 0.5f , 0.5f , 0.5f , 1.f };
@@ -1001,41 +1018,57 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 
 
 	// items
+	// 3번방
+	shared_ptr<CGameObject> m_pItem1_3 = make_shared<CItem>(m_pGraphicDev);
+	m_pItem1_3->SetColliding(true);
+	m_pLayer->CreateGameObject(L"Obj_TestItem1", m_pItem1_3);
+	dynamic_pointer_cast<CItem>(m_pItem1_3)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Player_Item_RedGem", 1);
+
+	shared_ptr<CGameObject> m_pItem2_3 = make_shared<CItem>(m_pGraphicDev);
+	m_pItem2_3->SetColliding(true);
+	m_pLayer->CreateGameObject(L"Obj_TestItem2", m_pItem2_3);
+	dynamic_pointer_cast<CItem>(m_pItem2_3)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Player_Item_GreenGem", 1);
+
+	shared_ptr<CGameObject> m_pItem3_3 = make_shared<CItem>(m_pGraphicDev);
+	m_pItem3_3->SetColliding(true);
+	m_pLayer->CreateGameObject(L"Obj_TestItem3", m_pItem3_3);
+	dynamic_pointer_cast<CItem>(m_pItem3_3)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Player_Item_BlueGem", 1);
+	
 	// 4번방
 	shared_ptr<CGameObject> m_pItem1_4 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1_4->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem11", m_pItem1_4);
+	m_pLayer->CreateGameObject(L"Obj_TestItem4", m_pItem1_4);
 	dynamic_pointer_cast<CItem>(m_pItem1_4)->SetDropItemInfo({ 56.f, -50.f, 14.f }, L"Item_Torch", 1);
 
 	shared_ptr<CGameObject> m_pItem2_4 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2_4->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem12", m_pItem2_4);
+	m_pLayer->CreateGameObject(L"Obj_TestItem5", m_pItem2_4);
 	dynamic_pointer_cast<CItem>(m_pItem2_4)->SetDropItemInfo({ 60.f, -50.f, 14.f }, L"Item_Torch", 1);
 
 	shared_ptr<CGameObject> m_pItem3_4 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3_4->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem3_4);
+	m_pLayer->CreateGameObject(L"Obj_TestItem6", m_pItem3_4);
 	dynamic_pointer_cast<CItem>(m_pItem3_4)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Item_Torch", 1);
 
 	// 5번방
 	shared_ptr<CGameObject> m_pItem1_5 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem1_5->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem1_5);
+	m_pLayer->CreateGameObject(L"Obj_TestItem7", m_pItem1_5);
 	dynamic_pointer_cast<CItem>(m_pItem1_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_RedGem", 1);
 
 	shared_ptr<CGameObject> m_pItem2_5 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem2_5->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem2_5);
+	m_pLayer->CreateGameObject(L"Obj_TestItem8", m_pItem2_5);
 	dynamic_pointer_cast<CItem>(m_pItem2_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_GreenGem", 1);
 
 	shared_ptr<CGameObject> m_pItem3_5 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem3_5->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem3_5);
+	m_pLayer->CreateGameObject(L"Obj_TestItem9", m_pItem3_5);
 	dynamic_pointer_cast<CItem>(m_pItem3_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_BlueGem", 1);
 
 	shared_ptr<CGameObject> m_pItem4_5 = make_shared<CItem>(m_pGraphicDev);
 	m_pItem4_5->SetColliding(true);
-	m_pLayer->CreateGameObject(L"Obj_TestItem13", m_pItem4_5);
+	m_pLayer->CreateGameObject(L"Obj_TestItem10", m_pItem4_5);
 	dynamic_pointer_cast<CItem>(m_pItem4_5)->SetDropItemInfo({ 64.f, -50.f, 14.f }, L"Player_Item_Bandage", 1);
 
 	// monsters
@@ -1083,6 +1116,10 @@ HRESULT CRuin_Dungeon::Ready_Layer_GameObject(tstring pLayerTag)
 	Room3_v1.push_back(m_pBoneCourtier_1);
 
 	Room3_v1.push_back(m_pCurioF1);
+
+	Room3_v1.push_back(m_pItem1_3);
+	Room3_v1.push_back(m_pItem2_3);
+	Room3_v1.push_back(m_pItem3_3);
 
 	m_pRoom3->PushGameObjectVector(Room3_v1);
 

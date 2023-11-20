@@ -45,7 +45,7 @@ _int CRuin_Curio_Fountain::UpdateGameObject(const _float& fTimeDelta)
 			for (int i = 0; i < size(*pHeroVec); i++)
 			{
 				// 모두 회복
-				dynamic_pointer_cast<CHero>((*pHeroVec)[i])->IncreaseHP(100);
+				//dynamic_pointer_cast<CHero>((*pHeroVec)[i])->IncreaseHP(100);
 				dynamic_pointer_cast<CHero>((*pHeroVec)[i])->DecreaseStress(200);
 			}
 
@@ -53,6 +53,8 @@ _int CRuin_Curio_Fountain::UpdateGameObject(const _float& fTimeDelta)
 			m_bActive = false;
 			m_ePrevAnimState = m_eCurAnimState;
 			m_eCurAnimState = EState::FINISH;
+
+			dynamic_pointer_cast<CPlayer>(CGameMgr::GetInstance()->GetPlayer())->SetEventTrigger(true);
 		}
 	}
 
