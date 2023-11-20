@@ -606,6 +606,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 		//1회만 실행될 수 있도록 bool State로 관리
 		if (!m_bBattleEndEffectOn) {
 			//승리BGM 재생
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"Combat_Victory.wav", CHANNELID::MONSTER, 1.f);
 
@@ -705,7 +706,7 @@ _bool CBattleSystem::Update(const _float& fTimeDelta)
 			if (m_pHeroUI && !m_bUISetDone)
 			{
 				m_pHeroUI->SetVisible(true);
-				m_pHeroUI->SettingHeroInfo(pHero->GetHp(), pHero->GetHp(), pHero->GetStress(), HeroName, pHero->GetSkillVector());
+				m_pHeroUI->SettingHeroInfo(pHero->GetMaxHp(), pHero->GetHp(), pHero->GetStress(), HeroName, pHero->GetSkillVector());
 				m_bUISetDone = true;
 			}
 		}
@@ -1438,7 +1439,7 @@ void CBattleSystem::DeadCheck()
 			for (int j = i + 1; j < size(m_vHeroes); j++)
 			{
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetMoving(true);
-				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTargetPos(m_vHeroLocation[j - 1]);
+				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetTargetPos(m_vHeroLocation[j - 1] );
 				dynamic_pointer_cast<CCreature>(m_vHeroes[j])->SetMovingSpeed(
 					dynamic_pointer_cast<CCreature>(m_vHeroes[j])->MovingSpeed(m_vHeroLocation[j - 1], DEATHMOVINGINTERVEL));
 			}
@@ -1460,10 +1461,12 @@ void CBattleSystem::DeadCheck()
 		{
 			for (int j = i + 1; j < size(m_vMonsters); j++)
 			{
+				_vec3 vPos = *dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", COMPONENTID::ID_DYNAMIC))->GetPos();
+
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetMoving(true);
-				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetTargetPos(m_vMonsterLocation[j - 1]);
+				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetTargetPos({ m_vMonsterLocation[j - 1].x, vPos.y,  m_vMonsterLocation[j - 1].z });
 				dynamic_pointer_cast<CCreature>(m_vMonsters[j])->SetMovingSpeed(
-					dynamic_pointer_cast<CCreature>(m_vMonsters[j])->MovingSpeed(m_vMonsterLocation[j - 1], DEATHMOVINGINTERVEL));
+					dynamic_pointer_cast<CCreature>(m_vMonsters[j])->MovingSpeed({ m_vMonsterLocation[j - 1].x, vPos.y,  m_vMonsterLocation[j - 1].z }, DEATHMOVINGINTERVEL));
 			}
 
 			for (int j = i + 1; j < size(m_vMonsters); j++)
@@ -2059,15 +2062,17 @@ void CBattleSystem::Battle(int _iNum)
 						!dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->GetIsDeath() &&
 						!dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->GetIsDeath())
 					{
+						_vec3 vPos = *dynamic_pointer_cast<CTransform>(m_pCurrentCreature->GetComponent(L"Com_Transform", COMPONENTID::ID_DYNAMIC))->GetPos();
+
 						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetMoving(true);
-						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetTargetPos(m_vMonsterLocation[iTarget + iMovePos]);
+						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetTargetPos({ m_vMonsterLocation[iTarget + iMovePos].x, vPos.y ,m_vMonsterLocation[iTarget + iMovePos].z });
 						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->SetMovingSpeed(
-							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->MovingSpeed(m_vMonsterLocation[iTarget + iMovePos], SKILLMOVINGINTERVEL));
+							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget])->MovingSpeed({ m_vMonsterLocation[iTarget + iMovePos].x, vPos.y ,m_vMonsterLocation[iTarget + iMovePos].z }, SKILLMOVINGINTERVEL));
 
 						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetMoving(true);
-						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetTargetPos(m_vMonsterLocation[iTarget]);
+						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetTargetPos({ m_vMonsterLocation[iTarget].x, vPos.y ,m_vMonsterLocation[iTarget].z });
 						dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->SetMovingSpeed(
-							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->MovingSpeed(m_vMonsterLocation[iTarget], SKILLMOVINGINTERVEL));
+							dynamic_pointer_cast<CCreature>(m_vMonsters[iTarget + iMovePos])->MovingSpeed({ m_vMonsterLocation[iTarget].x, vPos.y ,m_vMonsterLocation[iTarget].z }, SKILLMOVINGINTERVEL));
 						m_bSkillMoving = true;
 						shared_ptr<CGameObject> pObj = m_vMonsters[iTarget];
 						m_vMonsters[iTarget] = m_vMonsters[iTarget + iMovePos];

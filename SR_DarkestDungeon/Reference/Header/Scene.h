@@ -23,6 +23,8 @@ public:
 
 	virtual void SetLight() {};
 
+	void SetSceneChangeState(_bool _bSceneChange) { m_bSceneChange = _bSceneChange; }
+
 public:
 	shared_ptr<CComponent> GetComponent(const tstring& _strLayerName, const tstring& _strObjName, const tstring& _strComName, COMPONENTID _eID);
 
@@ -30,6 +32,7 @@ protected:
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 	map<tstring, std::shared_ptr<CLayer>> m_mapLayer;
 
+	_bool m_bSceneChange = false;
 };
 
 END

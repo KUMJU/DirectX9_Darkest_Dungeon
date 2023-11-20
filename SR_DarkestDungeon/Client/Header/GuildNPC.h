@@ -40,5 +40,7 @@ private:
 
 	vector<shared_ptr<CUIObj>> m_pUIVec;
 	vector<shared_ptr<CGameObject>> m_vecGameObject;
+
+	_bool m_bInteractionFirst = false;
 };
 

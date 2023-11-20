@@ -40,6 +40,8 @@ private:
 	shared_ptr<CDungeonRoom>	m_pRoom6 = {};				// 방6(보스방)
 
 	_bool				m_bTestBattle = false;
+	_bool				m_bInitNarr = false;
+
 
 	_tchar				m_szString[128];
 };

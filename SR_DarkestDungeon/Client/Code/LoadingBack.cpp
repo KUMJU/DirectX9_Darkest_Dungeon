@@ -111,6 +111,11 @@ void CLoadingBack::RenderGameObject()
 		RenderFontCenter(L"Font_Point_Title", L"폐허", &vTitleStartPos, &vTitleEndPos, YELLOW);
 		RenderFontCenter(L"Font_Default_Light", L"가문의 폐허로 향하는 첫 번째 여정입니다. 꼼꼼히 조사하되,\n항상 조심하십시오.", &vTipStartPos, &vTipeEndPos, WHITE);
 	}
+	else if (ELoadingSceneType::BOSS == m_eLoadingType) {
+
+		RenderFontCenter(L"Font_Point_Title", L"가장 어두운 던전", &vTitleStartPos, &vTitleEndPos, YELLOW);
+		RenderFontCenter(L"Font_Default_Light", L"", &vTipStartPos, &vTipeEndPos, WHITE);
+	}
 
 	//_vec2 vInfoStartPos = { 0.f , 430.f };
 	//_vec2 vInfoEndPos = { WINCX , 480.f };
@@ -190,6 +195,10 @@ void CLoadingBack::AddComponent()
 	}
 	else if(ELoadingSceneType::RUIN == m_eLoadingType) {
 		m_pBackGroundTex->SetTextureKey(L"UI_Loading_Ruin", TEXTUREID::TEX_NORMAL);
+
+	}
+	else if (ELoadingSceneType::BOSS == m_eLoadingType) {
+		m_pBackGroundTex->SetTextureKey(L"UI_Loading_Boss", TEXTUREID::TEX_NORMAL);
 
 	}
 

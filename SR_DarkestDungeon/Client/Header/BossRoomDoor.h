@@ -13,6 +13,8 @@ public:
 	virtual void			LateUpdateGameObject();
 	virtual void			RenderGameObject();
 
+	_bool					GetEnterState() { return m_bEnter; }
+
 protected:
 	virtual void			AddComponent();
 	virtual void			GetInteractionKey(const _float& fTimeDelta);
@@ -26,6 +28,7 @@ protected:
 private:
 
 	_bool m_bDebounce = false;
+	_bool m_bEnter = false;
 
 };
 

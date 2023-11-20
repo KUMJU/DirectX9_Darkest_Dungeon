@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "Hero.h"
 
+#include "UIMgr.h"
+
 CDoor::CDoor(LPDIRECT3DDEVICE9 pGraphicDev, EFacilityType _eDoorType)
 	: CInteractionObj(pGraphicDev), m_eDoorType(_eDoorType)
 {
@@ -92,6 +94,8 @@ void CDoor::GetInteractionKey(const _float& fTimeDelta)
 			
 		else if (EFacilityType::GUILD == m_eDoorType)
 		{
+
+
 			// 훈련소 내부로 이동
 			dynamic_pointer_cast<CTransform>(CGameMgr::GetInstance()->GetPlayer()->GetComponent(L"Com_Transform", ID_DYNAMIC))->SetPosition(0.f, -197.f, 104.f);
 

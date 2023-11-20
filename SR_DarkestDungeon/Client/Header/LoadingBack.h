@@ -6,6 +6,7 @@
 enum class ELoadingSceneType {
 	VILLAGE,
 	RUIN,
+	BOSS,
 	ENUM_END
 };
 

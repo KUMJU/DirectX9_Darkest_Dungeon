@@ -36,6 +36,8 @@ public:
 	}
 
 
+	void SetSceneChange() { m_pCurrentScene->SetSceneChangeState(true); }
+
 
 public:
 	

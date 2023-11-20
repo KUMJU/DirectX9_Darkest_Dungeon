@@ -145,5 +145,9 @@ void CNarration::SetNarrationMap()
 	m_NarrationMap.insert({L"Narr_Battle_Critical3", L"강력하구나!"});
 	m_NarrationMap.insert({L"Narr_Tut_Curio", L"꼼꼼히 살펴보고 지나가거라.\n이 버려진 길에는 찾을만한 물건이 아주 많다."});
 	m_NarrationMap.insert({L"Narr_EnterVillage", L"집에 돌아온 걸 환영한다. 이 황폐한 마을, 타락한 영지가 모두 네 것이다.\n 너도 이곳에 묶여버린 셈이지."});
+	m_NarrationMap.insert({L"Narr_SecondDungeon", L"이 말종들을 잔혹하게 몰살해버려라.\n네가 돌아왔음을 모두에게 알려라!"});
+	m_NarrationMap.insert({L"Narr_FirstLight", L"평안을 안겨주는 빛이구나!"});
+	m_NarrationMap.insert({L"Narr_Trap_Fail", L"고대의 함정이 기다리고 있다가, 피를 갈구하며 튀어 오르는구나."});
+	m_NarrationMap.insert({L"Narr_Visit_Guild", L"실수는 용납되지 않는다. 우린 지상 최대의 악과 맞서야 하느니라.\n병사들 역시 최고로 훈련되어야 할 게야."});
 
 }

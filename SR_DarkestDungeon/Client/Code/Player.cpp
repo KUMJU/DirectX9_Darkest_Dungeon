@@ -69,6 +69,17 @@ HRESULT CPlayer::ReadyGameObject()
 
 _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 {
+	if (m_bPlrWalkingDeb) {
+
+		m_fWalkDebTime += fTimeDelta;
+
+		if (m_fWalkDebTime > 0.6f) {
+			m_fWalkDebTime = 0.f;
+			m_bPlrWalkingDeb = false;
+		}
+	}
+
+
 	// 피격시 일정시간 무적
 	if (m_bHitted)
 	{
@@ -133,7 +144,7 @@ _int CPlayer::UpdateGameObject(const _float& fTimeDelta)
 
 
 	//횃불 밝기 조절 
-	if (m_bInDungeon && !m_bInBattle) {
+	if (m_bInDungeon && !m_bInBattle && !m_bInBossRoom) {
 
 		m_fLightActTime += fTimeDelta;
 
@@ -272,7 +283,7 @@ void CPlayer::DecreaseHP(_int _iDamage)
 
 void CPlayer::SettingLight()
 {
-	if (m_bInDungeon) {
+	if (m_bInDungeon && !m_bInBossRoom) {
 		m_iLightIntensity = 3;
 		m_fLightActTime = 0.f;
 
@@ -294,6 +305,10 @@ void CPlayer::SpendTorchItem()
 	++m_iLightIntensity;
 	m_pLight->LightIntensity(m_iLightIntensity);
 
+	if (!m_bFirstLighUp) {
+		CUIMgr::GetInstance()->NarrationOn(L"Narr_FirstLight");
+		m_bFirstLighUp = true;
+	}
 
 }
 
@@ -410,6 +425,12 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		ShakingHand();
 		m_fDeltaTime = fTimeDelta;
 		m_eLastMove = EPlayerMove::RIGHT;
+
+		if (!m_bPlrWalkingDeb) {
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::PLAYER_STEP);
+			CSoundMgr::GetInstance()->PlaySound(L"Plr_Step.wav", CHANNELID::PLAYER_STEP, 1.f);
+			m_bPlrWalkingDeb = true;
+		}
 	}
 
 	if (GetAsyncKeyState('A') & 0x8000) {
@@ -421,6 +442,12 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		ShakingHand();
 		m_fDeltaTime = fTimeDelta;
 		m_eLastMove = EPlayerMove::LEFT;
+
+		if (!m_bPlrWalkingDeb) {
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::PLAYER_STEP);
+			CSoundMgr::GetInstance()->PlaySound(L"Plr_Step.wav", CHANNELID::PLAYER_STEP, 1.f);
+			m_bPlrWalkingDeb = true;
+		}
 	}
 
 	if (GetAsyncKeyState('S') & 0x8000) {
@@ -432,6 +459,12 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		ShakingHand();
 		m_fDeltaTime = fTimeDelta;
 		m_eLastMove = EPlayerMove::DOWN;
+
+		if (!m_bPlrWalkingDeb) {
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::PLAYER_STEP);
+			CSoundMgr::GetInstance()->PlaySound(L"Plr_Step.wav", CHANNELID::PLAYER_STEP, 1.f);
+			m_bPlrWalkingDeb = true;
+		}
 	}
 
 
@@ -444,7 +477,17 @@ void CPlayer::KeyInput(const _float& fTimeDelta)
 		ShakingHand();
 		m_fDeltaTime = fTimeDelta;
 		m_eLastMove = EPlayerMove::UP;
+
+
+		if (!m_bPlrWalkingDeb) {
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::PLAYER_STEP);
+			CSoundMgr::GetInstance()->PlaySound(L"Plr_Step.wav", CHANNELID::PLAYER_STEP, 1.f);
+			m_bPlrWalkingDeb = true;
+		}
+
+
 	}
+
 
 	//기본 던전 카메라
 	if (GetAsyncKeyState('1') & 0x8000) {

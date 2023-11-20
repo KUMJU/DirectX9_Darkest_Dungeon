@@ -2,6 +2,7 @@
 
 #include"Scene.h"
 #include "Creature.h"
+#include "Light.h"
 
 class CDungeonSystem;
 class CDungeonRoom;
@@ -24,6 +25,7 @@ public:
 
 public:
 	virtual void SetLight();
+	void ChangeLightInfo();
 
 public:
 	void SetWall(shared_ptr<CWall> _pWall, shared_ptr<CLayer> _pLayer,
@@ -56,5 +58,9 @@ private:
 	float				m_fBattlePositionZ = 250.f;
 
 	_tchar				m_szString[128];
+
+
+	shared_ptr<CLight> m_pDirLight = nullptr;
+	shared_ptr<CLight> m_pPointLight = nullptr;
 };
 
