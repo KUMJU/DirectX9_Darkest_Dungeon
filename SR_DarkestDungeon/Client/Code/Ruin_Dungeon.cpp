@@ -319,9 +319,11 @@ _int CRuin_Dungeon::UpdateScene(const _float& fTimeDelta)
 	if (GetAsyncKeyState('6') & 0x8000) {
 		CSoundMgr::GetInstance()->StopAll();
 		CSoundMgr::GetInstance()->StopSound(CHANNELID::BGM);
-		shared_ptr<CBossMap> pScene = make_shared<CBossMap>(m_pGraphicDev);
-		CSceneMgr::GetInstance()->ChangeScene(pScene);
-		pScene->ReadyScene();
+
+		shared_ptr<CScene> pLoadingScreen = make_shared<CLoadingScreen>(m_pGraphicDev, ELoadingSceneType::BOSS);
+		CSceneMgr::GetInstance()->SetLoadingState(false);
+		CSceneMgr::GetInstance()->ChangeScene(pLoadingScreen);
+		pLoadingScreen->ReadyScene();
 	}
 
 	//∫∏Ω∫ æ¿ ¿Ãµø

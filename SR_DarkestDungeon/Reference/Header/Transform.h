@@ -28,6 +28,11 @@ public:
 
 	void SetAngle(_vec3 _vAngle) { m_vAngle = _vAngle; }
 
+	void SetYPos(_float _fYpos) { 
+	
+		m_vInfo[INFO_POS].y = _fYpos;
+		m_vPos.y = _fYpos;
+	}
 
 public:
 

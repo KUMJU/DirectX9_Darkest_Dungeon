@@ -4,6 +4,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include "SoundMgr.h"
+#include "CameraMgr.h"
 
 CRuinSecretDoor::CRuinSecretDoor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CInteractionObj(pGraphicDev)
@@ -21,6 +22,7 @@ CRuinSecretDoor::~CRuinSecretDoor()
 
 HRESULT CRuinSecretDoor::ReadyGameObject()
 {
+	m_bTabInteractionKey = true;
 	__super::ReadyGameObject();
 
 
@@ -33,10 +35,18 @@ _int CRuinSecretDoor::UpdateGameObject(const _float& fTimeDelta)
 
 	if (m_bOpenStart)
 	{
-		m_fOpenTime -= fTimeDelta;
+		if (!m_bEffectDone) {
+			CCameraMgr::GetInstance()->MovingStraight(ECameraMode::IDLE, {m_vPos.x - 1.5f, m_vPos.y, m_vPos.z});
 
-		CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
-		CSoundMgr::GetInstance()->PlaySound(L"dun_secret_door.wav", CHANNELID::NPC, 1.f);
+			CCameraMgr::GetInstance()->AddEffectInfo(EEffectState::SHAKING, 5.f, 0.13f , EShakingType::VERTICAL);
+
+			CSoundMgr::GetInstance()->StopSound(CHANNELID::NPC);
+			CSoundMgr::GetInstance()->PlaySound(L"dun_secret_door.wav", CHANNELID::NPC, 1.f);
+
+			m_bEffectDone = true;
+		}
+
+		m_fOpenTime -= fTimeDelta;
 
 		_vec3 DirR = _vec3(1.f, 0.f, 0.f);
 		_vec3 DirL = _vec3(-1.f, 0.f, 0.f);
@@ -49,6 +59,7 @@ _int CRuinSecretDoor::UpdateGameObject(const _float& fTimeDelta)
 
 		if (m_fOpenTime < 0.f)
 		{
+			CCameraMgr::GetInstance()->SetFPSMode();
 			m_fOpenTime = 5.f;
 			m_bOpenStart = false;
 		}

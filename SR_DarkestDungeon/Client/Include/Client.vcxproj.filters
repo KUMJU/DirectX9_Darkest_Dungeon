@@ -284,12 +284,14 @@
     <ClCompile Include="..\Code\Video.cpp">
       <Filter>00. Scene\06. Video</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SceneEvent.cpp" />
     <ClCompile Include="..\Code\TextBoard.cpp">
       <Filter>01. GameObject\03. UI\15. TextBoard</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Ruin_SecretDoor.cpp">
       <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SceneEvent.cpp">
+      <Filter>01. GameObject\12. SceneEvent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -579,12 +581,14 @@
     <ClInclude Include="..\Header\Video.h">
       <Filter>00. Scene\06. Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\SceneEvent.h" />
     <ClInclude Include="..\Header\TextBoard.h">
       <Filter>01. GameObject\03. UI\15. TextBoard</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Ruin_SecretDoor.h">
       <Filter>01. GameObject\02 InteractionObj\02. Ruin Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SceneEvent.h">
+      <Filter>01. GameObject\12. SceneEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

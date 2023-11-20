@@ -561,13 +561,10 @@ void CStaticCamera::ShakingCamera()
 
 	//한 방향으로 진폭만큼 이동했을시 방향 전환
 
-	printf("%f\n", m_qEffectQueue.front()->MoveDistance + fDistance);
-	printf("%f\n", fDir);
 
 	if (fabsf(m_qEffectQueue.front()->MoveDistance + fDistance) >= m_qEffectQueue.front()->fAmplitude) {
 		fDistance = m_qEffectQueue.front()->fAmplitude * fDir - m_qEffectQueue.front()->MoveDistance;
 		m_qEffectQueue.front()->MoveDistance = m_qEffectQueue.front()->fAmplitude * fDir;
-		printf("위치 출력!! %f\n", m_qEffectQueue.front()->fAmplitude * fDir);
 
 		m_qEffectQueue.front()->fDir *= -1.f;
 	}
@@ -594,7 +591,7 @@ void CStaticCamera::ShakingCamera()
 		else if (EShakingType::HORIZON == m_qEffectQueue.front()->eShakingType) {
 			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vRight;
 		}
-		else if (EShakingType::HORIZON == m_qEffectQueue.front()->eShakingType) {
+		else if (EShakingType::VERTICAL == m_qEffectQueue.front()->eShakingType) {
 			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vUp;
 
 		}
@@ -613,7 +610,7 @@ void CStaticCamera::ShakingCamera()
 		else if (EShakingType::HORIZON == m_qEffectQueue.front()->eShakingType) {
 			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vRight;
 		}
-		else if (EShakingType::HORIZON == m_qEffectQueue.front()->eShakingType) {
+		else if (EShakingType::VERTICAL == m_qEffectQueue.front()->eShakingType) {
 			vCurrentPos += m_qEffectQueue.front()->MoveDistance * vUp;
 
 		}

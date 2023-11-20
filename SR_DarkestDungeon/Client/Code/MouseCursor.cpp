@@ -79,6 +79,10 @@ void CMouseCursor::LateUpdateGameObject()
 
 void CMouseCursor::RenderGameObject()
 {
+
+    if (!m_bCursorVisible)
+        return;
+
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->GetWorld());
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -109,4 +113,25 @@ void CMouseCursor::AddComponent()
     m_mapComponent[ID_STATIC].insert({ L"Com_Texture",pComponent });
     m_pTextureCom->SetTextureKey(L"UI_MouseCursor_Main", TEXTUREID::TEX_NORMAL);
 
+}
+
+void CMouseCursor::SwitchCursorImage()
+{
+    m_pTextureCom->SetTextureKey(L"UI_MouseCursor_Cross", TEXTUREID::TEX_NORMAL);
+}
+
+void CMouseCursor::SwitchCursorOrigin()
+{
+    m_pTextureCom->SetTextureKey(L"UI_MouseCursor_Main", TEXTUREID::TEX_NORMAL);
+
+}
+
+void CMouseCursor::CursorOn()
+{
+    m_bCursorVisible = true;
+}
+
+void CMouseCursor::CursorOff()
+{
+    m_bCursorVisible = false;
 }

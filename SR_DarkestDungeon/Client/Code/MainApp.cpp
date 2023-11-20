@@ -26,7 +26,6 @@ CMainApp::~CMainApp()
 HRESULT CMainApp::Ready_MainApp()
 {
 	ShowCursor(false);
-	AllocConsole();
 	srand((unsigned int)time(NULL));
 	if (FAILED(SetUp_DefaultSetting(&m_pGraphicDev))) {
 		return E_FAIL;
@@ -150,7 +149,6 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 void CMainApp::Free()
 {
 
-	FreeConsole();
 
 	CLightMgr::DestroyInstance();
 	CEffectMgr::DestroyInstance();

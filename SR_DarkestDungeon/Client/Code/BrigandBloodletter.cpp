@@ -78,11 +78,16 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 			m_pTransformCom->SetScale(3.f, 3.f, 3.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f, m_vPos.z);
 
+			m_fYpos = 3.f;
+
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Hitted", 0.02f);
 			m_pTransformCom->SetScale(3.f * 330.f / 303.f, 3.f * 345.f / 382.f, 3.f * 330.f / 303.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 345.f / 382.f, m_vPos.z);
+
+			m_fYpos = 3.f * 345.f / 382.f;
+
 
 			break;
 		case EAnimState::SKILL1:
@@ -93,6 +98,8 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_whipsingle.wav", CHANNELID::MONSTER, 1.f);
 
+			m_fYpos = 3.f * 383.f / 382.f;
+
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Attack2", 0.02f);
@@ -100,16 +107,25 @@ _int CBrigandBloodletter::UpdateGameObject(const _float& fTimeDelta)
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 379.f / 382.f, m_vPos.z);
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_brigblood_pointblank.wav", CHANNELID::MONSTER, 1.f);
+
+			m_fYpos = 3.f * 379.f / 382.f;
+
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Dead", 0.02f);
 			m_pTransformCom->SetScale(3.f * 375.f / 303.f, 3.f * 167.f / 382.f, 3.f * 375.f / 303.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 167.f / 382.f, m_vPos.z);
 
+			m_fYpos = 3.f * 167.f / 382.f;
+
+
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Brigand Bloodletter_Death", 0.02f);
 			m_pTransformCom->SetScale(3.f, 3.f, 3.f);
+
+			m_fYpos = 3.f;
+
 			break;
 		}
 		m_ePrevAnimState = m_eCurAnimState;

@@ -19,6 +19,7 @@ public:
 	_bool	GetOpenStart() { return m_bOpenStart; }
 	void	SetOpenStart(_bool _bOpenStart) { m_bOpenStart = _bOpenStart; }
 
+
 protected:
 	virtual void			AddComponent();
 	virtual void			GetInteractionKey(const _float& fTimeDelta);
@@ -45,6 +46,7 @@ private:
 
 	_bool	m_bOpenStart = false;
 	float	m_fOpenTime = 5.f;
+	_bool	m_bEffectDone = false;
 
 };
 

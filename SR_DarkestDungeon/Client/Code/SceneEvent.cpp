@@ -55,6 +55,20 @@ _int CSceneEvent::UpdateGameObject(const _float& fTimeDelta)
 {
     m_fSceneActTime += fTimeDelta;
 
+    if (!m_bSoundEvenetDone) {
+        CSoundMgr::GetInstance()->StopSound(CHANNELID::VESTAL);
+        CSoundMgr::GetInstance()->PlaySound(L"Effect_HeartBeat.wav", CHANNELID::VESTAL, 2.5f);
+
+        shared_ptr<CUIObj> pScreenEffect = CUIMgr::GetInstance()->FindUI(L"UI_ScreenEffect");
+
+        if (pScreenEffect) {
+            dynamic_pointer_cast<CScreenEffect>(pScreenEffect)->SetScreenEffect(EScreenEffect::ATTACKED);
+        }
+
+        m_bSoundEvenetDone = true;
+
+    }
+
     //지정한 이벤트 시간이 지나면 종료 
     if (m_fEventTime <= m_fSceneActTime)
         m_bEnable = false;

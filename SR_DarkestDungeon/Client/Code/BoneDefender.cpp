@@ -76,11 +76,17 @@ _int CBoneDefender::UpdateGameObject(const _float& fTimeDelta)
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Combat", 0.05f);
 			m_pTransformCom->SetScale(3.f, 3.f, 3.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f, m_vPos.z);
+
+			m_fYpos = 3.f;
+
 			break;
 		case EAnimState::BESHOT:
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Hitted", 0.02f);
 			m_pTransformCom->SetScale(3.f * 250.f / 290.f, 3.f * 320.f / 390.f, 3.f * 250.f / 290.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 320.f / 390.f, m_vPos.z);
+
+			m_fYpos = 3.f * 320.f / 390.f;
+
 			break;
 		case EAnimState::SKILL1:
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Attack1", 0.02f);
@@ -89,7 +95,7 @@ _int CBoneDefender::UpdateGameObject(const _float& fTimeDelta)
 
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_BoneDef_Attack.wav", CHANNELID::MONSTER, 1.f);
-
+			m_fYpos = 3.f * 304.f / 390.f;
 			break;
 		case EAnimState::SKILL2:
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Attack2", 0.02f);
@@ -98,16 +104,24 @@ _int CBoneDefender::UpdateGameObject(const _float& fTimeDelta)
 
 			CSoundMgr::GetInstance()->StopSound(CHANNELID::MONSTER);
 			CSoundMgr::GetInstance()->PlaySound(L"En_BoneDef_Attack.wav", CHANNELID::MONSTER, 1.f);
+			m_fYpos = 3.f * 327.f / 390.f;
 
 			break;
 		case EAnimState::CORPSE:
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Dead", 0.02f);
 			m_pTransformCom->SetScale(3.f * 225.f / 290.f, 3.f * 160.f / 390.f, 3.f * 225.f / 290.f);
 			m_pTransformCom->SetPosition(m_vPos.x, 3.f * 160.f / 390.f, m_vPos.z);
+
+			m_fYpos = 3.f * 160.f / 390.f;
+
 			break;
 		case EAnimState::DEATH:
 			m_pTextureCom->SetAnimKey(L"Bone Defender_Death", 0.02f);
 			m_pTransformCom->SetScale(3.f, 3.f, 3.f);
+
+			m_fYpos = 3.f;
+
+
 			break;
 		}
 		m_ePrevAnimState = m_eCurAnimState;
